@@ -21,6 +21,18 @@ namespace Konamiman.Z80dotNet
     /// This method will simply execute the next instruction (as pointed by the PC register, see <see cref="IZ80Processor.Registers"/>)
     /// and then returns immediately. This can be useful to allow for step-by-step debugging of Z80 code.
     /// </para>
+    /// <para>
+    /// The default configuration when the class is instantiated is:
+    /// <list type="bullet">
+    /// <item><description><see cref="IZ80Processor.ClockFrequencyInMHz"/> = 4</description></item>
+    /// <item><description><see cref="IZ80Processor.ClockSpeedFactor"/> = 1</description></item>
+    /// <item><description><see cref="IZ80Processor.AutoStopOnDiPlusHalt"/> = false</description></item>
+    /// <item><description><see cref="IZ80Processor.AutoStopOnRetWithStackEmpty"/> = false</description></item>
+    /// <item><description><see cref="IZ80Processor.MemoryWaitStates"/> = all zeros</description></item>
+    /// <item><description><see cref="IZ80Processor.PortWaitStates"/> = all zeros</description></item>
+    /// <item><description>Memory and ports access modes = all <see cref="MemoryAccessMode.RAM"/></description></item>
+    /// </list>
+    /// </para>
     /// </remarks>
     public interface IZ80Processor
     {
@@ -50,8 +62,8 @@ namespace Konamiman.Z80dotNet
         /// execution will stop immediately. Otherwise it will stop after the current instruction finishes executing.
         /// </remarks>
         /// <param name="isPause">If true, the <see cref="IZ80Processor.StopReason"/> property of the
-        /// processor classs will return <see cref="StopReason.PauseInvoked"/> after the method returns.
-        /// Otherwise, it will return <see cref="StopReason.StopInvoked"/>.</param>
+        /// processor classs will return <see cref="Konamiman.Z80dotNet.StopReason.PauseInvoked"/> after the method returns.
+        /// Otherwise, it will return <see cref="Konamiman.Z80dotNet.StopReason.StopInvoked"/>.</param>
         /// <exception cref="InvalidOperationException">The method is not invoked from within an event handler.</exception>
         void Stop(bool isPause = false);
 
@@ -201,7 +213,38 @@ namespace Konamiman.Z80dotNet
         /// <param name="length">Length of the memory portion that will be set</param>
         /// <param name="mode">New memory mode</param>
         /// <exception cref="System.InvalidOperationException"><c>startAddress</c> + <c>length</c> goes beyond 65535.</exception>
-        void SetMemoryMode(ushort startAddress, ushort length, MemoryAccessMode mode);
+        void SetMemoryAccessMode(ushort startAddress, ushort length, MemoryAccessMode mode);
+
+        /// <summary>
+        /// Gets the 256 byte array that contains the visible ports space for the processor.
+        /// </summary>
+        byte[] PortsSpace { get; }
+
+        /// <summary>
+        /// Sets a portion of the visible ports space with the contents of a byte array.
+        /// </summary>
+        /// <param name="startPort">First port that will be set</param>
+        /// <param name="contents">New contents of the ports space</param>
+        /// <param name="startIndex">Start index for starting copying within the contens array</param>
+        /// <param name="length">Length of the contents array that will be copied. If null,
+        /// the whole array is copied.</param>
+        /// <remarks>
+        /// This is just a convenience method. The contents of the ports space can be modified too by just accessing the array
+        /// returned by the <see cref="IZ80Processor.PortsSpace"/> property.
+        /// </remarks>
+        /// <exception cref="System.InvalidOperationException"><c>startAddress</c> + <c>length</c> (or <c>content.Length</c>)
+        /// goes beyond 255, or <c>length</c> is greater that the actual length of <c>contents</c>.</exception>
+        /// <exception cref="System.ArgumentNullException">contents is null</exception>
+        void SetPortsSpaceContents(ushort startPort, byte[] contents, ushort startIndex = 0, ushort? length = null);
+
+        /// <summary>
+        /// Sets the mode of a portion of the visible ports space.
+        /// </summary>
+        /// <param name="startAddress">First port that will be set</param>
+        /// <param name="length">Length of the mports space that will be set</param>
+        /// <param name="mode">New memory mode</param>
+        /// <exception cref="System.InvalidOperationException"><c>startAddress</c> + <c>length</c> goes beyond 255.</exception>
+        void SetPortsSpaceMode(ushort startPort, ushort length, MemoryAccessMode mode);
 
         #endregion
 
@@ -297,46 +340,5 @@ namespace Konamiman.Z80dotNet
         event EventHandler<InstructionExecutionEventArgs> InstructionExecution;
 
         #endregion
-    }
-
-    public class InstructionExecutionEventArgs : ProcessorEventArgs
-    {
-        public InstructionExecutionOperation Operation { get; private set; }
-
-        public byte[] Opcode { get; set; }
-
-        public bool IsContinuationOfBlockInstructionExecution { get; private set; }
-    }
-
-    public enum InstructionExecutionOperation
-    {
-        BeforeInstructionExecution,
-        AfterInstructionExecution
-    }
-
-    public class MemoryAccessEventArgs : ProcessorEventArgs
-    {
-        public MemoryAccessOperation Operation { get; private set; }
-
-        public ushort Address { get; private set; }
-
-        public byte Value { get; set; }
-    }
-
-    public enum MemoryAccessOperation
-    {
-        BeforeMemoryRead,
-        AfterMemoryRead,
-        BeforeMemoryWrite,
-        AfterMemoryWrite,
-        BeforePortRead,
-        AfterPortRead,
-        BeforePortWrite,
-        AfterPortWrite
-    }
-
-    public class ProcessorEventArgs : EventArgs
-    {
-        object LocalUserState { get; set; }
     }
 }
