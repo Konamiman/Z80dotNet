@@ -243,7 +243,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// Sets the wait states that will be simulated when accessing a given range of ports.
         /// </summary>
-        /// <param name="startAddress">First port that will be set</param>
+        /// <param name="startPort">First port that will be set</param>
         /// <param name="length">Length of the port range that will be set</param>
         /// <param name="waitStates">New wait states</param>
         /// <remarks>
@@ -268,14 +268,6 @@ namespace Konamiman.Z80dotNet
         event EventHandler<InstructionExecutionEventArgs> InstructionExecution;
 
         #endregion
-    }
-
-    public enum ProcessorState
-    {
-        Stopped,
-        Paused,
-        Running,
-        ExecutingOneInstruction
     }
 
     public enum StopReason
