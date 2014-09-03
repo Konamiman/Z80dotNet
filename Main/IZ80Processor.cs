@@ -270,16 +270,6 @@ namespace Konamiman.Z80dotNet
         #endregion
     }
 
-    public enum StopReason
-    {
-        NotApplicable,
-        NeverRan,
-        StopInvoked,
-        PauseInvoked,
-        ExecuteNextInstructionInvoked,
-        DiPlusHalt
-    }
-
     public enum MemoryMode
     {
         RAM,
