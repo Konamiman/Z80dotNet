@@ -2,21 +2,100 @@
 
 namespace Konamiman.Z80dotNet
 {
+    /// <summary>
+    /// Represents a Z80 processor class that can be used to develop processor simulators or computer emulators.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// The Z80 processor class is intended to be used in synchronous mode and controlled by events.
+    /// You simply configure the instance, subscribe to the <see cref="IZ80Processor.MemoryAccess"/> and
+    /// <see cref="IZ80Processor.InstructionExecution"/> events and invoke the <see cref="IZ80Processor.Start"/> method.
+    /// The method returns when the processor stops execution for whatever reason (see <see cref="IZ80Processor.StopReason"/>).
+    /// </para>
+    /// The <see cref="IZ80Processor.MemoryAccess"/> and <see cref="IZ80Processor.InstructionExecution"/> events 
+    /// provide full control of the memory and ports access and the instructions executions. During these events
+    /// you can examine and alter the memory contents and even stop the processor execution
+    /// (see the <see cref="IZ80Processor.Stop"/> method).
+    /// <para>
+    /// An alternative way of using the class is to use the <see cref="IZ80Processor.ExecuteNextInstruction"/> method.
+    /// This method will simply execute the next instruction (as pointed by the PC register, see <see cref="IZ80Processor.Registers"/>)
+    /// and then returns immediately. This can be useful to allow for step-by-step debugging of Z80 code.
+    /// </para>
+    /// </remarks>
     public interface IZ80Processor
     {
-        // Control
+        #region Processor control
 
-        void Start(object globalState);
+        /// <summary>
+        /// Performs a reset (see <see cref="IZ80Processor.Reset"/>) and sets the processor in running state.
+        /// This method cannot be invoked from an event handler.
+        /// </summary>
+        /// <remarks>
+        /// The method will finish when the <see cref="IZ80Processor.Stop"/> method is invoked from within an
+        /// event handler, or when a HALT instruction is executed with the interrupts disabled (only if
+        /// <see cref="IZ80Processor.AutoStopOnDiPlusHalt"/> is true).
+        /// </remarks>
+        /// <param name="globalState">If this value is not null, it will be copied to the
+        /// <see cref="IZ80Processor.UserState"/> property.
+        /// </param>
+        /// <exception cref="InvalidOperationException">The method is invoked from within an event handler.</exception>
+        void Start(object globalState = null);
 
-        void Stop();
+        /// <summary>
+        /// Stops the processor execution, causing the <see cref="IZ80Processor.Start"/> method to return.
+        /// This method can only be invoked from an event handler.
+        /// </summary>
+        /// <remarks>
+        /// If the method is executed from a <see cref="IZ80Processor.InstructionExecution"/> event, the processor
+        /// execution will stop immediately. Otherwise it will stop after the current instruction finishes executing.
+        /// </remarks>
+        /// <param name="isPause">If true, the <see cref="IZ80Processor.StopReason"/> property of the
+        /// processor classs will return <see cref="StopReason.PauseInvoked"/> after the method returns.
+        /// Otherwise, it will return <see cref="StopReason.StopInvoked"/>.</param>
+        /// <exception cref="InvalidOperationException">The method is not invoked from within an event handler.</exception>
+        void Stop(bool isPause = false);
 
-        void Pause();
-
+        /// <summary>
+        /// Sets the processor in running state without first doing a reset, thus preserving the state of all the registers.
+        /// This method cannot be invoked from an event handler.
+        /// </summary>
+        /// <exception cref="InvalidOperationException">The method is invoked from within an event handler, or the
+        /// <see cref="IZ80Processor.Start"/> method has never been invoked since the processor object was created.</exception>
         void Continue();
 
+        /// <summary>
+        /// Resets the registers to its initial state. The running state is not modified.
+        /// </summary>
+        /// <para>
+        /// This method sets the PC, IFF1, IFF2 and IM registers to 0, and all other registers to FFFFh.
+        /// </para>
+        /// <para>
+        /// If the method is executed from a <see cref="IZ80Processor.MemoryAccess"/> event, the reset
+        /// will be effective after the current instruction execution finishes.
+        /// </para>
         void Reset();
 
+        /// <summary>
+        /// Executes the next instruction as pointed by the PC register, and the returns.
+        /// This method cannot be invoked from an event handler.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// During the execution of this method, the <see cref="IZ80Processor.MemoryAccess"/> and
+        /// <see cref="IZ80Processor.InstructionExecution"/> events will be triggered as usual.
+        /// Altough not necessary, it is possible to invoke the <see cref="IZ80Processor.Stop"/> method,
+        /// thus modifying the value of <see cref="IZ80Processor.StopReason"/>.
+        /// </para>
+        /// <para>
+        /// This method will never issue a reset. A manual call to <see cref="IZ80Processor.Reset"/> is needed
+        /// before the first invocation of this method if <see cref="IZ80Processor.Start"/> has never been invoked.
+        /// </para>
+        /// </remarks>
+        /// <exception cref="InvalidOperationException">The method is invoked from within an event handler, or the
+        /// <see cref="IZ80Processor.Start"/> method has never been invoked since the processor object was created.</exception>
         void ExecuteNextInstruction();
+
+        #endregion
 
         // Info and state
 
