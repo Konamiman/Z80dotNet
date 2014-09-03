@@ -89,6 +89,8 @@ namespace Konamiman.Z80dotNet
         public InstructionExecutionOperation Operation { get; private set; }
 
         public byte[] Opcode { get; set; }
+
+        public bool IsContinuationOfBlockInstructionExecution { get; private set; }
     }
 
     public enum InstructionExecutionOperation
@@ -155,6 +157,12 @@ namespace Konamiman.Z80dotNet
         public short SP { get; set; }
 
         public short IR { get; set; }
+
+        public byte IM { get; set; }    // 0, 1 or 2
+
+        public byte IFF1 { get; set; }  // 0 or 1
+
+        public byte IFF2 { get; set; }  // 0 or 1
     }
 
     public class MainZ80Registers
