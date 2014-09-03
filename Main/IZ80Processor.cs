@@ -192,22 +192,82 @@ namespace Konamiman.Z80dotNet
 
         #endregion
 
-        // Config
+        #region Configuration
 
+        /// <summary>
+        /// Gets or sets the clock frequency in MegaHertzs. 
+        /// This value cannot be changed while the processor is running or in single instruction execution mode.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">The product of <see cref="IZ80Processor.ClockSpeedFactor"/>
+        /// by the new value gives a number that is smaller than 0.001 or greater than 1000.</exception>
+        /// <exception cref="System.InvalidOperationException">The procesor is running or in single instruction execution mode.</exception>
         decimal ClockFrequencyInMHz { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value that is multiplied by the clock frequency to obtain the effective
+        /// clock frequency simulated by the processor.
+        /// </summary>
+        /// <exception cref="System.ArgumentException">The product of <see cref="IZ80Processor.ClockFrequencyInMHz"/>
+        /// by the new value gives a number that is smaller than 0.001 or greater than 1000.</exception>
         decimal ClockSpeedFactor { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value that indicates whether the processor should stop automatically or not when a HALT
+        /// instruction is executed with interrupts disabled.
+        /// </summary>
         bool AutoStopOnDiPlusHalt { get; set; }
+        
+        /// <summary>
+        /// Gets the 64K array that indicates how many wait states will be simulated when accessing each visible memory address.
+        /// </summary>
+        byte[] MemoryWaitStates { get; set; }
 
-        int MemoryWaitStates { get; set; }
+        /// <summary>
+        /// Sets the wait states that will be simulated when accessing of a portion of the visible memory.
+        /// </summary>
+        /// <param name="startAddress">First memory address that will be set</param>
+        /// <param name="length">Length of the memory portion that will be set</param>
+        /// <param name="waitStates">New wait states</param>
+        /// <remarks>
+        /// This is just a convenience method. The wait states can be changed too by just accessing the array
+        /// returned by the <see cref="IZ80Processor.MemoryWaitStates"/> property.
+        /// </remarks>
+        /// <exception cref="System.InvalidOperationException"><c>startAddress</c> + <c>length</c> goes beyond 65535.</exception>
+        void SetMemoryWaitStates(ushort startAddress, ushort length, ushort waitStates);
 
-        // Events
+        /// <summary>
+        /// Gets the 256 bytes array that indicates how many wait states will be simulated when accessing each port.
+        /// </summary>
+        ushort[] PortWaitStates { get; set; }
 
+        /// <summary>
+        /// Sets the wait states that will be simulated when accessing a given range of ports.
+        /// </summary>
+        /// <param name="startAddress">First port that will be set</param>
+        /// <param name="length">Length of the port range that will be set</param>
+        /// <param name="waitStates">New wait states</param>
+        /// <remarks>
+        /// This is just a convenience method. The wait states can be changed too by just accessing the array
+        /// returned by the <see cref="IZ80Processor.PortWaitStates"/> property.
+        /// </remarks>
+        /// <exception cref="System.InvalidOperationException"><c>startAddress</c> + <c>length</c> goes beyond 255.</exception>
+        void SetPortWaitStates(ushort startPort, ushort length, ushort waitStates);
+
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        /// Memory access event. Is is triggered before and after each memory and port read and write.
+        /// </summary>
         event EventHandler<MemoryAccessEventArgs> MemoryAccess;
 
+        /// <summary>
+        /// Instruction execution event. It is triggered before and after an instruction is executed.
+        /// </summary>
         event EventHandler<InstructionExecutionEventArgs> InstructionExecution;
 
+        #endregion
     }
 
     public enum ProcessorState
