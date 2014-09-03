@@ -10,6 +10,7 @@ syntax: glob
 ## User-specific files
 
 *.suo
+Z80dotNet.v12.suo
 *.user
 *.sln.docstates
 
