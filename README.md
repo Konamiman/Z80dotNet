@@ -4,11 +4,11 @@ So, one day I was doing I don't remember what, and then a weird idea came to my 
 
 > What if I develop a Z80 simulator in .NET?
 
-_"Nah"_, I replied to myself, _"you're never going to have enough free time for that"_. But somehow, the idea was stuck in my mind... and I agreed with myself to at least _start_ the project and define a minimum set of interfaces and data classes... just in case.
+_"Nah"_, I replied to myself, _"you're never going to have enough free time for that"_. But somehow, the idea was stuck in my mind... so I agreed with myself to at least _start_ the project and define a minimum set of interfaces and data classes... just in case.
 
 ## How would it be supposed to work, in case it is done some day? ##
 
-The `Z80Processor` class (which does not exist yet, just its interface has been defined) is a virtual Z80. The idea is that it should be complete enough for being capable of acting as the core class for processor simulators and computer emulators.
+The `Z80Processor` class (which does not exist yet, just its interface has been defined) is a virtual Z80 processor. The idea is that it should be complete enough for being capable of acting as the core class for processor simulators and computer emulators.
 
 How to use it? You simply:
 
@@ -17,7 +17,7 @@ How to use it? You simply:
 * Invoke the `Start` method.
 * Communicate with the processor by using the above mentioned events. When you want the `Start` method to return, you invoke the `Stop` method.
 
-Or alternatively, instead of invoking the `Start` method, you invoke `ExecuteNextInstruction` instead.
+Or alternatively, instead of invoking the `Start` method, you invoke `ExecuteNextInstruction` instead (useful for step-by-step debuggers).
 
 That's it, all synchronous, all event based. Easy peasy.
 
