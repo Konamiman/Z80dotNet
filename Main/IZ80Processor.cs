@@ -64,7 +64,7 @@ namespace Konamiman.Z80dotNet
         void Continue();
 
         /// <summary>
-        /// Resets the registers to its initial state. The running state is not modified.
+        /// Resets all registers to its initial state. The running state is not modified.
         /// </summary>
         /// <para>
         /// This method sets the PC, IFF1, IFF2 and IM registers to 0, and all other registers to FFFFh.
@@ -91,23 +91,61 @@ namespace Konamiman.Z80dotNet
         /// before the first invocation of this method if <see cref="IZ80Processor.Start"/> has never been invoked.
         /// </para>
         /// </remarks>
-        /// <exception cref="InvalidOperationException">The method is invoked from within an event handler, or the
-        /// <see cref="IZ80Processor.Start"/> method has never been invoked since the processor object was created.</exception>
+        /// <exception cref="InvalidOperationException">The method is invoked from within an event handler, or neither the
+        /// <see cref="IZ80Processor.Start"/> method or the <see cref="IZ80Processor.Reset"/> method
+        /// have never been invoked since the processor object was created.</exception>
         void ExecuteNextInstruction();
 
         #endregion
 
-        // Info and state
+        #region Information and state
 
+        /// <summary>
+        /// Obtains the count of T states elapsed since the processor execution started.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This property is set to zero when the processor object is created, and when the
+        /// <see cref="IZ80Processor.Start"/> method is invoked. It is not affected by the
+        /// <see cref="IZ80Processor.Continue"/> and <see cref="IZ80Processor.Reset"/> methods.
+        /// </para>
+        /// <para>The value is updated after each relevant operation (memory access or instruction execution),
+        /// both in running mode and in single instruction execution mode.</para>
+        /// </remarks>
         ulong TStatesElapsedSinceStart { get; }
 
+        /// <summary>
+        /// Obtains the count of T states elapsed since the last reset.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This property is set to zero when the processor object is created, and when the
+        /// <see cref="IZ80Processor.Start"/> method or the <see cref="IZ80Processor.Reset"/> are invoked.
+        /// It is not affected by the <see cref="IZ80Processor.Continue"/> method.
+        /// </para>
+        /// <para>The value is updated after each relevant operation (memory access or instruction execution),
+        /// both in running mode and in single instruction execution mode.</para>
+        /// </remarks>
         ulong TStatesElapsedSinceReset { get; }
 
+        /// <summary>
+        /// Obtains the reason for the processor not being in the running state,
+        /// that is, what triggered the last stop.
+        /// </summary>
         StopReason StopReason { get; }
 
+        /// <summary>
+        /// Obtains the current processor execution state.
+        /// </summary>
         ProcessorState State { get; }
 
+        /// <summary>
+        /// Contains an user-defined state object. This property exists for the client code convenience
+        /// and can be set to any value, the class code will never access it.
+        /// </summary>
         object UserState { get; set; }
+
+        #endregion
 
         // Inside and outside world
 
@@ -149,6 +187,7 @@ namespace Konamiman.Z80dotNet
 
     public enum StopReason
     {
+        NotApplicable,
         NeverRan,
         StopInvoked,
         PauseInvoked,
