@@ -229,7 +229,23 @@ namespace Konamiman.Z80dotNet
         /// instruction is executed with interrupts disabled.
         /// </summary>
         bool AutoStopOnDiPlusHalt { get; set; }
-        
+
+        /// <summary>
+        /// Gets or sets a value that indicates whether the processor should stop automatically when a RET
+        /// instruction is executed and the stack is empty.
+        /// </summary>
+        /// <remarks>
+        /// <para>"The stack is empty" means that the SP register has the value
+        /// it had when the <see cref="IZ80Processor.Start"/> method or the <see cref="IZ80Processor.Stop"/>
+        /// method was executed, or the value set by the last execution of a <c>LD, SP</c> instruction.
+        /// </para>
+        /// <para>
+        /// This setting is useful for testing simple programs, so that the processor stops automatically
+        /// as soon as the program finishes with a RET.
+        /// </para>
+        /// </remarks>
+        bool AutoStopOnRetWithStackEmpty { get; set; }
+
         /// <summary>
         /// Gets the 64K array that indicates how many wait states will be simulated when accessing each visible memory address.
         /// </summary>

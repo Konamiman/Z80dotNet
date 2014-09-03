@@ -35,8 +35,14 @@ namespace Konamiman.Z80dotNet
 
         /// <summary>
         /// A HALT instruction was encountered when interrupts were disabled,
-        /// and <see cref="IZ80Processor.AutoStopOnDiPlusHalt"/> was set to true.
+        /// and <see cref="IZ80Processor.AutoStopOnDiPlusHalt"/> property was set to true.
         /// </summary>
-        DiPlusHalt
+        DiPlusHalt,
+
+        /// <summary>
+        /// A RET instruction was encountered, the stack is empty, and the
+        /// <see cref="IZ80Processor.AutoStopOnRetWithStackEmpty"/> property was set to true.
+        /// </summary>
+        RetWithStackEmpty
     }
 }
