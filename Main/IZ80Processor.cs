@@ -147,17 +147,50 @@ namespace Konamiman.Z80dotNet
 
         #endregion
 
-        // Inside and outside world
+        #region Inside and outside world
 
+        /// <summary>
+        /// Gets or sets the register set used by the processor.
+        /// </summary>
         Z80Registers Registers { get; set; }
 
+        /// <summary>
+        /// Gets or sets the object that represents the input and output lines of the processor.
+        /// </summary>
         Z80Lines Lines { get; set; }
 
+        /// <summary>
+        /// Gets the 64K array that contains the visible memory for the processor.
+        /// </summary>
         byte[] Memory { get; }
 
+        /// <summary>
+        /// Sets a portion of the visible memory with the contents of a byte array.
+        /// </summary>
+        /// <param name="startAddress">First memory address that will be set</param>
+        /// <param name="contents">New contents of the memory</param>
+        /// <param name="startIndex">Start index for starting copying within the contens array</param>
+        /// <param name="length">Length of the contents array that will be copied. If null,
+        /// the whole array is copied.</param>
+        /// <remarks>
+        /// This is just a convenience method. The memory can be modified too by just accessing the array
+        /// returned by the <see cref="IZ80Processor.Memory"/> property.
+        /// </remarks>
+        /// <exception cref="System.InvalidOperationException"><c>startAddress</c> + <c>length</c> (or <c>content.Length</c>)
+        /// goes beyond 65535, or <c>length</c> is greater that the actual length of <c>contents</c>.</exception>
+        /// <exception cref="System.ArgumentNullException">contents is null</exception>
         void SetMemoryContents(ushort startAddress, byte[] contents, ushort startIndex = 0, ushort? length = null);
 
+        /// <summary>
+        /// Sets the mode of a portion of the visible memory.
+        /// </summary>
+        /// <param name="startAddress">First memory address that will be set</param>
+        /// <param name="length">Length of the memory portion that will be set</param>
+        /// <param name="mode">New memory mode</param>
+        /// <exception cref="System.InvalidOperationException"><c>startAddress</c> + <c>length</c> goes beyond 65535.</exception>
         void SetMemoryMode(ushort startAddress, ushort length, MemoryMode mode);
+
+        #endregion
 
         // Config
 
