@@ -40,10 +40,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IZ80Processor.cs" />
+    <Compile Include="MainZ80Registers.cs" />
     <Compile Include="MemoryAccessMode.cs" />
     <Compile Include="ProcessorState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StopReason.cs" />
+    <Compile Include="Z80Registers.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

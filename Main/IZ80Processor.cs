@@ -96,6 +96,19 @@ namespace Konamiman.Z80dotNet
         /// have never been invoked since the processor object was created.</exception>
         void ExecuteNextInstruction();
 
+        /// <summary>
+        /// Simulates the arrival of a non-maskable interrupt request.
+        /// </summary>
+        void FireNonMaskableInterrupt();
+
+        /// <summary>
+        /// Simulates the arrival of a maskable interrupt request.
+        /// </summary>
+        /// <param name="dataBusValue">The value that the processor will read from the data bus,
+        /// relevant for the interrupt modes 0 and 2.</param>
+        /// <remarks>This method will have no effect if the IIF1 flag is set to zero.</remarks>
+        void FireMaskableInterrupt(byte dataBusValue = 0xFF);
+
         #endregion
 
         #region Information and state
@@ -145,6 +158,11 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         object UserState { get; set; }
 
+        /// <summary>
+        /// Returns true when a HALT instruction is executed, returns to false when an interrupt request arrives.
+        /// </summary>
+        bool IsHalted { get; set; }
+
         #endregion
 
         #region Inside and outside world
@@ -153,11 +171,6 @@ namespace Konamiman.Z80dotNet
         /// Gets or sets the register set used by the processor.
         /// </summary>
         Z80Registers Registers { get; set; }
-
-        /// <summary>
-        /// Gets or sets the object that represents the input and output lines of the processor.
-        /// </summary>
-        Z80Lines Lines { get; set; }
 
         /// <summary>
         /// Gets the 64K array that contains the visible memory for the processor.
@@ -309,56 +322,5 @@ namespace Konamiman.Z80dotNet
     public class ProcessorEventArgs : EventArgs
     {
         object LocalUserState { get; set; }
-    }
-
-    public class Z80Lines
-    {
-        // Values can be 0 or 1 only.
-
-        // Output
-
-        public byte Halt { get; private set; }
-
-        // Input
-
-        public byte Reset { get; set; }
-
-        public byte Interrupt { get; set; }
-
-        public byte NonMaskableInterrupt { get; set; }
-    }
-
-    public class Z80Registers
-    {
-        public MainZ80Registers Main { get; set; }
-
-        public MainZ80Registers Alternate { get; set; }
-
-        public short IX { get; set; }
-
-        public short IY { get; set; }
-
-        public short PC { get; set; }
-
-        public short SP { get; set; }
-
-        public short IR { get; set; }
-
-        public byte IM { get; set; }    // 0, 1 or 2
-
-        public byte IFF1 { get; set; }  // 0 or 1
-
-        public byte IFF2 { get; set; }  // 0 or 1
-    }
-
-    public class MainZ80Registers
-    {
-        public short AF { get; set; }
-
-        public short BC { get; set; }
-
-        public short DE { get; set; }
-
-        public short HL { get; set; }
     }
 }
