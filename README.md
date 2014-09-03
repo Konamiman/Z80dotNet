@@ -8,7 +8,9 @@ _"Nah"_, I replied to myself, _"you're never going to have enough free time for 
 
 ## How would it be supposed to work, in case it is done some day? ##
 
-You simply:
+The `Z80Processor` class (which does not exist yet, just its interface has been defined) is a virtual Z80. The idea is that it should be complete enough for being capable of acting as the core class for processor simulators and computer emulators.
+
+How to use it? You simply:
 
 * Create an instance of the `Z80Processor` class and configure it (at the very least the memory contents).
 * Subscribe to the `MemoryAccess` and `InstructionExecution` events.
@@ -17,11 +19,13 @@ You simply:
 
 Or alternatively, instead of invoking the `Start` method, you invoke `ExecuteNextInstruction` instead.
 
-That's it, all syncrhonous, all event based. Easy peasy.
+That's it, all synchronous, all event based. Easy peasy.
 
 ## That's all?? ##
 
 Well, that's the basic idea, but there's nothing implemented yet. Anyway you can get more details by taking a look at the source code, which is (I hope) pretty well documented.
+
+For sure there are plenty of conceptual mistakes in what I have designed so far... if so, please send me a slap in the face! (use the link below to get my contact details)
 
 ## But who are you? ##
 
