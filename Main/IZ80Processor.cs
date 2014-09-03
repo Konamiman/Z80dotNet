@@ -188,7 +188,7 @@ namespace Konamiman.Z80dotNet
         /// <param name="length">Length of the memory portion that will be set</param>
         /// <param name="mode">New memory mode</param>
         /// <exception cref="System.InvalidOperationException"><c>startAddress</c> + <c>length</c> goes beyond 65535.</exception>
-        void SetMemoryMode(ushort startAddress, ushort length, MemoryMode mode);
+        void SetMemoryMode(ushort startAddress, ushort length, MemoryAccessMode mode);
 
         #endregion
 
@@ -268,13 +268,6 @@ namespace Konamiman.Z80dotNet
         event EventHandler<InstructionExecutionEventArgs> InstructionExecution;
 
         #endregion
-    }
-
-    public enum MemoryMode
-    {
-        RAM,
-        ROM,
-        NotConnected
     }
 
     public class InstructionExecutionEventArgs : ProcessorEventArgs
