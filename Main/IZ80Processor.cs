@@ -30,7 +30,9 @@ namespace Konamiman.Z80dotNet
     /// <item><description><see cref="IZ80Processor.AutoStopOnRetWithStackEmpty"/> = false</description></item>
     /// <item><description><see cref="IZ80Processor.MemoryWaitStates"/> = all zeros</description></item>
     /// <item><description><see cref="IZ80Processor.PortWaitStates"/> = all zeros</description></item>
-    /// <item><description>Memory and ports access modes = all <see cref="MemoryAccessMode.RAM"/></description></item>
+    /// <item><description><see cref="IZ80Processor.Memory"/> = an instance of <see cref="PlainMemory"/></description></item>
+    /// <item><description><see cref="IZ80Processor.PortsSpace"/> = an instance of <see cref="PlainMemory"/></description></item>
+    /// <item><description>Memory and ports access modes = all <see cref="MemoryAccessMode.ReadAndWrite"/></description></item>
     /// </list>
     /// </para>
     /// </remarks>
@@ -185,26 +187,9 @@ namespace Konamiman.Z80dotNet
         Z80Registers Registers { get; set; }
 
         /// <summary>
-        /// Gets the 64K array that contains the visible memory for the processor.
+        /// Gets or sets the visible memory for the processor.
         /// </summary>
-        byte[] Memory { get; }
-
-        /// <summary>
-        /// Sets a portion of the visible memory with the contents of a byte array.
-        /// </summary>
-        /// <param name="startAddress">First memory address that will be set</param>
-        /// <param name="contents">New contents of the memory</param>
-        /// <param name="startIndex">Start index for starting copying within the contens array</param>
-        /// <param name="length">Length of the contents array that will be copied. If null,
-        /// the whole array is copied.</param>
-        /// <remarks>
-        /// This is just a convenience method. The memory can be modified too by just accessing the array
-        /// returned by the <see cref="IZ80Processor.Memory"/> property.
-        /// </remarks>
-        /// <exception cref="System.InvalidOperationException"><c>startAddress</c> + <c>length</c> (or <c>content.Length</c>)
-        /// goes beyond 65535, or <c>length</c> is greater that the actual length of <c>contents</c>.</exception>
-        /// <exception cref="System.ArgumentNullException">contents is null</exception>
-        void SetMemoryContents(ushort startAddress, byte[] contents, ushort startIndex = 0, ushort? length = null);
+        IMemory Memory { get; }
 
         /// <summary>
         /// Sets the mode of a portion of the visible memory.
@@ -216,26 +201,9 @@ namespace Konamiman.Z80dotNet
         void SetMemoryAccessMode(ushort startAddress, ushort length, MemoryAccessMode mode);
 
         /// <summary>
-        /// Gets the 256 byte array that contains the visible ports space for the processor.
+        /// Gets or sets the visible ports space for the processor.
         /// </summary>
-        byte[] PortsSpace { get; }
-
-        /// <summary>
-        /// Sets a portion of the visible ports space with the contents of a byte array.
-        /// </summary>
-        /// <param name="startPort">First port that will be set</param>
-        /// <param name="contents">New contents of the ports space</param>
-        /// <param name="startIndex">Start index for starting copying within the contens array</param>
-        /// <param name="length">Length of the contents array that will be copied. If null,
-        /// the whole array is copied.</param>
-        /// <remarks>
-        /// This is just a convenience method. The contents of the ports space can be modified too by just accessing the array
-        /// returned by the <see cref="IZ80Processor.PortsSpace"/> property.
-        /// </remarks>
-        /// <exception cref="System.InvalidOperationException"><c>startAddress</c> + <c>length</c> (or <c>content.Length</c>)
-        /// goes beyond 255, or <c>length</c> is greater that the actual length of <c>contents</c>.</exception>
-        /// <exception cref="System.ArgumentNullException">contents is null</exception>
-        void SetPortsSpaceContents(ushort startPort, byte[] contents, ushort startIndex = 0, ushort? length = null);
+        IMemory PortsSpace { get; }
 
         /// <summary>
         /// Sets the mode of a portion of the visible ports space.

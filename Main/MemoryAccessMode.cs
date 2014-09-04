@@ -6,18 +6,25 @@ namespace Konamiman.Z80dotNet
     public enum MemoryAccessMode
     {
         /// <summary>
-        /// RAM: memory can be read or written.
-        /// </summary>
-        RAM,
+        /// Read and write. The registered <see cref="IMemory"/> object will be accessed
+        /// for both reading and writing from and to memory.
+        ReadAndWrite,
 
         /// <summary>
-        /// ROM: memory is read-only. Writes will appropriately affect timing but will have no effect.
+        /// Read only. The registered <see cref="IMemory"/> object will be accessed
+        /// only for reading to memory.
         /// </summary>
-        ROM,
+        ReadOnly,
 
         /// <summary>
-        /// Not connected: reads and writes will appropriately affect timing, but
-        /// reads will aways return FFh and writes will have no effect.
+        /// Write only. The registered <see cref="IMemory"/> object will be accessed
+        /// only for writing to memory. The read value will always be FFh.
+        /// </summary>
+        WriteOnly,
+
+        /// <summary>
+        /// Not connected. The registered <see cref="IMemory"/> object will never be accessed
+        /// for the affected memory address. The read value will always be FFh.
         /// </summary>
         NotConnected
     }

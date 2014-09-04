@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IMemory.cs" />
     <Compile Include="InstructionExecutionEventArgs.cs" />
     <Compile Include="InstructionExecutionEventType.cs" />
     <Compile Include="IZ80Processor.cs" />
@@ -46,6 +47,7 @@
     <Compile Include="MemoryAccessEventArgs.cs" />
     <Compile Include="MemoryAccessEventType.cs" />
     <Compile Include="MemoryAccessMode.cs" />
+    <Compile Include="PlainMemory.cs" />
     <Compile Include="ProcessorEventArgs.cs" />
     <Compile Include="ProcessorState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
