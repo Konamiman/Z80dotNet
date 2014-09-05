@@ -2,34 +2,17 @@ using System;
 
 namespace Konamiman.Z80dotNet
 {
-    /// <summary>
-    /// Represents a set of the Z80 main registers (AF, BC, DE, HL)
-    /// </summary>
-    public class MainZ80Registers
+
+    public class MainZ80Registers : IMainZ80Registers
     {
-        /// <summary>
-        /// The AF register pair
-        /// </summary>
         public short AF { get; set; }
 
-        /// <summary>
-        /// The BC register pair
-        /// </summary>
         public short BC { get; set; }
 
-        /// <summary>
-        /// The DE register pair
-        /// </summary>
         public short DE { get; set; }
 
-        /// <summary>
-        /// The HL register pair
-        /// </summary>
         public short HL { get; set; }
 
-        /// <summary>
-        /// The A register.
-        /// </summary>
         public byte A
         {
             get
@@ -42,9 +25,6 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        /// <summary>
-        /// The F register.
-        /// </summary>
         public byte F
         {
             get
@@ -57,9 +37,6 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        /// <summary>
-        /// The B register.
-        /// </summary>
         public byte B
         {
             get
@@ -72,9 +49,6 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        /// <summary>
-        /// The C register.
-        /// </summary>
         public byte C
         {
             get
@@ -87,9 +61,6 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        /// <summary>
-        /// The D register.
-        /// </summary>
         public byte D
         {
             get
@@ -102,9 +73,6 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        /// <summary>
-        /// The E register.
-        /// </summary>
         public byte E
         {
             get
@@ -117,9 +85,6 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        /// <summary>
-        /// The H register.
-        /// </summary>
         public byte H
         {
             get
@@ -132,9 +97,6 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        /// <summary>
-        /// The E register.
-        /// </summary>
         public byte L
         {
             get
@@ -147,9 +109,6 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        /// <summary>
-        /// The carry (C) flag.
-        /// </summary>
         public Bit CF
         {
             get
@@ -162,9 +121,6 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        /// <summary>
-        /// The addition/substraction (N) flag.
-        /// </summary>
         public Bit NF
         {
             get
@@ -177,9 +133,6 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        /// <summary>
-        /// The parity/overflow (P/V) flag.
-        /// </summary>
         public Bit PF
         {
             get
@@ -192,9 +145,6 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        /// <summary>
-        /// The unused flag at bit 3 of F.
-        /// </summary>
         public Bit Flag3
         {
             get
@@ -207,9 +157,6 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        /// <summary>
-        /// The half carry (H) flag.
-        /// </summary>
         public Bit HF
         {
             get
@@ -222,9 +169,6 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        /// <summary>
-        /// The unused flag at bit 5 of F.
-        /// </summary>
         public Bit Flag5
         {
             get
@@ -237,9 +181,6 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        /// <summary>
-        /// The zero (Z) flag.
-        /// </summary>
         public Bit ZF
         {
             get
@@ -252,9 +193,6 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        /// <summary>
-        /// The sign (S) flag.
-        /// </summary>
         public Bit SF
         {
             get

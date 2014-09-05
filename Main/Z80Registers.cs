@@ -5,43 +5,23 @@ namespace Konamiman.Z80dotNet
     /// <summary>
     /// Represents a full set of Z80 registers.
     /// </summary>
-    public class Z80Registers
+    public class Z80Registers : IZ80Registers
     {
-        /// <summary>
-        /// The main register set (AF, BC, DE, HL)
-        /// </summary>
-        public MainZ80Registers Main { get; set; }
+        public IMainZ80Registers Main { get; set; }
 
-        /// <summary>
-        /// The alternate register set (AF', BC', DE', HL')
-        /// </summary>
-        public MainZ80Registers Alternate { get; set; }
+        public IMainZ80Registers Alternate { get; set; }
 
-        /// <summary>
-        /// The IX register pair
-        /// </summary>
         public short IX { get; set; }
 
-        /// <summary>
-        /// The IY register pair
-        /// </summary>
         public short IY { get; set; }
 
-        /// <summary>
-        /// The program counter
-        /// </summary>
         public short PC { get; set; }
 
-        /// <summary>
-        /// The stack pointer
-        /// </summary>
         public short SP { get; set; }
 
-        /// <summary>
-        /// The interrupt and refresh register
-        /// </summary>
         public short IR { get; set; }
 
+#if false
         private byte _IM;
         /// <summary>
         /// The current interrupt mode register. It has always the value 0, 1 or 2.
@@ -61,22 +41,12 @@ namespace Konamiman.Z80dotNet
                 _IM = value;
             }
         }
+#endif
 
-        /// <summary>
-        /// The IFF1 flag. It has always the value 0 or 1.
-        /// </summary>
-        /// <exception cref="System.InvalidOperationException">Attempt to set a value other than 0 or 1</exception>
         public Bit IFF1 { get; set; }
 
-        /// <summary>
-        /// The IFF2 flag. It has always the value 0 or 1.
-        /// </summary>
-        /// <exception cref="System.InvalidOperationException">Attempt to set a value other than 0 or 1</exception>
-        public Bit IFF2 { get; set; }  // 0 or 1
+        public Bit IFF2 { get; set; }
 
-        /// <summary>
-        /// The IXh register.
-        /// </summary>
         public byte IXh
         {
             get
@@ -89,9 +59,6 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        /// <summary>
-        /// The IXl register.
-        /// </summary>
         public byte IXl
         {
             get
@@ -104,9 +71,6 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        /// <summary>
-        /// The IYh register.
-        /// </summary>
         public byte IYh
         {
             get
@@ -119,9 +83,6 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        /// <summary>
-        /// The IYl register.
-        /// </summary>
         public byte IYl
         {
             get
@@ -134,9 +95,6 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        /// <summary>
-        /// The I register.
-        /// </summary>
         public byte I
         {
             get
@@ -149,9 +107,6 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        /// <summary>
-        /// The R register.
-        /// </summary>
         public byte R
         {
             get

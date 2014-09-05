@@ -32,6 +32,7 @@ namespace Konamiman.Z80dotNet
     /// <item><description><see cref="IZ80Processor.PortWaitStates"/> = all zeros</description></item>
     /// <item><description><see cref="IZ80Processor.Memory"/> = an instance of <see cref="PlainMemory"/></description></item>
     /// <item><description><see cref="IZ80Processor.PortsSpace"/> = an instance of <see cref="PlainMemory"/></description></item>
+    /// <item><description><see cref="IZ80Processor.Registers"/> = an instance of <see cref="Z80Registers"/></description></item>
     /// <item><description>Memory and ports access modes = all <see cref="MemoryAccessMode.ReadAndWrite"/></description></item>
     /// </list>
     /// </para>
@@ -81,7 +82,8 @@ namespace Konamiman.Z80dotNet
         /// Resets all registers to its initial state. The running state is not modified.
         /// </summary>
         /// <para>
-        /// This method sets the PC, IFF1, IFF2 and IM registers to 0, and all other registers to FFFFh.
+        /// This method sets the PC, IFF1, and IFF2 registers to 0, all other registers to FFFFh,
+        /// and the interrupt mode to 0.
         /// </para>
         /// <para>
         /// If the method is executed from a <see cref="IZ80Processor.MemoryAccess"/> event, the reset
@@ -176,6 +178,12 @@ namespace Konamiman.Z80dotNet
         /// Returns true when a HALT instruction is executed, returns to false when an interrupt request arrives.
         /// </summary>
         bool IsHalted { get; set; }
+        
+        /// <summary>
+        /// The current interrupt mode. It has always the value 0, 1 or 2.
+        /// </summary>
+        /// <exception cref="System.InvalidOperationException">Attempt to set a value other than 0, 1 or 2</exception>
+        byte InterruptModeM { get; set; }
 
         #endregion
 
@@ -184,7 +192,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// Gets or sets the register set used by the processor.
         /// </summary>
-        Z80Registers Registers { get; set; }
+        IZ80Registers Registers { get; set; }
 
         /// <summary>
         /// Gets or sets the visible memory for the processor.

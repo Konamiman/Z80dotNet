@@ -97,6 +97,7 @@ namespace Konamiman.Z80dotNet.Tests
             Assert.AreEqual(expected, Sut.IR);
         }
 
+#if false
         [Test]
         public void Can_set_IM_to_0_1_or_2()
         {
@@ -115,5 +116,6 @@ namespace Konamiman.Z80dotNet.Tests
         {
             Assert.Throws<InvalidOperationException>(() => Sut.IM = 3);
         }
+#endif
     }
 }
