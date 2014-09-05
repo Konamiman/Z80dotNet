@@ -52,6 +52,7 @@
     <Compile Include="PlainMemoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NumberUtilsTests.cs" />
+    <Compile Include="Z80RegistersTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
