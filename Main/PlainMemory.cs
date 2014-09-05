@@ -9,14 +9,16 @@ namespace Konamiman.Z80dotNet
     /// </summary>
     public class PlainMemory : IMemory
     {
-        //TODO: Error checking (addresses and lengths validation)
-        //TODO: Add unit tests
-
         private readonly byte[] memory;
+        private readonly int memorySize;
 
-        public PlainMemory(int length)
+        public PlainMemory(int size)
         {
-            memory = new byte[length];
+            if(size < 1)
+                throw new InvalidOperationException("Memory size must be greater than zero");
+
+            memory = new byte[size];
+            memorySize = size;
         }
 
         public byte this[int address]
@@ -33,17 +35,41 @@ namespace Konamiman.Z80dotNet
 
         public void SetContents(int startAddress, byte[] contents, int startIndex = 0, int? length = null)
         {
+            if(contents == null)
+                throw new ArgumentNullException("contents");
+
+            if (length == null)
+                length = contents.Length;
+            
+            if((startIndex + length) > contents.Length)
+                throw new IndexOutOfRangeException("startIndex + length cannot be greater than contents.length");
+
+            if(startIndex < 0)
+                throw new IndexOutOfRangeException("startIndex cannot be negative");
+
+            if(startAddress + length > memorySize)
+                throw new IndexOutOfRangeException("startAddress + length cannot go beyond the memory size");
+
             Array.Copy(
                 sourceArray: contents,
                 sourceIndex: startIndex,
                 destinationArray: memory,
                 destinationIndex: startAddress,
-                length: length ?? contents.Length
+                length: length.Value
                 );
             }
 
         public byte[] GetContents(int startAddress, int length)
         {
+            if(startAddress >= memory.Length)
+                throw new IndexOutOfRangeException("startAddress cannot go beyond memory size");
+
+            if(startAddress + length > memory.Length)
+                throw new IndexOutOfRangeException("startAddress + length cannot go beyond memory size");
+
+            if(startAddress < 0)
+                throw new IndexOutOfRangeException("startAddress cannot be negative");
+
             return memory.Skip(startAddress).Take(length).ToArray();
         }
     }
