@@ -66,13 +66,13 @@ namespace Konamiman.Z80dotNet
         /// The IFF1 flag. It has always the value 0 or 1.
         /// </summary>
         /// <exception cref="System.InvalidOperationException">Attempt to set a value other than 0 or 1</exception>
-        public int IFF1 { get; set; }
+        public Bit IFF1 { get; set; }
 
         /// <summary>
         /// The IFF2 flag. It has always the value 0 or 1.
         /// </summary>
         /// <exception cref="System.InvalidOperationException">Attempt to set a value other than 0 or 1</exception>
-        public int IFF2 { get; set; }  // 0 or 1
+        public Bit IFF2 { get; set; }  // 0 or 1
 
         /// <summary>
         /// The IXh register.

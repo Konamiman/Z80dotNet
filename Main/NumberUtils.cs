@@ -53,29 +53,26 @@ namespace Konamiman.Z80dotNet
             return (short)((high << 8) | low);
         }
 
-        public static int GetBit(this byte target, int bit)
+        public static Bit GetBit(this byte target, int bitNumber)
         {
-            if(bit < 0 || bit > 7)
+            if(bitNumber < 0 || bitNumber > 7)
                 throw new InvalidOperationException("bit number must be between 0 and 7");
 
-            return (target & (1 << bit)) == 0 ? 0 : 1;
+            return (target & (1 << bitNumber));
         }
 
-        public static byte SetBit(this byte target, int bit, int value)
+        public static byte SetBit(this byte target, int bitNumber, Bit value)
         {
-            if(bit < 0 || bit > 7)
+            if(bitNumber < 0 || bitNumber > 7)
                 throw new InvalidOperationException("bit number must be between 0 and 7");
 
-            if(value != 0 && value != 1)
-                throw new InvalidOperationException("bit value must be 0 or 1");
-
-            if(value == 1) 
+            if(value) 
             {
-                return (byte)(target | (1 << bit));
+                return (byte)(target | (1 << bitNumber));
             }
             else 
             {
-                return (byte)(target & ~(1 << bit));
+                return (byte)(target & ~(1 << bitNumber));
             }
         }
     }

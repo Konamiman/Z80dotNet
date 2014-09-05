@@ -150,7 +150,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The carry (C) flag.
         /// </summary>
-        public int CF
+        public Bit CF
         {
             get
             {
@@ -165,7 +165,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The addition/substraction (N) flag.
         /// </summary>
-        public int NF
+        public Bit NF
         {
             get
             {
@@ -180,7 +180,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The parity/overflow (P/V) flag.
         /// </summary>
-        public int PF
+        public Bit PF
         {
             get
             {
@@ -195,7 +195,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The unused flag at bit 3 of F.
         /// </summary>
-        public int Flag3
+        public Bit Flag3
         {
             get
             {
@@ -210,7 +210,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The half carry (H) flag.
         /// </summary>
-        public int HF
+        public Bit HF
         {
             get
             {
@@ -225,7 +225,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The unused flag at bit 5 of F.
         /// </summary>
-        public int Flag5
+        public Bit Flag5
         {
             get
             {
@@ -240,7 +240,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The zero (Z) flag.
         /// </summary>
-        public int ZF
+        public Bit ZF
         {
             get
             {
@@ -255,7 +255,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The sign (S) flag.
         /// </summary>
-        public int SF
+        public Bit SF
         {
             get
             {

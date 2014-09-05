@@ -176,11 +176,5 @@ namespace Konamiman.Z80dotNet.Tests
         {
             Assert.Throws<InvalidOperationException>(() => ((byte)0).SetBit(8, 0));
         }
-
-        [Test]
-        public void SetBit_fails_for_bit_value_not_0_or_1()
-        {
-            Assert.Throws<InvalidOperationException>(() => ((byte)0).SetBit(0, 2));
-        }
     }
 }

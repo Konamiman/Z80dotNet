@@ -42,7 +42,7 @@
 
         public static implicit operator bool(Bit value)
         {
-            return value.Value != 0;
+            return value.Value == 1;
         }
 
         public static implicit operator Bit(bool value)

@@ -1,5 +1,4 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Ploeh.AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests
@@ -120,8 +119,6 @@ namespace Konamiman.Z80dotNet.Tests
             Assert.AreEqual(expected, Sut.HL);
         }
 
-        //SF ZF YF HF XF PF NF CF
-
         [Test]
         public void Gets_CF_correctly_from_F()
         {
@@ -142,12 +139,6 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.F = 0x00;
             Sut.CF = 1;
             Assert.AreEqual(0x01, Sut.F);
-        }
-
-        [Test]
-        public void Fails_to_set_CF_to_invalid_bit_value()
-        {
-            Assert.Throws<InvalidOperationException>(() => Sut.CF = 2);
         }
 
         [Test]
@@ -173,12 +164,6 @@ namespace Konamiman.Z80dotNet.Tests
         }
 
         [Test]
-        public void Fails_to_set_NF_to_invalid_bit_value()
-        {
-            Assert.Throws<InvalidOperationException>(() => Sut.NF = 2);
-        }
-
-        [Test]
         public void Gets_PF_correctly_from_F()
         {
             Sut.F = 0xFB;
@@ -198,12 +183,6 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.F = 0x00;
             Sut.PF = 1;
             Assert.AreEqual(0x04, Sut.F);
-        }
-
-        [Test]
-        public void Fails_to_set_PF_to_invalid_bit_value()
-        {
-            Assert.Throws<InvalidOperationException>(() => Sut.PF = 2);
         }
 
         [Test]
@@ -229,12 +208,6 @@ namespace Konamiman.Z80dotNet.Tests
         }
 
         [Test]
-        public void Fails_to_set_Flag3_to_invalid_bit_value()
-        {
-            Assert.Throws<InvalidOperationException>(() => Sut.Flag3 = 2);
-        }
-        
-        [Test]
         public void Gets_HF_correctly_from_F()
         {
             Sut.F = 0xEF;
@@ -254,12 +227,6 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.F = 0x00;
             Sut.HF = 1;
             Assert.AreEqual(0x10, Sut.F);
-        }
-
-        [Test]
-        public void Fails_to_set_HF_to_invalid_bit_value()
-        {
-            Assert.Throws<InvalidOperationException>(() => Sut.HF = 2);
         }
 
         [Test]
@@ -285,12 +252,6 @@ namespace Konamiman.Z80dotNet.Tests
         }
 
         [Test]
-        public void Fails_to_set_Flag5_to_invalid_bit_value()
-        {
-            Assert.Throws<InvalidOperationException>(() => Sut.Flag5 = 2);
-        }
-
-        [Test]
         public void Gets_ZF_correctly_from_F()
         {
             Sut.F = 0xBF;
@@ -310,12 +271,6 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.F = 0x00;
             Sut.ZF = 1;
             Assert.AreEqual(0x40, Sut.F);
-        }
-
-        [Test]
-        public void Fails_to_set_ZF_to_invalid_bit_value()
-        {
-            Assert.Throws<InvalidOperationException>(() => Sut.ZF = 2);
         }
 
         [Test]
@@ -339,12 +294,5 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.SF = 1;
             Assert.AreEqual(0x80, Sut.F);
         }
-
-        [Test]
-        public void Fails_to_set_SF_to_invalid_bit_value()
-        {
-            Assert.Throws<InvalidOperationException>(() => Sut.SF = 2);
-        }
-
     }
 }
