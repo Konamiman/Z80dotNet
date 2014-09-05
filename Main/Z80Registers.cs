@@ -1,4 +1,6 @@
-﻿namespace Konamiman.Z80dotNet
+﻿using System;
+
+namespace Konamiman.Z80dotNet
 {
     /// <summary>
     /// Represents a full set of Z80 registers.
@@ -40,17 +42,31 @@
         /// </summary>
         public short IR { get; set; }
 
+        private byte _IM;
         /// <summary>
         /// The current interrupt mode register. It has always the value 0, 1 or 2.
         /// </summary>
         /// <exception cref="System.InvalidOperationException">Attempt to set a value other than 0, 1 or 2</exception>
-        public byte IM { get; set; }    // 0, 1 or 2
+        public byte IM
+        {
+            get
+            {
+                return _IM;
+            }
+            set
+            {
+                if(value > 2)
+                    throw new InvalidOperationException("IM can be set to 0, 1 or 2 only");
+
+                _IM = value;
+            }
+        }
 
         /// <summary>
         /// The IFF1 flag. It has always the value 0 or 1.
         /// </summary>
         /// <exception cref="System.InvalidOperationException">Attempt to set a value other than 0 or 1</exception>
-        public int IFF1 { get; set; }  // 0 or 1
+        public int IFF1 { get; set; }
 
         /// <summary>
         /// The IFF2 flag. It has always the value 0 or 1.
