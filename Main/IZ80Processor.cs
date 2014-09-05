@@ -14,7 +14,9 @@ namespace Konamiman.Z80dotNet
     /// </para>
     /// The <see cref="IZ80Processor.MemoryAccess"/> and <see cref="IZ80Processor.InstructionExecution"/> events 
     /// provide full control of the memory and ports access and the instructions executions. During these events
-    /// you can examine and alter the memory contents and even stop the processor execution
+    /// you can examine and alter the memory contents and even stop the processor execution.
+    /// Extra control on the memory and registers can be achieved by using custom implementations of
+    /// <see cref="IMemory"/> and <see cref="IZ80Registers"/>.
     /// (see the <see cref="IZ80Processor.Stop"/> method).
     /// <para>
     /// An alternative way of using the class is to use the <see cref="IZ80Processor.ExecuteNextInstruction"/> method.

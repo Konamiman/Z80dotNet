@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Konamiman.Z80dotNet
+﻿namespace Konamiman.Z80dotNet
 {
     /// <summary>
     /// Represents a full set of Z80 registers.
