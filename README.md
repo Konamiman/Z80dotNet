@@ -13,6 +13,7 @@ The `Z80Processor` class (which does not exist yet, just its interface has been 
 How to use it? You simply:
 
 * Create an instance of the `Z80Processor` class and configure it (at the very least the memory contents).
+* Optionally, plug your own implementation of `IMemory` in the `Memory` property of the class (the default memory implementation is a plain array of bytes).
 * Subscribe to the `MemoryAccess` and `InstructionExecution` events.
 * Invoke the `Start` method.
 * Communicate with the processor by using the above mentioned events. When you want the `Start` method to return, you invoke the `Stop` method.
