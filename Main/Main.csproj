@@ -57,6 +57,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NumberUtils.cs" />
     <Compile Include="StopReason.cs" />
+    <Compile Include="Z80Processor.cs" />
     <Compile Include="Z80Registers.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

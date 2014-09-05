@@ -207,8 +207,17 @@ namespace Konamiman.Z80dotNet
         /// <param name="startAddress">First memory address that will be set</param>
         /// <param name="length">Length of the memory portion that will be set</param>
         /// <param name="mode">New memory mode</param>
-        /// <exception cref="System.InvalidOperationException"><c>startAddress</c> + <c>length</c> goes beyond 65535.</exception>
-        void SetMemoryAccessMode(ushort startAddress, ushort length, MemoryAccessMode mode);
+        /// <exception cref="System.ArgumentException"><c>startAddress</c> is less than 0, 
+        /// or <c>startAddress</c> + <c>length</c> goes beyond 65535.</exception>
+        void SetMemoryAccessMode(ushort startAddress, int length, MemoryAccessMode mode);
+
+        /// <summary>
+        /// Gets the access mode of a memory address.
+        /// </summary>
+        /// <param name="address">The address to check</param>
+        /// <returns>The current memory access mode for the address</returns>
+        /// <exception cref="System.ArgumentException"><c>address</c> is greater than 65536</exception>
+        MemoryAccessMode GetMemoryAccessMode(ushort address);
 
         /// <summary>
         /// Gets or sets the visible ports space for the processor.
@@ -218,11 +227,20 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// Sets the mode of a portion of the visible ports space.
         /// </summary>
-        /// <param name="startAddress">First port that will be set</param>
+        /// <param name="startPort">First port that will be set</param>
         /// <param name="length">Length of the mports space that will be set</param>
         /// <param name="mode">New memory mode</param>
-        /// <exception cref="System.InvalidOperationException"><c>startAddress</c> + <c>length</c> goes beyond 255.</exception>
-        void SetPortsSpaceMode(ushort startPort, ushort length, MemoryAccessMode mode);
+        /// <exception cref="System.ArgumentException"><c>startAddress</c> is less than 0, 
+        /// or <c>startAddress</c> + <c>length</c> goes beyond 255.</exception>
+        void SetPortsSpaceMode(byte startPort, int length, MemoryAccessMode mode);
+
+        /// <summary>
+        /// Gets the access mode of a port.
+        /// </summary>
+        /// <param name="portNumber">The port number to check</param>
+        /// <returns>The current memory access mode for the port</returns>
+        /// <exception cref="System.ArgumentException"><c>portNumber</c> is greater than 65536.</exception>
+        MemoryAccessMode GetPortAccessMode(byte portNumber);
 
         #endregion
 
@@ -268,9 +286,9 @@ namespace Konamiman.Z80dotNet
         bool AutoStopOnRetWithStackEmpty { get; set; }
 
         /// <summary>
-        /// Gets the 64K array that indicates how many wait states will be simulated when accessing each visible memory address.
+        /// Gets a 64K array that indicates how many wait states will be simulated when accessing each visible memory address.
         /// </summary>
-        byte[] MemoryWaitStates { get; set; }
+        byte[] MemoryWaitStates { get; }
 
         /// <summary>
         /// Sets the wait states that will be simulated when accessing of a portion of the visible memory.
@@ -283,12 +301,12 @@ namespace Konamiman.Z80dotNet
         /// returned by the <see cref="IZ80Processor.MemoryWaitStates"/> property.
         /// </remarks>
         /// <exception cref="System.InvalidOperationException"><c>startAddress</c> + <c>length</c> goes beyond 65535.</exception>
-        void SetMemoryWaitStates(ushort startAddress, ushort length, ushort waitStates);
+        void SetMemoryWaitStates(ushort startAddress, ushort length, byte waitStates);
 
         /// <summary>
-        /// Gets the 256 bytes array that indicates how many wait states will be simulated when accessing each port.
+        /// Gets a 256 bytes array that indicates how many wait states will be simulated when accessing each port.
         /// </summary>
-        ushort[] PortWaitStates { get; set; }
+        byte[] PortWaitStates { get; }
 
         /// <summary>
         /// Sets the wait states that will be simulated when accessing a given range of ports.
@@ -301,7 +319,7 @@ namespace Konamiman.Z80dotNet
         /// returned by the <see cref="IZ80Processor.PortWaitStates"/> property.
         /// </remarks>
         /// <exception cref="System.InvalidOperationException"><c>startAddress</c> + <c>length</c> goes beyond 255.</exception>
-        void SetPortWaitStates(ushort startPort, ushort length, ushort waitStates);
+        void SetPortWaitStates(ushort startPort, ushort length, byte waitStates);
 
         #endregion
 

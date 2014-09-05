@@ -6,6 +6,11 @@
     public interface IMemory
     {
         /// <summary>
+        /// Returns the size of the memory.
+        /// </summary>
+        int Size { get; }
+
+        /// <summary>
         /// Reads or writes one single memory address.
         /// </summary>
         /// <param name="address">Address to read or write</param>

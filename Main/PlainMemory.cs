@@ -10,16 +10,17 @@ namespace Konamiman.Z80dotNet
     public class PlainMemory : IMemory
     {
         private readonly byte[] memory;
-        private readonly int memorySize;
-
+        
         public PlainMemory(int size)
         {
             if(size < 1)
                 throw new InvalidOperationException("Memory size must be greater than zero");
 
             memory = new byte[size];
-            memorySize = size;
+            Size = size;
         }
+
+        public int Size { get; private set; }
 
         public byte this[int address]
         {
@@ -47,7 +48,7 @@ namespace Konamiman.Z80dotNet
             if(startIndex < 0)
                 throw new IndexOutOfRangeException("startIndex cannot be negative");
 
-            if(startAddress + length > memorySize)
+            if(startAddress + length > Size)
                 throw new IndexOutOfRangeException("startAddress + length cannot go beyond the memory size");
 
             Array.Copy(
