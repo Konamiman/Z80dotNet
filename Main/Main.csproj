@@ -52,6 +52,7 @@
     <Compile Include="ProcessorEventArgs.cs" />
     <Compile Include="ProcessorState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShortExtensions.cs" />
     <Compile Include="StopReason.cs" />
     <Compile Include="Z80Registers.cs" />
   </ItemGroup>
