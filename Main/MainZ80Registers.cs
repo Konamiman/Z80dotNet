@@ -1,3 +1,5 @@
+using System;
+
 namespace Konamiman.Z80dotNet
 {
     /// <summary>
@@ -142,6 +144,126 @@ namespace Konamiman.Z80dotNet
             set
             {
                 HL = HL.SetLowByte(value);
+            }
+        }
+
+        /// <summary>
+        /// The carry (C) flag.
+        /// </summary>
+        public int CF
+        {
+            get
+            {
+                return F.GetBit(0);
+            }
+            set
+            {
+                F = F.SetBit(0, value);
+            }
+        }
+
+        /// <summary>
+        /// The addition/substraction (N) flag.
+        /// </summary>
+        public int NF
+        {
+            get
+            {
+                return F.GetBit(1);
+            }
+            set
+            {
+                F = F.SetBit(1, value);
+            }
+        }
+
+        /// <summary>
+        /// The parity/overflow (P/V) flag.
+        /// </summary>
+        public int PF
+        {
+            get
+            {
+                return F.GetBit(2);
+            }
+            set
+            {
+                F = F.SetBit(2, value);
+            }
+        }
+
+        /// <summary>
+        /// The unused flag at bit 3 of F.
+        /// </summary>
+        public int Flag3
+        {
+            get
+            {
+                return F.GetBit(3);
+            }
+            set
+            {
+                F = F.SetBit(3, value);
+            }
+        }
+
+        /// <summary>
+        /// The half carry (H) flag.
+        /// </summary>
+        public int HF
+        {
+            get
+            {
+                return F.GetBit(4);
+            }
+            set
+            {
+                F = F.SetBit(4, value);
+            }
+        }
+
+        /// <summary>
+        /// The unused flag at bit 5 of F.
+        /// </summary>
+        public int Flag5
+        {
+            get
+            {
+                return F.GetBit(5);
+            }
+            set
+            {
+                F = F.SetBit(5, value);
+            }
+        }
+
+        /// <summary>
+        /// The zero (Z) flag.
+        /// </summary>
+        public int ZF
+        {
+            get
+            {
+                return F.GetBit(6);
+            }
+            set
+            {
+                F = F.SetBit(6, value);
+            }
+        }
+
+        /// <summary>
+        /// The sign (S) flag.
+        /// </summary>
+        public int SF
+        {
+            get
+            {
+                return F.GetBit(7);
+            }
+            set
+            {
+                F = F.SetBit(7, value);
             }
         }
     }

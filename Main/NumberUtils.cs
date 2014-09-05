@@ -1,4 +1,6 @@
-﻿namespace Konamiman.Z80dotNet
+﻿using System;
+
+namespace Konamiman.Z80dotNet
 {
     public static class NumberUtils
     {
@@ -49,6 +51,32 @@
         public static short CreateShort(byte high, byte low)
         {
             return (short)((high << 8) | low);
+        }
+
+        public static int GetBit(this byte target, int bit)
+        {
+            if(bit < 0 || bit > 7)
+                throw new InvalidOperationException("bit number must be between 0 and 7");
+
+            return (target & (1 << bit)) == 0 ? 0 : 1;
+        }
+
+        public static byte SetBit(this byte target, int bit, int value)
+        {
+            if(bit < 0 || bit > 7)
+                throw new InvalidOperationException("bit number must be between 0 and 7");
+
+            if(value != 0 && value != 1)
+                throw new InvalidOperationException("bit value must be 0 or 1");
+
+            if(value == 1) 
+            {
+                return (byte)(target | (1 << bit));
+            }
+            else 
+            {
+                return (byte)(target & ~(1 << bit));
+            }
         }
     }
 }

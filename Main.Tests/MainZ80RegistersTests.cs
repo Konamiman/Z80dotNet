@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using Ploeh.AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests
@@ -118,5 +119,232 @@ namespace Konamiman.Z80dotNet.Tests
 
             Assert.AreEqual(expected, Sut.HL);
         }
+
+        //SF ZF YF HF XF PF NF CF
+
+        [Test]
+        public void Gets_CF_correctly_from_F()
+        {
+            Sut.F = 0xFE;
+            Assert.AreEqual(0, Sut.CF);
+
+            Sut.F = 0x01;
+            Assert.AreEqual(1, Sut.CF);
+        }
+
+        [Test]
+        public void Sets_F_correctly_from_CF()
+        {
+            Sut.F = 0xFF;
+            Sut.CF = 0;
+            Assert.AreEqual(0xFE, Sut.F);
+
+            Sut.F = 0x00;
+            Sut.CF = 1;
+            Assert.AreEqual(0x01, Sut.F);
+        }
+
+        [Test]
+        public void Fails_to_set_CF_to_invalid_bit_value()
+        {
+            Assert.Throws<InvalidOperationException>(() => Sut.CF = 2);
+        }
+
+        [Test]
+        public void Gets_NF_correctly_from_F()
+        {
+            Sut.F = 0xFD;
+            Assert.AreEqual(0, Sut.NF);
+
+            Sut.F = 0x02;
+            Assert.AreEqual(1, Sut.NF);
+        }
+
+        [Test]
+        public void Sets_F_correctly_from_NF()
+        {
+            Sut.F = 0xFF;
+            Sut.NF = 0;
+            Assert.AreEqual(0xFD, Sut.F);
+
+            Sut.F = 0x00;
+            Sut.NF = 1;
+            Assert.AreEqual(0x02, Sut.F);
+        }
+
+        [Test]
+        public void Fails_to_set_NF_to_invalid_bit_value()
+        {
+            Assert.Throws<InvalidOperationException>(() => Sut.NF = 2);
+        }
+
+        [Test]
+        public void Gets_PF_correctly_from_F()
+        {
+            Sut.F = 0xFB;
+            Assert.AreEqual(0, Sut.PF);
+
+            Sut.F = 0x04;
+            Assert.AreEqual(1, Sut.PF);
+        }
+
+        [Test]
+        public void Sets_F_correctly_from_PF()
+        {
+            Sut.F = 0xFF;
+            Sut.PF = 0;
+            Assert.AreEqual(0xFB, Sut.F);
+
+            Sut.F = 0x00;
+            Sut.PF = 1;
+            Assert.AreEqual(0x04, Sut.F);
+        }
+
+        [Test]
+        public void Fails_to_set_PF_to_invalid_bit_value()
+        {
+            Assert.Throws<InvalidOperationException>(() => Sut.PF = 2);
+        }
+
+        [Test]
+        public void Gets_Flag3_correctly_from_F()
+        {
+            Sut.F = 0xF7;
+            Assert.AreEqual(0, Sut.Flag3);
+
+            Sut.F = 0x08;
+            Assert.AreEqual(1, Sut.Flag3);
+        }
+
+        [Test]
+        public void Sets_F_correctly_from_Flag3()
+        {
+            Sut.F = 0xFF;
+            Sut.Flag3 = 0;
+            Assert.AreEqual(0xF7, Sut.F);
+
+            Sut.F = 0x00;
+            Sut.Flag3 = 1;
+            Assert.AreEqual(0x08, Sut.F);
+        }
+
+        [Test]
+        public void Fails_to_set_Flag3_to_invalid_bit_value()
+        {
+            Assert.Throws<InvalidOperationException>(() => Sut.Flag3 = 2);
+        }
+        
+        [Test]
+        public void Gets_HF_correctly_from_F()
+        {
+            Sut.F = 0xEF;
+            Assert.AreEqual(0, Sut.HF);
+
+            Sut.F = 0x10;
+            Assert.AreEqual(1, Sut.HF);
+        }
+
+        [Test]
+        public void Sets_F_correctly_from_HF()
+        {
+            Sut.F = 0xFF;
+            Sut.HF = 0;
+            Assert.AreEqual(0xEF, Sut.F);
+
+            Sut.F = 0x00;
+            Sut.HF = 1;
+            Assert.AreEqual(0x10, Sut.F);
+        }
+
+        [Test]
+        public void Fails_to_set_HF_to_invalid_bit_value()
+        {
+            Assert.Throws<InvalidOperationException>(() => Sut.HF = 2);
+        }
+
+        [Test]
+        public void Gets_Flag5_correctly_from_F()
+        {
+            Sut.F = 0xDF;
+            Assert.AreEqual(0, Sut.Flag5);
+
+            Sut.F = 0x20;
+            Assert.AreEqual(1, Sut.Flag5);
+        }
+
+        [Test]
+        public void Sets_F_correctly_from_Flag5()
+        {
+            Sut.F = 0xFF;
+            Sut.Flag5 = 0;
+            Assert.AreEqual(0xDF, Sut.F);
+
+            Sut.F = 0x00;
+            Sut.Flag5 = 1;
+            Assert.AreEqual(0x20, Sut.F);
+        }
+
+        [Test]
+        public void Fails_to_set_Flag5_to_invalid_bit_value()
+        {
+            Assert.Throws<InvalidOperationException>(() => Sut.Flag5 = 2);
+        }
+
+        [Test]
+        public void Gets_ZF_correctly_from_F()
+        {
+            Sut.F = 0xBF;
+            Assert.AreEqual(0, Sut.ZF);
+
+            Sut.F = 0x40;
+            Assert.AreEqual(1, Sut.ZF);
+        }
+
+        [Test]
+        public void Sets_F_correctly_from_ZF()
+        {
+            Sut.F = 0xFF;
+            Sut.ZF = 0;
+            Assert.AreEqual(0xBF, Sut.F);
+
+            Sut.F = 0x00;
+            Sut.ZF = 1;
+            Assert.AreEqual(0x40, Sut.F);
+        }
+
+        [Test]
+        public void Fails_to_set_ZF_to_invalid_bit_value()
+        {
+            Assert.Throws<InvalidOperationException>(() => Sut.ZF = 2);
+        }
+
+        [Test]
+        public void Gets_SF_correctly_from_F()
+        {
+            Sut.F = 0x7F;
+            Assert.AreEqual(0, Sut.SF);
+
+            Sut.F = 0x80;
+            Assert.AreEqual(1, Sut.SF);
+        }
+
+        [Test]
+        public void Sets_F_correctly_from_SF()
+        {
+            Sut.F = 0xFF;
+            Sut.SF = 0;
+            Assert.AreEqual(0x7F, Sut.F);
+
+            Sut.F = 0x00;
+            Sut.SF = 1;
+            Assert.AreEqual(0x80, Sut.F);
+        }
+
+        [Test]
+        public void Fails_to_set_SF_to_invalid_bit_value()
+        {
+            Assert.Throws<InvalidOperationException>(() => Sut.SF = 2);
+        }
+
     }
 }
