@@ -13,6 +13,7 @@ syntax: glob
 Z80dotNet.v12.suo
 *.user
 *.sln.docstates
+*.cache
 
 ## Build results
 
