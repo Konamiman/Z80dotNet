@@ -59,20 +59,6 @@ namespace Konamiman.Z80dotNet
         void Start(object globalState = null);
 
         /// <summary>
-        /// Stops the processor execution, causing the <see cref="IZ80Processor.Start"/> method to return.
-        /// This method can only be invoked from an event handler.
-        /// </summary>
-        /// <remarks>
-        /// If the method is executed from a <see cref="IZ80Processor.InstructionExecution"/> event, the processor
-        /// execution will stop immediately. Otherwise it will stop after the current instruction finishes executing.
-        /// </remarks>
-        /// <param name="isPause">If true, the <see cref="IZ80Processor.StopReason"/> property of the
-        /// processor classs will return <see cref="Konamiman.Z80dotNet.StopReason.PauseInvoked"/> after the method returns.
-        /// Otherwise, it will return <see cref="Konamiman.Z80dotNet.StopReason.StopInvoked"/>.</param>
-        /// <exception cref="InvalidOperationException">The method is not invoked from within an event handler.</exception>
-        void Stop(bool isPause = false);
-
-        /// <summary>
         /// Sets the processor in running state without first doing a reset, thus preserving the state of all the registers.
         /// This method cannot be invoked from an event handler.
         /// </summary>
@@ -350,7 +336,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// Instruction execution event. It is triggered before and after an instruction is executed.
         /// </summary>
-        event EventHandler<InstructionExecutionEventArgs> InstructionExecution;
+        event EventHandler<BeforeInstructionExecutionEventArgs> InstructionExecution;
 
         #endregion
     }

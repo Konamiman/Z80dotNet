@@ -40,11 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AfterInstructionExecutionEventArgs.cs" />
     <Compile Include="Bit.cs" />
+    <Compile Include="IExecutionStopper.cs" />
     <Compile Include="IMainZ80Registers.cs" />
     <Compile Include="IMemory.cs" />
-    <Compile Include="InstructionExecutionEventArgs.cs" />
-    <Compile Include="InstructionExecutionEventType.cs" />
+    <Compile Include="BeforeInstructionExecutionEventArgs.cs" />
     <Compile Include="IZ80Processor.cs" />
     <Compile Include="IZ80Registers.cs" />
     <Compile Include="MainZ80Registers.cs" />

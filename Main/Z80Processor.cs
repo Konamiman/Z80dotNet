@@ -38,11 +38,6 @@ namespace Konamiman.Z80dotNet
             throw new NotImplementedException();
         }
 
-        public void Stop(bool isPause = false)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Continue()
         {
             throw new NotImplementedException();
@@ -197,6 +192,6 @@ namespace Konamiman.Z80dotNet
 
         public event EventHandler<MemoryAccessEventArgs> MemoryAccess;
 
-        public event EventHandler<InstructionExecutionEventArgs> InstructionExecution;
+        public event EventHandler<BeforeInstructionExecutionEventArgs> InstructionExecution;
     }
 }
