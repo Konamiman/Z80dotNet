@@ -28,7 +28,7 @@ Well, that's the basic idea, but there's nothing implemented yet. Anyway you can
 
 For sure there are plenty of conceptual mistakes in what I have designed so far... if so, please send me a slap in the face! (use the link below to get my contact details)
 
-## Hello, world! (theorical) ##
+## Hello, world! (not runnable yet) ##
 
     var z80 = new Z80Processor();
     z80.AutoStopOnRetWithStackEmpty = true;
