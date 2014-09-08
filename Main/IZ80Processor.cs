@@ -34,7 +34,8 @@ namespace Konamiman.Z80dotNet
     /// <item><description><see cref="IZ80Processor.PortsSpace"/> = an instance of <see cref="PlainMemory"/></description></item>
     /// <item><description><see cref="IZ80Processor.Registers"/> = an instance of <see cref="Z80Registers"/></description></item>
     /// <item><description>Memory and ports access modes = all <see cref="MemoryAccessMode.ReadAndWrite"/></description></item>
-    /// <item><description><see cref="IZ80Processor.InstructionExecutor"/> = an instance of <see cref="IZ80InstructionExecutor"/></description></item>
+    /// <item><description><see cref="IZ80Processor.InstructionExecutor"/> = an instance of <see cref="Z80InstructionExecutor"/></description></item>
+    /// <item><description><see cref="IZ80Processor.PeriodWaiter"/> = an instance of <see cref="PeriodWaiter"/></description></item>
     /// </list>
     /// </para>
     /// </remarks>
@@ -227,11 +228,6 @@ namespace Konamiman.Z80dotNet
         /// <exception cref="System.ArgumentException"><c>portNumber</c> is greater than 65536.</exception>
         MemoryAccessMode GetPortAccessMode(byte portNumber);
 
-        /// <summary>
-        /// Gets or set the instruction executor.
-        /// </summary>
-        IZ80InstructionExecutor InstructionExecutor { get; set; }
-
         #endregion
 
         #region Configuration
@@ -327,6 +323,16 @@ namespace Konamiman.Z80dotNet
         /// <param name="portNumber">Port number to het the wait states for</param>
         /// <returns>Current wait states for the specified port</returns>
         byte GetPortWaitStates(byte portNumber);
+
+        /// <summary>
+        /// Gets or set the instruction executor.
+        /// </summary>
+        IZ80InstructionExecutor InstructionExecutor { get; set; }
+
+        /// <summary>
+        /// Gets or sets the period waiter.
+        /// </summary>
+        IPeriodWaiter PeriodWaiter { get; set; }
 
         #endregion
 

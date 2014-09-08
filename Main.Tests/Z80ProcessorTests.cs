@@ -48,6 +48,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Assert.IsInstanceOf<Z80InstructionExecutor>(Sut.InstructionExecutor);
             Assert.AreSame(Sut, Sut.InstructionExecutor.ProcessorAgent);
+            Assert.IsInstanceOf<PeriodWaiter>(Sut.PeriodWaiter);
         }
     }
 }

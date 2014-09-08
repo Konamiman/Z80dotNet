@@ -35,6 +35,8 @@ namespace Konamiman.Z80dotNet
             {
                 ProcessorAgent = this
             };
+
+            PeriodWaiter = new PeriodWaiter();
         }
 
         public void Start(object globalState = null)
@@ -159,8 +161,6 @@ namespace Konamiman.Z80dotNet
             return MemoryAccessMode.ReadAndWrite;
         }
 
-        public IZ80InstructionExecutor InstructionExecutor { get; set; }
-
         public decimal ClockFrequencyInMHz { get; set; }
 
         public decimal ClockSpeedFactor { get; set; }
@@ -195,6 +195,10 @@ namespace Konamiman.Z80dotNet
         {
             return 0;
         }
+
+        public IZ80InstructionExecutor InstructionExecutor { get; set; }
+
+        public IPeriodWaiter PeriodWaiter { get; set; }
 
         public event EventHandler<MemoryAccessEventArgs> MemoryAccess;
 
