@@ -61,7 +61,7 @@ The following chain of operations is followed for instructions execution after t
 8. The `AfterInstructionExecution` event is triggered. The code listening the event has an opportunity to request execution termination by invoking `AfterInstructionExecutionEventArgs.ExecutionStopper.Stop`.
 9. `PeriodWaiter.WaitToEndOfPeriod` passing the value returned by `InstructionExecutor.Execute` plus any additional extra wait states as the T states count.
 10. `TStatesElapsedSinceStart` and `TStatesElapsedSinceReset` are increased by the value returned by `InstructionExecutor.Execute`.
-11. If `Stop` was invoked in step 7 or in step 8; or if the instruction was RET and `AutoStopOnRetWithStackEmpty` is true; or if the instruction was HALT, interrupts are disabled and `AutoStopOnDiPlusHalt` is true, the `Stop` method returns.
+11. If `Stop` was invoked in step 7 or in step 8; or if the instruction was RET and `AutoStopOnRetWithStackEmpty` is true; or if the instruction was HALT, interrupts are disabled and `AutoStopOnDiPlusHalt` is true; the `Start` method returns.
 12. Start again in step 1.
 
 ## Memory access flow ##
