@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7EC18F5A-DEDF-49FD-BFEF-EF20FA41189F}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
+		Z80dotNet.shfbproj = Z80dotNet.shfbproj
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Main.Tests", "Main.Tests\Main.Tests.csproj", "{B2F2FEA1-C72C-46E9-8AE4-4DEE9A85E234}"
