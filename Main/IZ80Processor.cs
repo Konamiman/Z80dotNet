@@ -251,7 +251,7 @@ namespace Konamiman.Z80dotNet
         /// This value cannot be changed while the processor is running or in single instruction execution mode.
         /// </summary>
         /// <exception cref="System.ArgumentException">The product of <see cref="IZ80Processor.ClockSpeedFactor"/>
-        /// by the new value gives a number that is smaller than 0.001 or greater than 1000.</exception>
+        /// by the new value gives a number that is smaller than 0.001 or greater than 100.</exception>
         /// <exception cref="System.InvalidOperationException">The procesor is running or in single instruction execution mode.</exception>
         decimal ClockFrequencyInMHz { get; set; }
 
@@ -260,7 +260,7 @@ namespace Konamiman.Z80dotNet
         /// clock frequency simulated by the processor.
         /// </summary>
         /// <exception cref="System.ArgumentException">The product of <see cref="IZ80Processor.ClockFrequencyInMHz"/>
-        /// by the new value gives a number that is smaller than 0.001 or greater than 1000.</exception>
+        /// by the new value gives a number that is smaller than 0.001 or greater than 100.</exception>
         decimal ClockSpeedFactor { get; set; }
 
         /// <summary>
@@ -286,40 +286,57 @@ namespace Konamiman.Z80dotNet
         bool AutoStopOnRetWithStackEmpty { get; set; }
 
         /// <summary>
-        /// Gets a 64K array that indicates how many wait states will be simulated when accessing each visible memory address.
+        /// Sets the wait states that will be simulated when accessing the visible memory
+        /// during the M1 cycle for a given address range.
         /// </summary>
-        byte[] MemoryWaitStates { get; }
-
-        /// <summary>
-        /// Sets the wait states that will be simulated when accessing of a portion of the visible memory.
-        /// </summary>
-        /// <param name="startAddress">First memory address that will be set</param>
-        /// <param name="length">Length of the memory portion that will be set</param>
+        /// <param name="startAddress">First memory address that will be configured</param>
+        /// <param name="length">Length of the memory portion that will be configured</param>
         /// <param name="waitStates">New wait states</param>
-        /// <remarks>
-        /// This is just a convenience method. The wait states can be changed too by just accessing the array
-        /// returned by the <see cref="IZ80Processor.MemoryWaitStates"/> property.
-        /// </remarks>
         /// <exception cref="System.InvalidOperationException"><c>startAddress</c> + <c>length</c> goes beyond 65535.</exception>
-        void SetMemoryWaitStates(ushort startAddress, ushort length, byte waitStates);
+        void SetMemoryWaitStatesForM1(ushort startAddress, int length, byte waitStates);
 
         /// <summary>
-        /// Gets a 256 bytes array that indicates how many wait states will be simulated when accessing each port.
+        /// Obtains the wait states that will be simulated when accessing the visible memory
+        /// during the M1 cycle for a given address. 
         /// </summary>
-        byte[] PortWaitStates { get; }
+        /// <param name="address">Address to het the wait states for</param>
+        /// <returns>Current wait states during M1 for the specified address</returns>
+        byte GetMemoryWaitStatesForM1(ushort address);
 
         /// <summary>
-        /// Sets the wait states that will be simulated when accessing a given range of ports.
+        /// Sets the wait states that will be simulated when accessing the visible memory
+        /// outside the M1 cycle for a given address range.
         /// </summary>
-        /// <param name="startPort">First port that will be set</param>
-        /// <param name="length">Length of the port range that will be set</param>
+        /// <param name="startAddress">First memory address that will be configured</param>
+        /// <param name="length">Length of the memory portion that will be configured</param>
         /// <param name="waitStates">New wait states</param>
-        /// <remarks>
-        /// This is just a convenience method. The wait states can be changed too by just accessing the array
-        /// returned by the <see cref="IZ80Processor.PortWaitStates"/> property.
-        /// </remarks>
+        /// <exception cref="System.InvalidOperationException"><c>startAddress</c> + <c>length</c> goes beyond 65535.</exception>
+        void SetMemoryWaitStatesForNonM1(ushort startAddress, int length, byte waitStates);
+
+        /// <summary>
+        /// Obtains the wait states that will be simulated when accessing the visible memory
+        /// outside the M1 cycle for a given address. 
+        /// </summary>
+        /// <param name="address">Address to het the wait states for</param>
+        /// <returns>Current wait states outside M1 for the specified address</returns>
+        byte GetMemoryWaitStatesForNonM1(ushort address);
+
+        /// <summary>
+        /// Sets the wait states that will be simulated when accessing the I/O ports.
+        /// </summary>
+        /// <param name="startPort">First port that will be configured</param>
+        /// <param name="length">Length of the port range that will be configured</param>
+        /// <param name="waitStates">New wait states</param>
         /// <exception cref="System.InvalidOperationException"><c>startAddress</c> + <c>length</c> goes beyond 255.</exception>
-        void SetPortWaitStates(ushort startPort, ushort length, byte waitStates);
+        void SetPortWaitStates(ushort startPort, int length, byte waitStates);
+
+        /// <summary>
+        /// Obtains the wait states that will be simulated when accessing the I/O ports
+        /// for a given port. 
+        /// </summary>
+        /// <param name="address">Port number to het the wait states for</param>
+        /// <returns>Current wait states for the specified port</returns>
+        byte GetPortWaitStates(byte portNumber);
 
         #endregion
 

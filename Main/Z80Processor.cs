@@ -16,8 +16,9 @@ namespace Konamiman.Z80dotNet
             AutoStopOnDiPlusHalt = false;
             AutoStopOnRetWithStackEmpty = false;
 
-            MemoryWaitStates = Enumerable.Repeat<byte>(0, MemorySpaceSize).ToArray();
-            PortWaitStates = Enumerable.Repeat<byte>(0, PortSpaceSize).ToArray();
+            SetMemoryWaitStatesForM1(0, MemorySpaceSize, 0);
+            SetMemoryWaitStatesForNonM1(0, MemorySpaceSize, 0);
+            SetPortWaitStates(0, MemorySpaceSize, 0);
 
             Memory = new PlainMemory(MemorySpaceSize);
             PortsSpace = new PlainMemory(PortSpaceSize);
@@ -167,18 +168,31 @@ namespace Konamiman.Z80dotNet
 
         public bool AutoStopOnRetWithStackEmpty { get; set; }
 
-        public byte[] MemoryWaitStates { get; private set; }
-
-        public void SetMemoryWaitStates(ushort startAddress, ushort length, byte waitStates)
+        public void SetMemoryWaitStatesForM1(ushort startAddress, int length, byte waitStates)
         {
-            throw new NotImplementedException();
         }
 
-        public byte[] PortWaitStates { get; private set; }
-
-        public void SetPortWaitStates(ushort startPort, ushort length, byte waitStates)
+        public byte GetMemoryWaitStatesForM1(ushort address)
         {
-            throw new NotImplementedException();
+            return 0;
+        }
+
+        public void SetMemoryWaitStatesForNonM1(ushort startAddress, int length, byte waitStates)
+        {
+        }
+
+        public byte GetMemoryWaitStatesForNonM1(ushort address)
+        {
+            return 0;
+        }
+
+        public void SetPortWaitStates(ushort startPort, int length, byte waitStates)
+        {
+        }
+
+        public byte GetPortWaitStates(byte portNumber)
+        {
+            return 0;
         }
 
         public event EventHandler<MemoryAccessEventArgs> MemoryAccess;

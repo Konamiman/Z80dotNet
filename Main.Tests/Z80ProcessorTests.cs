@@ -31,18 +31,20 @@ namespace Konamiman.Z80dotNet.Tests
             Assert.IsFalse(Sut.AutoStopOnDiPlusHalt);
             Assert.IsFalse(Sut.AutoStopOnRetWithStackEmpty);
 
-            Assert.AreEqual(Enumerable.Repeat<byte>(0, 65536).ToArray(), Sut.MemoryWaitStates);
-            Assert.AreEqual(Enumerable.Repeat<byte>(0, 256).ToArray(), Sut.PortWaitStates);
-
             Assert.IsInstanceOf<PlainMemory>(Sut.Memory);
             Assert.AreEqual(65536, Sut.Memory.Size);
             Assert.IsInstanceOf<PlainMemory>(Sut.PortsSpace);
             Assert.AreEqual(256, Sut.PortsSpace.Size);
 
-            for(int i = 0; i < 65536; i++)
+            for(int i = 0; i < 65536; i++) {
                 Assert.AreEqual(MemoryAccessMode.ReadAndWrite, Sut.GetMemoryAccessMode((ushort)i));
-            for(int i = 0; i < 256; i++)
-                Assert.AreEqual(MemoryAccessMode.ReadAndWrite, Sut.GetPortAccessMode((byte)i));
+                Assert.AreEqual(0, Sut.GetMemoryWaitStatesForM1((ushort)i));
+                Assert.AreEqual(0, Sut.GetMemoryWaitStatesForNonM1((ushort)i));
+            }       
+            for(int i = 0; i < 256; i++) {
+                Assert.AreEqual(MemoryAccessMode.ReadAndWrite, Sut.GetPortAccessMode((byte) i));
+                Assert.AreEqual(0, Sut.GetPortWaitStates((byte) i));
+            }
 
             Assert.IsInstanceOf<Z80Registers>(Sut.Registers);
             Assert.IsInstanceOf<MainZ80Registers>(Sut.Registers.Main);
