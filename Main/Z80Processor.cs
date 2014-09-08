@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Linq;
 
 namespace Konamiman.Z80dotNet
 {
-    public class Z80Processor : IZ80Processor
+    public class Z80Processor : IZ80Processor, IZ80ProcessorAgent
     {
         private const int MemorySpaceSize = 65536;
         private const int PortSpaceSize = 256;
@@ -30,6 +29,11 @@ namespace Konamiman.Z80dotNet
             {
                 Main = new MainZ80Registers(),
                 Alternate = new MainZ80Registers()
+            };
+
+            InstructionExecutor = new Z80InstructionExecutor()
+            {
+                ProcessorAgent = this
             };
         }
 
@@ -119,7 +123,7 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        public byte InterruptModeM
+        public byte InterruptMode
         {
             get
             {
@@ -154,6 +158,8 @@ namespace Konamiman.Z80dotNet
         {
             return MemoryAccessMode.ReadAndWrite;
         }
+
+        public IZ80InstructionExecutor InstructionExecutor { get; set; }
 
         public decimal ClockFrequencyInMHz { get; set; }
 
@@ -192,6 +198,47 @@ namespace Konamiman.Z80dotNet
 
         public event EventHandler<MemoryAccessEventArgs> MemoryAccess;
 
-        public event EventHandler<BeforeInstructionExecutionEventArgs> InstructionExecution;
+        public event EventHandler<BeforeInstructionExecutionEventArgs> BeforeInstructionExecution;
+
+        public event EventHandler<AfterInstructionExecutionEventArgs> AfterInstructionExecution;
+
+        #region Members of IZ80ProcessorAgent
+
+        public byte FetchNextOpcode()
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte ReadFromMemory(ushort address)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WriteToMemory(ushort address, byte value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte ReadFromPort(byte portNumber)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WriteToPort(byte portNumber, byte value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetInterruptMode(int interruptMode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Stop(bool isPause = false)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

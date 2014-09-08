@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace Konamiman.Z80dotNet.Tests
 {
@@ -49,6 +45,9 @@ namespace Konamiman.Z80dotNet.Tests
             Assert.IsInstanceOf<Z80Registers>(Sut.Registers);
             Assert.IsInstanceOf<MainZ80Registers>(Sut.Registers.Main);
             Assert.IsInstanceOf<MainZ80Registers>(Sut.Registers.Alternate);
+
+            Assert.IsInstanceOf<Z80InstructionExecutor>(Sut.InstructionExecutor);
+            Assert.AreSame(Sut, Sut.InstructionExecutor.ProcessorAgent);
         }
     }
 }

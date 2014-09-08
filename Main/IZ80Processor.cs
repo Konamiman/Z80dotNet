@@ -17,7 +17,6 @@ namespace Konamiman.Z80dotNet
     /// you can examine and alter the memory contents and even stop the processor execution.
     /// Extra control on the memory and registers can be achieved by using custom implementations of
     /// <see cref="IMemory"/> and <see cref="IZ80Registers"/>.
-    /// (see the <see cref="IZ80Processor.Stop"/> method).
     /// <para>
     /// An alternative way of using the class is to use the <see cref="IZ80Processor.ExecuteNextInstruction"/> method.
     /// This method will simply execute the next instruction (as pointed by the PC register, see <see cref="IZ80Processor.Registers"/>)
@@ -30,12 +29,12 @@ namespace Konamiman.Z80dotNet
     /// <item><description><see cref="IZ80Processor.ClockSpeedFactor"/> = 1</description></item>
     /// <item><description><see cref="IZ80Processor.AutoStopOnDiPlusHalt"/> = false</description></item>
     /// <item><description><see cref="IZ80Processor.AutoStopOnRetWithStackEmpty"/> = false</description></item>
-    /// <item><description><see cref="IZ80Processor.MemoryWaitStates"/> = all zeros</description></item>
-    /// <item><description><see cref="IZ80Processor.PortWaitStates"/> = all zeros</description></item>
+    /// <item><description>Memory and ports wait states: all zeros</description></item>
     /// <item><description><see cref="IZ80Processor.Memory"/> = an instance of <see cref="PlainMemory"/></description></item>
     /// <item><description><see cref="IZ80Processor.PortsSpace"/> = an instance of <see cref="PlainMemory"/></description></item>
     /// <item><description><see cref="IZ80Processor.Registers"/> = an instance of <see cref="Z80Registers"/></description></item>
     /// <item><description>Memory and ports access modes = all <see cref="MemoryAccessMode.ReadAndWrite"/></description></item>
+    /// <item><description><see cref="IZ80Processor.InstructionExecutor"/> = an instance of <see cref="IZ80InstructionExecutor"/></description></item>
     /// </list>
     /// </para>
     /// </remarks>
@@ -171,7 +170,7 @@ namespace Konamiman.Z80dotNet
         /// The current interrupt mode. It has always the value 0, 1 or 2.
         /// </summary>
         /// <exception cref="System.InvalidOperationException">Attempt to set a value other than 0, 1 or 2</exception>
-        byte InterruptModeM { get; set; }
+        byte InterruptMode { get; set; }
 
         #endregion
 
@@ -227,6 +226,11 @@ namespace Konamiman.Z80dotNet
         /// <returns>The current memory access mode for the port</returns>
         /// <exception cref="System.ArgumentException"><c>portNumber</c> is greater than 65536.</exception>
         MemoryAccessMode GetPortAccessMode(byte portNumber);
+
+        /// <summary>
+        /// Gets or set the instruction executor.
+        /// </summary>
+        IZ80InstructionExecutor InstructionExecutor { get; set; }
 
         #endregion
 
@@ -320,7 +324,7 @@ namespace Konamiman.Z80dotNet
         /// Obtains the wait states that will be simulated when accessing the I/O ports
         /// for a given port. 
         /// </summary>
-        /// <param name="address">Port number to het the wait states for</param>
+        /// <param name="portNumber">Port number to het the wait states for</param>
         /// <returns>Current wait states for the specified port</returns>
         byte GetPortWaitStates(byte portNumber);
 
@@ -334,9 +338,14 @@ namespace Konamiman.Z80dotNet
         event EventHandler<MemoryAccessEventArgs> MemoryAccess;
 
         /// <summary>
-        /// Instruction execution event. It is triggered before and after an instruction is executed.
+        /// Pre-instruction execution event. It is triggered before an instruction is executed.
         /// </summary>
-        event EventHandler<BeforeInstructionExecutionEventArgs> InstructionExecution;
+        event EventHandler<BeforeInstructionExecutionEventArgs> BeforeInstructionExecution;
+
+        /// <summary>
+        /// Post-instruction execution event. It is triggered after an instruction is executed.
+        /// </summary>
+        event EventHandler<AfterInstructionExecutionEventArgs> AfterInstructionExecution;
 
         #endregion
     }
