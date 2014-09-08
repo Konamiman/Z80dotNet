@@ -28,6 +28,23 @@ Well, that's the basic idea, but there's nothing implemented yet. Anyway you can
 
 For sure there are plenty of conceptual mistakes in what I have designed so far... if so, please send me a slap in the face! (use the link below to get my contact details)
 
+## Hello, world! (theorical) ##
+
+    var z80 = new Z80Processor();
+    z80.AutoStopOnRetWithStackEmpty = true;
+
+    var program = new byte[] {
+        0x3E, 0x07, //LD A,7
+        0xC6, 0x04, //ADD A,4
+        0x3C,       //INC A
+        0xC9        //RET
+    };
+    z80.Memory.SetContents(0, program);
+
+    z80.Start();
+
+    Debug.Assert(z80.Registers.Main.A == 12);
+
 ## But who are you? ##
 
 I'm [Konamiman, the MSX freak](http://www.konamiman.com). No more, no less.

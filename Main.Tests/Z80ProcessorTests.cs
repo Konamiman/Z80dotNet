@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System;
+using System.Diagnostics;
+using NUnit.Framework;
 
 namespace Konamiman.Z80dotNet.Tests
 {
@@ -49,6 +51,26 @@ namespace Konamiman.Z80dotNet.Tests
             Assert.IsInstanceOf<Z80InstructionExecutor>(Sut.InstructionExecutor);
             Assert.AreSame(Sut, Sut.InstructionExecutor.ProcessorAgent);
             Assert.IsInstanceOf<PeriodWaiter>(Sut.PeriodWaiter);
+        }
+
+        [Test]
+        [Ignore]
+        public void HelloWorld()
+        {
+            Sut.AutoStopOnRetWithStackEmpty = true;
+
+            var program = new byte[]
+            {
+                0x3E, 0x07, //LD A,7
+                0xC6, 0x04, //ADD A,4
+                0x3C,       //INC A
+                0xC9        //RET
+            };
+            Sut.Memory.SetContents(0, program);
+
+            Sut.Start();
+
+            Assert.AreEqual(12, Sut.Registers.Main.A);
         }
     }
 }
