@@ -8,15 +8,20 @@ namespace Konamiman.Z80dotNet
     /// <remarks>
     /// <para>
     /// The Z80 processor class is intended to be used in synchronous mode and controlled by events.
-    /// You simply configure the instance, subscribe to the <see cref="IZ80Processor.MemoryAccess"/> and
-    /// <see cref="IZ80Processor.InstructionExecution"/> events and invoke the <see cref="IZ80Processor.Start"/> method.
+    /// You simply configure the instance, subscribe to the <see cref="IZ80Processor.MemoryAccess"/>,
+    /// <see cref="IZ80Processor.BeforeInstructionExecution"/> and <see cref="IZ80Processor.AfterInstructionExecution"/> events
+    /// and invoke the <see cref="IZ80Processor.Start"/> method.
     /// The method returns when the processor stops execution for whatever reason (see <see cref="IZ80Processor.StopReason"/>).
     /// </para>
-    /// The <see cref="IZ80Processor.MemoryAccess"/> and <see cref="IZ80Processor.InstructionExecution"/> events 
+    /// <para>
+    /// The <see cref="IZ80Processor.MemoryAccess"/>,
+    /// <see cref="IZ80Processor.BeforeInstructionExecution"/> and <see cref="IZ80Processor.AfterInstructionExecution"/> events
     /// provide full control of the memory and ports access and the instructions executions. During these events
     /// you can examine and alter the memory contents and even stop the processor execution.
     /// Extra control on the memory and registers can be achieved by using custom implementations of
-    /// <see cref="IMemory"/> and <see cref="IZ80Registers"/>.
+    /// <see cref="IMemory"/> and <see cref="IZ80Registers"/>. The instruction execution engine itself can be
+    /// replaced as well by a custom implementation, see the <see cref="InstructionExecutor"/> property.
+    /// </para>
     /// <para>
     /// An alternative way of using the class is to use the <see cref="IZ80Processor.ExecuteNextInstruction"/> method.
     /// This method will simply execute the next instruction (as pointed by the PC register, see <see cref="IZ80Processor.Registers"/>)
@@ -48,26 +53,25 @@ namespace Konamiman.Z80dotNet
         /// This method cannot be invoked from an event handler.
         /// </summary>
         /// <remarks>
-        /// The method will finish when the <see cref="IZ80Processor.Stop"/> method is invoked from within an
-        /// event handler, or when a HALT instruction is executed with the interrupts disabled (only if
-        /// <see cref="IZ80Processor.AutoStopOnDiPlusHalt"/> is true).
+        /// The method will finish when the <see cref="IExecutionStopper.Stop"/> method is invoked from within an
+        /// event handler, when a HALT instruction is executed with the interrupts disabled (only if
+        /// <see cref="IZ80Processor.AutoStopOnDiPlusHalt"/> is <b>true</b>), or when a RET instruction is executed
+        /// and the stack is empty (only if <see cref="IZ80Processor.AutoStopOnRetWithStackEmpty"/> is <b>true</b>).
         /// </remarks>
         /// <param name="globalState">If this value is not null, it will be copied to the
         /// <see cref="IZ80Processor.UserState"/> property.
         /// </param>
-        /// <exception cref="InvalidOperationException">The method is invoked from within an event handler.</exception>
         void Start(object globalState = null);
 
         /// <summary>
         /// Sets the processor in running state without first doing a reset, thus preserving the state of all the registers.
         /// This method cannot be invoked from an event handler.
         /// </summary>
-        /// <exception cref="InvalidOperationException">The method is invoked from within an event handler, or the
-        /// <see cref="IZ80Processor.Start"/> method has never been invoked since the processor object was created.</exception>
+        /// <exception cref="InvalidOperationException">The method is invoked from within an event handler.</exception>
         void Continue();
 
         /// <summary>
-        /// Resets all registers to its initial state. The running state is not modified.
+        /// Resets all registers to its initial state. The running state of the processor is not modified.
         /// </summary>
         /// <para>
         /// This method sets the PC, IFF1, and IFF2 registers to 0, all other registers to FFFFh,
@@ -85,19 +89,20 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         /// <remarks>
         /// <para>
-        /// During the execution of this method, the <see cref="IZ80Processor.MemoryAccess"/> and
-        /// <see cref="IZ80Processor.InstructionExecution"/> events will be triggered as usual.
-        /// Altough not necessary, it is possible to invoke the <see cref="IZ80Processor.Stop"/> method,
+        /// During the execution of this method, the <see cref="IZ80Processor.MemoryAccess"/>,
+        /// <see cref="IZ80Processor.BeforeInstructionExecution"/> and <see cref="IZ80Processor.AfterInstructionExecution"/> 
+        /// events will be triggered as usual.
+        /// Altough not necessary, it is possible to invoke the <see cref="IExecutionStopper.Stop"/> method
+        /// during the <see cref="AfterInstructionExecutionEventArgs"/> event,
         /// thus modifying the value of <see cref="IZ80Processor.StopReason"/>.
         /// </para>
         /// <para>
         /// This method will never issue a reset. A manual call to <see cref="IZ80Processor.Reset"/> is needed
-        /// before the first invocation of this method if <see cref="IZ80Processor.Start"/> has never been invoked.
+        /// before the first invocation of this method if <see cref="IZ80Processor.Start"/> has never been invoked,
+        /// unless register state is set manually.
         /// </para>
         /// </remarks>
-        /// <exception cref="InvalidOperationException">The method is invoked from within an event handler, or neither the
-        /// <see cref="IZ80Processor.Start"/> method or the <see cref="IZ80Processor.Reset"/> method
-        /// have never been invoked since the processor object was created.</exception>
+        /// <exception cref="InvalidOperationException">The method is invoked from within an event handler.</exception>
         void ExecuteNextInstruction();
 
         /// <summary>
@@ -225,7 +230,7 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         /// <param name="portNumber">The port number to check</param>
         /// <returns>The current memory access mode for the port</returns>
-        /// <exception cref="System.ArgumentException"><c>portNumber</c> is greater than 65536.</exception>
+        /// <exception cref="System.ArgumentException"><c>portNumber</c> is greater than 255.</exception>
         MemoryAccessMode GetPortAccessMode(byte portNumber);
 
         #endregion
@@ -261,8 +266,8 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         /// <remarks>
         /// <para>"The stack is empty" means that the SP register has the value
-        /// it had when the <see cref="IZ80Processor.Start"/> method or the <see cref="IZ80Processor.Stop"/>
-        /// method was executed, or the value set by the last execution of a <c>LD, SP</c> instruction.
+        /// it had when the <see cref="IZ80Processor.Start"/> method
+        /// was executed, or the value set by the last execution of a <c>LD SP,xx</c> instruction.
         /// </para>
         /// <para>
         /// This setting is useful for testing simple programs, so that the processor stops automatically
@@ -330,7 +335,7 @@ namespace Konamiman.Z80dotNet
         IZ80InstructionExecutor InstructionExecutor { get; set; }
 
         /// <summary>
-        /// Gets or sets the period waiter.
+        /// Gets or sets the period waiter used to achieve proper timing on the execution flow.
         /// </summary>
         IPeriodWaiter PeriodWaiter { get; set; }
 

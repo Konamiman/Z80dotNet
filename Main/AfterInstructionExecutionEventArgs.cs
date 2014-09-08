@@ -6,7 +6,7 @@ namespace Konamiman.Z80dotNet
     public class AfterInstructionExecutionEventArgs : ProcessorEventArgs
     {
         /// <summary>
-        /// Contains the full opcode bytes of the instruction to be executed or having been executed.
+        /// Contains the full opcode bytes of the instruction that has been executed.
         /// </summary>
         public byte[] Opcode { get; set; }
 

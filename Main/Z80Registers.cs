@@ -1,7 +1,8 @@
 ﻿namespace Konamiman.Z80dotNet
 {
     /// <summary>
-    /// Represents a full set of Z80 registers.
+    /// Represents a full set of Z80 registers. This is the default implementation of
+    /// <see cref="IZ80Registers"/>.
     /// </summary>
     public class Z80Registers : IZ80Registers
     {

@@ -17,7 +17,7 @@
         /// <summary>
         /// Creates a new instance with the specified value.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value for the bit. Anything other than 0 will be interpreted as 1.</param>
         public Bit(int value) : this()
         {
             Value = value == 0 ? 0 : 1;
@@ -107,6 +107,11 @@
             return !(bitValue == intValue);
         }
 
+        /// <summary>
+        /// Indicates whether this instance and a specified object are equal.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current instance.</param>
+        /// <returns><b>true</b> if obj and this instance are the same type and represent the same value; otherwise, <b>false</b>. </returns>
         public override bool Equals(object obj)
         {
             if(obj is int)

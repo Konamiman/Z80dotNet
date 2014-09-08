@@ -16,20 +16,20 @@ namespace Konamiman.Z80dotNet
         NeverRan,
 
         /// <summary>
-        /// The processor was running and finished with an invocation of <see cref="IZ80Processor.Stop"/>
+        /// The processor was running and finished with an invocation of <see cref="IExecutionStopper.Stop"/>
         /// with <c>isPause=false</c>.
         /// </summary>
         StopInvoked,
 
         /// <summary>
-        /// The processor was running and finished with an invocation of <see cref="IZ80Processor.Stop"/>
+        /// The processor was running and finished with an invocation of <see cref="IExecutionStopper.Stop"/>
         /// with <c>isPause=true</c>.
         /// </summary>
         PauseInvoked,
 
         /// <summary>
         /// The <see cref="IZ80Processor.ExecuteNextInstruction"/> was invoked and finished normally
-        /// (the <see cref="IZ80Processor.Stop"/> method was not invoked).
+        /// (the <see cref="IExecutionStopper.Stop"/> method was not invoked).
         /// </summary>
         ExecuteNextInstructionInvoked,
 

@@ -1,6 +1,8 @@
 namespace Konamiman.Z80dotNet
 {
-
+    /// <summary>
+    /// Default implementation of <see cref="IMainZ80Registers"/>.
+    /// </summary>
     public class MainZ80Registers : IMainZ80Registers
     {
         public short AF { get; set; }

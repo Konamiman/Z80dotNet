@@ -2,6 +2,9 @@
 
 namespace Konamiman.Z80dotNet
 {
+    /// <summary>
+    /// The implementation of the <see cref="IZ80Processor"/> class.
+    /// </summary>
     public class Z80Processor : IZ80Processor, IZ80ProcessorAgent
     {
         private const int MemorySpaceSize = 65536;

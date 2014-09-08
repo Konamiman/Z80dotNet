@@ -5,7 +5,8 @@ namespace Konamiman.Z80dotNet
 {
     /// <summary>
     /// Represents a trivial memory implementation in which all the addresses are RAM 
-    /// and the values written are simply read back.
+    /// and the values written are simply read back. This is the default implementation
+    /// of <see cref="IMemory"/>.
     /// </summary>
     public class PlainMemory : IMemory
     {

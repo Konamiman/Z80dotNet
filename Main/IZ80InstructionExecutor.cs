@@ -31,7 +31,6 @@ namespace Konamiman.Z80dotNet
         /// <item><description>The method terminates, returning the total count of T states required for the instruction
         /// execution, not including any extra memory or port wait states (but including the automatically
         /// inserted wait state used for port access).</description></item>
-        /// <item><description></description></item>
         /// </list>
         /// </remarks>
         int Execute(byte firstOpcodeByte);

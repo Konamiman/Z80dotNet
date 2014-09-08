@@ -9,7 +9,7 @@
         /// Reads the next opcode byte from the memory location currently pointed by the PC register,
         /// then increases PC by one.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The byte obtained from memory</returns>
         byte FetchNextOpcode();
 
         /// <summary>

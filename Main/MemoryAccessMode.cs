@@ -8,6 +8,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// Read and write. The registered <see cref="IMemory"/> object will be accessed
         /// for both reading and writing from and to memory.
+        /// </summary>
         ReadAndWrite,
 
         /// <summary>
