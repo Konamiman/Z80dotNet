@@ -176,5 +176,23 @@ namespace Konamiman.Z80dotNet.Tests
         {
             Assert.Throws<InvalidOperationException>(() => ((byte)0).SetBit(8, 0));
         }
+
+        [Test]
+        public void ToShort_works_for_numbers_below_8000h()
+        {
+            Assert.AreEqual((short)0x1234, 0x1234.ToShort());
+        }
+
+        [Test]
+        public void ToShort_works_for_numbers_above_8000h()
+        {
+            Assert.AreEqual((short)-1, 0xFFFF.ToShort());
+        }
+
+        [Test]
+        public void ToShort_works_for_8000h()
+        {
+            Assert.AreEqual((short)-32768, 0x8000.ToShort());
+        }
     }
 }

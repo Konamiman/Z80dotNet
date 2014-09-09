@@ -48,11 +48,7 @@ namespace Konamiman.Z80dotNet
         /// <returns>Number with the original low byte and the new high byte</returns>
         public static short SetHighByte(this short value, byte highByte)
         {
-            var result = (ushort)((value & 0x00FF) | (highByte << 8));
-            if (result > 65535)
-                return (short)(result - 65536);
-            else
-                return (short)result;
+            return ((value & 0x00FF) | (highByte << 8)).ToShort();
         }
 
         /// <summary>
@@ -146,6 +142,16 @@ namespace Konamiman.Z80dotNet
             {
                 return (byte)(number & ~(1 << bitPosition));
             }
+        }
+
+        /// <summary>
+        /// Converts a number to short by substractin 65536 when the number is 32768 or higher.
+        /// </summary>
+        /// <param name="value">Number to convert</param>
+        /// <returns>Converted number</returns>
+        public static short ToShort(this int value)
+        {
+            return (value >= 32768 ? (short)(value - 65536) : (short)value);
         }
     }
 }

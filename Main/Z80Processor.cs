@@ -54,7 +54,12 @@ namespace Konamiman.Z80dotNet
 
         public void Reset()
         {
-            throw new NotImplementedException();
+            Registers.IFF1 = 0;
+            Registers.IFF1 = 0;
+            Registers.PC = 0;
+            Registers.Main.AF = 0xFFFF.ToShort();
+            Registers.SP = 0xFFFF.ToShort();
+            InterruptMode = 0;
         }
 
         public void ExecuteNextInstruction()
@@ -128,17 +133,7 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        public byte InterruptMode
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public byte InterruptMode { get; set; }
 
         public IZ80Registers Registers { get; set; }
 

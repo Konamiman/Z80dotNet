@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Diagnostics;
 using NUnit.Framework;
+using Ploeh.AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests
 {
     public class Z80ProcessorTests
     {
         Z80Processor Sut { get; set; }
+        Fixture Fixture { get; set; }
 
         [SetUp]
         public void Setup()
         {
+            Fixture = new Fixture();
+
             Sut = new Z80Processor();
         }
 
@@ -71,6 +75,26 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.Start();
 
             Assert.AreEqual(12, Sut.Registers.Main.A);
+        }
+
+        [Test]
+        public void Reset_sets_registers_properly()
+        {
+            Sut.Registers.IFF1 = 1;
+            Sut.Registers.IFF1 = 1;
+            Sut.Registers.PC = 1;
+            Sut.Registers.Main.AF = 0;
+            Sut.Registers.SP = 0;
+            Sut.InterruptMode = 1;
+
+            Sut.Reset();
+
+            Assert.AreEqual(0xFFFF.ToShort(), Sut.Registers.Main.AF);
+            Assert.AreEqual(0xFFFF.ToShort(), Sut.Registers.SP);
+            Assert.AreEqual(0, Sut.Registers.PC);
+            Assert.AreEqual(0, Sut.Registers.IFF1);
+            Assert.AreEqual(0, Sut.Registers.IFF2);
+            Assert.AreEqual(0, Sut.InterruptMode);
         }
     }
 }
