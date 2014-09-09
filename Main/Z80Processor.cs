@@ -21,7 +21,7 @@ namespace Konamiman.Z80dotNet
 
             SetMemoryWaitStatesForM1(0, MemorySpaceSize, 0);
             SetMemoryWaitStatesForNonM1(0, MemorySpaceSize, 0);
-            SetPortWaitStates(0, MemorySpaceSize, 0);
+            SetPortWaitStates(0, PortSpaceSize, 0);
 
             Memory = new PlainMemory(MemorySpaceSize);
             PortsSpace = new PlainMemory(PortSpaceSize);
@@ -119,13 +119,7 @@ namespace Konamiman.Z80dotNet
 
         public void SetMemoryAccessMode(ushort startAddress, int length, MemoryAccessMode mode)
         {
-             if(length < 0)
-                throw new ArgumentException("length can't be negative");
-            if(startAddress + length > MemorySpaceSize)
-                throw new ArgumentException("startAddress + length go beyond memory size");
-
-            var data = Enumerable.Repeat(mode, length).ToArray();
-            Array.Copy(data, 0, memoryAccessModes, startAddress, length);
+             SetArrayContents(memoryAccessModes, startAddress, length, mode);
         }
 
         public MemoryAccessMode GetMemoryAccessMode(ushort address)
@@ -139,13 +133,7 @@ namespace Konamiman.Z80dotNet
 
         public void SetPortsSpaceAccessMode(byte startPort, int length, MemoryAccessMode mode)
         {
-            if(length < 0)
-                throw new ArgumentException("length can't be negative");
-            if(startPort + length > PortSpaceSize)
-                throw new ArgumentException("startAddress + length go beyond ports space size");
-
-            var data = Enumerable.Repeat(mode, length).ToArray();
-            Array.Copy(data, 0, portsAccessModes, startPort, length);
+            SetArrayContents(portsAccessModes, startPort, length, mode);
         }
 
         public MemoryAccessMode GetPortAccessMode(byte portNumber)
@@ -161,22 +149,28 @@ namespace Konamiman.Z80dotNet
 
         public bool AutoStopOnRetWithStackEmpty { get; set; }
 
+        private byte[] memoryWaitStatesForM1 = new byte[MemorySpaceSize];
+
         public void SetMemoryWaitStatesForM1(ushort startAddress, int length, byte waitStates)
         {
+            SetArrayContents(memoryWaitStatesForM1, startAddress, length, waitStates);
         }
 
         public byte GetMemoryWaitStatesForM1(ushort address)
         {
-            return 0;
+            return memoryWaitStatesForM1[address];
         }
+
+        private byte[] memoryWaitStatesForNonM1 = new byte[MemorySpaceSize];
 
         public void SetMemoryWaitStatesForNonM1(ushort startAddress, int length, byte waitStates)
         {
+            SetArrayContents(memoryWaitStatesForNonM1, startAddress, length, waitStates);
         }
 
         public byte GetMemoryWaitStatesForNonM1(ushort address)
         {
-            return 0;
+            return memoryWaitStatesForNonM1[address];
         }
 
         public void SetPortWaitStates(ushort startPort, int length, byte waitStates)
@@ -197,6 +191,17 @@ namespace Konamiman.Z80dotNet
         public event EventHandler<BeforeInstructionExecutionEventArgs> BeforeInstructionExecution;
 
         public event EventHandler<AfterInstructionExecutionEventArgs> AfterInstructionExecution;
+
+        private void SetArrayContents<T>(T[] array, ushort startIndex, int length, T value)
+        {
+            if(length < 0)
+                throw new ArgumentException("length can't be negative");
+            if(startIndex + length > array.Length)
+                throw new ArgumentException("start + length go beyond " + (array.Length - 1));
+
+            var data = Enumerable.Repeat(value, length).ToArray();
+            Array.Copy(data, 0, array, startIndex, length);
+        }
 
         #region Members of IZ80ProcessorAgent
 

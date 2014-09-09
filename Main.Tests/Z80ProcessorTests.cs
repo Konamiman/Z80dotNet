@@ -140,21 +140,29 @@ namespace Konamiman.Z80dotNet.Tests
         }
 
         [Test]
-        public void SetMemoryAccessMode_works_when_adrress_plus_length_are_on_memory_size_boundary()
+        public void SetMemoryAccessMode_works_when_address_plus_length_are_on_memory_size_boundary()
         {
-            Sut.SetMemoryAccessMode(MemorySpaceSize-5, 5, MemoryAccessMode.NotConnected);
+           var value = Fixture.Create<MemoryAccessMode>();
+           var length = Fixture.Create<byte>();
+
+           Sut.SetMemoryAccessMode((ushort)(MemorySpaceSize - length), length, MemoryAccessMode.NotConnected);
         }
 
         [Test]
-        public void SetMemoryAccessMode_fails_when_adrress_plus_length_are_beyond_memory_size_boundary()
+        public void SetMemoryAccessMode_fails_when_address_plus_length_are_beyond_memory_size_boundary()
         {
-            Assert.Throws<ArgumentException>(() => Sut.SetMemoryAccessMode(MemorySpaceSize-5, 5+1, MemoryAccessMode.NotConnected));
+            var value = Fixture.Create<MemoryAccessMode>();
+            var length = Fixture.Create<byte>();
+
+            Assert.Throws<ArgumentException>(() => Sut.SetMemoryAccessMode((ushort)(MemorySpaceSize - length), length + 1, MemoryAccessMode.NotConnected));
         }
 
         [Test]
         public void SetMemoryAccessMode_fails_when_length_is_negative()
         {
-            Assert.Throws<ArgumentException>(() => Sut.SetMemoryAccessMode(0, -1, MemoryAccessMode.NotConnected));
+            var value = Fixture.Create<MemoryAccessMode>();
+
+            Assert.Throws<ArgumentException>(() => Sut.SetMemoryAccessMode(0, -1, value));
         }
 
         [Test]
@@ -176,21 +184,115 @@ namespace Konamiman.Z80dotNet.Tests
         }
 
         [Test]
-        public void SetPortsAccessMode_works_when_adrress_plus_length_are_on_ports_space_size_boundary()
+        public void SetPortsAccessMode_works_when_address_plus_length_are_on_ports_space_size_boundary()
         {
-            Sut.SetPortsSpaceAccessMode(PortSpaceSize-5, 5, MemoryAccessMode.NotConnected);
+            var value = Fixture.Create<MemoryAccessMode>();
+            var length = Fixture.Create<byte>();
+
+            Sut.SetPortsSpaceAccessMode((byte)(PortSpaceSize - length), length, MemoryAccessMode.NotConnected);
         }
 
         [Test]
-        public void SetPortsAccessMode_fails_when_adrress_plus_length_are_beyond_ports_space_size_boundary()
+        public void SetPortsAccessMode_fails_when_address_plus_length_are_beyond_ports_space_size_boundary()
         {
-            Assert.Throws<ArgumentException>(() => Sut.SetPortsSpaceAccessMode(PortSpaceSize-5, 5+1, MemoryAccessMode.NotConnected));
+            var value = Fixture.Create<MemoryAccessMode>();
+            var length = Fixture.Create<byte>();
+
+            Assert.Throws<ArgumentException>(() => Sut.SetPortsSpaceAccessMode((byte)(PortSpaceSize - length), length + 1, MemoryAccessMode.NotConnected));
         }
 
         [Test]
         public void SetPortsSpaceAccessMode_fails_when_length_is_negative()
         {
-            Assert.Throws<ArgumentException>(() => Sut.SetPortsSpaceAccessMode(0, -1, MemoryAccessMode.NotConnected));
+            var value = Fixture.Create<MemoryAccessMode>();
+
+            Assert.Throws<ArgumentException>(() => Sut.SetPortsSpaceAccessMode(0, -1, value));
+        }
+
+        [Test]
+        public void SetMemoryWaitStatesForM1_and_GetMemoryWaitStatesForM1_are_consistent()
+        {
+            var value1 = Fixture.Create<byte>();
+            var value2 = Fixture.Create<byte>();
+
+            Sut.SetMemoryWaitStatesForM1(0, 0x8000, value1);
+            Sut.SetMemoryWaitStatesForM1(0x8000, 0x8000, value2);
+
+            Assert.AreEqual(value1, Sut.GetMemoryWaitStatesForM1(0));
+            Assert.AreEqual(value1, Sut.GetMemoryWaitStatesForM1(0x7FFF));
+            Assert.AreEqual(value2, Sut.GetMemoryWaitStatesForM1(0x8000));
+            Assert.AreEqual(value2, Sut.GetMemoryWaitStatesForM1(0xFFFF));
+        }
+
+        [Test]
+        public void SetMemoryWaitStatesForM1_works_when_address_plus_length_are_in_memory_size_boundary()
+        {
+            var value = Fixture.Create<byte>();
+            var length = Fixture.Create<byte>();
+
+            Sut.SetMemoryWaitStatesForM1((ushort)(MemorySpaceSize - length), length, value);
+        }
+
+        [Test]
+        public void SetMemoryWaitStatesForM1_fails_when_address_plus_length_are_beyond_memory_size_boundary()
+        {
+            var value = Fixture.Create<byte>();
+            var length = Fixture.Create<byte>();
+
+            Assert.Throws<ArgumentException>(
+                () => Sut.SetMemoryWaitStatesForM1((ushort)(MemorySpaceSize - length), length + 1, value));
+        }
+
+        [Test]
+        public void SetMemoryWaitStatesForM1_fails_when_length_is_negative()
+        {
+            var value = Fixture.Create<byte>();
+
+            Assert.Throws<ArgumentException>(
+                () => Sut.SetMemoryWaitStatesForM1(0, -1, value));
+        }
+        
+        [Test]
+        public void SetMemoryWaitStatesForNonM1_and_GetMemoryWaitStatesForNonM1_are_consistent()
+        {
+            var value1 = Fixture.Create<byte>();
+            var value2 = Fixture.Create<byte>();
+
+            Sut.SetMemoryWaitStatesForNonM1(0, 0x8000, value1);
+            Sut.SetMemoryWaitStatesForNonM1(0x8000, 0x8000, value2);
+
+            Assert.AreEqual(value1, Sut.GetMemoryWaitStatesForNonM1(0));
+            Assert.AreEqual(value1, Sut.GetMemoryWaitStatesForNonM1(0x7FFF));
+            Assert.AreEqual(value2, Sut.GetMemoryWaitStatesForNonM1(0x8000));
+            Assert.AreEqual(value2, Sut.GetMemoryWaitStatesForNonM1(0xFFFF));
+        }
+
+        [Test]
+        public void SetMemoryWaitStatesForNonM1_works_when_address_plus_length_are_in_memory_size_boundary()
+        {
+            var value = Fixture.Create<byte>();
+            var length = Fixture.Create<byte>();
+
+            Sut.SetMemoryWaitStatesForNonM1((ushort)(MemorySpaceSize - length), length, value);
+        }
+
+        [Test]
+        public void SetMemoryWaitStatesForNonM1_fails_when_address_plus_length_are_beyond_memory_size_boundary()
+        {
+            var value = Fixture.Create<byte>();
+            var length = Fixture.Create<byte>();
+
+            Assert.Throws<ArgumentException>(
+                () => Sut.SetMemoryWaitStatesForNonM1((ushort)(MemorySpaceSize - length), length + 1, value));
+        }
+
+        [Test]
+        public void SetMemoryWaitStatesForNonM1_fails_when_length_is_negative()
+        {
+            var value = Fixture.Create<byte>();
+
+            Assert.Throws<ArgumentException>(
+                () => Sut.SetMemoryWaitStatesForNonM1(0, -1, value));
         }
     }
 }
