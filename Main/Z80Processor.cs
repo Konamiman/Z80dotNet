@@ -173,13 +173,16 @@ namespace Konamiman.Z80dotNet
             return memoryWaitStatesForNonM1[address];
         }
 
+        private byte[] portWaitStates = new byte[PortSpaceSize];
+
         public void SetPortWaitStates(ushort startPort, int length, byte waitStates)
         {
+            SetArrayContents(portWaitStates, startPort, length, waitStates);
         }
 
         public byte GetPortWaitStates(byte portNumber)
         {
-            return 0;
+            return portWaitStates[portNumber];
         }
 
         public IZ80InstructionExecutor InstructionExecutor { get; set; }

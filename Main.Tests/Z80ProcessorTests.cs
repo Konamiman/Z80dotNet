@@ -294,5 +294,48 @@ namespace Konamiman.Z80dotNet.Tests
             Assert.Throws<ArgumentException>(
                 () => Sut.SetMemoryWaitStatesForNonM1(0, -1, value));
         }
+        
+        [Test]
+        public void SetPortWaitStates_and_GetPortWaitStates_are_consistent()
+        {
+            var value1 = Fixture.Create<byte>();
+            var value2 = Fixture.Create<byte>();
+
+            Sut.SetPortWaitStates(0, 128, value1);
+            Sut.SetPortWaitStates(128, 128, value2);
+
+            Assert.AreEqual(value1, Sut.GetPortWaitStates(0));
+            Assert.AreEqual(value1, Sut.GetPortWaitStates(127));
+            Assert.AreEqual(value2, Sut.GetPortWaitStates(128));
+            Assert.AreEqual(value2, Sut.GetPortWaitStates(255));
+        }
+
+        [Test]
+        public void SetPortWaitStates_works_when_address_plus_length_are_in_memory_size_boundary()
+        {
+            var value = Fixture.Create<byte>();
+            var length = Fixture.Create<byte>();
+
+            Sut.SetPortWaitStates((ushort)(PortSpaceSize - length), length, value);
+        }
+
+        [Test]
+        public void SetPortWaitStates_fails_when_address_plus_length_are_beyond_memory_size_boundary()
+        {
+            var value = Fixture.Create<byte>();
+            var length = Fixture.Create<byte>();
+
+            Assert.Throws<ArgumentException>(
+                () => Sut.SetPortWaitStates((ushort)(PortSpaceSize - length), length + 1, value));
+        }
+
+        [Test]
+        public void SetPortWaitStates_fails_when_length_is_negative()
+        {
+            var value = Fixture.Create<byte>();
+
+            Assert.Throws<ArgumentException>(
+                () => Sut.SetPortWaitStates(0, -1, value));
+        }
     }
 }
