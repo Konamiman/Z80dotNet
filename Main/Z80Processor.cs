@@ -31,10 +31,7 @@ namespace Konamiman.Z80dotNet
 
             Registers = new Z80Registers();
 
-            InstructionExecutor = new Z80InstructionExecutor()
-            {
-                ProcessorAgent = this
-            };
+            InstructionExecutor = new Z80InstructionExecutor();
 
             ClockSynchronizationHelper = new ClockSynchronizationHelper();
 

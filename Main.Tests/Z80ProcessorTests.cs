@@ -110,8 +110,13 @@ namespace Konamiman.Z80dotNet.Tests
         public void Interrupt_mode_can_be_set_to_0_1_or_2()
         {
             Sut.InterruptMode = 0;
+            Assert.AreEqual(Sut.InterruptMode, 0);
+
             Sut.InterruptMode = 1;
+            Assert.AreEqual(Sut.InterruptMode, 1);
+
             Sut.InterruptMode = 2;
+            Assert.AreEqual(Sut.InterruptMode, 2);
         }
 
         [Test]

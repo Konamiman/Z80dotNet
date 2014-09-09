@@ -55,28 +55,6 @@ namespace Konamiman.Z80dotNet
 
         public short IR { get; set; }
 
-#if false
-        private byte _IM;
-        /// <summary>
-        /// The current interrupt mode register. It has always the value 0, 1 or 2.
-        /// </summary>
-        /// <exception cref="System.InvalidOperationException">Attempt to set a value other than 0, 1 or 2</exception>
-        public byte IM
-        {
-            get
-            {
-                return _IM;
-            }
-            set
-            {
-                if(value > 2)
-                    throw new InvalidOperationException("IM can be set to 0, 1 or 2 only");
-
-                _IM = value;
-            }
-        }
-#endif
-
         public Bit IFF1 { get; set; }
 
         public Bit IFF2 { get; set; }
