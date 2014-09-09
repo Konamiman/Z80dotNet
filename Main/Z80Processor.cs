@@ -40,6 +40,9 @@ namespace Konamiman.Z80dotNet
             };
 
             ClockSynchronizationHelper = new ClockSynchronizationHelper();
+
+            StopReason = StopReason.NeverRan;
+            State = ProcessorState.Stopped;
         }
 
         public void Start(object globalState = null)
@@ -60,6 +63,8 @@ namespace Konamiman.Z80dotNet
             Registers.Main.AF = 0xFFFF.ToShort();
             Registers.SP = 0xFFFF.ToShort();
             InterruptMode = 0;
+
+            TStatesElapsedSinceReset = 0;
         }
 
         public void ExecuteNextInstruction()
@@ -77,63 +82,33 @@ namespace Konamiman.Z80dotNet
             throw new NotImplementedException();
         }
 
-        public ulong TStatesElapsedSinceStart
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public ulong TStatesElapsedSinceStart { get; private set; }
 
-        public ulong TStatesElapsedSinceReset
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public ulong TStatesElapsedSinceReset { get; private set; }
 
-        public StopReason StopReason
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public StopReason StopReason { get; private set; }
 
-        public ProcessorState State
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public ProcessorState State { get; private set; }
 
-        public object UserState
+        public object UserState { get; set; }
+
+        public bool IsHalted { get; private set; }
+
+        private byte _InterruptMode;
+        public byte InterruptMode
         {
             get
             {
-                throw new NotImplementedException();
+                return _InterruptMode;
             }
             set
             {
-                throw new NotImplementedException();
+                if(value>2)
+                    throw new ArgumentException("Interrupt mode can be set to 0, 1 or 2 only");
+
+                _InterruptMode = value;
             }
         }
-
-        public bool IsHalted
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public byte InterruptMode { get; set; }
 
         public IZ80Registers Registers { get; set; }
 

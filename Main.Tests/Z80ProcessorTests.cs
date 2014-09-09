@@ -55,6 +55,11 @@ namespace Konamiman.Z80dotNet.Tests
             Assert.IsInstanceOf<Z80InstructionExecutor>(Sut.InstructionExecutor);
             Assert.AreSame(Sut, Sut.InstructionExecutor.ProcessorAgent);
             Assert.IsInstanceOf<ClockSynchronizationHelper>(Sut.ClockSynchronizationHelper);
+
+            Assert.AreEqual(StopReason.NeverRan, Sut.StopReason);
+            Assert.AreEqual(ProcessorState.Stopped, Sut.State);
+            Assert.IsFalse(Sut.IsHalted);
+            Assert.IsNull(Sut.UserState);
         }
 
         [Test]
@@ -95,6 +100,22 @@ namespace Konamiman.Z80dotNet.Tests
             Assert.AreEqual(0, Sut.Registers.IFF1);
             Assert.AreEqual(0, Sut.Registers.IFF2);
             Assert.AreEqual(0, Sut.InterruptMode);
+
+            Assert.AreEqual(0, Sut.TStatesElapsedSinceReset);
+        }
+
+        [Test]
+        public void Interrupt_mode_can_be_set_to_0_1_or_2()
+        {
+            Sut.InterruptMode = 0;
+            Sut.InterruptMode = 1;
+            Sut.InterruptMode = 2;
+        }
+
+        [Test]
+        public void Interrupt_mode_cannot_be_set_to_higher_than_2()
+        {
+            Assert.Throws<ArgumentException>(() => Sut.InterruptMode = 3);
         }
     }
 }

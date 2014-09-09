@@ -170,12 +170,12 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// Returns true when a HALT instruction is executed, returns to false when an interrupt request arrives.
         /// </summary>
-        bool IsHalted { get; set; }
+        bool IsHalted { get; }
         
         /// <summary>
         /// The current interrupt mode. It has always the value 0, 1 or 2.
         /// </summary>
-        /// <exception cref="System.InvalidOperationException">Attempt to set a value other than 0, 1 or 2</exception>
+        /// <exception cref="System.ArgumentException">Attempt to set a value other than 0, 1 or 2</exception>
         byte InterruptMode { get; set; }
 
         #endregion
