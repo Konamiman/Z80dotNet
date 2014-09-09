@@ -7,6 +7,9 @@ namespace Konamiman.Z80dotNet.Tests
 {
     public class Z80ProcessorTests
     {
+        private const int MemorySpaceSize = 65536;
+        private const int PortSpaceSize = 256;
+
         Z80Processor Sut { get; set; }
         Fixture Fixture { get; set; }
 
@@ -137,6 +140,24 @@ namespace Konamiman.Z80dotNet.Tests
         }
 
         [Test]
+        public void SetMemoryAccessMode_works_when_adrress_plus_length_are_on_memory_size_boundary()
+        {
+            Sut.SetMemoryAccessMode(MemorySpaceSize-5, 5, MemoryAccessMode.NotConnected);
+        }
+
+        [Test]
+        public void SetMemoryAccessMode_fails_when_adrress_plus_length_are_beyond_memory_size_boundary()
+        {
+            Assert.Throws<ArgumentException>(() => Sut.SetMemoryAccessMode(MemorySpaceSize-5, 5+1, MemoryAccessMode.NotConnected));
+        }
+
+        [Test]
+        public void SetMemoryAccessMode_fails_when_length_is_negative()
+        {
+            Assert.Throws<ArgumentException>(() => Sut.SetMemoryAccessMode(0, -1, MemoryAccessMode.NotConnected));
+        }
+
+        [Test]
         public void SetPortsSpaceAccessMode_and_GetPortsSpaceAccessMode_are_consistent()
         {
             Sut.SetPortsSpaceAccessMode(0, 64, MemoryAccessMode.NotConnected);
@@ -152,6 +173,24 @@ namespace Konamiman.Z80dotNet.Tests
             Assert.AreEqual(MemoryAccessMode.ReadOnly, Sut.GetPortAccessMode(191));
             Assert.AreEqual(MemoryAccessMode.WriteOnly, Sut.GetPortAccessMode(192));
             Assert.AreEqual(MemoryAccessMode.WriteOnly, Sut.GetPortAccessMode(255));
+        }
+
+        [Test]
+        public void SetPortsAccessMode_works_when_adrress_plus_length_are_on_ports_space_size_boundary()
+        {
+            Sut.SetPortsSpaceAccessMode(PortSpaceSize-5, 5, MemoryAccessMode.NotConnected);
+        }
+
+        [Test]
+        public void SetPortsAccessMode_fails_when_adrress_plus_length_are_beyond_ports_space_size_boundary()
+        {
+            Assert.Throws<ArgumentException>(() => Sut.SetPortsSpaceAccessMode(PortSpaceSize-5, 5+1, MemoryAccessMode.NotConnected));
+        }
+
+        [Test]
+        public void SetPortsSpaceAccessMode_fails_when_length_is_negative()
+        {
+            Assert.Throws<ArgumentException>(() => Sut.SetPortsSpaceAccessMode(0, -1, MemoryAccessMode.NotConnected));
         }
     }
 }

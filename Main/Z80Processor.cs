@@ -119,7 +119,12 @@ namespace Konamiman.Z80dotNet
 
         public void SetMemoryAccessMode(ushort startAddress, int length, MemoryAccessMode mode)
         {
-            var data = Enumerable.Repeat<MemoryAccessMode>(mode, length).ToArray();
+             if(length < 0)
+                throw new ArgumentException("length can't be negative");
+            if(startAddress + length > MemorySpaceSize)
+                throw new ArgumentException("startAddress + length go beyond memory size");
+
+            var data = Enumerable.Repeat(mode, length).ToArray();
             Array.Copy(data, 0, memoryAccessModes, startAddress, length);
         }
 
@@ -134,7 +139,12 @@ namespace Konamiman.Z80dotNet
 
         public void SetPortsSpaceAccessMode(byte startPort, int length, MemoryAccessMode mode)
         {
-            var data = Enumerable.Repeat<MemoryAccessMode>(mode, length).ToArray();
+            if(length < 0)
+                throw new ArgumentException("length can't be negative");
+            if(startPort + length > PortSpaceSize)
+                throw new ArgumentException("startAddress + length go beyond ports space size");
+
+            var data = Enumerable.Repeat(mode, length).ToArray();
             Array.Copy(data, 0, portsAccessModes, startPort, length);
         }
 
