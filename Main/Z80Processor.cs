@@ -11,6 +11,9 @@ namespace Konamiman.Z80dotNet
         private const int MemorySpaceSize = 65536;
         private const int PortSpaceSize = 256;
 
+        private const decimal MaxEffectiveClockSpeed = 100M;
+        private const decimal MinEffectiveClockSpeed = 0.001M;
+
         public Z80Processor()
         {
             ClockFrequencyInMHz = 4;
@@ -176,9 +179,45 @@ namespace Konamiman.Z80dotNet
             return portsAccessModes[portNumber];
         }
 
-        public decimal ClockFrequencyInMHz { get; set; }
 
-        public decimal ClockSpeedFactor { get; set; }
+        private decimal effectiveClockFrequency;
+
+        private decimal _ClockFrequencyInMHz = 0;
+        public decimal ClockFrequencyInMHz
+        {
+            get
+            {
+                return _ClockFrequencyInMHz;
+            }
+            set
+            {
+                SetEffectiveClockFrequency(value, ClockSpeedFactor);
+                _ClockFrequencyInMHz = value;
+            }
+        }
+
+        private void SetEffectiveClockFrequency(decimal clockFrequency, decimal clockSpeedFactor)
+        {
+            decimal effectiveClockFrequency = clockFrequency * clockSpeedFactor;
+            if(effectiveClockFrequency > MaxEffectiveClockSpeed)
+                throw new ArgumentException(string.Format("Clock frequency multiplied by clock speed factor must be a number between {0} and {1}", MinEffectiveClockSpeed, MaxEffectiveClockSpeed));
+
+            this.effectiveClockFrequency = effectiveClockFrequency;
+        }
+
+        private decimal _ClockSpeedFactor = 0;
+        public decimal ClockSpeedFactor
+        {
+            get
+            {
+                return _ClockSpeedFactor;
+            }
+            set
+            {
+                SetEffectiveClockFrequency(ClockFrequencyInMHz, value);
+                _ClockSpeedFactor = value;
+            }
+        }
 
         public bool AutoStopOnDiPlusHalt { get; set; }
 
@@ -250,7 +289,7 @@ namespace Konamiman.Z80dotNet
                     throw new ArgumentNullException("ClockSynchronizationHelper");
 
                 _ClockSynchronizationHelper = value;
-                _ClockSynchronizationHelper.EffecttiveClockSpeedInMHz = ClockFrequencyInMHz * ClockSpeedFactor;
+                _ClockSynchronizationHelper.EffecttiveClockSpeedInMHz = effectiveClockFrequency;
             }
         }
 

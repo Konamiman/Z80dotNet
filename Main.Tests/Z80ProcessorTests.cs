@@ -432,5 +432,33 @@ namespace Konamiman.Z80dotNet.Tests
             mock.VerifySet(m => m.EffecttiveClockSpeedInMHz = 2 * 3);
         }
 
+        [Test]
+        public void Can_set_clock_speed_and_clock_factor_combination_up_to_100_MHz()
+        {
+            Sut.ClockFrequencyInMHz = 20;
+            Sut.ClockSpeedFactor = 5;
+
+            Assert.AreEqual(Sut.ClockFrequencyInMHz, 20);
+            Assert.AreEqual(Sut.ClockSpeedFactor, 5);
+        }
+
+        [Test]
+        public void Cannot_set_clock_speed_and_clock_factor_combination_over_100_MHz()
+        {
+            Sut.ClockFrequencyInMHz = 1;
+            Sut.ClockSpeedFactor = 1;
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                Sut.ClockFrequencyInMHz = 1;
+                Sut.ClockSpeedFactor = 101;
+            });
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                Sut.ClockSpeedFactor = 1;
+                Sut.ClockFrequencyInMHz = 101;
+            });
+        }
     }
 }
