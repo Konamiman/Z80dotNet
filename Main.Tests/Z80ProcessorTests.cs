@@ -117,5 +117,41 @@ namespace Konamiman.Z80dotNet.Tests
         {
             Assert.Throws<ArgumentException>(() => Sut.InterruptMode = 3);
         }
+
+        [Test]
+        public void SetMemoryAccessMode_and_GetMemoryAccessMode_are_consistent()
+        {
+            Sut.SetMemoryAccessMode(0, 0x4000, MemoryAccessMode.NotConnected);
+            Sut.SetMemoryAccessMode(0x4000, 0x4000, MemoryAccessMode.ReadAndWrite);
+            Sut.SetMemoryAccessMode(0x8000, 0x4000, MemoryAccessMode.ReadOnly);
+            Sut.SetMemoryAccessMode(0xC000, 0x4000, MemoryAccessMode.WriteOnly);
+
+            Assert.AreEqual(MemoryAccessMode.NotConnected, Sut.GetMemoryAccessMode(0));
+            Assert.AreEqual(MemoryAccessMode.NotConnected, Sut.GetMemoryAccessMode(0x3FFF));
+            Assert.AreEqual(MemoryAccessMode.ReadAndWrite, Sut.GetMemoryAccessMode(0x4000));
+            Assert.AreEqual(MemoryAccessMode.ReadAndWrite, Sut.GetMemoryAccessMode(0x7FFF));
+            Assert.AreEqual(MemoryAccessMode.ReadOnly, Sut.GetMemoryAccessMode(0x8000));
+            Assert.AreEqual(MemoryAccessMode.ReadOnly, Sut.GetMemoryAccessMode(0xBFFF));
+            Assert.AreEqual(MemoryAccessMode.WriteOnly, Sut.GetMemoryAccessMode(0xC000));
+            Assert.AreEqual(MemoryAccessMode.WriteOnly, Sut.GetMemoryAccessMode(0xFFFF));
+        }
+
+        [Test]
+        public void SetPortsSpaceAccessMode_and_GetPortsSpaceAccessMode_are_consistent()
+        {
+            Sut.SetPortsSpaceAccessMode(0, 64, MemoryAccessMode.NotConnected);
+            Sut.SetPortsSpaceAccessMode(64, 64, MemoryAccessMode.ReadAndWrite);
+            Sut.SetPortsSpaceAccessMode(128, 64, MemoryAccessMode.ReadOnly);
+            Sut.SetPortsSpaceAccessMode(192, 64, MemoryAccessMode.WriteOnly);
+
+            Assert.AreEqual(MemoryAccessMode.NotConnected, Sut.GetPortAccessMode(0));
+            Assert.AreEqual(MemoryAccessMode.NotConnected, Sut.GetPortAccessMode(63));
+            Assert.AreEqual(MemoryAccessMode.ReadAndWrite, Sut.GetPortAccessMode(64));
+            Assert.AreEqual(MemoryAccessMode.ReadAndWrite, Sut.GetPortAccessMode(127));
+            Assert.AreEqual(MemoryAccessMode.ReadOnly, Sut.GetPortAccessMode(128));
+            Assert.AreEqual(MemoryAccessMode.ReadOnly, Sut.GetPortAccessMode(191));
+            Assert.AreEqual(MemoryAccessMode.WriteOnly, Sut.GetPortAccessMode(192));
+            Assert.AreEqual(MemoryAccessMode.WriteOnly, Sut.GetPortAccessMode(255));
+        }
     }
 }

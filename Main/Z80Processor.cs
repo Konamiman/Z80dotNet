@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Konamiman.Z80dotNet
 {
@@ -114,24 +115,32 @@ namespace Konamiman.Z80dotNet
 
         public IMemory Memory { get; private set; }
 
+        private MemoryAccessMode[] memoryAccessModes = new MemoryAccessMode[MemorySpaceSize];
+
         public void SetMemoryAccessMode(ushort startAddress, int length, MemoryAccessMode mode)
         {
+            var data = Enumerable.Repeat<MemoryAccessMode>(mode, length).ToArray();
+            Array.Copy(data, 0, memoryAccessModes, startAddress, length);
         }
 
         public MemoryAccessMode GetMemoryAccessMode(ushort address)
         {
-            return MemoryAccessMode.ReadAndWrite;
+            return memoryAccessModes[address];
         }
 
         public IMemory PortsSpace { get; private set; }
 
+        private MemoryAccessMode[] portsAccessModes = new MemoryAccessMode[PortSpaceSize];
+
         public void SetPortsSpaceAccessMode(byte startPort, int length, MemoryAccessMode mode)
         {
+            var data = Enumerable.Repeat<MemoryAccessMode>(mode, length).ToArray();
+            Array.Copy(data, 0, portsAccessModes, startPort, length);
         }
 
         public MemoryAccessMode GetPortAccessMode(byte portNumber)
         {
-            return MemoryAccessMode.ReadAndWrite;
+            return portsAccessModes[portNumber];
         }
 
         public decimal ClockFrequencyInMHz { get; set; }
