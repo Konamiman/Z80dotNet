@@ -26,7 +26,7 @@ namespace Konamiman.Z80dotNet
             PortsSpace = new PlainMemory(PortSpaceSize);
 
             SetMemoryAccessMode(0, MemorySpaceSize, MemoryAccessMode.ReadAndWrite);
-            SetPortsSpaceMode(0, PortSpaceSize, MemoryAccessMode.ReadAndWrite);
+            SetPortsSpaceAccessMode(0, PortSpaceSize, MemoryAccessMode.ReadAndWrite);
 
             Registers = new Z80Registers()
             {
@@ -39,7 +39,7 @@ namespace Konamiman.Z80dotNet
                 ProcessorAgent = this
             };
 
-            PeriodWaiter = new PeriodWaiter();
+            PeriodWaiter = new ClockSynchronizationHelper();
         }
 
         public void Start(object globalState = null)
@@ -155,7 +155,7 @@ namespace Konamiman.Z80dotNet
 
         public IMemory PortsSpace { get; private set; }
 
-        public void SetPortsSpaceMode(byte startPort, int length, MemoryAccessMode mode)
+        public void SetPortsSpaceAccessMode(byte startPort, int length, MemoryAccessMode mode)
         {
         }
 
@@ -201,7 +201,7 @@ namespace Konamiman.Z80dotNet
 
         public IZ80InstructionExecutor InstructionExecutor { get; set; }
 
-        public IPeriodWaiter PeriodWaiter { get; set; }
+        public IClockSynchronizationHelper PeriodWaiter { get; set; }
 
         public event EventHandler<MemoryAccessEventArgs> MemoryAccess;
 

@@ -74,7 +74,7 @@ namespace Konamiman.Z80dotNet
         /// Resets all registers to its initial state. The running state of the processor is not modified.
         /// </summary>
         /// <para>
-        /// This method sets the PC, IFF1, and IFF2 registers to 0, all other registers to FFFFh,
+        /// This method sets the PC, IFF1, and IFF2 registers to 0, AF and SP to FFFFh,
         /// and the interrupt mode to 0.
         /// </para>
         /// <para>
@@ -84,7 +84,7 @@ namespace Konamiman.Z80dotNet
         void Reset();
 
         /// <summary>
-        /// Executes the next instruction as pointed by the PC register, and the returns.
+        /// Executes the next instruction as pointed by the PC register, and then returns.
         /// This method cannot be invoked from an event handler.
         /// </summary>
         /// <remarks>
@@ -216,14 +216,14 @@ namespace Konamiman.Z80dotNet
         IMemory PortsSpace { get; }
 
         /// <summary>
-        /// Sets the mode of a portion of the visible ports space.
+        /// Sets the access mode of a portion of the visible ports space.
         /// </summary>
         /// <param name="startPort">First port that will be set</param>
         /// <param name="length">Length of the mports space that will be set</param>
         /// <param name="mode">New memory mode</param>
         /// <exception cref="System.ArgumentException"><c>startAddress</c> is less than 0, 
         /// or <c>startAddress</c> + <c>length</c> goes beyond 255.</exception>
-        void SetPortsSpaceMode(byte startPort, int length, MemoryAccessMode mode);
+        void SetPortsSpaceAccessMode(byte startPort, int length, MemoryAccessMode mode);
 
         /// <summary>
         /// Gets the access mode of a port.
@@ -337,7 +337,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// Gets or sets the period waiter used to achieve proper timing on the execution flow.
         /// </summary>
-        IPeriodWaiter PeriodWaiter { get; set; }
+        IClockSynchronizationHelper PeriodWaiter { get; set; }
 
         #endregion
 

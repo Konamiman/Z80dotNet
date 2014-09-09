@@ -3,13 +3,13 @@
 namespace Konamiman.Z80dotNet
 {
     /// <summary>
-    /// Default implementation of <see cref="IPeriodWaiter"/>.
+    /// Default implementation of <see cref="IClockSynchronizationHelper"/>.
     /// </summary>
-    public class PeriodWaiter : IPeriodWaiter
+    public class ClockSynchronizationHelper : IClockSynchronizationHelper
     {
         public int EffecttiveClockSpeedInMHz { get; set; }
 
-        public void PeriodElapsed(int periodLengthInCycles)
+        public void TryWait(int periodLengthInCycles)
         {
             throw new NotImplementedException();
         }

@@ -3,9 +3,10 @@
 namespace Konamiman.Z80dotNet
 {
     /// <summary>
-    /// Represents a class that helps on introducing delays that last for a specified amount of time.
+    /// Represents a class that helps on synchronizing with a simulated clock
+    /// by introducing delays that last for a specified amount of clock cycles.
     /// </summary>
-    public interface IPeriodWaiter
+    public interface IClockSynchronizationHelper
     {
         /// <summary>
         /// Gets or sets the clock speed of the simulated system, in MHz.
@@ -20,6 +21,6 @@ namespace Konamiman.Z80dotNet
         /// by pausing the current thread for the specified amount of time. However, depending on the host system's
         /// clock accuracy the method may need to accummulate several clock cycles across different method invocations
         /// before actually pausing the thread.</remarks>
-        void PeriodElapsed(int periodLengthInCycles);
+        void TryWait(int periodLengthInCycles);
     }
 }
