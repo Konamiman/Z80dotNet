@@ -53,8 +53,6 @@ namespace Konamiman.Z80dotNet.Tests
             }
 
             Assert.IsInstanceOf<Z80Registers>(Sut.Registers);
-            Assert.IsInstanceOf<MainZ80Registers>(Sut.Registers.Main);
-            Assert.IsInstanceOf<MainZ80Registers>(Sut.Registers.Alternate);
 
             Assert.IsInstanceOf<Z80InstructionExecutor>(Sut.InstructionExecutor);
             Assert.AreSame(Sut, Sut.InstructionExecutor.ProcessorAgent);

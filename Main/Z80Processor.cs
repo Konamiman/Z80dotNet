@@ -29,11 +29,7 @@ namespace Konamiman.Z80dotNet
             SetMemoryAccessMode(0, MemorySpaceSize, MemoryAccessMode.ReadAndWrite);
             SetPortsSpaceAccessMode(0, PortSpaceSize, MemoryAccessMode.ReadAndWrite);
 
-            Registers = new Z80Registers()
-            {
-                Main = new MainZ80Registers(),
-                Alternate = new MainZ80Registers()
-            };
+            Registers = new Z80Registers();
 
             InstructionExecutor = new Z80InstructionExecutor()
             {

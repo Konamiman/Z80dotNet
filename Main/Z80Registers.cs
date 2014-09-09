@@ -1,4 +1,5 @@
-﻿namespace Konamiman.Z80dotNet
+﻿using System;
+namespace Konamiman.Z80dotNet
 {
     /// <summary>
     /// Represents a full set of Z80 registers. This is the default implementation of
@@ -6,9 +7,43 @@
     /// </summary>
     public class Z80Registers : IZ80Registers
     {
-        public IMainZ80Registers Main { get; set; }
+        public Z80Registers()
+        {
+            Main = new MainZ80Registers();
+            Alternate = new MainZ80Registers();
+        }
 
-        public IMainZ80Registers Alternate { get; set; }
+        private IMainZ80Registers _Main;
+        public IMainZ80Registers Main
+        {
+            get
+            {
+                return _Main;
+            }
+            set
+            {
+                if(value == null)
+                    throw new ArgumentNullException("Main");
+
+                _Main = value;
+            }
+        }
+
+        private IMainZ80Registers _Alternate;
+        public IMainZ80Registers Alternate
+        {
+            get
+            {
+                return _Alternate;
+            }
+            set
+            {
+                if(value == null)
+                    throw new ArgumentNullException("Alternate");
+
+                _Alternate = value;
+            }
+        }
 
         public short IX { get; set; }
 
