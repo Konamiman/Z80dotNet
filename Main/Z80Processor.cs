@@ -111,9 +111,37 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        public IZ80Registers Registers { get; set; }
+        private IZ80Registers _Registers;
+        public IZ80Registers Registers
+        {
+            get
+            {
+                return _Registers;
+            }
+            set
+            {
+                if(value == null)
+                    throw new ArgumentNullException("Registers");
 
-        public IMemory Memory { get; private set; }
+                _Registers = value;
+            }
+        }
+
+        private IMemory _Memory;
+        public IMemory Memory
+        {
+            get
+            {
+                return _Memory;
+            }
+            set
+            {
+                if(value == null)
+                    throw new ArgumentNullException("Memory");
+
+                _Memory = value;
+            }
+        }
 
         private MemoryAccessMode[] memoryAccessModes = new MemoryAccessMode[MemorySpaceSize];
 
@@ -127,7 +155,21 @@ namespace Konamiman.Z80dotNet
             return memoryAccessModes[address];
         }
 
-        public IMemory PortsSpace { get; private set; }
+        private IMemory _PortsSpace;
+        public IMemory PortsSpace
+        {
+            get
+            {
+                return _PortsSpace;
+            }
+            set
+            {
+                if(value == null)
+                    throw new ArgumentNullException("PortsSpace");
+
+                _PortsSpace = value;
+            }
+        }
 
         private MemoryAccessMode[] portsAccessModes = new MemoryAccessMode[PortSpaceSize];
 
@@ -185,9 +227,39 @@ namespace Konamiman.Z80dotNet
             return portWaitStates[portNumber];
         }
 
-        public IZ80InstructionExecutor InstructionExecutor { get; set; }
+        private IZ80InstructionExecutor _InstructionExecutor;
+        public IZ80InstructionExecutor InstructionExecutor
+        {
+            get
+            {
+                return _InstructionExecutor;
+            }
+            set
+            {
+                if(value == null)
+                    throw new ArgumentNullException("InstructionExecutor");
 
-        public IClockSynchronizationHelper ClockSynchronizationHelper { get; set; }
+                _InstructionExecutor = value;
+                _InstructionExecutor.ProcessorAgent = this;
+            }
+        }
+
+        private IClockSynchronizationHelper _ClockSynchronizationHelper;
+        public IClockSynchronizationHelper ClockSynchronizationHelper
+        {
+            get
+            {
+                return _ClockSynchronizationHelper;
+            }
+            set
+            {
+                if(value == null)
+                    throw new ArgumentNullException("ClockSynchronizationHelper");
+
+                _ClockSynchronizationHelper = value;
+                _ClockSynchronizationHelper.EffecttiveClockSpeedInMHz = ClockFrequencyInMHz * ClockSpeedFactor;
+            }
+        }
 
         public event EventHandler<MemoryAccessEventArgs> MemoryAccess;
 

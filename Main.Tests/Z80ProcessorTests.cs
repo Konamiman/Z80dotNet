@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using Moq;
 using NUnit.Framework;
 using Ploeh.AutoFixture;
 
@@ -337,5 +338,96 @@ namespace Konamiman.Z80dotNet.Tests
             Assert.Throws<ArgumentException>(
                 () => Sut.SetPortWaitStates(0, -1, value));
         }
+
+        [Test]
+        public void Can_set_Memory_to_non_null_value()
+        {
+            var value = new Mock<IMemory>().Object;
+            Sut.Memory = value;
+            Assert.AreEqual(value, Sut.Memory);
+        }
+
+        [Test]
+        public void Cannot_set_Memory_to_null()
+        {
+            Assert.Throws<ArgumentNullException>(() => Sut.Memory = null);
+        }
+
+        [Test]
+        public void Can_set_Registers_to_non_null_value()
+        {
+            var value = new Mock<IZ80Registers>().Object;
+            Sut.Registers = value;
+            Assert.AreEqual(value, Sut.Registers);
+        }
+
+        [Test]
+        public void Cannot_set_Registers_to_null()
+        {
+            Assert.Throws<ArgumentNullException>(() => Sut.Registers = null);
+        }
+
+        [Test]
+        public void Can_set_PortsSpace_to_non_null_value()
+        {
+            var value = new Mock<IMemory>().Object;
+            Sut.PortsSpace = value;
+            Assert.AreEqual(value, Sut.PortsSpace);
+        }
+
+        [Test]
+        public void Cannot_set_PortsSpace_to_null()
+        {
+            Assert.Throws<ArgumentNullException>(() => Sut.PortsSpace = null);
+        }
+
+        [Test]
+        public void Can_set_InstructionExecutor_to_non_null_value()
+        {
+            var value = new Mock<IZ80InstructionExecutor>().Object;
+            Sut.InstructionExecutor = value;
+            Assert.AreEqual(value, Sut.InstructionExecutor);
+        }
+
+        [Test]
+        public void Cannot_set_InstructionExecutor_to_null()
+        {
+            Assert.Throws<ArgumentNullException>(() => Sut.InstructionExecutor = null);
+        }
+
+        [Test]
+        public void Sets_InstructionExecutor_agent_to_self()
+        {
+            var mock = new Mock<IZ80InstructionExecutor>();
+            Sut.InstructionExecutor = mock.Object;
+
+            mock.VerifySet(m => m.ProcessorAgent = Sut);
+        }
+
+        [Test]
+        public void Can_set_ClockSynchronizationHelper_to_non_null_value()
+        {
+            var value = new Mock<IClockSynchronizationHelper>().Object;
+            Sut.ClockSynchronizationHelper = value;
+            Assert.AreEqual(value, Sut.ClockSynchronizationHelper);
+        }
+
+        [Test]
+        public void Cannot_set_ClockSynchronizationHelper_to_null()
+        {
+            Assert.Throws<ArgumentNullException>(() => Sut.ClockSynchronizationHelper = null);
+        }
+
+        [Test]
+        public void Sets_ClockSynchronizationHelper_clockSpeed_to_processor_speed_by_speed_factor()
+        {
+            var mock = new Mock<IClockSynchronizationHelper>();
+            Sut.ClockFrequencyInMHz = 2;
+            Sut.ClockSpeedFactor = 3;
+            Sut.ClockSynchronizationHelper = mock.Object;
+
+            mock.VerifySet(m => m.EffecttiveClockSpeedInMHz = 2 * 3);
+        }
+
     }
 }

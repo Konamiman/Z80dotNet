@@ -190,7 +190,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// Gets or sets the visible memory for the processor.
         /// </summary>
-        IMemory Memory { get; }
+        IMemory Memory { get; set; }
 
         /// <summary>
         /// Sets the mode of a portion of the visible memory.
@@ -213,7 +213,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// Gets or sets the visible ports space for the processor.
         /// </summary>
-        IMemory PortsSpace { get; }
+        IMemory PortsSpace { get; set; }
 
         /// <summary>
         /// Sets the access mode of a portion of the visible ports space.
