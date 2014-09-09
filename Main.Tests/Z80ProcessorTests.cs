@@ -460,5 +460,34 @@ namespace Konamiman.Z80dotNet.Tests
                 Sut.ClockFrequencyInMHz = 101;
             });
         }
+
+        [Test]
+        public void Can_set_clock_speed_and_clock_factor_combination_down_to_1_KHz()
+        {
+            Sut.ClockFrequencyInMHz = 0.1M;
+            Sut.ClockSpeedFactor = 0.01M;
+
+            Assert.AreEqual(Sut.ClockFrequencyInMHz, 0.1M);
+            Assert.AreEqual(Sut.ClockSpeedFactor, 0.01M);
+        }
+
+        [Test]
+        public void Cannot_set_clock_speed_and_clock_factor_combination_under_1_KHz()
+        {
+            Sut.ClockFrequencyInMHz = 1;
+            Sut.ClockSpeedFactor = 1;
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                Sut.ClockFrequencyInMHz = 1;
+                Sut.ClockSpeedFactor = 0.0009M;
+            });
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                Sut.ClockSpeedFactor = 0.0009M;
+                Sut.ClockFrequencyInMHz = 1;
+            });
+        }
     }
 }

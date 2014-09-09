@@ -182,7 +182,7 @@ namespace Konamiman.Z80dotNet
 
         private decimal effectiveClockFrequency;
 
-        private decimal _ClockFrequencyInMHz = 0;
+        private decimal _ClockFrequencyInMHz = 1;
         public decimal ClockFrequencyInMHz
         {
             get
@@ -199,13 +199,14 @@ namespace Konamiman.Z80dotNet
         private void SetEffectiveClockFrequency(decimal clockFrequency, decimal clockSpeedFactor)
         {
             decimal effectiveClockFrequency = clockFrequency * clockSpeedFactor;
-            if(effectiveClockFrequency > MaxEffectiveClockSpeed)
+            if((effectiveClockFrequency > MaxEffectiveClockSpeed) ||
+                (effectiveClockFrequency < MinEffectiveClockSpeed))
                 throw new ArgumentException(string.Format("Clock frequency multiplied by clock speed factor must be a number between {0} and {1}", MinEffectiveClockSpeed, MaxEffectiveClockSpeed));
 
             this.effectiveClockFrequency = effectiveClockFrequency;
         }
 
-        private decimal _ClockSpeedFactor = 0;
+        private decimal _ClockSpeedFactor = 1;
         public decimal ClockSpeedFactor
         {
             get
