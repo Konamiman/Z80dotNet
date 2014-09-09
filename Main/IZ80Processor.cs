@@ -40,7 +40,7 @@ namespace Konamiman.Z80dotNet
     /// <item><description><see cref="IZ80Processor.Registers"/> = an instance of <see cref="Z80Registers"/></description></item>
     /// <item><description>Memory and ports access modes = all <see cref="MemoryAccessMode.ReadAndWrite"/></description></item>
     /// <item><description><see cref="IZ80Processor.InstructionExecutor"/> = an instance of <see cref="Z80InstructionExecutor"/></description></item>
-    /// <item><description><see cref="IZ80Processor.PeriodWaiter"/> = an instance of <see cref="PeriodWaiter"/></description></item>
+    /// <item><description><see cref="IZ80Processor.ClockSynchronizationHelper"/> = an instance of <see cref="ClockSynchronizationHelper"/></description></item>
     /// </list>
     /// </para>
     /// </remarks>
@@ -337,7 +337,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// Gets or sets the period waiter used to achieve proper timing on the execution flow.
         /// </summary>
-        IClockSynchronizationHelper PeriodWaiter { get; set; }
+        IClockSynchronizationHelper ClockSynchronizationHelper { get; set; }
 
         #endregion
 

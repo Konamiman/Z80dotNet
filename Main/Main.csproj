@@ -45,7 +45,7 @@
     <Compile Include="Bit.cs" />
     <Compile Include="IExecutionStopper.cs" />
     <Compile Include="InstructionFetchFinishedEventArgs.cs" />
-    <Compile Include="IPeriodWaiter.cs" />
+    <Compile Include="IClockSynchronizationHelper.cs" />
     <Compile Include="IZ80InstructionExecutor.cs" />
     <Compile Include="IMainZ80Registers.cs" />
     <Compile Include="IMemory.cs" />
@@ -57,7 +57,7 @@
     <Compile Include="MemoryAccessEventArgs.cs" />
     <Compile Include="MemoryAccessEventType.cs" />
     <Compile Include="MemoryAccessMode.cs" />
-    <Compile Include="PeriodWaiter.cs" />
+    <Compile Include="ClockSynchronizationHelper.cs" />
     <Compile Include="PlainMemory.cs" />
     <Compile Include="ProcessorEventArgs.cs" />
     <Compile Include="ProcessorState.cs" />

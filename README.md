@@ -58,7 +58,7 @@ The following chain of operations is followed for instructions execution after t
 5. The `BeforeInstructionExecution` event is triggered, with the fetched opcode bytes in its `BeforeInstructionExecutionEventArgs`.
 6. The code of the `InstructionExecutor.Execute` method processes the instruction, using the members of its `ProcessorAgent` as appropriate to access registers, memory and ports. It can request execution termination by invoking `ProcessorAgent.Stop` (the default implementation of `IZ80InstructionExecutor` does never do this). It returns the count of T states required to execute the instruction.
 7. The `AfterInstructionExecution` event is triggered. The code listening the event has an opportunity to request execution termination by invoking `AfterInstructionExecutionEventArgs.ExecutionStopper.Stop`.
-8. `IClockSynchronizationHelper.TryWait` is executed, passing the value returned by `InstructionExecutor.Execute` plus any additional extra wait states as the T states count.
+8. `ClockSynchronizationHelper.TryWait` is executed, passing the value returned by `InstructionExecutor.Execute` plus any additional extra wait states as the T states count.
 9. `TStatesElapsedSinceStart` and `TStatesElapsedSinceReset` are increased by the value returned by `InstructionExecutor.Execute`.
 10. If `Stop` was invoked in step 6 or in step 7; or if the instruction was RET and `AutoStopOnRetWithStackEmpty` is true; or if the instruction was HALT, interrupts are disabled and `AutoStopOnDiPlusHalt` is true; the `Start` method returns.
 11. Start again in step 1.

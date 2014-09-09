@@ -39,7 +39,7 @@ namespace Konamiman.Z80dotNet
                 ProcessorAgent = this
             };
 
-            PeriodWaiter = new ClockSynchronizationHelper();
+            ClockSynchronizationHelper = new ClockSynchronizationHelper();
         }
 
         public void Start(object globalState = null)
@@ -201,7 +201,7 @@ namespace Konamiman.Z80dotNet
 
         public IZ80InstructionExecutor InstructionExecutor { get; set; }
 
-        public IClockSynchronizationHelper PeriodWaiter { get; set; }
+        public IClockSynchronizationHelper ClockSynchronizationHelper { get; set; }
 
         public event EventHandler<MemoryAccessEventArgs> MemoryAccess;
 
