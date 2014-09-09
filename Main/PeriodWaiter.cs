@@ -7,12 +7,9 @@ namespace Konamiman.Z80dotNet
     /// </summary>
     public class PeriodWaiter : IPeriodWaiter
     {
-        public object StartPeriod(int effectiveClockSpeedInMHz)
-        {
-            throw new NotImplementedException();
-        }
+        public int EffecttiveClockSpeedInMHz { get; set; }
 
-        public void WaitToEndOfPeriod(object startPeriodState, int periodLengthInCycles)
+        public void PeriodElapsed(int periodLengthInCycles)
         {
             throw new NotImplementedException();
         }
