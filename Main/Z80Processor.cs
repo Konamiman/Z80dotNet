@@ -62,6 +62,29 @@ namespace Konamiman.Z80dotNet
         private void InstructionExecutionLoop()
         {
             executionContext = new InstructionExecutionContext();
+            StopReason = StopReason.NotApplicable;
+            State = ProcessorState.Running;
+
+            while (!executionContext.MustStop)
+            {
+                var opcode = FetchNextOpcode();
+                InstructionExecutor.Execute(opcode);
+                if(opcode == 0xC9)
+                    executionContext.StopReason = StopReason.RetWithStackEmpty;
+            }
+
+            //TODO: Fire Before and After instruction execution events
+            //TODO: Check for RetWithStackEmpty
+            //TODO: Check for DiPlusHalt
+            //TODO: Count extra T states and wait after instruction execution
+            //TODO: Catch InstructionFetchFinished event, prevent further opcode fetches
+
+            this.StopReason = executionContext.StopReason;
+            this.State =
+                StopReason == StopReason.PauseInvoked
+                    ? ProcessorState.Paused
+                    : ProcessorState.Stopped;
+            executionContext = null;
         }
 
         public void Reset()
@@ -468,14 +491,21 @@ namespace Konamiman.Z80dotNet
                 MemoryAccessEventType.AfterPortWrite);
         }
 
-        public void SetInterruptMode(int interruptMode)
+        public void SetInterruptMode(byte interruptMode)
         {
-            throw new NotImplementedException();
+            FailIfNoInstructionExecuting();
+
+            this.InterruptMode = interruptMode;
         }
 
         public void Stop(bool isPause = false)
         {
-            throw new NotImplementedException();
+            FailIfNoInstructionExecuting();
+
+            executionContext.StopReason = 
+                isPause ? 
+                StopReason.PauseInvoked :
+                StopReason.StopInvoked;
         }
 
         #endregion
@@ -484,8 +514,25 @@ namespace Konamiman.Z80dotNet
 
         protected InstructionExecutionContext executionContext;
 
+        /// <summary>
+        /// Internal class used to keep track of the current instruction execution.
+        /// </summary>
         protected class InstructionExecutionContext
         {
+            public InstructionExecutionContext()
+            {
+                StopReason = StopReason.NotApplicable;
+            }
+
+            public StopReason StopReason { get; set; }
+
+            public bool MustStop
+            {
+                get
+                {
+                    return StopReason != StopReason.NotApplicable;
+                }
+            }
         }
 
         #endregion

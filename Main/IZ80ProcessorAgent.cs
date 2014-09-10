@@ -50,6 +50,6 @@
         /// </summary>
         /// <param name="interruptMode">The new interrupt mode.</param>
         /// <exception cref="System.InvalidOperationException">Attempt to set a value other than 0, 1 or 2</exception>
-        void SetInterruptMode(int interruptMode);
+        void SetInterruptMode(byte interruptMode);
     }
 }
