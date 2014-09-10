@@ -390,7 +390,35 @@ namespace Konamiman.Z80dotNet
 
         public void WriteToMemory(ushort address, byte value)
         {
-            throw new NotImplementedException();
+            WritetoMemoryOrPort(
+                address,
+                value,
+                Memory,
+                GetMemoryAccessMode(address),
+                MemoryAccessEventType.BeforeMemoryWrite,
+                MemoryAccessEventType.AfterMemoryWrite);
+        }
+
+        private void WritetoMemoryOrPort(
+            ushort address,
+            byte value,
+            IMemory memory,
+            MemoryAccessMode accessMode,
+            MemoryAccessEventType beforeEventType,
+            MemoryAccessEventType afterEventType)
+        {
+            var beforeEventArgs = FireMemoryAccessEvent(beforeEventType, address, value);
+
+            if(!beforeEventArgs.CancelMemoryAccess &&
+                (accessMode == MemoryAccessMode.ReadAndWrite || accessMode == MemoryAccessMode.WriteOnly))
+                memory[address] = beforeEventArgs.Value;
+
+            FireMemoryAccessEvent(
+                afterEventType, 
+                address, 
+                beforeEventArgs.Value, 
+                beforeEventArgs.LocalUserState,
+                beforeEventArgs.CancelMemoryAccess);
         }
 
         public byte ReadFromPort(byte portNumber)
@@ -405,7 +433,13 @@ namespace Konamiman.Z80dotNet
 
         public void WriteToPort(byte portNumber, byte value)
         {
-            throw new NotImplementedException();
+            WritetoMemoryOrPort(
+                portNumber,
+                value,
+                PortsSpace,
+                GetPortAccessMode(portNumber),
+                MemoryAccessEventType.BeforePortWrite,
+                MemoryAccessEventType.AfterPortWrite);
         }
 
         public void SetInterruptMode(int interruptMode)
