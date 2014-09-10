@@ -320,21 +320,34 @@ namespace Konamiman.Z80dotNet
 
         public byte ReadFromMemory(ushort address)
         {
-            var beforeEventArgs = FireMemoryAccessEvent(
-                MemoryAccessEventType.BeforeMemoryRead, address, 0xFF);
+            return ReadFromMemoryOrPort(
+                address, 
+                Memory, 
+                GetMemoryAccessMode(address),
+                MemoryAccessEventType.BeforeMemoryRead,
+                MemoryAccessEventType.AfterMemoryRead);
+        }
 
-            var accessMode = GetMemoryAccessMode(address);
+        private byte ReadFromMemoryOrPort(
+            ushort address,
+            IMemory memory,
+            MemoryAccessMode accessMode,
+            MemoryAccessEventType beforeEventType,
+            MemoryAccessEventType afterEventType)
+        {
+            var beforeEventArgs = FireMemoryAccessEvent(beforeEventType, address, 0xFF);
+
             byte value;
             if(!beforeEventArgs.CancelMemoryAccess && 
                 (accessMode == MemoryAccessMode.ReadAndWrite || accessMode == MemoryAccessMode.ReadOnly))
-                value = Memory[address];
+                value = memory[address];
             else
                 value = beforeEventArgs.Value;
 
-            var afterEventArgs = FireMemoryAccessEvent(
-                MemoryAccessEventType.AfterMemoryRead, address, value, beforeEventArgs.CancelMemoryAccess);
+            var afterEventArgs = FireMemoryAccessEvent(afterEventType, address, value, beforeEventArgs.CancelMemoryAccess);
             return afterEventArgs.Value;
         }
+
 
         MemoryAccessEventArgs FireMemoryAccessEvent(
             MemoryAccessEventType eventType,
@@ -355,7 +368,12 @@ namespace Konamiman.Z80dotNet
 
         public byte ReadFromPort(byte portNumber)
         {
-            throw new NotImplementedException();
+            return ReadFromMemoryOrPort(
+                portNumber, 
+                PortsSpace, 
+                GetPortAccessMode(portNumber),
+                MemoryAccessEventType.BeforePortRead,
+                MemoryAccessEventType.AfterPortRead);
         }
 
         public void WriteToPort(byte portNumber, byte value)

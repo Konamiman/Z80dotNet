@@ -35,6 +35,8 @@ namespace Konamiman.Z80dotNet.Tests
         [Test]
         [TestCase(MemoryAccessMode.ReadAndWrite, false)]
         [TestCase(MemoryAccessMode.ReadOnly, false)]
+        [TestCase(MemoryAccessMode.ReadAndWrite, true)]
+        [TestCase(MemoryAccessMode.ReadOnly, true)]
         public void ReadFromMemory_accesses_memory_if_memory_mode_is_ReadAndWrite_or_ReadOnly(MemoryAccessMode accessMode, bool isPort)
         {
             var address = Fixture.Create<byte>();
@@ -44,7 +46,7 @@ namespace Konamiman.Z80dotNet.Tests
             memory.Setup(m => m[address]).Returns(value);
             SetAccessMode(address, accessMode, isPort);
 
-            var actual = Sut.ReadFromMemory(address);
+            var actual = Read(address, isPort);
 
             Assert.AreEqual(value, actual);
             memory.Verify(m => m[address]);
@@ -60,7 +62,9 @@ namespace Konamiman.Z80dotNet.Tests
 
         [Test]
         [TestCase(MemoryAccessMode.NotConnected, false)]
-        [TestCase(MemoryAccessMode.WriteOnly, false)]
+        [TestCase(MemoryAccessMode.WriteOnly, false)]       
+        [TestCase(MemoryAccessMode.NotConnected, true)]
+        [TestCase(MemoryAccessMode.WriteOnly, true)]
         public void ReadFromMemory_does_not_access_memory_if_memory_mode_is_NotConnected_or_WriteOnly(MemoryAccessMode accessMode, bool isPort)
         {
             var address = Fixture.Create<byte>();
@@ -83,6 +87,7 @@ namespace Konamiman.Z80dotNet.Tests
 
         [Test]
         [TestCase(false)]
+        [TestCase(true)]
         public void ReadFromMemory_fires_Before_event_with_appropriate_address_and_value(bool isPort)
         {
             var address = Fixture.Create<byte>();
@@ -115,6 +120,7 @@ namespace Konamiman.Z80dotNet.Tests
 
         [Test]
         [TestCase(false)]
+        [TestCase(true)]
         public void ReadFromMemory_fires_After_event_with_appropriate_address_and_value_if_memory_is_accessed(bool isPort)
         {
             var address = Fixture.Create<byte>();
@@ -152,6 +158,7 @@ namespace Konamiman.Z80dotNet.Tests
 
         [Test]
         [TestCase(false)]
+        [TestCase(true)]
         public void ReadFromMemory_fires_After_event_with_same_value_as_Before_event_if_memory_is_not_accessed(bool isPort)
         {
             var address = Fixture.Create<byte>();
@@ -188,6 +195,7 @@ namespace Konamiman.Z80dotNet.Tests
         
         [Test]
         [TestCase(false)]
+        [TestCase(true)]
         public void ReadFromMemory_returns_value_set_in_After_event(bool isPort)
         {
             var address = Fixture.Create<byte>();
@@ -216,6 +224,7 @@ namespace Konamiman.Z80dotNet.Tests
 
         [Test]
         [TestCase(false)]
+        [TestCase(true)]
         public void ReadFromMemory_does_not_access_memory_if_Cancel_is_set_from_Before_event(bool isPort)
         {
             var address = Fixture.Create<byte>();
@@ -240,6 +249,7 @@ namespace Konamiman.Z80dotNet.Tests
 
         [Test]
         [TestCase(false)]
+        [TestCase(true)]
         public void ReadFromMemory_propagates_Cancel_from_Before_to_after_event(bool isPort)
         {
             var address = Fixture.Create<byte>();
