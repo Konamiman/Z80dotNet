@@ -276,5 +276,31 @@ namespace Konamiman.Z80dotNet.Tests
 
             Assert.IsTrue(eventFired);
         }
+
+        [Test]
+        public void FetchNextOpcode_reads_from_address_pointed_by_PC()
+        {
+            var address = Fixture.Create<ushort>();
+            var value = Fixture.Create<byte>();
+
+            Memory.Setup(m => m[address]).Returns(value);
+            Sut.Registers.PC = address.ToShort();
+
+            var actual = Sut.FetchNextOpcode();
+
+            Assert.AreEqual(value, actual);
+            Memory.Verify(m => m[address]);
+        }
+
+        [Test]
+        public void FetchNextOpcode_increases_PC_by_one()
+        {
+            var address = Fixture.Create<ushort>();
+            Sut.Registers.PC = address.ToShort();
+
+            Sut.FetchNextOpcode();
+
+            Assert.AreEqual(address.ToShort().Inc(), Sut.Registers.PC);
+        }
     }
 }

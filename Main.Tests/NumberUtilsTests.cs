@@ -194,5 +194,35 @@ namespace Konamiman.Z80dotNet.Tests
         {
             Assert.AreEqual((short)-32768, 0x8000.ToShort());
         }
+
+        [Test]
+        public void ToUshort_works_for_number_below_zero()
+        {
+            Assert.AreEqual((ushort)0xFFFF, (-1).ToUShort());
+        }
+
+        [Test]
+        public void ToUshort_works_for_number_above_zero()
+        {
+            Assert.AreEqual((ushort)1, 1.ToUShort());
+        }
+
+        [Test]
+        public void ToUshort_works_for_zero()
+        {
+            Assert.AreEqual((ushort)0, 0.ToUShort());
+        }
+
+        [Test]
+        public void Inc_works_for_non_boundary_values()
+        {
+            Assert.AreEqual(2, ((short)1).Inc());
+        }
+
+        [Test]
+        public void Inc_works_for_boundary_values()
+        {
+            Assert.AreEqual(0, 0xFFFF.ToShort().Inc());
+        }
     }
 }

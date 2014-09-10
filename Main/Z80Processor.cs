@@ -315,7 +315,9 @@ namespace Konamiman.Z80dotNet
 
         public byte FetchNextOpcode()
         {
-            throw new NotImplementedException();
+            var value = ReadFromMemory(Registers.PC.ToUShort());
+            Registers.PC = Registers.PC.Inc();
+            return value;
         }
 
         public byte ReadFromMemory(ushort address)

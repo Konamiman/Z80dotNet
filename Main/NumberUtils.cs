@@ -145,13 +145,53 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// Converts a number to short by substractin 65536 when the number is 32768 or higher.
+        /// Converts a number to short by substracting 65536 when the number is 32768 or higher.
         /// </summary>
         /// <param name="value">Number to convert</param>
         /// <returns>Converted number</returns>
         public static short ToShort(this int value)
         {
             return (value >= 32768 ? (short)(value - 65536) : (short)value);
+        }
+
+        /// <summary>
+        /// Converts a number to short by substracting 65536 when the number is 32768 or higher.
+        /// </summary>
+        /// <param name="value">Number to convert</param>
+        /// <returns>Converted number</returns>
+        public static short ToShort(this ushort value)
+        {
+            return (value >= 32768 ? (short)(value - 65536) : (short)value);
+        }
+
+        /// <summary>
+        /// Converts a number to ushort by adding 65536 when the number is negative.
+        /// </summary>
+        /// <param name="value">Number to convert</param>
+        /// <returns>Converted number</returns>
+        public static ushort ToUShort(this int value)
+        {
+            return (value < 0 ? (ushort)(value + 65536) : (ushort)value);
+        }
+
+        /// <summary>
+        /// Converts a number to ushort by adding 65536 when the number is negative.
+        /// </summary>
+        /// <param name="value">Number to convert</param>
+        /// <returns>Converted number</returns>
+        public static ushort ToUShort(this short value)
+        {
+            return (value < 0 ? (ushort)(value + 65536) : (ushort)value);
+        }
+
+        /// <summary>
+        /// Increases a number and turns it into zero if it has its maximum value.
+        /// </summary>
+        /// <param name="value">Number to increase</param>
+        /// <returns>Increased number, or zero</returns>
+        public static short Inc(this short value)
+        {
+            return ((((int)value)+1) & 0xFFFF).ToShort();
         }
     }
 }
