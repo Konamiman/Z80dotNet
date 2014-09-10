@@ -15,6 +15,6 @@ namespace Konamiman.Z80dotNet
         /// This property is always null at the beginning of the <c>Before*</c> events.
         /// The client code can set this property to any value in these events, and the value
         /// will be replicated in the same property of the corresponding <c>After*</c> event.</remarks>
-        object LocalUserState { get; set; }
+        public object LocalUserState { get; set; }
     }
 }

@@ -32,6 +32,8 @@ namespace Konamiman.Z80dotNet.Tests
             Assert.IsNotNull(Sut);
         }
 
+        #region ReadFromMemory and ReadFromPort
+
         [Test]
         [TestCase(MemoryAccessMode.ReadAndWrite, false)]
         [TestCase(MemoryAccessMode.ReadOnly, false)]
@@ -276,6 +278,62 @@ namespace Konamiman.Z80dotNet.Tests
 
             Assert.IsTrue(eventFired);
         }
+        
+        [Test]
+        [TestCase(false)]
+        [TestCase(true)]
+        public void ReadFromMemory_enters_with_null_LocalState(bool isPort)
+        {
+            var address = Fixture.Create<byte>();
+            var memory = isPort ? Ports : Memory;
+
+            var eventFired = false;
+
+            Sut.MemoryAccess += (sender, args) =>
+            {
+                if(args.EventType == BeforeReadEventType(isPort))
+                {
+                    Assert.IsNull(args.LocalUserState);
+                }
+            };
+
+            Read(address, isPort);
+
+            Assert.IsTrue(eventFired);
+        }
+
+        [Test]
+        [TestCase(false)]
+        [TestCase(true)]
+        public void ReadFromMemory_passes_LocalState_from_Before_to_After(bool isPort)
+        {
+            var address = Fixture.Create<byte>();
+            var localUserState = Fixture.Create<object>();
+            var memory = isPort ? Ports : Memory;
+
+            var eventFired = false;
+
+            Sut.MemoryAccess += (sender, args) =>
+            {
+                if(args.EventType == BeforeReadEventType(isPort))
+                {
+                    args.LocalUserState = localUserState;
+                }
+                else if(args.EventType == AfterReadEventType(isPort))
+                {
+                    eventFired = true;
+                    Assert.AreEqual(localUserState, args.LocalUserState);
+                }
+            };
+
+            Read(address, isPort);
+
+            Assert.IsTrue(eventFired);
+        }
+
+        #endregion
+
+        #region FetchNextOpcode
 
         [Test]
         public void FetchNextOpcode_reads_from_address_pointed_by_PC()
@@ -302,5 +360,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Assert.AreEqual(address.ToShort().Inc(), Sut.Registers.PC);
         }
+
+        #endregion
     }
 }

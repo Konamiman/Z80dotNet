@@ -42,6 +42,8 @@ namespace Konamiman.Z80dotNet
             State = ProcessorState.Stopped;
         }
 
+        #region Processor control
+
         public void Start(object globalState = null)
         {
             throw new NotImplementedException();
@@ -79,6 +81,10 @@ namespace Konamiman.Z80dotNet
             throw new NotImplementedException();
         }
 
+        #endregion
+
+        #region Information and state
+
         public ulong TStatesElapsedSinceStart { get; private set; }
 
         public ulong TStatesElapsedSinceReset { get; private set; }
@@ -106,6 +112,10 @@ namespace Konamiman.Z80dotNet
                 _InterruptMode = value;
             }
         }
+
+        #endregion
+
+        #region Inside and outside world
 
         private IZ80Registers _Registers;
         public IZ80Registers Registers
@@ -146,6 +156,17 @@ namespace Konamiman.Z80dotNet
              SetArrayContents(memoryAccessModes, startAddress, length, mode);
         }
 
+        private void SetArrayContents<T>(T[] array, ushort startIndex, int length, T value)
+        {
+            if(length < 0)
+                throw new ArgumentException("length can't be negative");
+            if(startIndex + length > array.Length)
+                throw new ArgumentException("start + length go beyond " + (array.Length - 1));
+
+            var data = Enumerable.Repeat(value, length).ToArray();
+            Array.Copy(data, 0, array, startIndex, length);
+        }
+
         public MemoryAccessMode GetMemoryAccessMode(ushort address)
         {
             return memoryAccessModes[address];
@@ -179,6 +200,9 @@ namespace Konamiman.Z80dotNet
             return portsAccessModes[portNumber];
         }
 
+        #endregion
+
+        #region Configuration
 
         private decimal effectiveClockFrequency;
 
@@ -294,22 +318,17 @@ namespace Konamiman.Z80dotNet
             }
         }
 
+        #endregion
+
+        #region Events
+
         public event EventHandler<MemoryAccessEventArgs> MemoryAccess;
 
         public event EventHandler<BeforeInstructionExecutionEventArgs> BeforeInstructionExecution;
 
         public event EventHandler<AfterInstructionExecutionEventArgs> AfterInstructionExecution;
 
-        private void SetArrayContents<T>(T[] array, ushort startIndex, int length, T value)
-        {
-            if(length < 0)
-                throw new ArgumentException("length can't be negative");
-            if(startIndex + length > array.Length)
-                throw new ArgumentException("start + length go beyond " + (array.Length - 1));
-
-            var data = Enumerable.Repeat(value, length).ToArray();
-            Array.Copy(data, 0, array, startIndex, length);
-        }
+        #endregion
 
         #region Members of IZ80ProcessorAgent
 
@@ -346,7 +365,12 @@ namespace Konamiman.Z80dotNet
             else
                 value = beforeEventArgs.Value;
 
-            var afterEventArgs = FireMemoryAccessEvent(afterEventType, address, value, beforeEventArgs.CancelMemoryAccess);
+            var afterEventArgs = FireMemoryAccessEvent(
+                afterEventType, 
+                address,
+                value,
+                beforeEventArgs.LocalUserState,
+                beforeEventArgs.CancelMemoryAccess);
             return afterEventArgs.Value;
         }
 
@@ -355,9 +379,10 @@ namespace Konamiman.Z80dotNet
             MemoryAccessEventType eventType,
             ushort address, 
             byte value, 
+            object localUserState = null,
             bool cancelMemoryAccess = false)
         {
-            var eventArgs = new MemoryAccessEventArgs(eventType, address, value, cancelMemoryAccess);
+            var eventArgs = new MemoryAccessEventArgs(eventType, address, value, localUserState, cancelMemoryAccess);
             if(MemoryAccess != null)
                 MemoryAccess(this, eventArgs);
             return eventArgs;
