@@ -100,7 +100,7 @@ namespace Konamiman.Z80dotNet
             }
             set
             {
-                if(value>2)
+                if(value > 2)
                     throw new ArgumentException("Interrupt mode can be set to 0, 1 or 2 only");
 
                 _InterruptMode = value;
@@ -320,7 +320,32 @@ namespace Konamiman.Z80dotNet
 
         public byte ReadFromMemory(ushort address)
         {
-            throw new NotImplementedException();
+            var beforeEventArgs = FireMemoryAccessEvent(
+                MemoryAccessEventType.BeforeMemoryRead, address, 0xFF);
+
+            var accessMode = GetMemoryAccessMode(address);
+            byte value;
+            if(!beforeEventArgs.CancelMemoryAccess && 
+                (accessMode == MemoryAccessMode.ReadAndWrite || accessMode == MemoryAccessMode.ReadOnly))
+                value = Memory[address];
+            else
+                value = beforeEventArgs.Value;
+
+            var afterEventArgs = FireMemoryAccessEvent(
+                MemoryAccessEventType.AfterMemoryRead, address, value, beforeEventArgs.CancelMemoryAccess);
+            return afterEventArgs.Value;
+        }
+
+        MemoryAccessEventArgs FireMemoryAccessEvent(
+            MemoryAccessEventType eventType,
+            ushort address, 
+            byte value, 
+            bool cancelMemoryAccess = false)
+        {
+            var eventArgs = new MemoryAccessEventArgs(eventType, address, value, cancelMemoryAccess);
+            if(MemoryAccess != null)
+                MemoryAccess(this, eventArgs);
+            return eventArgs;
         }
 
         public void WriteToMemory(ushort address, byte value)

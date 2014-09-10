@@ -5,6 +5,14 @@ namespace Konamiman.Z80dotNet
     /// </summary>
     public class MemoryAccessEventArgs : ProcessorEventArgs
     {
+        public MemoryAccessEventArgs(MemoryAccessEventType eventType, ushort address, byte value, bool cancelMemoryAccess = false)
+        {
+            this.EventType = eventType;
+            this.Address = address;
+            this.Value = value;
+            this.CancelMemoryAccess = cancelMemoryAccess;
+        }
+
         /// <summary>
         /// Gets the type of event being processed. 
         /// </summary>

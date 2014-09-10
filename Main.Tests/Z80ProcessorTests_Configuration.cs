@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Diagnostics;
 using Moq;
 using NUnit.Framework;
 using Ploeh.AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests
 {
-    public class Z80ProcessorTests
+    public class Z80ProcessorTests_Configuration
     {
         private const int MemorySpaceSize = 65536;
         private const int PortSpaceSize = 256;
