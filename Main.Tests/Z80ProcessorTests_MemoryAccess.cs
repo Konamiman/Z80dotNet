@@ -9,7 +9,7 @@ namespace Konamiman.Z80dotNet.Tests
 {
     public class Z80ProcessorTests_MemoryAccess
     {
-        Z80Processor Sut { get; set; }
+        Z80ProcessorForTests Sut { get; set; }
         Fixture Fixture { get; set; }
         Mock<IMemory> Memory { get; set; }
         Mock<IMemory> Ports { get; set; }
@@ -19,7 +19,9 @@ namespace Konamiman.Z80dotNet.Tests
         {
             Fixture = new Fixture();
 
-            Sut = new Z80Processor();
+            Sut = new Z80ProcessorForTests();
+            Sut.SetInstructionExecutionContextToNonNull();
+
             Memory = new Mock<IMemory>();
             Sut.Memory = Memory.Object;
             Ports = new Mock<IMemory>();
@@ -657,6 +659,25 @@ namespace Konamiman.Z80dotNet.Tests
             Write(address, value, isPort);
 
             Assert.IsTrue(eventFired);
+        }
+
+        #endregion
+
+        #region Other
+
+        [Test]
+        public void ReadAndWrite_operations_fail_if_not_execution_an_instruction()
+        {
+            var address = Fixture.Create<byte>();
+            var value = Fixture.Create<byte>();
+
+            Sut.SetInstructionExecutionContextToNull();
+
+            Assert.Throws<InvalidOperationException>(() => Sut.ReadFromMemory(address));
+            Assert.Throws<InvalidOperationException>(() => Sut.ReadFromPort(address));
+            Assert.Throws<InvalidOperationException>(() => Sut.FetchNextOpcode());
+            Assert.Throws<InvalidOperationException>(() => Sut.WriteToMemory(address, value));
+            Assert.Throws<InvalidOperationException>(() => Sut.WriteToPort(address, value));
         }
 
         #endregion

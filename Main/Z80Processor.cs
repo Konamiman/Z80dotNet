@@ -44,14 +44,24 @@ namespace Konamiman.Z80dotNet
 
         #region Processor control
 
-        public void Start(object globalState = null)
+        public void Start(object userState = null)
         {
-            throw new NotImplementedException();
+            if(userState != null)
+                this.UserState = userState;
+
+            Reset();
+            
+            InstructionExecutionLoop();
         }
 
         public void Continue()
         {
-            throw new NotImplementedException();
+            InstructionExecutionLoop();
+        }
+
+        private void InstructionExecutionLoop()
+        {
+            executionContext = new InstructionExecutionContext();
         }
 
         public void Reset()
@@ -334,13 +344,23 @@ namespace Konamiman.Z80dotNet
 
         public byte FetchNextOpcode()
         {
+            FailIfNoInstructionExecuting();
+
             var value = ReadFromMemory(Registers.PC.ToUShort());
             Registers.PC = Registers.PC.Inc();
             return value;
         }
 
+        private void FailIfNoInstructionExecuting()
+        {
+            if(executionContext == null)
+                throw new InvalidOperationException("This method can be invoked only when an instruction is being executed.");
+        }
+
         public byte ReadFromMemory(ushort address)
         {
+            FailIfNoInstructionExecuting();
+
             return ReadFromMemoryOrPort(
                 address, 
                 Memory, 
@@ -390,6 +410,8 @@ namespace Konamiman.Z80dotNet
 
         public void WriteToMemory(ushort address, byte value)
         {
+            FailIfNoInstructionExecuting();
+
             WritetoMemoryOrPort(
                 address,
                 value,
@@ -423,6 +445,8 @@ namespace Konamiman.Z80dotNet
 
         public byte ReadFromPort(byte portNumber)
         {
+            FailIfNoInstructionExecuting();
+
             return ReadFromMemoryOrPort(
                 portNumber, 
                 PortsSpace, 
@@ -433,6 +457,8 @@ namespace Konamiman.Z80dotNet
 
         public void WriteToPort(byte portNumber, byte value)
         {
+            FailIfNoInstructionExecuting();
+
             WritetoMemoryOrPort(
                 portNumber,
                 value,
@@ -450,6 +476,16 @@ namespace Konamiman.Z80dotNet
         public void Stop(bool isPause = false)
         {
             throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region Instruction execution context
+
+        protected InstructionExecutionContext executionContext;
+
+        protected class InstructionExecutionContext
+        {
         }
 
         #endregion

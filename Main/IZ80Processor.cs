@@ -58,10 +58,10 @@ namespace Konamiman.Z80dotNet
         /// <see cref="IZ80Processor.AutoStopOnDiPlusHalt"/> is <b>true</b>), or when a RET instruction is executed
         /// and the stack is empty (only if <see cref="IZ80Processor.AutoStopOnRetWithStackEmpty"/> is <b>true</b>).
         /// </remarks>
-        /// <param name="globalState">If this value is not null, it will be copied to the
+        /// <param name="userState">If this value is not null, it will be copied to the
         /// <see cref="IZ80Processor.UserState"/> property.
         /// </param>
-        void Start(object globalState = null);
+        void Start(object userState = null);
 
         /// <summary>
         /// Sets the processor in running state without first doing a reset, thus preserving the state of all the registers.
