@@ -11,7 +11,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// Gets or sets the clock speed of the simulated system, in MHz.
         /// </summary>
-        decimal EffecttiveClockSpeedInMHz { get; set; }
+        decimal EffectiveClockFrequencyInMHz { get; set; }
 
         /// <summary>
         /// Signals that a certain number of clock cycles have elapsed in the simulated system.

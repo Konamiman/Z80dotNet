@@ -7,7 +7,7 @@ namespace Konamiman.Z80dotNet
     /// </summary>
     public class ClockSynchronizationHelper : IClockSynchronizationHelper
     {
-        public decimal EffecttiveClockSpeedInMHz { get; set; }
+        public decimal EffectiveClockFrequencyInMHz { get; set; }
 
         public void TryWait(int periodLengthInCycles)
         {

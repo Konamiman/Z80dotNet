@@ -12,12 +12,8 @@
             executionContext = null;
         }
 
-        public bool HasInstructionExecutionContext
+        protected override void FailIfNoInstructionFetchComplete()
         {
-            get
-            {
-                return executionContext != null;
-            }
         }
     }
 }

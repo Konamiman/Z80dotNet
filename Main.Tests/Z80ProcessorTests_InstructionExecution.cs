@@ -16,7 +16,7 @@ namespace Konamiman.Z80dotNet.Tests
         private const byte NOP_opcode = 0;
         private const byte LD_SP_HL_opcode = 0xF9;
 
-        Z80ProcessorForTests Sut { get; set; }
+        Z80Processor Sut { get; set; }
         Fixture Fixture { get; set; }
         Mock<IClockSynchronizationHelper> clockSyncHelper;
 
@@ -25,7 +25,7 @@ namespace Konamiman.Z80dotNet.Tests
         {
             Fixture = new Fixture();
 
-            Sut = new Z80ProcessorForTests();
+            Sut = new Z80Processor();
             Sut.AutoStopOnRetWithStackEmpty = true;
             Sut.Memory[0] = RET_opcode;
 
@@ -44,11 +44,9 @@ namespace Konamiman.Z80dotNet.Tests
         #region Start, Stop, Pause, Continue
 
         [Test]
-        public void Start_does_a_Reset_and_sets_execution_context()
+        public void Start_does_a_Reset()
         {
             Sut.Registers.PC = Fixture.Create<short>();
-
-            DoBeforeFetch(b => Assert.IsTrue(Sut.HasInstructionExecutionContext));
 
             Sut.Start();
 
@@ -117,7 +115,7 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.Memory[1] = DI_opcode;
             Sut.Memory[2] = RET_opcode;
 
-            DoBeforeFetch(b => { if (b == DI_opcode) Sut.Stop(); });
+            DoAfterFetch(b => { if (b == DI_opcode) Sut.Stop(); });
 
             Sut.Start();
 
@@ -136,7 +134,7 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.Memory[1] = DI_opcode;
             Sut.Memory[2] = RET_opcode;
 
-            DoBeforeFetch(b => { if (b == DI_opcode) Sut.Stop(isPause: true); });
+            DoAfterFetch(b => { if (b == DI_opcode) Sut.Stop(isPause: true); });
 
             Sut.Start();
 
@@ -180,14 +178,6 @@ namespace Konamiman.Z80dotNet.Tests
             AssertExecuted(RET_opcode, 1);
         }
         
-        [Test]
-        public void No_execution_context_after_start_returns()
-        {
-            Sut.Start(null);
-
-            Assert.IsFalse(Sut.HasInstructionExecutionContext);
-        }
-
         [Test]
         public void Cannot_change_interrupt_mode_from_agent_interface_if_no_execution_context()
         {
@@ -392,6 +382,51 @@ namespace Konamiman.Z80dotNet.Tests
 
             Assert.AreEqual(isPause ? StopReason.PauseInvoked : StopReason.StopInvoked, Sut.StopReason);
             Assert.AreEqual(isPause ? ProcessorState.Paused : ProcessorState.Stopped , Sut.State);
+        }
+
+        #endregion
+
+        #region Invoking agent members at the right time
+
+        [Test]
+        public void ProcessorAgent_members_other_than_FetchNextOpcode_can_be_invoked_only_after_instruction_fetch_complete()
+        {
+            var address = Fixture.Create<byte>();
+            var value = Fixture.Create<byte>();
+
+            DoBeforeFetch(b =>
+            {
+                Assert.Throws<InvalidOperationException>(() => Sut.ReadFromMemory(address));
+                Assert.Throws<InvalidOperationException>(() => Sut.ReadFromPort(address));
+                Assert.Throws<InvalidOperationException>(() => Sut.WriteToMemory(address, value));
+                Assert.Throws<InvalidOperationException>(() => Sut.WriteToPort(address, value));
+                Assert.Throws<InvalidOperationException>(() => Sut.SetInterruptMode(0));
+                Assert.Throws<InvalidOperationException>(() => ((IZ80ProcessorAgent)Sut).Registers.ToString());
+                Assert.Throws<InvalidOperationException>(() => Sut.Stop());
+            });
+
+            DoAfterFetch(b =>
+            {
+                Sut.ReadFromMemory(address);
+                Sut.ReadFromPort(address);
+                Sut.WriteToMemory(address, value);
+                Sut.WriteToPort(address, value);
+                Sut.SetInterruptMode(0);
+                var dummy = ((IZ80ProcessorAgent)Sut).Registers;
+                Sut.Stop();
+            });
+
+            Sut.Start();
+        }
+
+        [Test]
+        public void FetchNextOpcode_can_be_invoked_only_before_instruction_fetch_complete()
+        {
+            DoBeforeFetch(b => Sut.FetchNextOpcode());
+
+            DoAfterFetch(b => Assert.Throws<InvalidOperationException>(() => Sut.FetchNextOpcode()));
+
+            Sut.Start();
         }
 
         #endregion

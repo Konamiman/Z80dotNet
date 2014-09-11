@@ -15,14 +15,13 @@ namespace Konamiman.Z80dotNet
         private const decimal MaxEffectiveClockSpeed = 100M;
         private const decimal MinEffectiveClockSpeed = 0.001M;
 
-        private const byte RET_opcode = 0xC9;
-        private const byte HALT_opcode = 0x76;
-
         public Z80Processor()
         {
+            ClockSynchronizationHelper = new ClockSynchronizationHelper();
+
             ClockFrequencyInMHz = 4;
             ClockSpeedFactor = 1;
-
+            
             AutoStopOnDiPlusHalt = false;
             AutoStopOnRetWithStackEmpty = false;
 
@@ -39,8 +38,6 @@ namespace Konamiman.Z80dotNet
             Registers = new Z80Registers();
 
             InstructionExecutor = new Z80InstructionExecutor();
-
-            ClockSynchronizationHelper = new ClockSynchronizationHelper();
 
             StopReason = StopReason.NeverRan;
             State = ProcessorState.Stopped;
@@ -84,7 +81,6 @@ namespace Konamiman.Z80dotNet
             }
 
             //TODO: Count extra T states and wait after instruction execution
-            //TODO: Catch InstructionFetchFinished event, prevent further opcode fetches
 
             this.StopReason = executionContext.StopReason;
             this.State =
@@ -332,6 +328,7 @@ namespace Konamiman.Z80dotNet
                 throw new ArgumentException(string.Format("Clock frequency multiplied by clock speed factor must be a number between {0} and {1}", MinEffectiveClockSpeed, MaxEffectiveClockSpeed));
 
             this.effectiveClockFrequency = effectiveClockFrequency;
+            ClockSynchronizationHelper.EffectiveClockFrequencyInMHz = effectiveClockFrequency;
         }
 
         private decimal _ClockSpeedFactor = 1;
@@ -422,7 +419,7 @@ namespace Konamiman.Z80dotNet
                     throw new ArgumentNullException("ClockSynchronizationHelper");
 
                 _ClockSynchronizationHelper = value;
-                _ClockSynchronizationHelper.EffecttiveClockSpeedInMHz = effectiveClockFrequency;
+                _ClockSynchronizationHelper.EffectiveClockFrequencyInMHz = effectiveClockFrequency;
             }
         }
 
@@ -444,7 +441,17 @@ namespace Konamiman.Z80dotNet
         {
             FailIfNoInstructionExecuting();
 
-            var value = ReadFromMemory(Registers.PC.ToUShort());
+            if(executionContext.FetchComplete)
+                throw new InvalidOperationException("FetchNextOpcode can be invoked only before the InstructionFetchFinished event has been raised.");
+
+            var address = Registers.PC.ToUShort();
+            var value = ReadFromMemoryOrPort(
+                address, 
+                Memory, 
+                GetMemoryAccessMode(address),
+                MemoryAccessEventType.BeforeMemoryRead,
+                MemoryAccessEventType.AfterMemoryRead);
+
             executionContext.OpcodeBytes.Add(value);
             Registers.PC = Registers.PC.Inc();
             return value;
@@ -459,6 +466,7 @@ namespace Konamiman.Z80dotNet
         public byte ReadFromMemory(ushort address)
         {
             FailIfNoInstructionExecuting();
+            FailIfNoInstructionFetchComplete();
 
             return ReadFromMemoryOrPort(
                 address, 
@@ -466,6 +474,12 @@ namespace Konamiman.Z80dotNet
                 GetMemoryAccessMode(address),
                 MemoryAccessEventType.BeforeMemoryRead,
                 MemoryAccessEventType.AfterMemoryRead);
+        }
+        
+        protected virtual void FailIfNoInstructionFetchComplete()
+        {
+            if(!executionContext.FetchComplete)
+                throw new InvalidOperationException("IZ80ProcessorAgent members other than FetchNextOpcode can be invoked only after the InstructionFetchFinished event has been raised.");
         }
 
         private byte ReadFromMemoryOrPort(
@@ -510,6 +524,7 @@ namespace Konamiman.Z80dotNet
         public void WriteToMemory(ushort address, byte value)
         {
             FailIfNoInstructionExecuting();
+            FailIfNoInstructionFetchComplete();
 
             WritetoMemoryOrPort(
                 address,
@@ -545,6 +560,7 @@ namespace Konamiman.Z80dotNet
         public byte ReadFromPort(byte portNumber)
         {
             FailIfNoInstructionExecuting();
+            FailIfNoInstructionFetchComplete();
 
             return ReadFromMemoryOrPort(
                 portNumber, 
@@ -557,6 +573,7 @@ namespace Konamiman.Z80dotNet
         public void WriteToPort(byte portNumber, byte value)
         {
             FailIfNoInstructionExecuting();
+            FailIfNoInstructionFetchComplete();
 
             WritetoMemoryOrPort(
                 portNumber,
@@ -570,6 +587,7 @@ namespace Konamiman.Z80dotNet
         public void SetInterruptMode(byte interruptMode)
         {
             FailIfNoInstructionExecuting();
+            FailIfNoInstructionFetchComplete();
 
             this.InterruptMode = interruptMode;
         }
@@ -577,11 +595,23 @@ namespace Konamiman.Z80dotNet
         public void Stop(bool isPause = false)
         {
             FailIfNoInstructionExecuting();
+            FailIfNoInstructionFetchComplete();
 
             executionContext.StopReason = 
                 isPause ? 
                 StopReason.PauseInvoked :
                 StopReason.StopInvoked;
+        }
+
+        IZ80Registers IZ80ProcessorAgent.Registers
+        {
+            get
+            {
+                if(executionContext != null)
+                    FailIfNoInstructionFetchComplete();
+
+                return _Registers;
+            }
         }
 
         #endregion

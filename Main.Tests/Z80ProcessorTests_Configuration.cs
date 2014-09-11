@@ -428,7 +428,7 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.ClockSpeedFactor = 3;
             Sut.ClockSynchronizationHelper = mock.Object;
 
-            mock.VerifySet(m => m.EffecttiveClockSpeedInMHz = 2 * 3);
+            mock.VerifySet(m => m.EffectiveClockFrequencyInMHz = 2 * 3);
         }
 
         [Test]
