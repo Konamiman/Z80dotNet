@@ -203,5 +203,57 @@ namespace Konamiman.Z80dotNet.Tests
 
             Assert.AreEqual(2, Sut.InterruptMode);
         }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void Auto_stops_when_HALT_on_DI_found_only_if_AutoStopOnDiPlusHalt_is_true(bool autoStopIsEnabled)
+        {
+            Sut.AutoStopOnDiPlusHalt = autoStopIsEnabled;
+
+            Sut.Memory[0] = DI_opcode;
+            Sut.Memory[1] = HALT_opcode;
+            Sut.Memory[2] = RET_opcode;
+
+            executor
+                .Setup(x => x.Execute(DI_opcode))
+                .Callback<byte>(b => executor.Object.ProcessorAgent.Registers.IFF1 = 0)
+                .Returns(0);
+
+            Sut.Start();
+
+            executor.Verify(e => e.Execute(DI_opcode), Times.Once());
+            executor.Verify(e => e.Execute(HALT_opcode), Times.Once());
+            executor.Verify(e => e.Execute(RET_opcode), autoStopIsEnabled ? Times.Never() : Times.Once());
+
+            Assert.AreEqual(autoStopIsEnabled ? StopReason.DiPlusHalt : StopReason.RetWithStackEmpty, Sut.StopReason);
+            Assert.AreEqual(ProcessorState.Stopped , Sut.State);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void Does_not_auto_stop_when_HALT_on_EI_found_regardless_of_AutoStopOnDiPlusHalt_is_true(bool autoStopIsEnabled)
+        {
+            Sut.AutoStopOnDiPlusHalt = autoStopIsEnabled;
+
+            Sut.Memory[0] = DI_opcode;
+            Sut.Memory[1] = HALT_opcode;
+            Sut.Memory[2] = RET_opcode;
+
+            executor
+                .Setup(x => x.Execute(DI_opcode))
+                .Callback<byte>(b => executor.Object.ProcessorAgent.Registers.IFF1 = 1)
+                .Returns(0);
+
+            Sut.Start();
+
+            executor.Verify(e => e.Execute(DI_opcode), Times.Once());
+            executor.Verify(e => e.Execute(HALT_opcode), Times.Once());
+            executor.Verify(e => e.Execute(RET_opcode), Times.Once());
+
+            Assert.AreEqual(StopReason.RetWithStackEmpty, Sut.StopReason);
+            Assert.AreEqual(ProcessorState.Stopped , Sut.State);
+        }
     }
 }

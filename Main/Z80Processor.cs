@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Konamiman.Z80dotNet
@@ -13,6 +14,9 @@ namespace Konamiman.Z80dotNet
 
         private const decimal MaxEffectiveClockSpeed = 100M;
         private const decimal MinEffectiveClockSpeed = 0.001M;
+
+        private const byte RET_opcode = 0xC9;
+        private const byte HALT_opcode = 0x76;
 
         public Z80Processor()
         {
@@ -65,17 +69,21 @@ namespace Konamiman.Z80dotNet
             StopReason = StopReason.NotApplicable;
             State = ProcessorState.Running;
 
-            while (!executionContext.MustStop)
+            while(!executionContext.MustStop)
             {
+                executionContext.StartNewInstruction();
+
                 var opcode = FetchNextOpcode();
                 InstructionExecutor.Execute(opcode);
+
+                CheckAutoStopForHaltOnDi();
+
                 if(opcode == 0xC9)
                     executionContext.StopReason = StopReason.RetWithStackEmpty;
             }
 
             //TODO: Fire Before and After instruction execution events
             //TODO: Check for RetWithStackEmpty
-            //TODO: Check for DiPlusHalt
             //TODO: Count extra T states and wait after instruction execution
             //TODO: Catch InstructionFetchFinished event, prevent further opcode fetches
 
@@ -85,6 +93,25 @@ namespace Konamiman.Z80dotNet
                     ? ProcessorState.Paused
                     : ProcessorState.Stopped;
             executionContext = null;
+        }
+
+        private void CheckAutoStopForHaltOnDi()
+        {
+            if(AutoStopOnDiPlusHalt && executionContext.OpcodeBytes[0] == HALT_opcode && !InterruptsEnabled)
+                executionContext.StopReason = StopReason.DiPlusHalt;
+        }
+
+        private bool InterruptsEnabled
+        {
+            get
+            {
+                return Registers.IFF1 == 1;
+            }
+        }
+        
+        void _InstructionExecutor_InstructionFetchFinished(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         public void Reset()
@@ -329,8 +356,12 @@ namespace Konamiman.Z80dotNet
                 if(value == null)
                     throw new ArgumentNullException("InstructionExecutor");
 
+                if(_InstructionExecutor != null)
+                    _InstructionExecutor.InstructionFetchFinished -= _InstructionExecutor_InstructionFetchFinished;
+
                 _InstructionExecutor = value;
                 _InstructionExecutor.ProcessorAgent = this;
+                _InstructionExecutor.InstructionFetchFinished += _InstructionExecutor_InstructionFetchFinished;
             }
         }
 
@@ -370,6 +401,7 @@ namespace Konamiman.Z80dotNet
             FailIfNoInstructionExecuting();
 
             var value = ReadFromMemory(Registers.PC.ToUShort());
+            executionContext.OpcodeBytes.Add(value);
             Registers.PC = Registers.PC.Inc();
             return value;
         }
@@ -522,6 +554,7 @@ namespace Konamiman.Z80dotNet
             public InstructionExecutionContext()
             {
                 StopReason = StopReason.NotApplicable;
+                OpcodeBytes = new List<byte>();
             }
 
             public StopReason StopReason { get; set; }
@@ -533,6 +566,16 @@ namespace Konamiman.Z80dotNet
                     return StopReason != StopReason.NotApplicable;
                 }
             }
+
+            public void StartNewInstruction()
+            {
+                OpcodeBytes.Clear();
+                FetchComplete = false;
+            }
+
+            public bool FetchComplete { get; set; }
+
+            public List<byte> OpcodeBytes { get; set; }
         }
 
         #endregion

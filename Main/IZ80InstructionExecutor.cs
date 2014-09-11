@@ -38,6 +38,6 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// Event triggered when the instruction opcode has been fully fetched.
         /// </summary>
-        event EventHandler<InstructionFetchFinishedEventArgs> InstructionFetchFinished;
+        event EventHandler InstructionFetchFinished;
     }
 }
