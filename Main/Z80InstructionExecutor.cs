@@ -14,6 +14,6 @@ namespace Konamiman.Z80dotNet
             throw new NotImplementedException();
         }
 
-        public event EventHandler InstructionFetchFinished;
+        public event EventHandler<InstructionFetchFinishedEventArgs> InstructionFetchFinished;
     }
 }

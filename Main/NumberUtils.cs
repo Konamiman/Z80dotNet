@@ -98,10 +98,10 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// Generates a short number from two bytes.
         /// </summary>
-        /// <param name="highByte">High byte of the new number</param>
         /// <param name="lowByte">Low byte of the new number</param>
+        /// <param name="highByte">High byte of the new number</param>
         /// <returns>Generated number</returns>
-        public static short CreateShort(byte highByte, byte lowByte)
+        public static short CreateShort(byte lowByte, byte highByte)
         {
             return (short)((highByte << 8) | lowByte);
         }

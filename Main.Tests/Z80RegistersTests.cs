@@ -57,7 +57,7 @@ namespace Konamiman.Z80dotNet.Tests
         {
             var IXh = Fixture.Create<byte>();
             var IXl = Fixture.Create<byte>();
-            var IX = NumberUtils.CreateShort(IXh, IXl);
+            var IX = NumberUtils.CreateShort(IXl, IXh);
 
             Sut.IX = IX;
 
@@ -70,7 +70,7 @@ namespace Konamiman.Z80dotNet.Tests
         {
             var IXh = Fixture.Create<byte>();
             var IXl = Fixture.Create<byte>();
-            var expected = NumberUtils.CreateShort(IXh, IXl);
+            var expected = NumberUtils.CreateShort(IXl, IXh);
 
             Sut.IXh = IXh;
             Sut.IXl = IXl;
@@ -83,7 +83,7 @@ namespace Konamiman.Z80dotNet.Tests
         {
             var IYh = Fixture.Create<byte>();
             var IYl = Fixture.Create<byte>();
-            var IY = NumberUtils.CreateShort(IYh, IYl);
+            var IY = NumberUtils.CreateShort(IYl, IYh);
 
             Sut.IY = IY;
 
@@ -96,7 +96,7 @@ namespace Konamiman.Z80dotNet.Tests
         {
             var IYh = Fixture.Create<byte>();
             var IYl = Fixture.Create<byte>();
-            var expected = NumberUtils.CreateShort(IYh, IYl);
+            var expected = NumberUtils.CreateShort(IYl, IYh);
 
             Sut.IYh = IYh;
             Sut.IYl = IYl;
@@ -109,7 +109,7 @@ namespace Konamiman.Z80dotNet.Tests
         {
             var I = Fixture.Create<byte>();
             var R = Fixture.Create<byte>();
-            var IR = NumberUtils.CreateShort(I, R);
+            var IR = NumberUtils.CreateShort(R, I);
 
             Sut.IR = IR;
 
@@ -122,7 +122,7 @@ namespace Konamiman.Z80dotNet.Tests
         {
             var I = Fixture.Create<byte>();
             var R = Fixture.Create<byte>();
-            var expected = NumberUtils.CreateShort(I, R);
+            var expected = NumberUtils.CreateShort(R, I);
 
             Sut.I = I;
             Sut.R = R;

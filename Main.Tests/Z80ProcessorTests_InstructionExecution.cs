@@ -1,4 +1,6 @@
 ﻿using System;
+using System.CodeDom.Compiler;
+using System.Runtime.Serialization;
 using Moq;
 using NUnit.Framework;
 using Ploeh.AutoFixture;
@@ -46,7 +48,16 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.Registers.PC = Fixture.Create<short>();
 
             executor.Setup(x => x.Execute(It.IsAny<byte>()))
-                .Callback<byte>(b => Assert.IsTrue(Sut.HasInstructionExecutionContext));
+                .Callback<byte>(b =>
+                {
+                    Assert.IsTrue(Sut.HasInstructionExecutionContext);
+                    var agent = executor.Object.ProcessorAgent;
+                    executor.Raise(e => e.InstructionFetchFinished += null,
+                        new InstructionFetchFinishedEventArgs()
+                        {
+                            IsRetInstruction = true
+                        });
+                });
 
             Sut.Start();
 
@@ -59,6 +70,18 @@ namespace Konamiman.Z80dotNet.Tests
             var state = Fixture.Create<object>();
             Sut.UserState = null;
 
+            executor.Setup(x => x.Execute(It.IsAny<byte>()))
+                .Callback<byte>(b =>
+                {
+                    Assert.IsTrue(Sut.HasInstructionExecutionContext);
+                    var agent = executor.Object.ProcessorAgent;
+                    executor.Raise(e => e.InstructionFetchFinished += null,
+                        new InstructionFetchFinishedEventArgs()
+                        {
+                            IsRetInstruction = true
+                        });
+                });
+
             Sut.Start(state);
 
             Assert.AreSame(state, Sut.UserState);
@@ -69,6 +92,18 @@ namespace Konamiman.Z80dotNet.Tests
         {
             Sut.UserState = Fixture.Create<object>();
 
+            executor.Setup(x => x.Execute(It.IsAny<byte>()))
+                .Callback<byte>(b =>
+                {
+                    Assert.IsTrue(Sut.HasInstructionExecutionContext);
+                    var agent = executor.Object.ProcessorAgent;
+                    executor.Raise(e => e.InstructionFetchFinished += null,
+                        new InstructionFetchFinishedEventArgs()
+                        {
+                            IsRetInstruction = true
+                        });
+                });
+
             Sut.Start(null);
 
             Assert.IsNotNull(Sut.UserState);
@@ -77,6 +112,18 @@ namespace Konamiman.Z80dotNet.Tests
         [Test]
         public void No_execution_context_after_start_returns()
         {
+            executor.Setup(x => x.Execute(It.IsAny<byte>()))
+                .Callback<byte>(b =>
+                {
+                    Assert.IsTrue(Sut.HasInstructionExecutionContext);
+                    var agent = executor.Object.ProcessorAgent;
+                    executor.Raise(e => e.InstructionFetchFinished += null,
+                        new InstructionFetchFinishedEventArgs()
+                        {
+                            IsRetInstruction = true
+                        });
+                });
+
             Sut.Start(null);
 
             Assert.IsFalse(Sut.HasInstructionExecutionContext);
@@ -90,7 +137,16 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.Memory[pc] = RET_opcode;
 
             executor.Setup(x => x.Execute(It.IsAny<byte>()))
-                .Callback<byte>(b => Assert.IsTrue(Sut.HasInstructionExecutionContext));
+                .Callback<byte>(b =>
+                {
+                    Assert.IsTrue(Sut.HasInstructionExecutionContext);
+                    var agent = executor.Object.ProcessorAgent;
+                    executor.Raise(e => e.InstructionFetchFinished += null,
+                        new InstructionFetchFinishedEventArgs()
+                        {
+                            IsRetInstruction = true
+                        });
+                });
 
             Sut.Continue();
 
@@ -102,7 +158,16 @@ namespace Konamiman.Z80dotNet.Tests
         {
             executor
                 .Setup(x => x.Execute(RET_opcode))
-                .Callback<byte>(b => Assert.AreEqual(ProcessorState.Running, Sut.State))
+                .Callback<byte>(b =>
+                {
+                    Assert.AreEqual(ProcessorState.Running, Sut.State);
+                    var agent = executor.Object.ProcessorAgent;
+                    executor.Raise(e => e.InstructionFetchFinished += null,
+                        new InstructionFetchFinishedEventArgs()
+                        {
+                            IsRetInstruction = true
+                        });
+                })
                 .Returns(0);
 
             Sut.Start();
@@ -114,6 +179,20 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.Memory[0] = NOP_opcode;
             Sut.Memory[1] = DI_opcode;
             Sut.Memory[2] = RET_opcode;
+
+            executor
+                .Setup(x => x.Execute(RET_opcode))
+                .Callback<byte>(b =>
+                {
+                    Assert.AreEqual(ProcessorState.Running, Sut.State);
+                    var agent = executor.Object.ProcessorAgent;
+                    executor.Raise(e => e.InstructionFetchFinished += null,
+                        new InstructionFetchFinishedEventArgs()
+                        {
+                            IsRetInstruction = (b == RET_opcode)
+                        });
+                })
+                .Returns(0);
 
             Sut.Start();
 
@@ -177,7 +256,17 @@ namespace Konamiman.Z80dotNet.Tests
         {
             executor
                 .Setup(x => x.Execute(RET_opcode))
-                .Callback<byte>(b => Assert.AreEqual(StopReason.NotApplicable, Sut.StopReason))
+                .Callback<byte>(b =>
+                {
+                    Assert.AreEqual(StopReason.NotApplicable, Sut.StopReason);
+                    var agent = executor.Object.ProcessorAgent;
+                    executor.Raise(e => e.InstructionFetchFinished += null,
+                        new InstructionFetchFinishedEventArgs()
+                        {
+                            IsRetInstruction = true
+                        });
+
+                })
                 .Returns(0);
 
             Sut.Start();
@@ -196,7 +285,17 @@ namespace Konamiman.Z80dotNet.Tests
 
             executor
                 .Setup(x => x.Execute(RET_opcode))
-                .Callback<byte>(b => executor.Object.ProcessorAgent.SetInterruptMode(2))
+                .Callback<byte>(b =>
+                {
+                    executor.Object.ProcessorAgent.SetInterruptMode(2);
+                    var agent = executor.Object.ProcessorAgent;
+                    executor.Raise(e => e.InstructionFetchFinished += null,
+                        new InstructionFetchFinishedEventArgs()
+                        {
+                            IsRetInstruction = true
+                        });
+
+                })
                 .Returns(0);
 
             Sut.Start();
@@ -207,43 +306,63 @@ namespace Konamiman.Z80dotNet.Tests
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public void Auto_stops_when_HALT_on_DI_found_only_if_AutoStopOnDiPlusHalt_is_true(bool autoStopIsEnabled)
+        public void Auto_stops_when_HALT_on_DI_found_or_when_RET_with_initial_stack_is_found_if_configured_to_do_so(bool autoStopOnDiPlusHalt)
         {
-            Sut.AutoStopOnDiPlusHalt = autoStopIsEnabled;
+            Sut.AutoStopOnDiPlusHalt = autoStopOnDiPlusHalt;
+            Sut.AutoStopOnRetWithStackEmpty = !autoStopOnDiPlusHalt;
 
             Sut.Memory[0] = DI_opcode;
             Sut.Memory[1] = HALT_opcode;
             Sut.Memory[2] = RET_opcode;
 
             executor
-                .Setup(x => x.Execute(DI_opcode))
-                .Callback<byte>(b => executor.Object.ProcessorAgent.Registers.IFF1 = 0)
+                .Setup(x => x.Execute(It.IsAny<byte>()))
+                .Callback<byte>(b =>
+                {
+                    executor.Object.ProcessorAgent.Registers.IFF1 = 0;
+                    var agent = executor.Object.ProcessorAgent;
+                    executor.Raise(e => e.InstructionFetchFinished += null,
+                        new InstructionFetchFinishedEventArgs()
+                        {
+                            IsHaltInstruction = (b == HALT_opcode),
+                            IsRetInstruction = (b == RET_opcode)
+                        });
+                })
                 .Returns(0);
 
             Sut.Start();
 
             executor.Verify(e => e.Execute(DI_opcode), Times.Once());
             executor.Verify(e => e.Execute(HALT_opcode), Times.Once());
-            executor.Verify(e => e.Execute(RET_opcode), autoStopIsEnabled ? Times.Never() : Times.Once());
+            executor.Verify(e => e.Execute(RET_opcode), autoStopOnDiPlusHalt ? Times.Never() : Times.Once());
 
-            Assert.AreEqual(autoStopIsEnabled ? StopReason.DiPlusHalt : StopReason.RetWithStackEmpty, Sut.StopReason);
+            Assert.AreEqual(autoStopOnDiPlusHalt ? StopReason.DiPlusHalt : StopReason.RetWithStackEmpty, Sut.StopReason);
             Assert.AreEqual(ProcessorState.Stopped , Sut.State);
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public void Does_not_auto_stop_when_HALT_on_EI_found_regardless_of_AutoStopOnDiPlusHalt_is_true(bool autoStopIsEnabled)
+        public void Does_not_auto_stop_when_HALT_on_EI_found_regardless_of_AutoStopOnDiPlusHalt_is_true()
         {
-            Sut.AutoStopOnDiPlusHalt = autoStopIsEnabled;
+            Sut.AutoStopOnDiPlusHalt = true;
+            Sut.AutoStopOnRetWithStackEmpty = true;
 
             Sut.Memory[0] = DI_opcode;
             Sut.Memory[1] = HALT_opcode;
             Sut.Memory[2] = RET_opcode;
 
             executor
-                .Setup(x => x.Execute(DI_opcode))
-                .Callback<byte>(b => executor.Object.ProcessorAgent.Registers.IFF1 = 1)
+                .Setup(x => x.Execute(It.IsAny<byte>()))
+                .Callback<byte>(b =>
+                {
+                    executor.Object.ProcessorAgent.Registers.IFF1 = 1;
+                    var agent = executor.Object.ProcessorAgent;
+                    executor.Raise(e => e.InstructionFetchFinished += null,
+                        new InstructionFetchFinishedEventArgs()
+                        {
+                            IsHaltInstruction = (b == HALT_opcode),
+                            IsRetInstruction = (b == RET_opcode)
+                        });
+                })
                 .Returns(0);
 
             Sut.Start();
@@ -251,6 +370,84 @@ namespace Konamiman.Z80dotNet.Tests
             executor.Verify(e => e.Execute(DI_opcode), Times.Once());
             executor.Verify(e => e.Execute(HALT_opcode), Times.Once());
             executor.Verify(e => e.Execute(RET_opcode), Times.Once());
+
+            Assert.AreEqual(StopReason.RetWithStackEmpty, Sut.StopReason);
+            Assert.AreEqual(ProcessorState.Stopped , Sut.State);
+        }
+
+        [Test]
+        public void Auto_stops_when_RET_is_found_with_stack_equal_to_initial_value_if_AutoStopOnRetWithStackEmpty_is_true()
+        {
+            Sut.AutoStopOnRetWithStackEmpty = true;
+
+            Sut.Memory[0] = NOP_opcode;
+            Sut.Memory[1] = RET_opcode;
+            Sut.Memory[2] = DI_opcode;
+
+            var spValue = Fixture.Create<short>();
+
+            executor
+                .Setup(x => x.Execute(It.IsAny<byte>()))
+                .Callback<byte>(b =>
+                {
+                    executor.Object.ProcessorAgent.Registers.IFF1 = 1;
+                    var agent = executor.Object.ProcessorAgent;
+                    executor.Raise(e => e.InstructionFetchFinished += null,
+                        new InstructionFetchFinishedEventArgs()
+                        {
+                            IsLdSpInstruction = (b == NOP_opcode),
+                            IsRetInstruction = (b == RET_opcode)
+                        });
+                    if(b == NOP_opcode)
+                        agent.Registers.SP = spValue;
+                })
+                .Returns(0);
+
+            Sut.Start();
+
+            executor.Verify(e => e.Execute(NOP_opcode), Times.Once());
+            executor.Verify(e => e.Execute(RET_opcode), Times.Once());
+            executor.Verify(e => e.Execute(DI_opcode), Times.Never());
+
+            Assert.AreEqual(StopReason.RetWithStackEmpty, Sut.StopReason);
+            Assert.AreEqual(ProcessorState.Stopped , Sut.State);
+        }
+
+        [Test]
+        public void Does_not_auto_stops_when_RET_is_found_with_stack_not_equal_to_initial_value_if_AutoStopOnRetWithStackEmpty_is_true()
+        {
+            Sut.AutoStopOnRetWithStackEmpty = true;
+
+            Sut.Memory[0] = NOP_opcode;
+            Sut.Memory[1] = RET_opcode;
+            Sut.Memory[2] = RET_opcode;
+            Sut.Memory[3] = DI_opcode;
+
+            var spValue = Fixture.Create<short>();
+
+            executor
+                .Setup(x => x.Execute(It.IsAny<byte>()))
+                .Callback<byte>(b =>
+                {
+                    executor.Object.ProcessorAgent.Registers.IFF1 = 1;
+                    var agent = executor.Object.ProcessorAgent;
+                    executor.Raise(e => e.InstructionFetchFinished += null,
+                        new InstructionFetchFinishedEventArgs()
+                        {
+                            IsRetInstruction = (b == RET_opcode)
+                        });
+                    if (b == NOP_opcode)
+                        agent.Registers.SP += 2;
+                    else if (b == RET_opcode)
+                        agent.Registers.SP -= 2;
+                })
+                .Returns(0);
+            
+            Sut.Start();
+
+            executor.Verify(e => e.Execute(NOP_opcode), Times.Once());
+            executor.Verify(e => e.Execute(RET_opcode), Times.Exactly(2));
+            executor.Verify(e => e.Execute(DI_opcode), Times.Never());
 
             Assert.AreEqual(StopReason.RetWithStackEmpty, Sut.StopReason);
             Assert.AreEqual(ProcessorState.Stopped , Sut.State);

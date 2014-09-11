@@ -81,7 +81,7 @@ namespace Konamiman.Z80dotNet.Tests
         public void CreateShort_works_for_high_bytes_under_80h()
         {
             short expected = 0x12DE;
-            var actual = NumberUtils.CreateShort(0x12, 0xDE);
+            var actual = NumberUtils.CreateShort(0xDE, 0x12);
             Assert.AreEqual(expected, actual);
         }
 
@@ -89,7 +89,7 @@ namespace Konamiman.Z80dotNet.Tests
         public void CreateShort_works_for_high_bytes_over_80h()
         {
             short expected = 0xDE12 - 65536;
-            var actual = NumberUtils.CreateShort(0xDE, 0x12);
+            var actual = NumberUtils.CreateShort(0x12, 0xDE);
             Assert.AreEqual(expected, actual);
         }
 

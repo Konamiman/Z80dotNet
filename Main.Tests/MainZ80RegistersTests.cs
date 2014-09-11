@@ -20,7 +20,7 @@ namespace Konamiman.Z80dotNet.Tests
         {
             var A = Fixture.Create<byte>();
             var F = Fixture.Create<byte>();
-            var AF = NumberUtils.CreateShort(A, F);
+            var AF = NumberUtils.CreateShort(F, A);
 
             Sut.AF = AF;
 
@@ -33,7 +33,7 @@ namespace Konamiman.Z80dotNet.Tests
         {
             var A = Fixture.Create<byte>();
             var F = Fixture.Create<byte>();
-            var expected = NumberUtils.CreateShort(A, F);
+            var expected = NumberUtils.CreateShort(F, A);
 
             Sut.A = A;
             Sut.F = F;
@@ -46,7 +46,7 @@ namespace Konamiman.Z80dotNet.Tests
         {
             var B = Fixture.Create<byte>();
             var C = Fixture.Create<byte>();
-            var BC = NumberUtils.CreateShort(B, C);
+            var BC = NumberUtils.CreateShort(C, B);
 
             Sut.BC = BC;
 
@@ -59,7 +59,7 @@ namespace Konamiman.Z80dotNet.Tests
         {
             var B = Fixture.Create<byte>();
             var C = Fixture.Create<byte>();
-            var expected = NumberUtils.CreateShort(B, C);
+            var expected = NumberUtils.CreateShort(C, B);
 
             Sut.B = B;
             Sut.C = C;
@@ -72,7 +72,7 @@ namespace Konamiman.Z80dotNet.Tests
         {
             var D = Fixture.Create<byte>();
             var E = Fixture.Create<byte>();
-            var DE = NumberUtils.CreateShort(D, E);
+            var DE = NumberUtils.CreateShort(E, D);
 
             Sut.DE = DE;
 
@@ -85,7 +85,7 @@ namespace Konamiman.Z80dotNet.Tests
         {
             var D = Fixture.Create<byte>();
             var E = Fixture.Create<byte>();
-            var expected = NumberUtils.CreateShort(D, E);
+            var expected = NumberUtils.CreateShort(E, D);
 
             Sut.D = D;
             Sut.E = E;
@@ -98,7 +98,7 @@ namespace Konamiman.Z80dotNet.Tests
         {
             var H = Fixture.Create<byte>();
             var L = Fixture.Create<byte>();
-            var HL = NumberUtils.CreateShort(H, L);
+            var HL = NumberUtils.CreateShort(L, H);
 
             Sut.HL = HL;
 
@@ -111,7 +111,7 @@ namespace Konamiman.Z80dotNet.Tests
         {
             var H = Fixture.Create<byte>();
             var L = Fixture.Create<byte>();
-            var expected = NumberUtils.CreateShort(H, L);
+            var expected = NumberUtils.CreateShort(L, H);
 
             Sut.H = H;
             Sut.L = L;

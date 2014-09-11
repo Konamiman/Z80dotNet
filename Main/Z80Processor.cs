@@ -66,6 +66,7 @@ namespace Konamiman.Z80dotNet
         private void InstructionExecutionLoop()
         {
             executionContext = new InstructionExecutionContext();
+            executionContext.StartOfStack = Registers.SP;
             StopReason = StopReason.NotApplicable;
             State = ProcessorState.Running;
 
@@ -77,13 +78,11 @@ namespace Konamiman.Z80dotNet
                 InstructionExecutor.Execute(opcode);
 
                 CheckAutoStopForHaltOnDi();
-
-                if(opcode == 0xC9)
-                    executionContext.StopReason = StopReason.RetWithStackEmpty;
+                CheckForAutoStopForRetWithStackEmpty();
+                CheckForLdSpInstruction();
             }
 
             //TODO: Fire Before and After instruction execution events
-            //TODO: Check for RetWithStackEmpty
             //TODO: Count extra T states and wait after instruction execution
             //TODO: Catch InstructionFetchFinished event, prevent further opcode fetches
 
@@ -97,8 +96,25 @@ namespace Konamiman.Z80dotNet
 
         private void CheckAutoStopForHaltOnDi()
         {
-            if(AutoStopOnDiPlusHalt && executionContext.OpcodeBytes[0] == HALT_opcode && !InterruptsEnabled)
+            if(AutoStopOnDiPlusHalt && executionContext.IsHaltInstruction && !InterruptsEnabled)
                 executionContext.StopReason = StopReason.DiPlusHalt;
+        }
+
+        private void CheckForAutoStopForRetWithStackEmpty()
+        {
+            if(AutoStopOnRetWithStackEmpty && executionContext.IsRetInstruction && StackIsEmpty())
+                executionContext.StopReason = StopReason.RetWithStackEmpty;
+        }
+
+        private void CheckForLdSpInstruction()
+        {
+            if(executionContext.IsLdSpInstruction)
+                executionContext.StartOfStack = Registers.SP;
+        }
+
+        private bool StackIsEmpty()
+        {
+            return executionContext.SpAfterInstructionFetch == executionContext.StartOfStack;
         }
 
         private bool InterruptsEnabled
@@ -109,9 +125,13 @@ namespace Konamiman.Z80dotNet
             }
         }
         
-        void _InstructionExecutor_InstructionFetchFinished(object sender, EventArgs e)
+        void InstructionExecutor_InstructionFetchFinished(object sender, InstructionFetchFinishedEventArgs e)
         {
-            throw new NotImplementedException();
+            executionContext.IsRetInstruction = e.IsRetInstruction;
+            executionContext.IsLdSpInstruction = e.IsLdSpInstruction;
+            executionContext.IsHaltInstruction = e.IsHaltInstruction;
+
+            executionContext.SpAfterInstructionFetch = Registers.SP;
         }
 
         public void Reset()
@@ -357,11 +377,11 @@ namespace Konamiman.Z80dotNet
                     throw new ArgumentNullException("InstructionExecutor");
 
                 if(_InstructionExecutor != null)
-                    _InstructionExecutor.InstructionFetchFinished -= _InstructionExecutor_InstructionFetchFinished;
+                    _InstructionExecutor.InstructionFetchFinished -= InstructionExecutor_InstructionFetchFinished;
 
                 _InstructionExecutor = value;
                 _InstructionExecutor.ProcessorAgent = this;
-                _InstructionExecutor.InstructionFetchFinished += _InstructionExecutor_InstructionFetchFinished;
+                _InstructionExecutor.InstructionFetchFinished += InstructionExecutor_InstructionFetchFinished;
             }
         }
 
@@ -545,38 +565,6 @@ namespace Konamiman.Z80dotNet
         #region Instruction execution context
 
         protected InstructionExecutionContext executionContext;
-
-        /// <summary>
-        /// Internal class used to keep track of the current instruction execution.
-        /// </summary>
-        protected class InstructionExecutionContext
-        {
-            public InstructionExecutionContext()
-            {
-                StopReason = StopReason.NotApplicable;
-                OpcodeBytes = new List<byte>();
-            }
-
-            public StopReason StopReason { get; set; }
-
-            public bool MustStop
-            {
-                get
-                {
-                    return StopReason != StopReason.NotApplicable;
-                }
-            }
-
-            public void StartNewInstruction()
-            {
-                OpcodeBytes.Clear();
-                FetchComplete = false;
-            }
-
-            public bool FetchComplete { get; set; }
-
-            public List<byte> OpcodeBytes { get; set; }
-        }
 
         #endregion
     }
