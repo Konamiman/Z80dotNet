@@ -34,16 +34,17 @@ For sure there are plenty of conceptual mistakes in what I have designed so far.
     z80.AutoStopOnRetWithStackEmpty = true;
 
     var program = new byte[] {
-        0x3E, 0x07, //LD A,7
-        0xC6, 0x04, //ADD A,4
-        0x3C,       //INC A
-        0xC9        //RET
+        0x3E, 0x07, //LD A,7   (7T)
+        0xC6, 0x04, //ADD A,4  (4T)
+        0x3C,       //INC A    (4T)
+        0xC9        //RET      (10T)
     };
     z80.Memory.SetContents(0, program);
 
     z80.Start();
 
     Debug.Assert(z80.Registers.Main.A == 12);
+    Debug.Assert(z80.TStatesElapsedSinceStart == 25);
 
 ## Instruction execution flow ##
 
