@@ -33,7 +33,7 @@ namespace Konamiman.Z80dotNet.Tests
             Assert.AreEqual(4, Sut.ClockFrequencyInMHz);
             Assert.AreEqual(1, Sut.ClockSpeedFactor);
 
-            Assert.IsFalse(Sut.AutoStopOnDiPlusHalt);
+            Assert.IsTrue(Sut.AutoStopOnDiPlusHalt);
             Assert.IsFalse(Sut.AutoStopOnRetWithStackEmpty);
 
             Assert.IsInstanceOf<PlainMemory>(Sut.Memory);

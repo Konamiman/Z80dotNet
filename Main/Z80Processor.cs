@@ -22,7 +22,7 @@ namespace Konamiman.Z80dotNet
             ClockFrequencyInMHz = 4;
             ClockSpeedFactor = 1;
             
-            AutoStopOnDiPlusHalt = false;
+            AutoStopOnDiPlusHalt = true;
             AutoStopOnRetWithStackEmpty = false;
 
             SetMemoryWaitStatesForM1(0, MemorySpaceSize, 0);

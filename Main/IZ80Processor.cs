@@ -32,7 +32,7 @@ namespace Konamiman.Z80dotNet
     /// <list type="bullet">
     /// <item><description><see cref="IZ80Processor.ClockFrequencyInMHz"/> = 4</description></item>
     /// <item><description><see cref="IZ80Processor.ClockSpeedFactor"/> = 1</description></item>
-    /// <item><description><see cref="IZ80Processor.AutoStopOnDiPlusHalt"/> = false</description></item>
+    /// <item><description><see cref="IZ80Processor.AutoStopOnDiPlusHalt"/> = true</description></item>
     /// <item><description><see cref="IZ80Processor.AutoStopOnRetWithStackEmpty"/> = false</description></item>
     /// <item><description>Memory and ports wait states: all zeros</description></item>
     /// <item><description><see cref="IZ80Processor.Memory"/> = an instance of <see cref="PlainMemory"/></description></item>
