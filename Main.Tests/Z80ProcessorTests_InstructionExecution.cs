@@ -431,6 +431,164 @@ namespace Konamiman.Z80dotNet.Tests
 
         #endregion
 
+        #region T states management
+
+        [Test]
+        public void Counts_T_states_for_instruction_execution_and_memory_and_ports_access_appropriately()
+        {
+            var executionStates = Fixture.Create<byte>();
+            var M1readMemoryStates = Fixture.Create<byte>();
+            var memoryAccessStates = Fixture.Create<byte>();
+            var portAccessStates = Fixture.Create<byte>();
+            var memoryAddress = Fixture.Create<ushort>();
+            var portAddress = Fixture.Create<byte>();
+            var value = Fixture.Create<byte>();
+
+            SetStatesReturner(b => executionStates);
+
+            Sut.Memory[0] = NOP_opcode;
+            Sut.Memory[1] = LD_SP_HL_opcode;
+            Sut.Memory[2] = RET_opcode;
+
+            Sut.SetMemoryWaitStatesForM1(0, 3, M1readMemoryStates);
+            Sut.SetMemoryWaitStatesForNonM1(memoryAddress, 1, memoryAccessStates);
+            Sut.SetPortWaitStates(portAddress, 1, portAccessStates);
+
+            DoAfterFetch(b =>
+            {
+                if(b == NOP_opcode)
+                {
+                    Sut.ReadFromMemory(memoryAddress);
+                    Sut.WriteToMemory(memoryAddress, value);
+                    Sut.ReadFromPort(portAddress);
+                    Sut.WriteToPort(portAddress, value);
+                }
+            });
+
+            Sut.Start();
+
+            var expected =
+                //3 instructions of 1 byte each executed...
+                executionStates * 3 +
+                M1readMemoryStates * 3 +
+                //...plus 1 read+1 write to memory + port
+                memoryAccessStates * 2 +
+                portAccessStates * 2;
+
+            Assert.AreEqual(expected, Sut.TStatesElapsedSinceReset);
+            Assert.AreEqual(expected, Sut.TStatesElapsedSinceStart);
+        }
+
+        private void SetStatesReturner(Func<byte, byte> returner)
+        {
+            ((FakeInstructionExecutor)Sut.InstructionExecutor).TStatesReturner = returner;
+        }
+
+        [Test]
+        public void Start_sets_all_TStates_to_zero()
+        {
+            var M1readMemoryStates = Fixture.Create<byte>();
+            Sut.SetMemoryWaitStatesForM1(0, 1, M1readMemoryStates);
+            var secondRun = false;
+
+            Sut.AfterInstructionExecution += (sender, e) =>
+            {
+                if(!secondRun)
+                {
+                    Assert.AreEqual(M1readMemoryStates, Sut.TStatesElapsedSinceReset);
+                    Assert.AreEqual(M1readMemoryStates, Sut.TStatesElapsedSinceStart);
+                }
+            };
+
+            Sut.Start();
+
+            Sut.BeforeInstructionExecution += (sender, e) =>
+            {
+                Assert.AreEqual(0, Sut.TStatesElapsedSinceStart);
+                Assert.AreEqual(0, Sut.TStatesElapsedSinceReset);
+            };
+
+            secondRun = true;
+            Sut.Start();
+        }
+
+        [Test]
+        public void Continue_does_not_modify_TStates()
+        {
+            Sut.Memory[1] = RET_opcode;
+
+            var M1readMemoryStates = Fixture.Create<byte>();
+            Sut.SetMemoryWaitStatesForM1(0, 2, M1readMemoryStates);
+            var secondRun = false;
+
+            Sut.AfterInstructionExecution += (sender, e) =>
+            {
+                if(secondRun)
+                {
+                    Assert.AreEqual(M1readMemoryStates * 2, Sut.TStatesElapsedSinceReset);
+                    Assert.AreEqual(M1readMemoryStates * 2, Sut.TStatesElapsedSinceStart);
+                }
+                else
+                {
+                    Assert.AreEqual(M1readMemoryStates, Sut.TStatesElapsedSinceReset);
+                    Assert.AreEqual(M1readMemoryStates, Sut.TStatesElapsedSinceStart);
+                }
+            };
+
+            Sut.Start();
+
+            secondRun = true;
+            Sut.Continue();
+        }
+
+        [Test]
+        public void Reset_zeroes_TStatesSinceReset_but_not_TStatesSinceStart()
+        {
+            var M1readMemoryStates = Fixture.Create<byte>();
+            Sut.SetMemoryWaitStatesForM1(0, 1, M1readMemoryStates);
+            var secondRun = false;
+
+            Sut.AfterInstructionExecution += (sender, e) =>
+            {
+                if(secondRun)
+                {
+                    Assert.AreEqual(M1readMemoryStates, Sut.TStatesElapsedSinceReset);
+                    Assert.AreEqual(M1readMemoryStates * 2, Sut.TStatesElapsedSinceStart);
+                }
+                else
+                {
+                    Assert.AreEqual(M1readMemoryStates, Sut.TStatesElapsedSinceReset);
+                    Assert.AreEqual(M1readMemoryStates, Sut.TStatesElapsedSinceStart);
+                }
+            };
+
+            Sut.Start();
+
+            secondRun = true;
+            Sut.Reset();
+            Sut.Continue();
+        }
+
+        [Test]
+        public void ClockSyncHelper_is_notified_of_total_states_after_instruction_execution()
+        {
+            var M1readMemoryStates = Fixture.Create<byte>();
+            var executionStates = Fixture.Create<byte>();
+            
+            SetStatesReturner(b => executionStates);
+
+            Sut.SetMemoryWaitStatesForM1(0, 1, M1readMemoryStates);
+
+            Sut.AfterInstructionExecution += (sender, args) => 
+                clockSyncHelper.Verify(h => h.TryWait(It.IsAny<int>()), Times.Never());
+
+            Sut.Start();
+
+            clockSyncHelper.Verify(h => h.TryWait(M1readMemoryStates + executionStates));
+        }
+
+        #endregion
+
         #region FakeInstructionExecutor class
 
         private class FakeInstructionExecutor : IZ80InstructionExecutor
@@ -440,6 +598,8 @@ namespace Konamiman.Z80dotNet.Tests
             public Action<byte> ExtraBeforeFetchCode { get; set; }
 
             public Action<byte> ExtraAfterFetchCode { get; set; }
+
+            public Func<byte, byte> TStatesReturner { get; set; }
 
             public int Execute(byte firstOpcodeByte)
             {
@@ -462,7 +622,10 @@ namespace Konamiman.Z80dotNet.Tests
                 if(ExtraAfterFetchCode != null)
                     ExtraAfterFetchCode(firstOpcodeByte);
 
-                return 0;
+                if(TStatesReturner == null)
+                    return 0;
+                else
+                    return TStatesReturner(firstOpcodeByte);
             }
 
             public Dictionary<byte, int> TimesEachInstructionIsExecuted = new Dictionary<byte, int>();

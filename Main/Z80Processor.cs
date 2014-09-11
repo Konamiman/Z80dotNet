@@ -51,7 +51,8 @@ namespace Konamiman.Z80dotNet
                 this.UserState = userState;
 
             Reset();
-            
+            TStatesElapsedSinceStart = 0;
+
             InstructionExecutionLoop();
         }
 
@@ -71,16 +72,20 @@ namespace Konamiman.Z80dotNet
             {
                 executionContext.StartNewInstruction();
 
-                InstructionExecutor.Execute(FetchNextOpcode());
+                var executionTStates = InstructionExecutor.Execute(FetchNextOpcode());
+                
+                var totalTStates = executionTStates + executionContext.AccummulatedaMemoryWaitStates;
+                TStatesElapsedSinceStart += (ulong)totalTStates;
+                TStatesElapsedSinceReset += (ulong)totalTStates;
 
                 CheckAutoStopForHaltOnDi();
                 CheckForAutoStopForRetWithStackEmpty();
                 CheckForLdSpInstruction();
-
+                
                 FireAfterInstructionExecutionEvent();
-            }
 
-            //TODO: Count extra T states and wait after instruction execution
+                ClockSynchronizationHelper.TryWait(totalTStates);
+            }
 
             this.StopReason = executionContext.StopReason;
             this.State =
@@ -450,7 +455,8 @@ namespace Konamiman.Z80dotNet
                 Memory, 
                 GetMemoryAccessMode(address),
                 MemoryAccessEventType.BeforeMemoryRead,
-                MemoryAccessEventType.AfterMemoryRead);
+                MemoryAccessEventType.AfterMemoryRead,
+                GetMemoryWaitStatesForM1(address));
 
             executionContext.OpcodeBytes.Add(value);
             Registers.PC = Registers.PC.Inc();
@@ -473,7 +479,8 @@ namespace Konamiman.Z80dotNet
                 Memory, 
                 GetMemoryAccessMode(address),
                 MemoryAccessEventType.BeforeMemoryRead,
-                MemoryAccessEventType.AfterMemoryRead);
+                MemoryAccessEventType.AfterMemoryRead,
+                GetMemoryWaitStatesForNonM1(address));
         }
         
         protected virtual void FailIfNoInstructionFetchComplete()
@@ -487,7 +494,8 @@ namespace Konamiman.Z80dotNet
             IMemory memory,
             MemoryAccessMode accessMode,
             MemoryAccessEventType beforeEventType,
-            MemoryAccessEventType afterEventType)
+            MemoryAccessEventType afterEventType,
+            byte waitStates)
         {
             var beforeEventArgs = FireMemoryAccessEvent(beforeEventType, address, 0xFF);
 
@@ -497,6 +505,9 @@ namespace Konamiman.Z80dotNet
                 value = memory[address];
             else
                 value = beforeEventArgs.Value;
+
+            if(executionContext != null)
+                executionContext.AccummulatedaMemoryWaitStates += waitStates;
 
             var afterEventArgs = FireMemoryAccessEvent(
                 afterEventType, 
@@ -532,7 +543,8 @@ namespace Konamiman.Z80dotNet
                 Memory,
                 GetMemoryAccessMode(address),
                 MemoryAccessEventType.BeforeMemoryWrite,
-                MemoryAccessEventType.AfterMemoryWrite);
+                MemoryAccessEventType.AfterMemoryWrite,
+                GetMemoryWaitStatesForNonM1(address));
         }
 
         private void WritetoMemoryOrPort(
@@ -541,13 +553,17 @@ namespace Konamiman.Z80dotNet
             IMemory memory,
             MemoryAccessMode accessMode,
             MemoryAccessEventType beforeEventType,
-            MemoryAccessEventType afterEventType)
+            MemoryAccessEventType afterEventType,
+            byte waitStates)
         {
             var beforeEventArgs = FireMemoryAccessEvent(beforeEventType, address, value);
 
             if(!beforeEventArgs.CancelMemoryAccess &&
                 (accessMode == MemoryAccessMode.ReadAndWrite || accessMode == MemoryAccessMode.WriteOnly))
                 memory[address] = beforeEventArgs.Value;
+
+            if(executionContext != null)
+                executionContext.AccummulatedaMemoryWaitStates += waitStates;
 
             FireMemoryAccessEvent(
                 afterEventType, 
@@ -567,7 +583,8 @@ namespace Konamiman.Z80dotNet
                 PortsSpace, 
                 GetPortAccessMode(portNumber),
                 MemoryAccessEventType.BeforePortRead,
-                MemoryAccessEventType.AfterPortRead);
+                MemoryAccessEventType.AfterPortRead,
+                GetPortWaitStates(portNumber));
         }
 
         public void WriteToPort(byte portNumber, byte value)
@@ -581,7 +598,8 @@ namespace Konamiman.Z80dotNet
                 PortsSpace,
                 GetPortAccessMode(portNumber),
                 MemoryAccessEventType.BeforePortWrite,
-                MemoryAccessEventType.AfterPortWrite);
+                MemoryAccessEventType.AfterPortWrite,
+                GetPortWaitStates(portNumber));
         }
 
         public void SetInterruptMode(byte interruptMode)
