@@ -1,5 +1,6 @@
 ﻿using System;
 using System.CodeDom.Compiler;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Moq;
 using NUnit.Framework;
@@ -13,10 +14,10 @@ namespace Konamiman.Z80dotNet.Tests
         private const byte DI_opcode = 0xF3;
         private const byte HALT_opcode = 0x76;
         private const byte NOP_opcode = 0;
+        private const byte LD_SP_HL_opcode = 0xF9;
 
         Z80ProcessorForTests Sut { get; set; }
         Fixture Fixture { get; set; }
-        Mock<IZ80InstructionExecutor> executor;
         Mock<IClockSynchronizationHelper> clockSyncHelper;
 
         [SetUp]
@@ -28,11 +29,9 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.AutoStopOnRetWithStackEmpty = true;
             Sut.Memory[0] = RET_opcode;
 
-            executor = new Mock<IZ80InstructionExecutor>();
             clockSyncHelper = new Mock<IClockSynchronizationHelper>();
 
-            executor.SetupGet(x => x.ProcessorAgent).Returns(Sut);
-            Sut.InstructionExecutor = executor.Object;
+            Sut.InstructionExecutor = new FakeInstructionExecutor() {ProcessorAgent = Sut};
             Sut.ClockSynchronizationHelper = clockSyncHelper.Object;
         }
 
@@ -47,21 +46,16 @@ namespace Konamiman.Z80dotNet.Tests
         {
             Sut.Registers.PC = Fixture.Create<short>();
 
-            executor.Setup(x => x.Execute(It.IsAny<byte>()))
-                .Callback<byte>(b =>
-                {
-                    Assert.IsTrue(Sut.HasInstructionExecutionContext);
-                    var agent = executor.Object.ProcessorAgent;
-                    executor.Raise(e => e.InstructionFetchFinished += null,
-                        new InstructionFetchFinishedEventArgs()
-                        {
-                            IsRetInstruction = true
-                        });
-                });
+            DoBeforeFetch(b => Assert.IsTrue(Sut.HasInstructionExecutionContext));
 
             Sut.Start();
 
             Assert.AreEqual(1, Sut.Registers.PC);
+        }
+
+        void DoBeforeFetch(Action<byte> code)
+        {
+            ((FakeInstructionExecutor)Sut.InstructionExecutor).ExtraBeforeFetchCode = code;
         }
 
         [Test]
@@ -69,18 +63,6 @@ namespace Konamiman.Z80dotNet.Tests
         {
             var state = Fixture.Create<object>();
             Sut.UserState = null;
-
-            executor.Setup(x => x.Execute(It.IsAny<byte>()))
-                .Callback<byte>(b =>
-                {
-                    Assert.IsTrue(Sut.HasInstructionExecutionContext);
-                    var agent = executor.Object.ProcessorAgent;
-                    executor.Raise(e => e.InstructionFetchFinished += null,
-                        new InstructionFetchFinishedEventArgs()
-                        {
-                            IsRetInstruction = true
-                        });
-                });
 
             Sut.Start(state);
 
@@ -92,18 +74,6 @@ namespace Konamiman.Z80dotNet.Tests
         {
             Sut.UserState = Fixture.Create<object>();
 
-            executor.Setup(x => x.Execute(It.IsAny<byte>()))
-                .Callback<byte>(b =>
-                {
-                    Assert.IsTrue(Sut.HasInstructionExecutionContext);
-                    var agent = executor.Object.ProcessorAgent;
-                    executor.Raise(e => e.InstructionFetchFinished += null,
-                        new InstructionFetchFinishedEventArgs()
-                        {
-                            IsRetInstruction = true
-                        });
-                });
-
             Sut.Start(null);
 
             Assert.IsNotNull(Sut.UserState);
@@ -112,18 +82,6 @@ namespace Konamiman.Z80dotNet.Tests
         [Test]
         public void No_execution_context_after_start_returns()
         {
-            executor.Setup(x => x.Execute(It.IsAny<byte>()))
-                .Callback<byte>(b =>
-                {
-                    Assert.IsTrue(Sut.HasInstructionExecutionContext);
-                    var agent = executor.Object.ProcessorAgent;
-                    executor.Raise(e => e.InstructionFetchFinished += null,
-                        new InstructionFetchFinishedEventArgs()
-                        {
-                            IsRetInstruction = true
-                        });
-                });
-
             Sut.Start(null);
 
             Assert.IsFalse(Sut.HasInstructionExecutionContext);
@@ -136,18 +94,6 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.Registers.PC = pc;
             Sut.Memory[pc] = RET_opcode;
 
-            executor.Setup(x => x.Execute(It.IsAny<byte>()))
-                .Callback<byte>(b =>
-                {
-                    Assert.IsTrue(Sut.HasInstructionExecutionContext);
-                    var agent = executor.Object.ProcessorAgent;
-                    executor.Raise(e => e.InstructionFetchFinished += null,
-                        new InstructionFetchFinishedEventArgs()
-                        {
-                            IsRetInstruction = true
-                        });
-                });
-
             Sut.Continue();
 
             Assert.AreEqual(pc.Inc(), Sut.Registers.PC);
@@ -156,19 +102,7 @@ namespace Konamiman.Z80dotNet.Tests
         [Test]
         public void Start_sets_ProcessorState_to_running()
         {
-            executor
-                .Setup(x => x.Execute(RET_opcode))
-                .Callback<byte>(b =>
-                {
-                    Assert.AreEqual(ProcessorState.Running, Sut.State);
-                    var agent = executor.Object.ProcessorAgent;
-                    executor.Raise(e => e.InstructionFetchFinished += null,
-                        new InstructionFetchFinishedEventArgs()
-                        {
-                            IsRetInstruction = true
-                        });
-                })
-                .Returns(0);
+            DoBeforeFetch(b => Assert.AreEqual(ProcessorState.Running, Sut.State));
 
             Sut.Start();
         }
@@ -180,25 +114,20 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.Memory[1] = DI_opcode;
             Sut.Memory[2] = RET_opcode;
 
-            executor
-                .Setup(x => x.Execute(RET_opcode))
-                .Callback<byte>(b =>
-                {
-                    Assert.AreEqual(ProcessorState.Running, Sut.State);
-                    var agent = executor.Object.ProcessorAgent;
-                    executor.Raise(e => e.InstructionFetchFinished += null,
-                        new InstructionFetchFinishedEventArgs()
-                        {
-                            IsRetInstruction = (b == RET_opcode)
-                        });
-                })
-                .Returns(0);
-
             Sut.Start();
 
-            executor.Verify(e => e.Execute(NOP_opcode), Times.Once());
-            executor.Verify(e => e.Execute(DI_opcode), Times.Once());
-            executor.Verify(e => e.Execute(RET_opcode), Times.Once());
+            AssertExecuted(NOP_opcode, 1);
+            AssertExecuted(DI_opcode, 1);
+            AssertExecuted(RET_opcode, 1);
+        }
+
+        private void AssertExecuted(byte opcode, int times)
+        {
+            var dictionary = ((FakeInstructionExecutor)Sut.InstructionExecutor).TimesEachInstructionIsExecuted;
+            if(times==0)
+                Assert.IsFalse(dictionary.ContainsKey(opcode));
+            else
+                Assert.AreEqual(dictionary[opcode], times);
         }
 
         [Test]
@@ -208,16 +137,13 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.Memory[1] = DI_opcode;
             Sut.Memory[2] = RET_opcode;
 
-            executor
-                .Setup(x => x.Execute(DI_opcode))
-                .Callback<byte>(b => executor.Object.ProcessorAgent.Stop())
-                .Returns(0);
+            DoBeforeFetch(b => { if (b == DI_opcode) Sut.Stop(); });
 
             Sut.Start();
 
-            executor.Verify(e => e.Execute(NOP_opcode), Times.Once());
-            executor.Verify(e => e.Execute(DI_opcode), Times.Once());
-            executor.Verify(e => e.Execute(RET_opcode), Times.Never());
+            AssertExecuted(NOP_opcode, 1);
+            AssertExecuted(DI_opcode, 1);
+            AssertExecuted(RET_opcode, 0);
 
             Assert.AreEqual(StopReason.StopInvoked, Sut.StopReason);
             Assert.AreEqual(ProcessorState.Stopped, Sut.State);
@@ -230,16 +156,13 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.Memory[1] = DI_opcode;
             Sut.Memory[2] = RET_opcode;
 
-            executor
-                .Setup(x => x.Execute(DI_opcode))
-                .Callback<byte>(b => executor.Object.ProcessorAgent.Stop(isPause: true))
-                .Returns(0);
+            DoBeforeFetch(b => { if (b == DI_opcode) Sut.Stop(isPause: true); });
 
             Sut.Start();
 
-            executor.Verify(e => e.Execute(NOP_opcode), Times.Once());
-            executor.Verify(e => e.Execute(DI_opcode), Times.Once());
-            executor.Verify(e => e.Execute(RET_opcode), Times.Never());
+            AssertExecuted(NOP_opcode, 1);
+            AssertExecuted(DI_opcode, 1);
+            AssertExecuted(RET_opcode, 0);
 
             Assert.AreEqual(StopReason.PauseInvoked, Sut.StopReason);
             Assert.AreEqual(ProcessorState.Paused , Sut.State);
@@ -254,20 +177,7 @@ namespace Konamiman.Z80dotNet.Tests
         [Test]
         public void StopReason_is_not_applicable_while_executing()
         {
-            executor
-                .Setup(x => x.Execute(RET_opcode))
-                .Callback<byte>(b =>
-                {
-                    Assert.AreEqual(StopReason.NotApplicable, Sut.StopReason);
-                    var agent = executor.Object.ProcessorAgent;
-                    executor.Raise(e => e.InstructionFetchFinished += null,
-                        new InstructionFetchFinishedEventArgs()
-                        {
-                            IsRetInstruction = true
-                        });
-
-                })
-                .Returns(0);
+            DoBeforeFetch(b => Assert.AreEqual(StopReason.NotApplicable, Sut.StopReason));
 
             Sut.Start();
         }
@@ -283,24 +193,16 @@ namespace Konamiman.Z80dotNet.Tests
         {
             Sut.InterruptMode = 0;
 
-            executor
-                .Setup(x => x.Execute(RET_opcode))
-                .Callback<byte>(b =>
-                {
-                    executor.Object.ProcessorAgent.SetInterruptMode(2);
-                    var agent = executor.Object.ProcessorAgent;
-                    executor.Raise(e => e.InstructionFetchFinished += null,
-                        new InstructionFetchFinishedEventArgs()
-                        {
-                            IsRetInstruction = true
-                        });
-
-                })
-                .Returns(0);
+            DoAfterFetch(b => Sut.SetInterruptMode(2));
 
             Sut.Start();
 
             Assert.AreEqual(2, Sut.InterruptMode);
+        }
+
+        void DoAfterFetch(Action<byte> code)
+        {
+            ((FakeInstructionExecutor)Sut.InstructionExecutor).ExtraAfterFetchCode = code;
         }
 
         [Test]
@@ -315,26 +217,13 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.Memory[1] = HALT_opcode;
             Sut.Memory[2] = RET_opcode;
 
-            executor
-                .Setup(x => x.Execute(It.IsAny<byte>()))
-                .Callback<byte>(b =>
-                {
-                    executor.Object.ProcessorAgent.Registers.IFF1 = 0;
-                    var agent = executor.Object.ProcessorAgent;
-                    executor.Raise(e => e.InstructionFetchFinished += null,
-                        new InstructionFetchFinishedEventArgs()
-                        {
-                            IsHaltInstruction = (b == HALT_opcode),
-                            IsRetInstruction = (b == RET_opcode)
-                        });
-                })
-                .Returns(0);
+            DoBeforeFetch(b => Sut.Registers.IFF1 = 0);
 
             Sut.Start();
 
-            executor.Verify(e => e.Execute(DI_opcode), Times.Once());
-            executor.Verify(e => e.Execute(HALT_opcode), Times.Once());
-            executor.Verify(e => e.Execute(RET_opcode), autoStopOnDiPlusHalt ? Times.Never() : Times.Once());
+            AssertExecuted(DI_opcode, 1);
+            AssertExecuted(HALT_opcode, 1);
+            AssertExecuted(RET_opcode, autoStopOnDiPlusHalt ? 0 : 1);
 
             Assert.AreEqual(autoStopOnDiPlusHalt ? StopReason.DiPlusHalt : StopReason.RetWithStackEmpty, Sut.StopReason);
             Assert.AreEqual(ProcessorState.Stopped , Sut.State);
@@ -350,26 +239,13 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.Memory[1] = HALT_opcode;
             Sut.Memory[2] = RET_opcode;
 
-            executor
-                .Setup(x => x.Execute(It.IsAny<byte>()))
-                .Callback<byte>(b =>
-                {
-                    executor.Object.ProcessorAgent.Registers.IFF1 = 1;
-                    var agent = executor.Object.ProcessorAgent;
-                    executor.Raise(e => e.InstructionFetchFinished += null,
-                        new InstructionFetchFinishedEventArgs()
-                        {
-                            IsHaltInstruction = (b == HALT_opcode),
-                            IsRetInstruction = (b == RET_opcode)
-                        });
-                })
-                .Returns(0);
+            DoBeforeFetch(b => Sut.Registers.IFF1 = 1);
 
             Sut.Start();
 
-            executor.Verify(e => e.Execute(DI_opcode), Times.Once());
-            executor.Verify(e => e.Execute(HALT_opcode), Times.Once());
-            executor.Verify(e => e.Execute(RET_opcode), Times.Once());
+            AssertExecuted(DI_opcode, 1);
+            AssertExecuted(HALT_opcode, 1);
+            AssertExecuted(RET_opcode, 1);
 
             Assert.AreEqual(StopReason.RetWithStackEmpty, Sut.StopReason);
             Assert.AreEqual(ProcessorState.Stopped , Sut.State);
@@ -380,34 +256,20 @@ namespace Konamiman.Z80dotNet.Tests
         {
             Sut.AutoStopOnRetWithStackEmpty = true;
 
-            Sut.Memory[0] = NOP_opcode;
+            Sut.Memory[0] = LD_SP_HL_opcode;
             Sut.Memory[1] = RET_opcode;
             Sut.Memory[2] = DI_opcode;
 
             var spValue = Fixture.Create<short>();
 
-            executor
-                .Setup(x => x.Execute(It.IsAny<byte>()))
-                .Callback<byte>(b =>
-                {
-                    executor.Object.ProcessorAgent.Registers.IFF1 = 1;
-                    var agent = executor.Object.ProcessorAgent;
-                    executor.Raise(e => e.InstructionFetchFinished += null,
-                        new InstructionFetchFinishedEventArgs()
-                        {
-                            IsLdSpInstruction = (b == NOP_opcode),
-                            IsRetInstruction = (b == RET_opcode)
-                        });
-                    if(b == NOP_opcode)
-                        agent.Registers.SP = spValue;
-                })
-                .Returns(0);
+            DoBeforeFetch(b => Sut.Registers.IFF1 = 1);
+            DoAfterFetch(b => { if(b == LD_SP_HL_opcode) Sut.Registers.SP = spValue; });
 
             Sut.Start();
 
-            executor.Verify(e => e.Execute(NOP_opcode), Times.Once());
-            executor.Verify(e => e.Execute(RET_opcode), Times.Once());
-            executor.Verify(e => e.Execute(DI_opcode), Times.Never());
+            AssertExecuted(LD_SP_HL_opcode, 1);
+            AssertExecuted(RET_opcode, 1);
+            AssertExecuted(DI_opcode, 0);
 
             Assert.AreEqual(StopReason.RetWithStackEmpty, Sut.StopReason);
             Assert.AreEqual(ProcessorState.Stopped , Sut.State);
@@ -425,32 +287,62 @@ namespace Konamiman.Z80dotNet.Tests
 
             var spValue = Fixture.Create<short>();
 
-            executor
-                .Setup(x => x.Execute(It.IsAny<byte>()))
-                .Callback<byte>(b =>
-                {
-                    executor.Object.ProcessorAgent.Registers.IFF1 = 1;
-                    var agent = executor.Object.ProcessorAgent;
-                    executor.Raise(e => e.InstructionFetchFinished += null,
-                        new InstructionFetchFinishedEventArgs()
-                        {
-                            IsRetInstruction = (b == RET_opcode)
-                        });
-                    if (b == NOP_opcode)
-                        agent.Registers.SP += 2;
-                    else if (b == RET_opcode)
-                        agent.Registers.SP -= 2;
-                })
-                .Returns(0);
-            
+            DoBeforeFetch(b => Sut.Registers.IFF1 = 1);
+
+            DoAfterFetch(b =>
+            {
+                if(b == NOP_opcode)
+                    Sut.Registers.SP += 2;
+                else if(b == RET_opcode)
+                    Sut.Registers.SP -= 2;
+            });
+
             Sut.Start();
 
-            executor.Verify(e => e.Execute(NOP_opcode), Times.Once());
-            executor.Verify(e => e.Execute(RET_opcode), Times.Exactly(2));
-            executor.Verify(e => e.Execute(DI_opcode), Times.Never());
+            AssertExecuted(NOP_opcode, 1);
+            AssertExecuted(RET_opcode, 2);
+            AssertExecuted(DI_opcode, 0);
 
             Assert.AreEqual(StopReason.RetWithStackEmpty, Sut.StopReason);
             Assert.AreEqual(ProcessorState.Stopped , Sut.State);
         }
+
+        private class FakeInstructionExecutor : IZ80InstructionExecutor
+        {
+            public IZ80ProcessorAgent ProcessorAgent { get; set; }
+
+            public Action<byte> ExtraBeforeFetchCode { get; set; }
+
+            public Action<byte> ExtraAfterFetchCode { get; set; }
+
+            public int Execute(byte firstOpcodeByte)
+            {
+                if(TimesEachInstructionIsExecuted.ContainsKey(firstOpcodeByte))
+                    TimesEachInstructionIsExecuted[firstOpcodeByte]++;
+                else
+                    TimesEachInstructionIsExecuted[firstOpcodeByte] = 1;
+
+                if(ExtraBeforeFetchCode != null)
+                    ExtraBeforeFetchCode(firstOpcodeByte);
+
+                InstructionFetchFinished(this, 
+                    new InstructionFetchFinishedEventArgs()
+                    {
+                        IsLdSpInstruction = (firstOpcodeByte == LD_SP_HL_opcode),
+                        IsRetInstruction = (firstOpcodeByte == RET_opcode),
+                        IsHaltInstruction = (firstOpcodeByte == HALT_opcode)
+                    });
+
+                if(ExtraAfterFetchCode != null)
+                    ExtraAfterFetchCode(firstOpcodeByte);
+
+                return 0;
+            }
+
+            public Dictionary<byte, int> TimesEachInstructionIsExecuted = new Dictionary<byte, int>();
+
+            public event EventHandler<InstructionFetchFinishedEventArgs> InstructionFetchFinished;
+        }
+
     }
 }
