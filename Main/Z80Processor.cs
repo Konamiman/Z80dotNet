@@ -74,15 +74,15 @@ namespace Konamiman.Z80dotNet
             {
                 executionContext.StartNewInstruction();
 
-                var opcode = FetchNextOpcode();
-                InstructionExecutor.Execute(opcode);
+                InstructionExecutor.Execute(FetchNextOpcode());
 
                 CheckAutoStopForHaltOnDi();
                 CheckForAutoStopForRetWithStackEmpty();
                 CheckForLdSpInstruction();
+
+                FireAfterInstructionExecutionEvent();
             }
 
-            //TODO: Fire Before and After instruction execution events
             //TODO: Count extra T states and wait after instruction execution
             //TODO: Catch InstructionFetchFinished event, prevent further opcode fetches
 
@@ -125,13 +125,37 @@ namespace Konamiman.Z80dotNet
             }
         }
         
+        void FireAfterInstructionExecutionEvent()
+        {
+            if(AfterInstructionExecution != null)
+                AfterInstructionExecution(this, new AfterInstructionExecutionEventArgs(
+                    executionContext.OpcodeBytes.ToArray(), 
+                    stopper: this,
+                    localUserState: executionContext.LocalUserStateFromBeforeExecuteEvent));
+        }
+
         void InstructionExecutor_InstructionFetchFinished(object sender, InstructionFetchFinishedEventArgs e)
         {
+            executionContext.FetchComplete = true;
+
             executionContext.IsRetInstruction = e.IsRetInstruction;
             executionContext.IsLdSpInstruction = e.IsLdSpInstruction;
             executionContext.IsHaltInstruction = e.IsHaltInstruction;
 
             executionContext.SpAfterInstructionFetch = Registers.SP;
+
+            var eventArgs = FireBeforeInstructionExecutionEvent();
+            executionContext.LocalUserStateFromBeforeExecuteEvent = eventArgs.LocalUserState;
+        }
+
+        BeforeInstructionExecutionEventArgs FireBeforeInstructionExecutionEvent()
+        {
+            var eventArgs = new BeforeInstructionExecutionEventArgs(executionContext.OpcodeBytes.ToArray());
+
+            if(BeforeInstructionExecution != null)
+                BeforeInstructionExecution(this, eventArgs);
+
+            return eventArgs;
         }
 
         public void Reset()

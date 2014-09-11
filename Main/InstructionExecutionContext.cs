@@ -31,6 +31,7 @@ namespace Konamiman.Z80dotNet
         {
             OpcodeBytes.Clear();
             FetchComplete = false;
+            LocalUserStateFromBeforeExecuteEvent = null;
         }
 
         public bool FetchComplete
@@ -70,6 +71,12 @@ namespace Konamiman.Z80dotNet
         }
 
         public short SpAfterInstructionFetch
+        {
+            get;
+            set;
+        }
+
+        public object LocalUserStateFromBeforeExecuteEvent
         {
             get;
             set;

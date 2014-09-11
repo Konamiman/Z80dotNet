@@ -41,6 +41,8 @@ namespace Konamiman.Z80dotNet.Tests
             Assert.IsNotNull(Sut);
         }
 
+        #region Start, Stop, Pause, Continue
+
         [Test]
         public void Start_does_a_Reset_and_sets_execution_context()
         {
@@ -80,14 +82,6 @@ namespace Konamiman.Z80dotNet.Tests
         }
 
         [Test]
-        public void No_execution_context_after_start_returns()
-        {
-            Sut.Start(null);
-
-            Assert.IsFalse(Sut.HasInstructionExecutionContext);
-        }
-
-        [Test]
         public void Continue_sets_execution_context_and_does_not_reset()
         {
             var pc = Fixture.Create<short>();
@@ -105,20 +99,6 @@ namespace Konamiman.Z80dotNet.Tests
             DoBeforeFetch(b => Assert.AreEqual(ProcessorState.Running, Sut.State));
 
             Sut.Start();
-        }
-
-        [Test]
-        public void Execution_invokes_InstructionExecutor_for_each_fetched_opcode()
-        {
-            Sut.Memory[0] = NOP_opcode;
-            Sut.Memory[1] = DI_opcode;
-            Sut.Memory[2] = RET_opcode;
-
-            Sut.Start();
-
-            AssertExecuted(NOP_opcode, 1);
-            AssertExecuted(DI_opcode, 1);
-            AssertExecuted(RET_opcode, 1);
         }
 
         private void AssertExecuted(byte opcode, int times)
@@ -182,6 +162,32 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.Start();
         }
 
+        #endregion
+
+        #region Conditions at runtime
+
+        [Test]
+        public void Execution_invokes_InstructionExecutor_for_each_fetched_opcode()
+        {
+            Sut.Memory[0] = NOP_opcode;
+            Sut.Memory[1] = DI_opcode;
+            Sut.Memory[2] = RET_opcode;
+
+            Sut.Start();
+
+            AssertExecuted(NOP_opcode, 1);
+            AssertExecuted(DI_opcode, 1);
+            AssertExecuted(RET_opcode, 1);
+        }
+        
+        [Test]
+        public void No_execution_context_after_start_returns()
+        {
+            Sut.Start(null);
+
+            Assert.IsFalse(Sut.HasInstructionExecutionContext);
+        }
+
         [Test]
         public void Cannot_change_interrupt_mode_from_agent_interface_if_no_execution_context()
         {
@@ -204,6 +210,10 @@ namespace Konamiman.Z80dotNet.Tests
         {
             ((FakeInstructionExecutor)Sut.InstructionExecutor).ExtraAfterFetchCode = code;
         }
+
+        #endregion
+
+        #region Auto-stop conditions
 
         [Test]
         [TestCase(true)]
@@ -307,6 +317,87 @@ namespace Konamiman.Z80dotNet.Tests
             Assert.AreEqual(ProcessorState.Stopped , Sut.State);
         }
 
+        #endregion
+
+        #region Before and after instruction execution events
+
+        [Test]
+        public void Fires_before_and_after_instruction_execution_with_proper_opcodes_and_local_state()
+        {
+            var executeInvoked = false;
+            var beforeEventRaised = false;
+            var afterEventRaised = false;
+            var localState = Fixture.Create<object>();
+
+            var instructionBytes = new byte[]
+            {
+                RET_opcode, HALT_opcode, DI_opcode, NOP_opcode
+            };
+            Sut.Memory.SetContents(0, instructionBytes);
+
+            DoBeforeFetch(b =>
+            {
+                Sut.FetchNextOpcode();
+                Sut.FetchNextOpcode();
+                Sut.FetchNextOpcode();
+            });
+
+            Sut.BeforeInstructionExecution += (sender, e) =>
+            {
+                beforeEventRaised = true;
+                Assert.IsFalse(executeInvoked);
+                executeInvoked = true;
+                Assert.AreEqual(instructionBytes, e.Opcode);
+                Assert.IsNull(e.LocalUserState);
+
+                e.LocalUserState = localState;
+            };
+
+            Sut.AfterInstructionExecution += (sender, e) =>
+            {
+                afterEventRaised = true;
+                Assert.IsTrue(executeInvoked);
+                Assert.AreEqual(instructionBytes, e.Opcode);
+                Assert.AreEqual(localState, e.LocalUserState);
+            };
+
+            Sut.Start();
+
+            Assert.IsTrue(beforeEventRaised);
+            Assert.IsTrue(afterEventRaised);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void Stops_execution_if_requested_from_AfterInstructionExecutionEvent(bool isPause)
+        {
+            Sut.Memory[0] = NOP_opcode;
+            Sut.Memory[1] = DI_opcode;
+            Sut.Memory[2] = HALT_opcode;
+            Sut.Memory[3] = RET_opcode;
+
+            Sut.AfterInstructionExecution += (sender, e) =>
+            {
+                if(e.Opcode[0] == DI_opcode)
+                    e.ExecutionStopper.Stop(isPause);
+            };
+
+            Sut.Start();
+
+            AssertExecuted(NOP_opcode, 1);
+            AssertExecuted(DI_opcode, 1);
+            AssertExecuted(HALT_opcode, 0);
+            AssertExecuted(RET_opcode, 0);
+
+            Assert.AreEqual(isPause ? StopReason.PauseInvoked : StopReason.StopInvoked, Sut.StopReason);
+            Assert.AreEqual(isPause ? ProcessorState.Paused : ProcessorState.Stopped , Sut.State);
+        }
+
+        #endregion
+
+        #region FakeInstructionExecutor class
+
         private class FakeInstructionExecutor : IZ80InstructionExecutor
         {
             public IZ80ProcessorAgent ProcessorAgent { get; set; }
@@ -344,5 +435,6 @@ namespace Konamiman.Z80dotNet.Tests
             public event EventHandler<InstructionFetchFinishedEventArgs> InstructionFetchFinished;
         }
 
+        #endregion
     }
 }
