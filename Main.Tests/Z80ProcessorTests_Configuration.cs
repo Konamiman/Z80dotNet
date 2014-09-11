@@ -64,7 +64,7 @@ namespace Konamiman.Z80dotNet.Tests
         }
 
         [Test]
-        [Ignore]
+        //[Ignore]
         public void HelloWorld()
         {
             Sut.AutoStopOnRetWithStackEmpty = true;
@@ -81,6 +81,7 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.Start();
 
             Assert.AreEqual(12, Sut.Registers.Main.A);
+            Assert.AreEqual(25, Sut.TStatesElapsedSinceStart);
         }
 
         [Test]

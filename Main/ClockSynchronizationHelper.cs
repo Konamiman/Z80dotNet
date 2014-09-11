@@ -11,7 +11,7 @@ namespace Konamiman.Z80dotNet
 
         public void TryWait(int periodLengthInCycles)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }
