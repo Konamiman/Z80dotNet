@@ -193,5 +193,75 @@ namespace Konamiman.Z80dotNet
         {
             return ((((int)value)+1) & 0xFFFF).ToShort();
         }
+
+        /// <summary>
+        /// Decreases a number and turns it into max value if it passes under its minimum value.
+        /// </summary>
+        /// <param name="value">Number to increase</param>
+        /// <returns>Increased number, or zero</returns>
+        public static short Dec(this short value)
+        {
+            return ((((int)value)-1) & 0xFFFF).ToShort();
+        }
+
+        /// <summary>
+        /// Adds a value to a number and overlaps it from zero if it passes its maximum value.
+        /// </summary>
+        /// <param name="value">Number to increase</param>
+        /// <returns>Increased number, or zero</returns>
+        public static short Add(this short value, short amount)
+        {
+            return ((((int)value)+amount) & 0xFFFF).ToShort();
+        }
+
+        /// <summary>
+        /// Substract a value to a number and overlaps it from its max value if it passes below its minimum value.
+        /// </summary>
+        /// <param name="value">Number to increase</param>
+        /// <returns>Increased number, or zero</returns>
+        public static short Sub(this short value, short amount)
+        {
+            return ((((int)value)-amount) & 0xFFFF).ToShort();
+        }
+
+        /// <summary>
+        /// Increases a number and turns it into zero if it has its maximum value.
+        /// </summary>
+        /// <param name="value">Number to increase</param>
+        /// <returns>Increased number, or zero</returns>
+        public static byte Inc(this byte value)
+        {
+            return (byte)((((int)value) + 1) & 0xFF);
+        }
+
+        /// <summary>
+        /// Decreases a number and turns it into max value if it passes under its minimum value.
+        /// </summary>
+        /// <param name="value">Number to increase</param>
+        /// <returns>Increased number, or zero</returns>
+        public static short Dec(this byte value)
+        {
+            return ((((byte)value)-1) & 0xFF).ToShort();
+        }
+
+        /// <summary>
+        /// Adds a value to a number and overlaps it from zero if it passes its maximum value.
+        /// </summary>
+        /// <param name="value">Number to increase</param>
+        /// <returns>Increased number, or zero</returns>
+        public static short Add(this byte value, byte amount)
+        {
+            return ((((int)value)+amount) & 0xFF).ToShort();
+        }
+
+        /// <summary>
+        /// Substract a value to a number and overlaps it from its max value if it passes below its minimum value.
+        /// </summary>
+        /// <param name="value">Number to increase</param>
+        /// <returns>Increased number, or zero</returns>
+        public static short Sub(this byte value, byte amount)
+        {
+            return ((((int)value)-amount) & 0xFF).ToShort();
+        }
     }
 }

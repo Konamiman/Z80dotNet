@@ -1,5 +1,5 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using System;
 
 namespace Konamiman.Z80dotNet.Tests
 {
@@ -214,15 +214,99 @@ namespace Konamiman.Z80dotNet.Tests
         }
 
         [Test]
-        public void Inc_works_for_non_boundary_values()
+        public void Inc_short_works_for_non_boundary_values()
         {
             Assert.AreEqual(2, ((short)1).Inc());
         }
 
         [Test]
-        public void Inc_works_for_boundary_values()
+        public void Inc_short_works_for_boundary_values()
         {
             Assert.AreEqual(0, 0xFFFF.ToShort().Inc());
+        }
+
+        [Test]
+        public void Dec_short_works_for_non_boundary_values()
+        {
+            Assert.AreEqual(1, ((short)2).Dec());
+        }
+
+        [Test]
+        public void Dec_short_works_for_boundary_values()
+        {
+            Assert.AreEqual(0xFFFF.ToShort(), ((short)0).Dec());
+        }
+
+        [Test]
+        public void Add_short_works_for_non_boundary_values()
+        {
+            Assert.AreEqual(5, ((short)2).Add(3));
+        }
+
+        [Test]
+        public void Add_short_works_for_boundary_values()
+        {
+            Assert.AreEqual(1, 0xFFFE.ToShort().Add(3));
+        }
+
+        [Test]
+        public void Sub_short_works_for_non_boundary_values()
+        {
+            Assert.AreEqual(2, ((short)5).Sub(3));
+        }
+
+        [Test]
+        public void Sub_short_works_for_boundary_values()
+        {
+            Assert.AreEqual(0xFFFE.ToShort(), ((short)1).Sub(3));
+        }
+
+        [Test]
+        public void Inc_byte_works_for_non_boundary_values()
+        {
+            Assert.AreEqual(2, ((byte)1).Inc());
+        }
+
+        [Test]
+        public void Inc_byte_works_for_boundary_values()
+        {
+            Assert.AreEqual(0, ((byte)0xFF).Inc());
+        }
+
+        [Test]
+        public void Dec_byte_works_for_non_boundary_values()
+        {
+            Assert.AreEqual(1, ((byte)2).Dec());
+        }
+
+        [Test]
+        public void Dec_byte_works_for_boundary_values()
+        {
+            Assert.AreEqual(0xFF.ToShort(), ((byte)0).Dec());
+        }
+
+        [Test]
+        public void Add_byte_works_for_non_boundary_values()
+        {
+            Assert.AreEqual(5, ((byte)2).Add(3));
+        }
+
+        [Test]
+        public void Add_byte_works_for_boundary_values()
+        {
+            Assert.AreEqual(1, ((byte)0xFE).Add(3));
+        }
+
+        [Test]
+        public void Sub_byte_works_for_non_boundary_values()
+        {
+            Assert.AreEqual(2, ((byte)5).Sub(3));
+        }
+
+        [Test]
+        public void Sub_byte_works_for_boundary_values()
+        {
+            Assert.AreEqual(0xFE.ToShort(), ((byte)1).Sub(3));
         }
     }
 }

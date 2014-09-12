@@ -17,20 +17,20 @@ namespace Konamiman.Z80dotNet
             {
                 case 0x3E:  //LD A,n
                     value = ProcessorAgent.FetchNextOpcode();
-                    FireFetchFinished();
+                    FetchFinished();
                     ProcessorAgent.Registers.Main.A = value;
                     return 7;
                 case 0xC6:  //ADD A,n
                     value = ProcessorAgent.FetchNextOpcode();
-                    FireFetchFinished();
+                    FetchFinished();
                     ProcessorAgent.Registers.Main.A += value;   //TODO: Check for overflow, set flags
                     return 4;
                 case 0x3C:  //INC A
-                    FireFetchFinished();
+                    FetchFinished();
                     ProcessorAgent.Registers.Main.A++;  //TODO: Check for overflow, set flags
                     return 4;
                 case 0xC9:  //RET
-                    FireFetchFinished(true);
+                    FetchFinished(true);
                     //TODO: Update PC and SP
                     return 10;
                 default:    //treat as NOP
@@ -38,9 +38,14 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        private void FireFetchFinished(bool isRet = false)
+        private void FetchFinished(bool isRet = false, bool isHalt = false, bool isLdSp = false)
         {
-            InstructionFetchFinished(this, new InstructionFetchFinishedEventArgs() {IsRetInstruction = isRet});
+            InstructionFetchFinished(this, new InstructionFetchFinishedEventArgs()
+            {
+                IsRetInstruction = isRet,
+                IsHaltInstruction = isHalt,
+                IsLdSpInstruction = isLdSp
+            });
         }
 
         public event EventHandler<InstructionFetchFinishedEventArgs> InstructionFetchFinished;
