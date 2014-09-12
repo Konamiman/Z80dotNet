@@ -585,6 +585,28 @@ namespace Konamiman.Z80dotNet.Tests
             clockSyncHelper.Verify(h => h.TryWait(M1readMemoryStates + executionStates));
         }
 
+        [Test]
+        public void AfterInstructionExecuted_event_contains_proper_Tstates_count()
+        {
+            var M1readMemoryStates = Fixture.Create<byte>();
+            var executionStates = Fixture.Create<byte>();
+            bool instructionExecuted = false;
+            
+            SetStatesReturner(b => executionStates);
+
+            Sut.SetMemoryWaitStatesForM1(0, 1, M1readMemoryStates);
+
+            Sut.AfterInstructionExecution += (sender, args) =>
+            {
+                instructionExecuted = true;
+                Assert.AreEqual(executionStates + M1readMemoryStates, args.TotalTStates);
+            };
+
+            Sut.Start();
+
+            Assert.IsTrue(instructionExecuted);
+        }
+
         #endregion
 
         #region ExecuteNextInstruction

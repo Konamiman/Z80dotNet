@@ -86,7 +86,7 @@ namespace Konamiman.Z80dotNet
                     CheckForLdSpInstruction();
                 }
 
-                FireAfterInstructionExecutionEvent();
+                FireAfterInstructionExecutionEvent(totalTStates);
 
                 if(isSingleInstruction)
                     executionContext.StopReason = StopReason.ExecuteNextInstructionInvoked;
@@ -137,13 +137,14 @@ namespace Konamiman.Z80dotNet
             }
         }
         
-        void FireAfterInstructionExecutionEvent()
+        void FireAfterInstructionExecutionEvent(int tStates)
         {
             if(AfterInstructionExecution != null)
                 AfterInstructionExecution(this, new AfterInstructionExecutionEventArgs(
                     executionContext.OpcodeBytes.ToArray(), 
                     stopper: this,
-                    localUserState: executionContext.LocalUserStateFromBeforeExecuteEvent));
+                    localUserState: executionContext.LocalUserStateFromBeforeExecuteEvent,
+                    tStates: tStates));
         }
 
         void InstructionExecutor_InstructionFetchFinished(object sender, InstructionFetchFinishedEventArgs e)

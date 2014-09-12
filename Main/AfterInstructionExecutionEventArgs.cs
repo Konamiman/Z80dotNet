@@ -12,11 +12,13 @@ namespace Konamiman.Z80dotNet
         /// <param name="stopper">An instance of <see cref="IExecutionStopper"/> that can be used
         /// by the event listener to request stop of the execution loop.</param>
         /// <param name="localUserState">The state object from the matching <see cref="IZ80Processor.BeforeInstructionExecution"/> event.</param>
-        public AfterInstructionExecutionEventArgs(byte[] opcode, IExecutionStopper stopper, object localUserState)
+        /// <param name="tStates">Total count of T states used for the instruction execution, including extra wait states</param>
+        public AfterInstructionExecutionEventArgs(byte[] opcode, IExecutionStopper stopper, object localUserState, int tStates)
         {
             this.Opcode = opcode;
             this.ExecutionStopper = stopper;
             this.LocalUserState = localUserState;
+            this.TotalTStates = tStates;
         }
 
         /// <summary>
@@ -29,5 +31,11 @@ namespace Konamiman.Z80dotNet
         /// to ask termination of the processor execution.
         /// </summary>
         public IExecutionStopper ExecutionStopper { get; private set; }
+
+        /// <summary>
+        /// Contains the total count of T states required for the instruction execution, including
+        /// any extra wait states used for memory and ports access.
+        /// </summary>
+        public int TotalTStates { get; private set; }
     }
 }
