@@ -102,8 +102,10 @@ namespace Konamiman.Z80dotNet
         /// unless register state is set manually.
         /// </para>
         /// </remarks>
+        /// <returns>The total amount of T states required to execute the instruction,
+        /// inclusing extra wait states.</returns>
         /// <exception cref="InvalidOperationException">The method is invoked from within an event handler.</exception>
-        void ExecuteNextInstruction();
+        int ExecuteNextInstruction();
 
         /// <summary>
         /// Simulates the arrival of a non-maskable interrupt request.

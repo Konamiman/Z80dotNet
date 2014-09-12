@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Konamiman.Z80dotNet
@@ -61,12 +60,13 @@ namespace Konamiman.Z80dotNet
             InstructionExecutionLoop();
         }
 
-        private void InstructionExecutionLoop()
+        private int InstructionExecutionLoop(bool isSingleInstruction = false)
         {
             executionContext = new InstructionExecutionContext();
             executionContext.StartOfStack = Registers.SP;
             StopReason = StopReason.NotApplicable;
             State = ProcessorState.Running;
+            int totalTStates = 0;
 
             while(!executionContext.MustStop)
             {
@@ -74,17 +74,23 @@ namespace Konamiman.Z80dotNet
 
                 var executionTStates = InstructionExecutor.Execute(FetchNextOpcode());
                 
-                var totalTStates = executionTStates + executionContext.AccummulatedaMemoryWaitStates;
+                totalTStates = executionTStates + executionContext.AccummulatedaMemoryWaitStates;
                 TStatesElapsedSinceStart += (ulong)totalTStates;
                 TStatesElapsedSinceReset += (ulong)totalTStates;
 
-                CheckAutoStopForHaltOnDi();
-                CheckForAutoStopForRetWithStackEmpty();
-                CheckForLdSpInstruction();
-                
+                if(!isSingleInstruction)
+                {
+                    CheckAutoStopForHaltOnDi();
+                    CheckForAutoStopForRetWithStackEmpty();
+                    CheckForLdSpInstruction();
+                }
+
                 FireAfterInstructionExecutionEvent();
 
-                ClockSynchronizationHelper.TryWait(totalTStates);
+                if(isSingleInstruction)
+                    executionContext.StopReason = StopReason.ExecuteNextInstructionInvoked;
+                else
+                    ClockSynchronizationHelper.TryWait(totalTStates);
             }
 
             this.StopReason = executionContext.StopReason;
@@ -92,7 +98,10 @@ namespace Konamiman.Z80dotNet
                 StopReason == StopReason.PauseInvoked
                     ? ProcessorState.Paused
                     : ProcessorState.Stopped;
+
             executionContext = null;
+
+            return totalTStates;
         }
 
         private void CheckAutoStopForHaltOnDi()
@@ -162,7 +171,7 @@ namespace Konamiman.Z80dotNet
         public void Reset()
         {
             Registers.IFF1 = 0;
-            Registers.IFF1 = 0;
+            Registers.IFF2 = 0;
             Registers.PC = 0;
             Registers.Main.AF = 0xFFFF.ToShort();
             Registers.SP = 0xFFFF.ToShort();
@@ -171,9 +180,9 @@ namespace Konamiman.Z80dotNet
             TStatesElapsedSinceReset = 0;
         }
 
-        public void ExecuteNextInstruction()
+        public int ExecuteNextInstruction()
         {
-            throw new NotImplementedException();
+            return InstructionExecutionLoop(isSingleInstruction: true);
         }
 
         public void FireNonMaskableInterrupt()
@@ -444,7 +453,7 @@ namespace Konamiman.Z80dotNet
 
         public byte FetchNextOpcode()
         {
-            FailIfNoInstructionExecuting();
+            FailIfNoExecutionContext();
 
             if(executionContext.FetchComplete)
                 throw new InvalidOperationException("FetchNextOpcode can be invoked only before the InstructionFetchFinished event has been raised.");
@@ -463,7 +472,7 @@ namespace Konamiman.Z80dotNet
             return value;
         }
 
-        private void FailIfNoInstructionExecuting()
+        private void FailIfNoExecutionContext()
         {
             if(executionContext == null)
                 throw new InvalidOperationException("This method can be invoked only when an instruction is being executed.");
@@ -471,7 +480,7 @@ namespace Konamiman.Z80dotNet
 
         public byte ReadFromMemory(ushort address)
         {
-            FailIfNoInstructionExecuting();
+            FailIfNoExecutionContext();
             FailIfNoInstructionFetchComplete();
 
             return ReadFromMemoryOrPort(
@@ -534,7 +543,7 @@ namespace Konamiman.Z80dotNet
 
         public void WriteToMemory(ushort address, byte value)
         {
-            FailIfNoInstructionExecuting();
+            FailIfNoExecutionContext();
             FailIfNoInstructionFetchComplete();
 
             WritetoMemoryOrPort(
@@ -575,7 +584,7 @@ namespace Konamiman.Z80dotNet
 
         public byte ReadFromPort(byte portNumber)
         {
-            FailIfNoInstructionExecuting();
+            FailIfNoExecutionContext();
             FailIfNoInstructionFetchComplete();
 
             return ReadFromMemoryOrPort(
@@ -589,7 +598,7 @@ namespace Konamiman.Z80dotNet
 
         public void WriteToPort(byte portNumber, byte value)
         {
-            FailIfNoInstructionExecuting();
+            FailIfNoExecutionContext();
             FailIfNoInstructionFetchComplete();
 
             WritetoMemoryOrPort(
@@ -604,7 +613,7 @@ namespace Konamiman.Z80dotNet
 
         public void SetInterruptMode(byte interruptMode)
         {
-            FailIfNoInstructionExecuting();
+            FailIfNoExecutionContext();
             FailIfNoInstructionFetchComplete();
 
             this.InterruptMode = interruptMode;
@@ -612,7 +621,7 @@ namespace Konamiman.Z80dotNet
 
         public void Stop(bool isPause = false)
         {
-            FailIfNoInstructionExecuting();
+            FailIfNoExecutionContext();
             FailIfNoInstructionFetchComplete();
 
             executionContext.StopReason = 

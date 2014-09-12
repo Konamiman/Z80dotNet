@@ -1,10 +1,8 @@
-﻿using System;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-using Moq;
+﻿using Moq;
 using NUnit.Framework;
 using Ploeh.AutoFixture;
+using System;
+using System.Collections.Generic;
 
 namespace Konamiman.Z80dotNet.Tests
 {
@@ -13,7 +11,7 @@ namespace Konamiman.Z80dotNet.Tests
         private const byte RET_opcode = 0xC9;
         private const byte DI_opcode = 0xF3;
         private const byte HALT_opcode = 0x76;
-        private const byte NOP_opcode = 0;
+        private const byte NOP_opcode = 0x00;
         private const byte LD_SP_HL_opcode = 0xF9;
 
         Z80Processor Sut { get; set; }
@@ -585,6 +583,93 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.Start();
 
             clockSyncHelper.Verify(h => h.TryWait(M1readMemoryStates + executionStates));
+        }
+
+        #endregion
+
+        #region ExecuteNextInstruction
+
+        [Test]
+        public void ExecuteNextInstruction_executes_just_one_instruction_and_finishes()
+        {
+            Sut.Memory[0] = NOP_opcode;
+            Sut.Memory[1] = NOP_opcode;
+            Sut.Memory[2] = RET_opcode;
+            var instructionsExecutedCount = 0;
+
+            DoBeforeFetch(b => instructionsExecutedCount++);
+
+            Sut.ExecuteNextInstruction();
+
+            Assert.AreEqual(1, instructionsExecutedCount);
+        }
+
+        [Test]
+        public void ExecuteNextInstruction_always_sets_StopReason_to_ExecuteNextInstructionInvoked()
+        {
+            Sut.Memory[0] = RET_opcode;
+            Sut.ExecuteNextInstruction();
+            Assert.AreEqual(StopReason.ExecuteNextInstructionInvoked, Sut.StopReason);
+
+            Sut.Memory[0] = DI_opcode;
+            Sut.Reset();
+            Sut.ExecuteNextInstruction();
+            Assert.AreEqual(StopReason.ExecuteNextInstructionInvoked, Sut.StopReason);
+
+            DoAfterFetch(b => Sut.Stop());
+            Sut.Reset();
+            Sut.ExecuteNextInstruction();
+            Assert.AreEqual(StopReason.ExecuteNextInstructionInvoked, Sut.StopReason);
+        }
+
+        [Test]
+        public void ExecuteNextInstruction_executes_instructions_sequentially()
+        {
+            Sut.Memory[0] = RET_opcode;
+            Sut.Memory[1] = NOP_opcode;
+            Sut.Memory[2] = DI_opcode;
+
+            var executedOpcodes = new List<byte>();
+
+            DoBeforeFetch(executedOpcodes.Add);
+
+            Sut.ExecuteNextInstruction();
+            Sut.ExecuteNextInstruction();
+            Sut.ExecuteNextInstruction();
+
+            Assert.AreEqual(Sut.Memory.GetContents(0, 3), executedOpcodes);
+        }
+
+        [Test]
+        public void ExecuteNextInstruction_returns_count_of_elapsed_TStates()
+        {
+            var executionStates = Fixture.Create<byte>();
+            var M1States = Fixture.Create<byte>();
+            var memoryReadStates = Fixture.Create<byte>();
+            var address = Fixture.Create<ushort>();
+
+            Sut.SetMemoryWaitStatesForM1(0, 1, M1States);
+            Sut.SetMemoryWaitStatesForNonM1(address, 1, memoryReadStates);
+
+            SetStatesReturner(b => executionStates);
+            DoAfterFetch(b => Sut.ReadFromMemory(address));
+
+            var actual = Sut.ExecuteNextInstruction();
+            var expected = executionStates + M1States + memoryReadStates;
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void ExecuteNextInstruction_updates_TStatesCounts_appropriately()
+        {
+            var statesCount = Fixture.Create<byte>();
+
+            SetStatesReturner(b => statesCount);
+
+            Sut.ExecuteNextInstruction();
+            Assert.AreEqual(statesCount, Sut.TStatesElapsedSinceStart);
+            Sut.ExecuteNextInstruction();
+            Assert.AreEqual(statesCount * 2, Sut.TStatesElapsedSinceStart);
         }
 
         #endregion
