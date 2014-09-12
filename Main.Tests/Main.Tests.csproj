@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitTests.cs" />
+    <Compile Include="ClockSynchronizationHelperTests.cs" />
     <Compile Include="MainZ80RegistersTests.cs">
       <SubType>Code</SubType>
     </Compile>

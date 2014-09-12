@@ -14,6 +14,21 @@ namespace Konamiman.Z80dotNet
         decimal EffectiveClockFrequencyInMHz { get; set; }
 
         /// <summary>
+        /// Starts the internal clock used to keep track of time.
+        /// </summary>
+        void Start();
+
+        /// <summary>
+        /// Stops the internal clock used to keep track of time.
+        /// </summary>
+        /// <remarks>
+        /// The class should still work even if this method is never invoked (that is, consecutive calls
+        /// to <see cref="Start"/> should be allowed). However invoking this method is convenient
+        /// in order to clean up resources.
+        /// </remarks>
+        void Stop();
+
+        /// <summary>
         /// Signals that a certain number of clock cycles have elapsed in the simulated system.
         /// </summary>
         /// <param name="periodLengthInCycles">Amount of period cycles to simulate</param>

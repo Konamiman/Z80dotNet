@@ -62,6 +62,7 @@ namespace Konamiman.Z80dotNet
 
         private int InstructionExecutionLoop(bool isSingleInstruction = false)
         {
+            ClockSynchronizationHelper.Start();
             executionContext = new InstructionExecutionContext();
             executionContext.StartOfStack = Registers.SP;
             StopReason = StopReason.NotApplicable;
@@ -93,6 +94,7 @@ namespace Konamiman.Z80dotNet
                     ClockSynchronizationHelper.TryWait(totalTStates);
             }
 
+            ClockSynchronizationHelper.Stop();
             this.StopReason = executionContext.StopReason;
             this.State =
                 StopReason == StopReason.PauseInvoked
