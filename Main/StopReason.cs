@@ -43,6 +43,13 @@ namespace Konamiman.Z80dotNet
         /// A RET instruction was encountered, the stack is empty, and the
         /// <see cref="IZ80Processor.AutoStopOnRetWithStackEmpty"/> property was set to true.
         /// </summary>
-        RetWithStackEmpty
+        RetWithStackEmpty,
+
+        /// <summary>
+        /// An exception was thrown and not handled during he execution of the
+        /// <see cref="IZ80Processor.Start"/> method, the <see cref="IZ80Processor.Continue"/> method
+        /// or the <see cref="IZ80Processor.ExecuteNextInstruction"/> method.
+        /// </summary>
+        ExceptionThrown
     }
 }

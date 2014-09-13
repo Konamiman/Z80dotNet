@@ -62,6 +62,21 @@ namespace Konamiman.Z80dotNet
 
         private int InstructionExecutionLoop(bool isSingleInstruction = false)
         {
+            try
+            {
+                return UnsafeInstructionExecutionLoop(isSingleInstruction);
+            }
+            catch
+            {
+                State = ProcessorState.Stopped;
+                StopReason = StopReason.ExceptionThrown;
+
+                throw;
+            }
+        }
+
+        private int UnsafeInstructionExecutionLoop(bool isSingleInstruction)
+        {
             ClockSynchronizationHelper.Start();
             executionContext = new InstructionExecutionContext();
             executionContext.StartOfStack = Registers.SP;
@@ -78,6 +93,8 @@ namespace Konamiman.Z80dotNet
                 totalTStates = executionTStates + executionContext.AccummulatedaMemoryWaitStates;
                 TStatesElapsedSinceStart += (ulong)totalTStates;
                 TStatesElapsedSinceReset += (ulong)totalTStates;
+
+                ThrowIfNoFetchFinishedEventFired();
 
                 if(!isSingleInstruction)
                 {
@@ -104,6 +121,16 @@ namespace Konamiman.Z80dotNet
             executionContext = null;
 
             return totalTStates;
+        }
+
+        private void ThrowIfNoFetchFinishedEventFired()
+        {
+            if (executionContext.FetchComplete)
+                return;
+
+            throw new InstructionFetchFinishedEventNotFiredException(
+                instructionAddress: Registers.PC.Sub(executionContext.OpcodeBytes.Count.ToShort()).ToUShort(),
+                fetchedBytes: executionContext.OpcodeBytes.ToArray());
         }
 
         private void CheckAutoStopForHaltOnDi()

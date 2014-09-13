@@ -158,6 +158,18 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.Start();
         }
 
+        [Test]
+        public void Has_proper_state_after_unhandled_exception()
+        {
+            DoBeforeFetch(b => {throw new Exception();} );
+
+            Assert.Throws<Exception>(() => Sut.Start());
+
+            Assert.AreEqual(ProcessorState.Stopped, Sut.State);
+            Assert.AreEqual(StopReason.ExceptionThrown, Sut.StopReason);
+
+        }
+
         #endregion
 
         #region Conditions at runtime
@@ -738,6 +750,27 @@ namespace Konamiman.Z80dotNet.Tests
             public Dictionary<byte, int> TimesEachInstructionIsExecuted = new Dictionary<byte, int>();
 
             public event EventHandler<InstructionFetchFinishedEventArgs> InstructionFetchFinished;
+        }
+
+        #endregion
+
+        #region InstructionFetchFinishedEventNotFiredException
+
+        [Test]
+        public void Fires_InstructionFetchFinishedEventNotFiredException_if_Execute_returns_without_firing_event()
+        {
+            var address = Fixture.Create<ushort>();
+            Sut.Memory[address] = RET_opcode;
+            Sut.Registers.PC = address.ToShort();
+
+            var executor = new Mock<IZ80InstructionExecutor>();
+            executor.Setup(e => e.Execute(It.IsAny<byte>())).Returns(0);
+            Sut.InstructionExecutor = executor.Object;
+
+            var exception = Assert.Throws<InstructionFetchFinishedEventNotFiredException>(Sut.Continue);
+
+            Assert.AreEqual(address, exception.InstructionAddress);
+            Assert.AreEqual(new Byte[] {RET_opcode}, exception.FetchedBytes);
         }
 
         #endregion
