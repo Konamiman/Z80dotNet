@@ -33,6 +33,7 @@ namespace Konamiman.Z80dotNet
             FetchComplete = false;
             LocalUserStateFromBeforeExecuteEvent = null;
             AccummulatedaMemoryWaitStates = 0;
+            PeekedOpcode = null;
         }
 
         public bool FetchComplete
@@ -86,6 +87,18 @@ namespace Konamiman.Z80dotNet
         public int AccummulatedaMemoryWaitStates
         {
             get; 
+            set;
+        }
+
+        public byte? PeekedOpcode
+        {
+            get; 
+            set;
+        }
+
+        public ushort AddressOfPeekedOpcode
+        {
+            get;
             set;
         }
     }

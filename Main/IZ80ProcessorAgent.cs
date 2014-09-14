@@ -7,10 +7,25 @@
     {
         /// <summary>
         /// Reads the next opcode byte from the memory location currently pointed by the PC register,
-        /// then increases PC by one.
+        /// then increments PC by one.
         /// </summary>
         /// <returns>The byte obtained from memory</returns>
         byte FetchNextOpcode();
+
+        /// <summary>
+        /// Reads the next opcode byte from the memory location currently pointed by the PC register,
+        /// but does not modify PC.
+        /// </summary>
+        /// <returns>The byte obtained from memory</returns>
+        /// <remarks>This method can be useful to handle 0xDD and 0xFD prefixes.
+        /// If <see cref="IZ80InstructionExecutor.Execute"/> receives one of these bytes, it can use this method
+        /// the check the next opcode byte. If both bytes do not form a supported instruction
+        /// (for example, if the second byte is another 0xDD/0xFD byte), then <see cref="IZ80InstructionExecutor.Execute"/>
+        /// simply returns; the first 0xDD/0xFD acts then as a NOP, and the
+        /// second byte will be fetched again for the next invocation of <see cref="IZ80InstructionExecutor.Execute"/>.
+        /// Otherwise, <see cref="FetchNextOpcode"/> in invoked in order to get PC properly incremented.
+        /// </remarks>
+        byte PeekNextOpcode();
 
         /// <summary>
         /// Reads one byte from memory.

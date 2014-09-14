@@ -176,6 +176,9 @@ namespace Konamiman.Z80dotNet
 
         void InstructionExecutor_InstructionFetchFinished(object sender, InstructionFetchFinishedEventArgs e)
         {
+            if(executionContext.FetchComplete)
+                return;
+
             executionContext.FetchComplete = true;
 
             executionContext.IsRetInstruction = e.IsRetInstruction;
@@ -488,18 +491,57 @@ namespace Konamiman.Z80dotNet
             if(executionContext.FetchComplete)
                 throw new InvalidOperationException("FetchNextOpcode can be invoked only before the InstructionFetchFinished event has been raised.");
 
-            var address = Registers.PC.ToUShort();
-            var value = ReadFromMemoryOrPort(
-                address, 
-                Memory, 
-                GetMemoryAccessMode(address),
-                MemoryAccessEventType.BeforeMemoryRead,
-                MemoryAccessEventType.AfterMemoryRead,
-                GetMemoryWaitStatesForM1(address));
+            byte opcode;
+            if (executionContext.PeekedOpcode == null)
+            {
+                var address = Registers.PC.ToUShort();
+                opcode = ReadFromMemoryOrPort(
+                    address,
+                    Memory,
+                    GetMemoryAccessMode(address),
+                    MemoryAccessEventType.BeforeMemoryRead,
+                    MemoryAccessEventType.AfterMemoryRead,
+                    GetMemoryWaitStatesForM1(address));
+            }
+            else
+            {
+                executionContext.AccummulatedaMemoryWaitStates +=
+                    GetMemoryWaitStatesForM1(executionContext.AddressOfPeekedOpcode);
+                opcode = executionContext.PeekedOpcode.Value;
+                executionContext.PeekedOpcode = null;
+            }
 
-            executionContext.OpcodeBytes.Add(value);
+            executionContext.OpcodeBytes.Add(opcode);
             Registers.PC = Registers.PC.Inc();
-            return value;
+            return opcode;
+        }
+        
+        public byte PeekNextOpcode()
+        {
+            FailIfNoExecutionContext();
+
+            if(executionContext.FetchComplete)
+                throw new InvalidOperationException("PeekNextOpcode can be invoked only before the InstructionFetchFinished event has been raised.");
+
+            if (executionContext.PeekedOpcode == null)
+            {
+                var address = Registers.PC.ToUShort();
+                var opcode = ReadFromMemoryOrPort(
+                    address,
+                    Memory,
+                    GetMemoryAccessMode(address),
+                    MemoryAccessEventType.BeforeMemoryRead,
+                    MemoryAccessEventType.AfterMemoryRead,
+                    waitStates: 0);
+
+                executionContext.PeekedOpcode = opcode;
+                executionContext.AddressOfPeekedOpcode = Registers.PC.ToUShort();
+                return opcode;
+            }
+            else
+            {
+                return executionContext.PeekedOpcode.Value;
+            }
         }
 
         private void FailIfNoExecutionContext()

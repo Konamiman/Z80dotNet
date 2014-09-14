@@ -774,5 +774,134 @@ namespace Konamiman.Z80dotNet.Tests
         }
 
         #endregion
+
+        #region PeekNextOpcode
+
+        [Test]
+        public void PeekNextOpcode_returns_next_opcode_without_increasing_PC_and_without_elapsing_T_states()
+        {
+            var executionStates = Fixture.Create<byte>();
+            var M1readMemoryStates = Fixture.Create<byte>();
+            var memoryAccessStates = Fixture.Create<byte>();
+            var memoryAddress = Fixture.Create<ushort>();
+
+            SetStatesReturner(b => executionStates);
+
+            Sut.Memory[0] = NOP_opcode;
+            Sut.Memory[1] = LD_SP_HL_opcode;
+            Sut.Memory[2] = RET_opcode;
+
+            Sut.SetMemoryWaitStatesForM1(0, 3, M1readMemoryStates);
+            Sut.SetMemoryWaitStatesForNonM1(memoryAddress, 1, memoryAccessStates);
+
+            var beforeInvoked = false;
+
+            DoBeforeFetch(b =>
+            {
+                if(b == LD_SP_HL_opcode)
+                {
+                    beforeInvoked = true;
+                    for (int i = 0; i < 3; i++)
+                    {
+                        var oldPC = Sut.Registers.PC;
+                        Assert.AreEqual(RET_opcode, Sut.PeekNextOpcode());
+                        Assert.AreEqual(oldPC, Sut.Registers.PC);
+                    }
+                }
+            });
+
+            DoAfterFetch(b =>
+            {
+                if(b == NOP_opcode)
+                {
+                    Sut.ReadFromMemory(memoryAddress);
+                }
+            });
+
+            Sut.Start();
+
+            Assert.IsTrue(beforeInvoked);
+
+            var expected =
+                //3 instructions of 1 byte each executed...
+                executionStates * 3 +
+                M1readMemoryStates * 3 +
+                //...plus 1 read from memory
+                memoryAccessStates;
+
+            AssertExecuted(NOP_opcode, 1);
+            AssertExecuted(LD_SP_HL_opcode, 1);
+            AssertExecuted(RET_opcode, 1);
+
+            Assert.AreEqual(expected, Sut.TStatesElapsedSinceReset);
+            Assert.AreEqual(expected, Sut.TStatesElapsedSinceStart);
+        }
+
+        [Test]
+        public void PeekNextOpcode_can_be_invoked_only_before_instruction_fetch_complete()
+        {
+            DoBeforeFetch(b => Sut.FetchNextOpcode());
+
+            DoAfterFetch(b => Assert.Throws<InvalidOperationException>(() => Sut.PeekNextOpcode()));
+
+            Sut.Start();
+        }
+
+        [Test]
+        public void FetchNextOpcode_after_peek_returns_correct_opcode_and_updates_T_states_appropriately()
+        {
+            var executionStates = Fixture.Create<byte>();
+            var M1readMemoryStates_0 = Fixture.Create<byte>();
+            var M1readMemoryStates_1 = Fixture.Create<byte>();
+            var M1readMemoryStates_2 = Fixture.Create<byte>();
+            var M1readMemoryStates_3 = Fixture.Create<byte>();
+            var secondOpcodeByte = Fixture.Create<byte>();
+
+            SetStatesReturner(b => executionStates);
+
+            Sut.Memory[0] = NOP_opcode;
+            Sut.Memory[1] = LD_SP_HL_opcode;
+            Sut.Memory[2] = secondOpcodeByte;
+            Sut.Memory[3] = RET_opcode;
+
+            Sut.SetMemoryWaitStatesForM1(0, 1, M1readMemoryStates_0);
+            Sut.SetMemoryWaitStatesForM1(1, 1, M1readMemoryStates_1);
+            Sut.SetMemoryWaitStatesForM1(2, 1, M1readMemoryStates_2);
+            Sut.SetMemoryWaitStatesForM1(3, 1, M1readMemoryStates_3);
+
+            var beforeInvoked = false;
+
+            DoBeforeFetch(b =>
+            {
+                if(b == LD_SP_HL_opcode)
+                {
+                    beforeInvoked = true;
+                    Assert.AreEqual(secondOpcodeByte, Sut.PeekNextOpcode());
+                    Assert.AreEqual(2, Sut.Registers.PC);
+                    Assert.AreEqual(secondOpcodeByte, Sut.FetchNextOpcode());
+                    Assert.AreEqual(3, Sut.Registers.PC);
+                }
+            });
+
+            Sut.Start();
+
+            Assert.IsTrue(beforeInvoked);
+
+            var expected =
+                executionStates * 3 +
+                M1readMemoryStates_0 +
+                M1readMemoryStates_1 +
+                M1readMemoryStates_2 +
+                M1readMemoryStates_3;
+
+            AssertExecuted(NOP_opcode, 1);
+            AssertExecuted(LD_SP_HL_opcode, 1);
+            AssertExecuted(RET_opcode, 1);
+
+            Assert.AreEqual(expected, Sut.TStatesElapsedSinceReset);
+            Assert.AreEqual(expected, Sut.TStatesElapsedSinceStart);
+        }
+
+        #endregion
     }
 }
