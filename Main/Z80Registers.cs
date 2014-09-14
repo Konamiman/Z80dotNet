@@ -49,7 +49,7 @@ namespace Konamiman.Z80dotNet
 
         public short IY { get; set; }
 
-        public short PC { get; set; }
+        public ushort PC { get; set; }
 
         public short SP { get; set; }
 

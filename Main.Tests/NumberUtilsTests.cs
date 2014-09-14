@@ -226,6 +226,18 @@ namespace Konamiman.Z80dotNet.Tests
         }
 
         [Test]
+        public void Inc_ushort_works_for_non_boundary_values()
+        {
+            Assert.AreEqual(2, ((ushort)1).Inc());
+        }
+
+        [Test]
+        public void Inc_ushort_works_for_boundary_values()
+        {
+            Assert.AreEqual(0, 0xFFFF.ToUShort().Inc());
+        }
+
+        [Test]
         public void Dec_short_works_for_non_boundary_values()
         {
             Assert.AreEqual(1, ((short)2).Dec());
@@ -259,6 +271,18 @@ namespace Konamiman.Z80dotNet.Tests
         public void Sub_short_works_for_boundary_values()
         {
             Assert.AreEqual(0xFFFE.ToShort(), ((short)1).Sub(3));
+        }
+
+        [Test]
+        public void Sub_ushort_works_for_non_boundary_values()
+        {
+            Assert.AreEqual(2, ((ushort)5).Sub(3));
+        }
+
+        [Test]
+        public void Sub_ushort_works_for_boundary_values()
+        {
+            Assert.AreEqual(0xFFFE.ToUShort(), ((ushort)1).Sub(3));
         }
 
         [Test]

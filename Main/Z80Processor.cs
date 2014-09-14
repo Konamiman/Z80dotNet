@@ -129,7 +129,7 @@ namespace Konamiman.Z80dotNet
                 return;
 
             throw new InstructionFetchFinishedEventNotFiredException(
-                instructionAddress: Registers.PC.Sub(executionContext.OpcodeBytes.Count.ToShort()).ToUShort(),
+                instructionAddress: Registers.PC.Sub((ushort)executionContext.OpcodeBytes.Count),
                 fetchedBytes: executionContext.OpcodeBytes.ToArray());
         }
 
@@ -494,7 +494,7 @@ namespace Konamiman.Z80dotNet
             byte opcode;
             if (executionContext.PeekedOpcode == null)
             {
-                var address = Registers.PC.ToUShort();
+                var address = Registers.PC;
                 opcode = ReadFromMemoryOrPort(
                     address,
                     Memory,
@@ -525,7 +525,7 @@ namespace Konamiman.Z80dotNet
 
             if (executionContext.PeekedOpcode == null)
             {
-                var address = Registers.PC.ToUShort();
+                var address = Registers.PC;
                 var opcode = ReadFromMemoryOrPort(
                     address,
                     Memory,
@@ -535,7 +535,7 @@ namespace Konamiman.Z80dotNet
                     waitStates: 0);
 
                 executionContext.PeekedOpcode = opcode;
-                executionContext.AddressOfPeekedOpcode = Registers.PC.ToUShort();
+                executionContext.AddressOfPeekedOpcode = Registers.PC;
                 return opcode;
             }
             else

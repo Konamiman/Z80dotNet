@@ -345,7 +345,7 @@ namespace Konamiman.Z80dotNet.Tests
             var value = Fixture.Create<byte>();
 
             Memory.Setup(m => m[address]).Returns(value);
-            Sut.Registers.PC = address.ToShort();
+            Sut.Registers.PC = address;
 
             var actual = Sut.FetchNextOpcode();
 
@@ -357,7 +357,7 @@ namespace Konamiman.Z80dotNet.Tests
         public void FetchNextOpcode_increases_PC_by_one()
         {
             var address = Fixture.Create<ushort>();
-            Sut.Registers.PC = address.ToShort();
+            Sut.Registers.PC = address;
 
             Sut.FetchNextOpcode();
 

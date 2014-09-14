@@ -28,7 +28,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The program counter
         /// </summary>
-        short PC { get; set; }
+        ushort PC { get; set; }
 
         /// <summary>
         /// The stack pointer

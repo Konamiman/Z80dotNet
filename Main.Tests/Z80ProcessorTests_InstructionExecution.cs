@@ -44,7 +44,7 @@ namespace Konamiman.Z80dotNet.Tests
         [Test]
         public void Start_does_a_Reset()
         {
-            Sut.Registers.PC = Fixture.Create<short>();
+            Sut.Registers.PC = Fixture.Create<ushort>();
 
             Sut.Start();
 
@@ -80,7 +80,7 @@ namespace Konamiman.Z80dotNet.Tests
         [Test]
         public void Continue_sets_execution_context_and_does_not_reset()
         {
-            var pc = Fixture.Create<short>();
+            var pc = Fixture.Create<ushort>();
             Sut.Registers.PC = pc;
             Sut.Memory[pc] = RET_opcode;
 
@@ -761,7 +761,7 @@ namespace Konamiman.Z80dotNet.Tests
         {
             var address = Fixture.Create<ushort>();
             Sut.Memory[address] = RET_opcode;
-            Sut.Registers.PC = address.ToShort();
+            Sut.Registers.PC = address;
 
             var executor = new Mock<IZ80InstructionExecutor>();
             executor.Setup(e => e.Execute(It.IsAny<byte>())).Returns(0);
