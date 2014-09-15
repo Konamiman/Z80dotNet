@@ -46,6 +46,14 @@
     <Compile Include="IExecutionStopper.cs" />
     <Compile Include="IClockSynchronizationHelper.cs" />
     <Compile Include="InstructionExecutionContext.cs" />
+    <Compile Include="InstructionExecution\Core\InstructionsTable.CB.cs" />
+    <Compile Include="InstructionExecution\Core\InstructionsTable.FDCB.cs" />
+    <Compile Include="InstructionExecution\Core\InstructionsTable.DDCB.cs" />
+    <Compile Include="InstructionExecution\Core\InstructionsTable.DD.cs" />
+    <Compile Include="InstructionExecution\Core\InstructionsTable.FD.cs" />
+    <Compile Include="InstructionExecution\Core\InstructionsTable.ED.cs" />
+    <Compile Include="InstructionExecution\Core\InstructionsTable.SingleByte.cs" />
+    <Compile Include="InstructionExecution\Instructions\NOP.cs" />
     <Compile Include="InstructionFetchFinishedEventArgs.cs" />
     <Compile Include="InstructionFetchFinishedEventNotFiredException.cs" />
     <Compile Include="IZ80InstructionExecutor.cs" />
@@ -66,10 +74,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NumberUtils.cs" />
     <Compile Include="StopReason.cs" />
-    <Compile Include="Z80InstructionExecutor.cs" />
+    <Compile Include="InstructionExecution\Core\_Z80InstructionExecutor.Core.cs" />
     <Compile Include="Z80Processor.cs" />
     <Compile Include="Z80Registers.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
