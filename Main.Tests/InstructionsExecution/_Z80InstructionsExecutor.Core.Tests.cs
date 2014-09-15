@@ -114,6 +114,23 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Assert.AreEqual(0x8C, Registers.R);
         }
 
+        [Test]
+        public void DD_FD_not_followed_by_valid_opcode_are_trated_as_nops()
+        {
+            var fetchFinishedEventsCount = 0;
+
+		    Sut.InstructionFetchFinished += (sender, e) => fetchFinishedEventsCount++;
+
+            SetNextFetches(0xFD);
+            Assert.AreEqual(4, Sut.Execute(0xDD));
+            SetNextFetches(0x01);
+            Assert.AreEqual(4, Sut.Execute(0xFD));
+            SetNextFetches(Fixture.Create<byte>(), Fixture.Create<byte>());
+            Assert.AreEqual(10, Sut.Execute(0x01));
+
+            Assert.AreEqual(3, fetchFinishedEventsCount);
+        }
+
 		private void SetNextFetches(params byte[] opcodes)
         {
 			ProcessorAgent.Memory = opcodes;

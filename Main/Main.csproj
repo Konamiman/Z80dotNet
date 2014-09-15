@@ -58,7 +58,11 @@
     <Compile Include="InstructionExecution\Core\InstructionsTable.FD.cs" />
     <Compile Include="InstructionExecution\Core\InstructionsTable.ED.cs" />
     <Compile Include="InstructionExecution\Core\InstructionsTable.SingleByte.cs" />
-    <Compile Include="InstructionExecution\Instructions\LD_BC_nn.cs" />
+    <Compile Include="InstructionExecution\Instructions\LD_rr_nn.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LD_rr_nn.tt</DependentUpon>
+    </Compile>
     <Compile Include="InstructionExecution\Instructions\NOP.cs" />
     <Compile Include="InstructionFetchFinishedEventArgs.cs" />
     <Compile Include="InstructionFetchFinishedEventNotFiredException.cs" />
@@ -88,6 +92,10 @@
     <None Include="InstructionExecution\Core\Execute_xD_Instruction.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Execute_xD_Instruction.cs</LastGenOutput>
+    </None>
+    <None Include="InstructionExecution\Instructions\LD_rr_nn.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LD_rr_nn.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
