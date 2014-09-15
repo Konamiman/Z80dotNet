@@ -22,7 +22,8 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         byte RLC_IX_plus_n_and_copy_to_B()
         {
-            throw new NotImplementedException();
+            FetchFinished();
+            return 23;
         }
 
         /// <summary>
@@ -30,7 +31,8 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         byte RLC_IX_plus_n_and_copy_to_C()
         {
-            throw new NotImplementedException();
+            FetchFinished();
+            return 23;
         }
     }
 }

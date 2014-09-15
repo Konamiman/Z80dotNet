@@ -23,7 +23,8 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         byte ADD_IX_BC()
         {
-            throw new NotImplementedException();
+            FetchFinished();
+            return 15;
         }
 
         /// <summary>
@@ -31,7 +32,8 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         byte ADD_IX_DE()
         {
-            throw new NotImplementedException();
+            FetchFinished();
+            return 15;
         }
     }
 }

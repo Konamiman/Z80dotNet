@@ -65,6 +65,7 @@
     <Compile Include="Z80RegistersTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InstructionsExecution\Z80InstructionsExecutor.Core.Tests.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -22,7 +22,8 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         byte IN_B_C()
         {
-            throw new NotImplementedException();
+            FetchFinished();
+            return 12;
         }
 
         /// <summary>
@@ -30,7 +31,8 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         byte OUT_C_B()
         {
-            throw new NotImplementedException();
+            FetchFinished();
+            return 12;
         }
     }
 }

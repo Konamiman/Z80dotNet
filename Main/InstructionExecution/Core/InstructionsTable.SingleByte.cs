@@ -22,7 +22,8 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         byte LD_BC_nn()
         {
-            throw new NotImplementedException();
+            FetchFinished();
+            return 10;
         }
     }
 }
