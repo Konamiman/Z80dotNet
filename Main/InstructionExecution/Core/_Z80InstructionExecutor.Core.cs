@@ -92,5 +92,10 @@ namespace Konamiman.Z80dotNet
         {
             ProcessorAgent.Registers.R = ProcessorAgent.Registers.R.Inc7Bits();
         }
+
+        private short FetchWord()
+        {
+            return NumberUtils.CreateShort(ProcessorAgent.FetchNextOpcode(), ProcessorAgent.FetchNextOpcode());
+        }
     }
 }

@@ -52,6 +52,7 @@
     <Compile Include="BitTests.cs" />
     <Compile Include="ClockSynchronizationHelperTests.cs" />
     <Compile Include="HelloWorld.cs" />
+    <Compile Include="InstructionsExecution\LD_BC_nn.Tests.cs" />
     <Compile Include="MainZ80RegistersTests.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -65,7 +66,7 @@
     <Compile Include="Z80RegistersTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="InstructionsExecution\Z80InstructionsExecutor.Core.Tests.cs" />
+    <Compile Include="InstructionsExecution\_Z80InstructionsExecutor.Core.Tests.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -58,6 +58,7 @@
     <Compile Include="InstructionExecution\Core\InstructionsTable.FD.cs" />
     <Compile Include="InstructionExecution\Core\InstructionsTable.ED.cs" />
     <Compile Include="InstructionExecution\Core\InstructionsTable.SingleByte.cs" />
+    <Compile Include="InstructionExecution\Instructions\LD_BC_nn.cs" />
     <Compile Include="InstructionExecution\Instructions\NOP.cs" />
     <Compile Include="InstructionFetchFinishedEventArgs.cs" />
     <Compile Include="InstructionFetchFinishedEventNotFiredException.cs" />
