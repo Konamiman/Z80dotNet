@@ -64,27 +64,6 @@ namespace Konamiman.Z80dotNet.Tests
         }
 
         [Test]
-        //[Ignore]
-        public void HelloWorld()
-        {
-            Sut.AutoStopOnRetWithStackEmpty = true;
-
-            var program = new byte[]
-            {
-                0x3E, 0x07, //LD A,7
-                0xC6, 0x04, //ADD A,4
-                0x3C,       //INC A
-                0xC9        //RET
-            };
-            Sut.Memory.SetContents(0, program);
-
-            Sut.Start();
-
-            Assert.AreEqual(12, Sut.Registers.Main.A);
-            Assert.AreEqual(25, Sut.TStatesElapsedSinceStart);
-        }
-
-        [Test]
         public void Reset_sets_registers_properly()
         {
             Sut.Registers.IFF1 = 1;

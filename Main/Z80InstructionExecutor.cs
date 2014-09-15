@@ -11,41 +11,7 @@ namespace Konamiman.Z80dotNet
 
         public int Execute(byte firstOpcodeByte)
         {
-            byte value;
-
-            switch(firstOpcodeByte)
-            {
-                case 0x3E:  //LD A,n
-                    value = ProcessorAgent.FetchNextOpcode();
-                    FetchFinished();
-                    ProcessorAgent.Registers.Main.A = value;
-                    return 7;
-                case 0xC6:  //ADD A,n
-                    value = ProcessorAgent.FetchNextOpcode();
-                    FetchFinished();
-                    ProcessorAgent.Registers.Main.A += value;   //TODO: Check for overflow, set flags
-                    return 4;
-                case 0x3C:  //INC A
-                    FetchFinished();
-                    ProcessorAgent.Registers.Main.A++;  //TODO: Check for overflow, set flags
-                    return 4;
-                case 0xC9:  //RET
-                    FetchFinished(true);
-                    //TODO: Update PC and SP
-                    return 10;
-                default:    //treat as NOP
-                    return 4;
-            }
-        }
-
-        private void FetchFinished(bool isRet = false, bool isHalt = false, bool isLdSp = false)
-        {
-            InstructionFetchFinished(this, new InstructionFetchFinishedEventArgs()
-            {
-                IsRetInstruction = isRet,
-                IsHaltInstruction = isHalt,
-                IsLdSpInstruction = isLdSp
-            });
+            throw new NotImplementedException();
         }
 
         public event EventHandler<InstructionFetchFinishedEventArgs> InstructionFetchFinished;
