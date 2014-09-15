@@ -16,16 +16,19 @@ namespace Konamiman.Z80dotNet
 <# foreach(var op in new[] {"DD","FD"}) { #>
         private int Execute_<#=op#>_Instruction()
         {
+			Inc_R();
             var secondOpcodeByte = ProcessorAgent.PeekNextOpcode();
             
             if(secondOpcodeByte == 0xCB)
             {
+				Inc_R();
                 ProcessorAgent.FetchNextOpcode();
                 return <#=op#>CB_InstructionExecutors[ProcessorAgent.FetchNextOpcode()]();
             }
 
             if(<#=op#>_InstructionExecutors.ContainsKey(secondOpcodeByte)) 
             {
+				Inc_R();
                 ProcessorAgent.FetchNextOpcode();
                 return <#=op#>_InstructionExecutors[secondOpcodeByte]();
             }

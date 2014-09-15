@@ -332,5 +332,14 @@ namespace Konamiman.Z80dotNet.Tests
         {
             Assert.AreEqual(0xFE.ToShort(), ((byte)1).Sub(3));
         }
+
+        [Test]
+        public void Test7Bits_works_as_expected()
+        {
+            Assert.AreEqual(1, ((byte)0).Inc7Bits());
+            Assert.AreEqual(0, ((byte)0x7F).Inc7Bits());
+            Assert.AreEqual(0x81, ((byte)0x80).Inc7Bits());
+            Assert.AreEqual(0x80, ((byte)0xFF).Inc7Bits());
+        }
     }
 }

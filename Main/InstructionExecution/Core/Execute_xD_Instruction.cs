@@ -9,16 +9,19 @@ namespace Konamiman.Z80dotNet
     {
         private int Execute_DD_Instruction()
         {
+			Inc_R();
             var secondOpcodeByte = ProcessorAgent.PeekNextOpcode();
             
             if(secondOpcodeByte == 0xCB)
             {
+				Inc_R();
                 ProcessorAgent.FetchNextOpcode();
                 return DDCB_InstructionExecutors[ProcessorAgent.FetchNextOpcode()]();
             }
 
             if(DD_InstructionExecutors.ContainsKey(secondOpcodeByte)) 
             {
+				Inc_R();
                 ProcessorAgent.FetchNextOpcode();
                 return DD_InstructionExecutors[secondOpcodeByte]();
             }
@@ -29,16 +32,19 @@ namespace Konamiman.Z80dotNet
 
         private int Execute_FD_Instruction()
         {
+			Inc_R();
             var secondOpcodeByte = ProcessorAgent.PeekNextOpcode();
             
             if(secondOpcodeByte == 0xCB)
             {
+				Inc_R();
                 ProcessorAgent.FetchNextOpcode();
                 return FDCB_InstructionExecutors[ProcessorAgent.FetchNextOpcode()]();
             }
 
             if(FD_InstructionExecutors.ContainsKey(secondOpcodeByte)) 
             {
+				Inc_R();
                 ProcessorAgent.FetchNextOpcode();
                 return FD_InstructionExecutors[secondOpcodeByte]();
             }

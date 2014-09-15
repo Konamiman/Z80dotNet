@@ -11,7 +11,6 @@ namespace Konamiman.Z80dotNet
 
         public Z80InstructionExecutor()
         {
-            Initialize_SingleByte_InstructionsTable();
             Initialize_CB_InstructionsTable();
             Initialize_DD_InstructionsTable();
             Initialize_DDCB_InstructionsTable();
@@ -40,11 +39,15 @@ namespace Konamiman.Z80dotNet
 
         private int Execute_CB_Instruction()
         {
+            Inc_R();
+            Inc_R();
             return CB_InstructionExecutors[ProcessorAgent.FetchNextOpcode()]();
         }
 
         private int Execute_ED_Instruction()
         {
+            Inc_R();
+            Inc_R();
             var secondOpcodeByte = ProcessorAgent.FetchNextOpcode();
             if (secondOpcodeByte <= 0x40 || secondOpcodeByte >= 0xC0)
                 return ExecuteUnsopported_ED_Instruction(secondOpcodeByte);
@@ -69,6 +72,7 @@ namespace Konamiman.Z80dotNet
 
         private int Execute_SingleByte_Instruction(byte firstOpcodeByte)
         {
+            Inc_R();
             return SingleByte_InstructionExecutors[firstOpcodeByte]();
         }
 
@@ -83,5 +87,10 @@ namespace Konamiman.Z80dotNet
         }
 
         public event EventHandler<InstructionFetchFinishedEventArgs> InstructionFetchFinished;
+
+        private void Inc_R()
+        {
+            ProcessorAgent.Registers.R = ProcessorAgent.Registers.R.Inc7Bits();
+        }
     }
 }

@@ -283,5 +283,15 @@ namespace Konamiman.Z80dotNet
         {
             return ((((int)value)-amount) & 0xFF).ToShort();
         }
+
+        /// <summary>
+        /// Increments the value using only the lowest seven bits (the most significant bit is unchanged).
+        /// </summary>
+        /// <param name="value">Number to increment</param>
+        /// <returns>Incremented number</returns>
+        public static byte Inc7Bits(this byte value)
+        {
+            return (byte)((value & 0x80)==0 ? (value+1) & 0x7F : (value+1) & 0x7F | 0x80);	
+        }
     }
 }
