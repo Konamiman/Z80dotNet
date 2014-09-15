@@ -49,7 +49,7 @@ namespace Konamiman.Z80dotNet
             Inc_R();
             Inc_R();
             var secondOpcodeByte = ProcessorAgent.FetchNextOpcode();
-            if (secondOpcodeByte < 0x40 || secondOpcodeByte >= 0xBF)
+            if (secondOpcodeByte < 0x40 || secondOpcodeByte > 0xBF)
                 return ExecuteUnsopported_ED_Instruction(secondOpcodeByte);
             else
                 return ED_InstructionExecutors[secondOpcodeByte - 0x40]();
@@ -76,6 +76,10 @@ namespace Konamiman.Z80dotNet
             return SingleByte_InstructionExecutors[firstOpcodeByte]();
         }
 
+        public event EventHandler<InstructionFetchFinishedEventArgs> InstructionFetchFinished;
+
+        #region Auxiliary methods
+
         private void FetchFinished(bool isRet = false, bool isHalt = false, bool isLdSp = false)
         {
             InstructionFetchFinished(this, new InstructionFetchFinishedEventArgs()
@@ -86,8 +90,6 @@ namespace Konamiman.Z80dotNet
             });
         }
 
-        public event EventHandler<InstructionFetchFinishedEventArgs> InstructionFetchFinished;
-
         private void Inc_R()
         {
             ProcessorAgent.Registers.R = ProcessorAgent.Registers.R.Inc7Bits();
@@ -97,5 +99,7 @@ namespace Konamiman.Z80dotNet
         {
             return NumberUtils.CreateShort(ProcessorAgent.FetchNextOpcode(), ProcessorAgent.FetchNextOpcode());
         }
+
+        #endregion
     }
 }

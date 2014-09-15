@@ -32,7 +32,7 @@ namespace Konamiman.Z80dotNet
             OpcodeBytes.Clear();
             FetchComplete = false;
             LocalUserStateFromBeforeExecuteEvent = null;
-            AccummulatedaMemoryWaitStates = 0;
+            AccummulatedMemoryWaitStates = 0;
             PeekedOpcode = null;
         }
 
@@ -84,7 +84,7 @@ namespace Konamiman.Z80dotNet
             set;
         }
 
-        public int AccummulatedaMemoryWaitStates
+        public int AccummulatedMemoryWaitStates
         {
             get; 
             set;

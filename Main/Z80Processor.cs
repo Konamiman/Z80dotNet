@@ -82,7 +82,7 @@ namespace Konamiman.Z80dotNet
             executionContext.StartOfStack = Registers.SP;
             StopReason = StopReason.NotApplicable;
             State = ProcessorState.Running;
-            int totalTStates = 0;
+            var totalTStates = 0;
 
             while(!executionContext.MustStop)
             {
@@ -90,7 +90,7 @@ namespace Konamiman.Z80dotNet
 
                 var executionTStates = InstructionExecutor.Execute(FetchNextOpcode());
                 
-                totalTStates = executionTStates + executionContext.AccummulatedaMemoryWaitStates;
+                totalTStates = executionTStates + executionContext.AccummulatedMemoryWaitStates;
                 TStatesElapsedSinceStart += (ulong)totalTStates;
                 TStatesElapsedSinceReset += (ulong)totalTStates;
 
@@ -505,7 +505,7 @@ namespace Konamiman.Z80dotNet
             }
             else
             {
-                executionContext.AccummulatedaMemoryWaitStates +=
+                executionContext.AccummulatedMemoryWaitStates +=
                     GetMemoryWaitStatesForM1(executionContext.AddressOfPeekedOpcode);
                 opcode = executionContext.PeekedOpcode.Value;
                 executionContext.PeekedOpcode = null;
@@ -588,7 +588,7 @@ namespace Konamiman.Z80dotNet
                 value = beforeEventArgs.Value;
 
             if(executionContext != null)
-                executionContext.AccummulatedaMemoryWaitStates += waitStates;
+                executionContext.AccummulatedMemoryWaitStates += waitStates;
 
             var afterEventArgs = FireMemoryAccessEvent(
                 afterEventType, 
@@ -644,7 +644,7 @@ namespace Konamiman.Z80dotNet
                 memory[address] = beforeEventArgs.Value;
 
             if(executionContext != null)
-                executionContext.AccummulatedaMemoryWaitStates += waitStates;
+                executionContext.AccummulatedMemoryWaitStates += waitStates;
 
             FireMemoryAccessEvent(
                 afterEventType, 
