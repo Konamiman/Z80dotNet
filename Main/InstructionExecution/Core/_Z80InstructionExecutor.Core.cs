@@ -46,23 +46,23 @@ namespace Konamiman.Z80dotNet
         private int Execute_DD_or_FD_Instruction(bool isDD)
         {
             var secondOpcodeByte = ProcessorAgent.PeekNextOpcode();
+            
             if(secondOpcodeByte == 0xCB)
             {
                 ProcessorAgent.FetchNextOpcode();
-                var executors = isDD ? DDCB_InstructionExecutors : FDCB_InstructionExecutors;
-                return executors[ProcessorAgent.FetchNextOpcode()]();
+                var threeByteExecutors = isDD ? DDCB_InstructionExecutors : FDCB_InstructionExecutors;
+                return threeByteExecutors[ProcessorAgent.FetchNextOpcode()]();
             }
-            else if(DD_InstructionExecutors.ContainsKey(secondOpcodeByte)) 
+
+            var twoByteExecutors = isDD ? DD_InstructionExecutors : FD_InstructionExecutors;
+            if(twoByteExecutors.ContainsKey(secondOpcodeByte)) 
             {
                 ProcessorAgent.FetchNextOpcode();
-                var executors = isDD ? DD_InstructionExecutors : FD_InstructionExecutors;
-                return executors[secondOpcodeByte]();
+                return twoByteExecutors[secondOpcodeByte]();
             }
-            else
-            {
-                FetchFinished();
-                return 4;
-            }
+
+            FetchFinished();
+            return 4;
         }
 
         private int Execute_ED_Instruction()
