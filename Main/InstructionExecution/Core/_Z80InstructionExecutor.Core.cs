@@ -28,11 +28,11 @@ namespace Konamiman.Z80dotNet
                 case 0xCB:
                     return Execute_CB_Instruction();
                 case 0xDD:
-                    return Execute_DD_or_FD_Instruction(isDD: true);
+                    return Execute_DD_Instruction();
                 case 0xED:
                     return Execute_ED_Instruction();
                 case 0xFD:
-                    return Execute_DD_or_FD_Instruction(isDD: false);
+                    return Execute_FD_Instruction();
                 default:
                     return Execute_SingleByte_Instruction(firstOpcodeByte);
             }
@@ -41,28 +41,6 @@ namespace Konamiman.Z80dotNet
         private int Execute_CB_Instruction()
         {
             return CB_InstructionExecutors[ProcessorAgent.FetchNextOpcode()]();
-        }
-
-        private int Execute_DD_or_FD_Instruction(bool isDD)
-        {
-            var secondOpcodeByte = ProcessorAgent.PeekNextOpcode();
-            
-            if(secondOpcodeByte == 0xCB)
-            {
-                ProcessorAgent.FetchNextOpcode();
-                var threeByteExecutors = isDD ? DDCB_InstructionExecutors : FDCB_InstructionExecutors;
-                return threeByteExecutors[ProcessorAgent.FetchNextOpcode()]();
-            }
-
-            var twoByteExecutors = isDD ? DD_InstructionExecutors : FD_InstructionExecutors;
-            if(twoByteExecutors.ContainsKey(secondOpcodeByte)) 
-            {
-                ProcessorAgent.FetchNextOpcode();
-                return twoByteExecutors[secondOpcodeByte]();
-            }
-
-            FetchFinished();
-            return 4;
         }
 
         private int Execute_ED_Instruction()

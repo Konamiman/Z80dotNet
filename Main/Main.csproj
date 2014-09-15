@@ -46,6 +46,11 @@
     <Compile Include="IExecutionStopper.cs" />
     <Compile Include="IClockSynchronizationHelper.cs" />
     <Compile Include="InstructionExecutionContext.cs" />
+    <Compile Include="InstructionExecution\Core\Execute_xD_Instruction.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Execute_xD_Instruction.tt</DependentUpon>
+    </Compile>
     <Compile Include="InstructionExecution\Core\InstructionsTable.CB.cs" />
     <Compile Include="InstructionExecution\Core\InstructionsTable.FDCB.cs" />
     <Compile Include="InstructionExecution\Core\InstructionsTable.DDCB.cs" />
@@ -78,7 +83,15 @@
     <Compile Include="Z80Processor.cs" />
     <Compile Include="Z80Registers.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="InstructionExecution\Core\Execute_xD_Instruction.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Execute_xD_Instruction.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
