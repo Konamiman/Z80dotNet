@@ -49,8 +49,10 @@ namespace Konamiman.Z80dotNet
             Inc_R();
             Inc_R();
             var secondOpcodeByte = ProcessorAgent.FetchNextOpcode();
-            if (secondOpcodeByte < 0x40 || secondOpcodeByte > 0xBF)
+            if (secondOpcodeByte < 0x40 || secondOpcodeByte.Between(0x80, 0x9F) || secondOpcodeByte > 0xBF)
                 return ExecuteUnsopported_ED_Instruction(secondOpcodeByte);
+            else if(secondOpcodeByte >= 0xA0)
+                return ED_Block_InstructionExecutors[secondOpcodeByte - 0xA0]();
             else
                 return ED_InstructionExecutors[secondOpcodeByte - 0x40]();
         }

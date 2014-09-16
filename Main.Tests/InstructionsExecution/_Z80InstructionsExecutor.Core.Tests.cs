@@ -64,8 +64,12 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 			Assert.AreEqual(8, Sut.Execute(0xED));
 			SetNextFetches(0xC0);
 			Assert.AreEqual(8, Sut.Execute(0xED));
+            SetNextFetches(0x80);
+			Assert.AreEqual(8, Sut.Execute(0xED));
+            SetNextFetches(0x9F);
+			Assert.AreEqual(8, Sut.Execute(0xED));
 
-			Assert.AreEqual(2, fetchFinishedEventsCount);
+			Assert.AreEqual(4, fetchFinishedEventsCount);
         }
 
 		[Test]

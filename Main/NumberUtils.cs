@@ -293,5 +293,17 @@ namespace Konamiman.Z80dotNet
         {
             return (byte)((value & 0x80)==0 ? (value+1) & 0x7F : (value+1) & 0x7F | 0x80);	
         }
+
+        /// <summary>
+        /// Checks if the value lies in a specified range.
+        /// </summary>
+        /// <param name="value">The number to check</param>
+        /// <param name="fromInclusive">The lower end of the range</param>
+        /// <param name="toInclusive">The higher end of the range</param>
+        /// <returns>True if the value lies within the range, false otherwise</returns>
+        public static bool Between(this byte value, byte fromInclusive, byte toInclusive)
+        {
+            return value >= fromInclusive && value <= toInclusive;
+        }
     }
 }

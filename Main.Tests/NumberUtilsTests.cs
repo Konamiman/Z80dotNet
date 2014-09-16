@@ -341,5 +341,16 @@ namespace Konamiman.Z80dotNet.Tests
             Assert.AreEqual(0x81, ((byte)0x80).Inc7Bits());
             Assert.AreEqual(0x80, ((byte)0xFF).Inc7Bits());
         }
+
+        [Test]
+        public void Between_works_as_expected()
+        {
+            byte value = 0x80;
+
+            Assert.False(value.Between(0, 0x7F));
+            Assert.True(value.Between(0x7F, 0xFF));
+            Assert.True(value.Between(0x80, 0xFF));
+            Assert.False(value.Between(0x81, 0xFF));
+        }
     }
 }
