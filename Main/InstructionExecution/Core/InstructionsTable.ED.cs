@@ -569,14 +569,5 @@ namespace Konamiman.Z80dotNet
         {
             throw new NotImplementedException();
         }
-
-        /// <summary>
-        /// The NOP2 instruction (a NOP that takes 8 T states).
-        /// </summary>
-        byte NOP2()
-        {
-            throw new NotImplementedException();
-        }
-
     }
 }

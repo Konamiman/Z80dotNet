@@ -80,8 +80,7 @@ namespace Konamiman.Z80dotNet
         /// instructions of the R800 processor).</remarks>
         protected virtual int ExecuteUnsopported_ED_Instruction(byte secondOpcodeByte)
         {
-            FetchFinished();
-            return 8;
+            return NOP2();
         }
 
         private int Execute_SingleByte_Instruction(byte firstOpcodeByte)

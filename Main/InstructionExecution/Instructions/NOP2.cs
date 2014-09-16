@@ -3,12 +3,12 @@
     public partial class Z80InstructionExecutor
     {
         /// <summary>
-        /// The NOP2 instruction (equivalent to two NOPs, used for unsupported instructions).
+        /// The NOP instruction.
         /// </summary>
-        byte NOP2()
+        byte NOP()
         {
             FetchFinished();
-            return 8;
+            return 4;
         }
     }
 }

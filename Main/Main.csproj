@@ -63,6 +63,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LD_rr_nn.tt</DependentUpon>
     </Compile>
+    <Compile Include="InstructionExecution\Instructions\NOP2.cs" />
     <Compile Include="InstructionExecution\Instructions\NOP.cs" />
     <Compile Include="InstructionFetchFinishedEventArgs.cs" />
     <Compile Include="InstructionFetchFinishedEventNotFiredException.cs" />
