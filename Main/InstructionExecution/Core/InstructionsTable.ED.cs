@@ -66,7 +66,7 @@ namespace Konamiman.Z80dotNet
                 NEG,    //74
                 RETN,    //75
                 IM_1,    //76
-                NOP,    //77
+                NOP2,    //77
                 IN_A_C,    //78
                 OUT_C_A,    //79
                 ADC_HL_SP,    //7A
@@ -74,13 +74,30 @@ namespace Konamiman.Z80dotNet
                 NEG,    //7C
                 RETI,    //7D
                 IM_2,    //7E
-                NOP,    //7F
+                NOP2    //7F
             };
 
             ED_Block_InstructionExecutors = new Func<byte>[]
             {
-                IN_B_C,         //40
-                OUT_C_B         //41
+                LDI,         //A0
+                CPI,         //A1
+                INI,         //A2
+                OUTI,        //A3
+                null, null, null, null,
+                LDD,         //A8
+                CPD,         //A9
+                IND,         //AA
+                OUTD,        //AB
+                null, null, null, null,
+                LDIR,        //B0
+                CPIR,        //B1
+                INIR,        //B2
+                OTIR,        //B3
+                null, null, null, null,
+                LDDR,        //B8
+                CPDR,        //B9
+                INDR,        //BA
+                OTDR,        //BB
             };
         }
 
@@ -422,5 +439,144 @@ namespace Konamiman.Z80dotNet
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// The LDI instruction.
+        /// </summary>
+        byte LDI()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// The CPI instruction.
+        /// </summary>
+        byte CPI()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// The INI instruction.
+        /// </summary>
+        byte INI()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// The OUTI instruction.
+        /// </summary>
+        byte OUTI()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// The LDD instruction.
+        /// </summary>
+        byte LDD()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// The CPD instruction.
+        /// </summary>
+        byte CPD()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// The IND instruction.
+        /// </summary>
+        byte IND()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// The OUTD instruction.
+        /// </summary>
+        byte OUTD()
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+        /// <summary>
+        /// The LDIR instruction.
+        /// </summary>
+        byte LDIR()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// The CPIR instruction.
+        /// </summary>
+        byte CPIR()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// The INIR instruction.
+        /// </summary>
+        byte INIR()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// The OUTIR instruction.
+        /// </summary>
+        byte OTIR()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// The LDDR instruction.
+        /// </summary>
+        byte LDDR()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// The CPDR instruction.
+        /// </summary>
+        byte CPDR()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// The INDR instruction.
+        /// </summary>
+        byte INDR()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// The OUTDR instruction.
+        /// </summary>
+        byte OTDR()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// The NOP2 instruction (a NOP that takes 8 T states).
+        /// </summary>
+        byte NOP2()
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

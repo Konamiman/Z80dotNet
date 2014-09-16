@@ -49,7 +49,7 @@ namespace Konamiman.Z80dotNet
             Inc_R();
             Inc_R();
             var secondOpcodeByte = ProcessorAgent.FetchNextOpcode();
-            if (secondOpcodeByte < 0x40 || secondOpcodeByte.Between(0x80, 0x9F) || secondOpcodeByte > 0xBF)
+            if (IsUnsupportedInstruction(secondOpcodeByte))
                 return ExecuteUnsopported_ED_Instruction(secondOpcodeByte);
             else if(secondOpcodeByte >= 0xA0)
                 return ED_Block_InstructionExecutors[secondOpcodeByte - 0xA0]();
@@ -57,9 +57,21 @@ namespace Konamiman.Z80dotNet
                 return ED_InstructionExecutors[secondOpcodeByte - 0x40]();
         }
 
+        private static bool IsUnsupportedInstruction(byte secondOpcodeByte)
+        {
+            return
+                secondOpcodeByte < 0x40 ||
+                secondOpcodeByte.Between(0x80, 0x9F) || 
+                secondOpcodeByte.Between(0xA4, 0xA7) || 
+                secondOpcodeByte.Between(0xAC, 0xAF) || 
+                secondOpcodeByte.Between(0xB4, 0xB7) || 
+                secondOpcodeByte.Between(0xBC, 0xBF) || 
+                secondOpcodeByte > 0xBF;
+        }
+
         /// <summary>
         /// Executes an unsupported ED instruction, that is, an instruction whose opcode is
-        /// ED xx, where xx is 00-40 or C0-FF.
+        /// ED xx, where xx is 00-3F, 80-9F, A4-A7, AC-AF, B4-B7, BC-BF or C0-FF.
         /// </summary>
         /// <param name="secondOpcodeByte">The opcode byte fetched after the 0xED.</param>
         /// <returns>The total amount of T states required for the instruction execution.</returns>
