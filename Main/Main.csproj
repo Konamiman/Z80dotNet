@@ -58,15 +58,15 @@
     <Compile Include="InstructionExecution\Core\InstructionsTable.FD.cs" />
     <Compile Include="InstructionExecution\Core\InstructionsTable.ED.cs" />
     <Compile Include="InstructionExecution\Core\InstructionsTable.SingleByte.cs" />
-    <Compile Include="InstructionExecution\Instructions\LD %28rr%29,r.cs">
+    <Compile Include="InstructionExecution\Instructions\LD %28rr%29,r    .cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LD %28rr%29,r.tt</DependentUpon>
+      <DependentUpon>LD %28rr%29,r    .tt</DependentUpon>
     </Compile>
-    <Compile Include="InstructionExecution\Instructions\LD rr,nn.cs">
+    <Compile Include="InstructionExecution\Instructions\LD rr,nn    .cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LD rr,nn.tt</DependentUpon>
+      <DependentUpon>LD rr,nn    .tt</DependentUpon>
     </Compile>
     <Compile Include="InstructionExecution\Instructions\NOP2.cs" />
     <Compile Include="InstructionExecution\Instructions\NOP.cs" />
@@ -99,13 +99,13 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Execute_xD_Instruction.cs</LastGenOutput>
     </None>
-    <None Include="InstructionExecution\Instructions\LD %28rr%29,r.tt">
+    <None Include="InstructionExecution\Instructions\LD %28rr%29,r    .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>LD %28rr%29,r.cs</LastGenOutput>
+      <LastGenOutput>LD %28rr%29,r    .cs</LastGenOutput>
     </None>
-    <None Include="InstructionExecution\Instructions\LD rr,nn.tt">
+    <None Include="InstructionExecution\Instructions\LD rr,nn    .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>LD rr,nn.cs</LastGenOutput>
+      <LastGenOutput>LD rr,nn    .cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
