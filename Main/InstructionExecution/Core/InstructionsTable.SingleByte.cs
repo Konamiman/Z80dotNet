@@ -272,14 +272,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files and include them in the table when they are implemented.
 
         /// <summary>
-        /// The INC BC instruction.
-        /// </summary>
-        byte INC_BC()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The INC B instruction.
         /// </summary>
         byte INC_B()
@@ -379,14 +371,6 @@ namespace Konamiman.Z80dotNet
         /// The DJNZ d instruction.
         /// </summary>
         byte DJNZ_d()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The INC DE instruction.
-        /// </summary>
-        byte INC_DE()
         {
             throw new NotImplementedException();
         }
@@ -504,14 +488,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The INC HL instruction.
-        /// </summary>
-        byte INC_HL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The INC H instruction.
         /// </summary>
         byte INC_H()
@@ -619,14 +595,6 @@ namespace Konamiman.Z80dotNet
         /// The LD (nn),A instruction.
         /// </summary>
         byte LD_aa_A()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The INC SP instruction.
-        /// </summary>
-        byte INC_SP()
         {
             throw new NotImplementedException();
         }

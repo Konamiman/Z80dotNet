@@ -60,6 +60,15 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LD %28rr%29,nn.Tests.cs</LastGenOutput>
     </None>
+    <None Include="InstructionsExecution\INC rr.Tests.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>INC rr.Tests1.cs</LastGenOutput>
+    </None>
+    <Compile Include="InstructionsExecution\INC rr.Tests1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>INC rr.Tests.tt</DependentUpon>
+    </Compile>
     <Compile Include="InstructionsExecution\LD %28rr%29,nn.Tests.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

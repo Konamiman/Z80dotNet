@@ -58,6 +58,15 @@
     <Compile Include="InstructionExecution\Core\InstructionsTable.FD.cs" />
     <Compile Include="InstructionExecution\Core\InstructionsTable.ED.cs" />
     <Compile Include="InstructionExecution\Core\InstructionsTable.SingleByte.cs" />
+    <None Include="InstructionExecution\Instructions\INC rr    .tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>INC rr    1.cs</LastGenOutput>
+    </None>
+    <Compile Include="InstructionExecution\Instructions\INC rr    1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>INC rr    .tt</DependentUpon>
+    </Compile>
     <Compile Include="InstructionExecution\Instructions\LD %28rr%29,r    .cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
