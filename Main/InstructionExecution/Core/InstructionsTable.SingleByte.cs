@@ -272,14 +272,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files and include them in the table when they are implemented.
 
         /// <summary>
-        /// The LD (BC),A instruction.
-        /// </summary>
-        byte LD_aBC_A()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The INC BC instruction.
         /// </summary>
         byte INC_BC()
@@ -387,14 +379,6 @@ namespace Konamiman.Z80dotNet
         /// The DJNZ d instruction.
         /// </summary>
         byte DJNZ_d()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD (DE),A instruction.
-        /// </summary>
-        byte LD_aDE_A()
         {
             throw new NotImplementedException();
         }
@@ -1128,65 +1112,9 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The LD (HL),B instruction.
-        /// </summary>
-        byte LD_aHL_B()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD (HL),C instruction.
-        /// </summary>
-        byte LD_aHL_C()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD (HL),D instruction.
-        /// </summary>
-        byte LD_aHL_D()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD (HL),E instruction.
-        /// </summary>
-        byte LD_aHL_E()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD (HL),H instruction.
-        /// </summary>
-        byte LD_aHL_H()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD (HL),L instruction.
-        /// </summary>
-        byte LD_aHL_L()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The HALT instruction.
         /// </summary>
         byte HALT()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD (HL),A instruction.
-        /// </summary>
-        byte LD_aHL_A()
         {
             throw new NotImplementedException();
         }

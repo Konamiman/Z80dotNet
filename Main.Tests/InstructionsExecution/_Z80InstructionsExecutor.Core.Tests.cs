@@ -10,6 +10,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         private Z80InstructionExecutor Sut { get; set; }
         private FakeProcessorAgent ProcessorAgent { get; set; }
         private IZ80Registers Registers { get; set; }
+        private IMemory Memory { get; set; }
         private Fixture Fixture { get; set; }
 
         [SetUp]
@@ -168,6 +169,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             public FakeProcessorAgent()
             {
                 Registers = new Z80Registers();
+                Memory = new byte[65536];
             }
 
             public byte[] Memory { get; set; }
@@ -191,7 +193,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             public void WriteToMemory(ushort address, byte value)
             {
-                throw new NotImplementedException();
+                Memory[address] = value;
             }
 
             public byte ReadFromPort(byte portNumber)

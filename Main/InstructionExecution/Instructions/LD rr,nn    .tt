@@ -22,7 +22,7 @@ namespace Konamiman.Z80dotNet
         {
             var value = FetchWord();
             FetchFinished();
-            ProcessorAgent.Registers.<#=reg=="SP" ? "" : "Main."#><#=reg#> = value;
+            <#=reg=="SP" ? "" : "Main"#>Registers.<#=reg#> = value;
             return 10;
         }
 

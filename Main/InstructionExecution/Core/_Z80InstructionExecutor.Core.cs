@@ -7,6 +7,9 @@ namespace Konamiman.Z80dotNet
     /// </summary>
     public partial class Z80InstructionExecutor : IZ80InstructionExecutor
     {
+        private IZ80Registers Registers;
+        private IMainZ80Registers MainRegisters;
+
         public IZ80ProcessorAgent ProcessorAgent { get; set; }
 
         public Z80InstructionExecutor()
@@ -22,6 +25,9 @@ namespace Konamiman.Z80dotNet
 
         public int Execute(byte firstOpcodeByte)
         {
+            Registers = ProcessorAgent.Registers;
+            MainRegisters = Registers.Main;
+
             switch(firstOpcodeByte)
             {
                 case 0xCB:
@@ -110,7 +116,9 @@ namespace Konamiman.Z80dotNet
 
         private short FetchWord()
         {
-            return NumberUtils.CreateShort(ProcessorAgent.FetchNextOpcode(), ProcessorAgent.FetchNextOpcode());
+            return NumberUtils.CreateShort(
+                lowByte: ProcessorAgent.FetchNextOpcode(),
+                highByte: ProcessorAgent.FetchNextOpcode());
         }
 
         #endregion

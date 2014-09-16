@@ -52,14 +52,23 @@
     <Compile Include="BitTests.cs" />
     <Compile Include="ClockSynchronizationHelperTests.cs" />
     <Compile Include="HelloWorld.cs" />
-    <None Include="InstructionsExecution\LD_rr_nn.Tests.tt">
+    <None Include="InstructionsExecution\LD %28rr%29,r.Tests.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>LD_rr_nn.Tests1.cs</LastGenOutput>
+      <LastGenOutput>LD %28rr%29,r.Tests1.cs</LastGenOutput>
     </None>
-    <Compile Include="InstructionsExecution\LD_rr_nn.Tests1.cs">
+    <None Include="InstructionsExecution\LD %28rr%29,nn.Tests.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LD %28rr%29,nn.Tests.cs</LastGenOutput>
+    </None>
+    <Compile Include="InstructionsExecution\LD %28rr%29,nn.Tests.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LD_rr_nn.Tests.tt</DependentUpon>
+      <DependentUpon>LD %28rr%29,nn.Tests.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InstructionsExecution\LD %28rr%29,r.Tests1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LD %28rr%29,r.Tests.tt</DependentUpon>
     </Compile>
     <Compile Include="MainZ80RegistersTests.cs">
       <SubType>Code</SubType>

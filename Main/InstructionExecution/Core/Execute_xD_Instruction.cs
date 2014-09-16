@@ -26,8 +26,7 @@ namespace Konamiman.Z80dotNet
                 return DD_InstructionExecutors[secondOpcodeByte]();
             }
 
-            FetchFinished();
-            return 4;
+            return NOP();
         }
 
         private int Execute_FD_Instruction()
@@ -49,8 +48,7 @@ namespace Konamiman.Z80dotNet
                 return FD_InstructionExecutors[secondOpcodeByte]();
             }
 
-            FetchFinished();
-            return 4;
+            return NOP();
         }
 
     }

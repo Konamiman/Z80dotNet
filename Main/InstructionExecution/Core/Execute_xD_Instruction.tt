@@ -34,8 +34,7 @@ namespace Konamiman.Z80dotNet
                 return <#=op#>_InstructionExecutors[secondOpcodeByte]();
             }
 
-            FetchFinished();
-            return 4;
+            return NOP();
         }
 
 <# } #>
