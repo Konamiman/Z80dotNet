@@ -1,0 +1,11 @@
+<#+
+string Register(string name)
+{
+	return (name=="SP" || name=="IX" || name=="IY" ? "Registers." : "MainRegisters.") + name;
+}
+
+string TestRegister(string name)
+{
+	return (name=="SP" || name=="IX" || name=="IY" ? "Registers." : "Registers.Main.") + name;
+}
+#>
