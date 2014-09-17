@@ -5,16 +5,21 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
     public partial class Z80InstructionsExecutor
     {
+        static object[] LD_rr_r_Source =
+        {
+            new object[] {"BC", "A", (byte)0x02},
+            new object[] {"DE", "A", (byte)0x12},
+            new object[] {"HL", "A", (byte)0x77},
+            new object[] {"HL", "B", (byte)0x70},
+            new object[] {"HL", "C", (byte)0x71},
+            new object[] {"HL", "D", (byte)0x72},
+            new object[] {"HL", "E", (byte)0x73},
+            new object[] {"HL", "H", (byte)0x74},
+            new object[] {"HL", "L", (byte)0x75}
+        };
+
         [Test]
-        [TestCase("BC", "A", 0x02)]
-        [TestCase("DE", "A", 0x12)]
-        [TestCase("HL", "A", 0x77)]
-        [TestCase("HL", "B", 0x70)]
-        [TestCase("HL", "C", 0x71)]
-        [TestCase("HL", "D", 0x72)]
-        [TestCase("HL", "E", 0x73)]
-        [TestCase("HL", "H", 0x74)]
-        [TestCase("HL", "L", 0x75)]
+        [TestCaseSource("LD_rr_r_Source")]
         public void LD_arr_r_works(string destPointerReg, string srcReg, byte opcode)
         {
             var isHorL = (srcReg == "H" || srcReg == "L");
@@ -32,6 +37,25 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             var expected = isHorL ? GetReg<byte>(srcReg) : newValue;
             Assert.AreEqual(expected, ProcessorAgent.Memory[address]);
+        }
+
+        [Test]
+        [TestCaseSource("LD_rr_r_Source")]
+        public void LD_rr_r_do_not_modify_flags(string destPointerReg, string srcReg, byte opcode)
+        {
+            var value = Fixture.Create<byte>();
+            Registers.Main.F = value;
+            Execute(opcode);
+
+            Assert.AreEqual(value, Registers.Main.F);
+        }
+
+        [Test]
+        [TestCaseSource("LD_rr_r_Source")]
+        public void LD_rr_r_returns_proper_T_states(string destPointerReg, string srcReg, byte opcode)
+        {
+            var states = Execute(opcode);
+            Assert.AreEqual(7, states);
         }
     }
 }

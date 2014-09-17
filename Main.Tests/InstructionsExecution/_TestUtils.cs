@@ -53,18 +53,23 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 return Registers;
         }
 
-        void Execute(byte opcode, byte? prefix = null)
+        int Execute(byte opcode, byte? prefix = null)
         {
             if (prefix == null)
             {
-                Sut.Execute(opcode);
+                return Sut.Execute(opcode);
             }
             else
             {
                 SetNextFetches(opcode);
-                Sut.Execute(prefix.Value);
+                return Sut.Execute(prefix.Value);
             }
 
+        }
+
+        object IfIndexRegister(string regName, object value, object @else)
+        {
+            return regName.StartsWith("IX") || regName.StartsWith("IY") ? value : @else;
         }
 
         #endregion

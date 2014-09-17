@@ -158,5 +158,13 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Assert.AreEqual(0, Registers.Main.Flag3);
             Assert.AreEqual(1, Registers.Main.Flag5);
         }
+
+        [Test]
+        [TestCaseSource("DEC_r_Source")]
+        public void DEC_r_returns_proper_T_states(string reg, byte opcode, byte? prefix)
+        {
+            var states = Execute(opcode, prefix);
+            Assert.AreEqual(IfIndexRegister(reg, 8, @else: 4), states);
+        }
     }
 }
