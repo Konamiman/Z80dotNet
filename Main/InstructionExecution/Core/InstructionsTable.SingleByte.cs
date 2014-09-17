@@ -272,14 +272,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files and include them in the table when they are implemented.
 
         /// <summary>
-        /// The RLCA instruction.
-        /// </summary>
-        byte RLCA()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The EX AF,AF' instruction.
         /// </summary>
         byte EX_AF_AF()
