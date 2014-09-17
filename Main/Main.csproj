@@ -62,14 +62,14 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>INC rr    1.cs</LastGenOutput>
     </None>
-    <None Include="InstructionExecution\Instructions\INC r     .tt">
+    <None Include="InstructionExecution\Instructions\INC r  + DEC r   .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>INC r     1.cs</LastGenOutput>
+      <LastGenOutput>INC r  + DEC r   .cs</LastGenOutput>
     </None>
-    <Compile Include="InstructionExecution\Instructions\INC r     1.cs">
+    <Compile Include="InstructionExecution\Instructions\INC r  + DEC r   .cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>INC r     .tt</DependentUpon>
+      <DependentUpon>INC r  + DEC r   .tt</DependentUpon>
     </Compile>
     <Compile Include="InstructionExecution\Instructions\INC rr    1.cs">
       <AutoGen>True</AutoGen>

@@ -259,9 +259,10 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         /// <param name="value">Number to increase</param>
         /// <returns>Increased number, or zero</returns>
-        public static short Dec(this byte value)
+        public static byte Dec(this byte value)
         {
-            return ((((byte)value)-1) & 0xFF).ToShort();
+            return (byte)((((int)value) - 1) & 0xFF);
+            
         }
 
         /// <summary>
