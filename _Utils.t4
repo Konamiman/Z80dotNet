@@ -1,11 +1,16 @@
 <#+
 string Register(string name)
 {
-	return (name=="SP" || name=="IX" || name=="IY" ? "Registers." : "MainRegisters.") + name;
+	return (name=="SP" || IsIndexRegister(name) ? "Registers." : "MainRegisters.") + name;
 }
 
 string TestRegister(string name)
 {
-	return (name=="SP" || name=="IX" || name=="IY" ? "Registers." : "Registers.Main.") + name;
+	return (name=="SP" || IsIndexRegister(name) ? "Registers." : "Registers.Main.") + name;
+}
+
+bool IsIndexRegister(string name)
+{
+	return (name.StartsWith("IX") || name.StartsWith("IY"));
 }
 #>

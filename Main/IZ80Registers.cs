@@ -53,24 +53,24 @@ namespace Konamiman.Z80dotNet
         Bit IFF2 { get; set; }
 
         /// <summary>
-        /// The IXh register.
+        /// The IXH register.
         /// </summary>
-        byte IXh { get; set; }
+        byte IXH { get; set; }
 
         /// <summary>
-        /// The IXl register.
+        /// The IXL register.
         /// </summary>
-        byte IXl { get; set; }
+        byte IXL { get; set; }
 
         /// <summary>
-        /// The IYh register.
+        /// The IYH register.
         /// </summary>
-        byte IYh { get; set; }
+        byte IYH { get; set; }
 
         /// <summary>
-        /// The IYl register.
+        /// The IYL register.
         /// </summary>
-        byte IYl { get; set; }
+        byte IYL { get; set; }
 
         /// <summary>
         /// The I register.

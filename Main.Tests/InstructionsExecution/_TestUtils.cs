@@ -28,7 +28,12 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             return (T)RegProperty(name).GetValue(GetTarget(name), null); 
         }
 
-        private void SetReg(string regName, object value)
+        private void SetReg(string regName, byte value)
+        {
+            RegProperty(regName).SetValue(GetTarget(regName), value, null);
+        }
+
+        private void SetReg(string regName, short value)
         {
             RegProperty(regName).SetValue(GetTarget(regName), value, null);
         }
@@ -46,6 +51,20 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 return Registers.Main;
             else
                 return Registers;
+        }
+
+        void Execute(byte opcode, byte? prefix = null)
+        {
+            if (prefix == null)
+            {
+                Sut.Execute(opcode);
+            }
+            else
+            {
+                SetNextFetches(opcode);
+                Sut.Execute(prefix.Value);
+            }
+
         }
 
         #endregion

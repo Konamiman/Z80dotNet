@@ -61,8 +61,8 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.IX = IX;
 
-            Assert.AreEqual(IXh, Sut.IXh);
-            Assert.AreEqual(IXl, Sut.IXl);
+            Assert.AreEqual(IXh, Sut.IXH);
+            Assert.AreEqual(IXl, Sut.IXL);
         }
 
         [Test]
@@ -72,8 +72,8 @@ namespace Konamiman.Z80dotNet.Tests
             var IXl = Fixture.Create<byte>();
             var expected = NumberUtils.CreateShort(IXl, IXh);
 
-            Sut.IXh = IXh;
-            Sut.IXl = IXl;
+            Sut.IXH = IXh;
+            Sut.IXL = IXl;
 
             Assert.AreEqual(expected, Sut.IX);
         }
@@ -87,8 +87,8 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.IY = IY;
 
-            Assert.AreEqual(IYh, Sut.IYh);
-            Assert.AreEqual(IYl, Sut.IYl);
+            Assert.AreEqual(IYh, Sut.IYH);
+            Assert.AreEqual(IYl, Sut.IYL);
         }
 
         [Test]
@@ -98,8 +98,8 @@ namespace Konamiman.Z80dotNet.Tests
             var IYl = Fixture.Create<byte>();
             var expected = NumberUtils.CreateShort(IYl, IYh);
 
-            Sut.IYh = IYh;
-            Sut.IYl = IYl;
+            Sut.IYH = IYh;
+            Sut.IYL = IYl;
 
             Assert.AreEqual(expected, Sut.IY);
         }

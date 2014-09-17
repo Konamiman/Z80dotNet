@@ -136,14 +136,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The INC IYH instruction.
-        /// </summary>
-        byte INC_IYH()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The DEC IYH instruction.
         /// </summary>
         byte DEC_IYH()
@@ -179,14 +171,6 @@ namespace Konamiman.Z80dotNet
         /// The DEC IY instruction.
         /// </summary>
         byte DEC_IY()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The INC IYL instruction.
-        /// </summary>
-        byte INC_IYL()
         {
             throw new NotImplementedException();
         }

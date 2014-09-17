@@ -272,14 +272,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files and include them in the table when they are implemented.
 
         /// <summary>
-        /// The INC B instruction.
-        /// </summary>
-        byte INC_B()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The DEC B instruction.
         /// </summary>
         byte DEC_B()
@@ -336,14 +328,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The INC C instruction.
-        /// </summary>
-        byte INC_C()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The DEC C instruction.
         /// </summary>
         byte DEC_C()
@@ -371,14 +355,6 @@ namespace Konamiman.Z80dotNet
         /// The DJNZ d instruction.
         /// </summary>
         byte DJNZ_d()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The INC D instruction.
-        /// </summary>
-        byte INC_D()
         {
             throw new NotImplementedException();
         }
@@ -440,14 +416,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The INC E instruction.
-        /// </summary>
-        byte INC_E()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The DEC E instruction.
         /// </summary>
         byte DEC_E()
@@ -483,14 +451,6 @@ namespace Konamiman.Z80dotNet
         /// The LD (nn),HL instruction.
         /// </summary>
         byte LD_aa_HL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The INC H instruction.
-        /// </summary>
-        byte INC_H()
         {
             throw new NotImplementedException();
         }
@@ -547,14 +507,6 @@ namespace Konamiman.Z80dotNet
         /// The DEC HL instruction.
         /// </summary>
         byte DEC_HL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The INC L instruction.
-        /// </summary>
-        byte INC_L()
         {
             throw new NotImplementedException();
         }
@@ -659,14 +611,6 @@ namespace Konamiman.Z80dotNet
         /// The DEC SP instruction.
         /// </summary>
         byte DEC_SP()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The INC A instruction.
-        /// </summary>
-        byte INC_A()
         {
             throw new NotImplementedException();
         }

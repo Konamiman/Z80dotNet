@@ -59,7 +59,7 @@ namespace Konamiman.Z80dotNet
 
         public Bit IFF2 { get; set; }
 
-        public byte IXh
+        public byte IXH
         {
             get
             {
@@ -71,7 +71,7 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        public byte IXl
+        public byte IXL
         {
             get
             {
@@ -83,7 +83,7 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        public byte IYh
+        public byte IYH
         {
             get
             {
@@ -95,7 +95,7 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        public byte IYl
+        public byte IYL
         {
             get
             {
