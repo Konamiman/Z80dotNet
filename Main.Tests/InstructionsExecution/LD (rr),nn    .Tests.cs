@@ -22,7 +22,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             SetReg(reg, oldValue);
 
-            SetNextFetches(newValue.GetLowByte(), newValue.GetHighByte());
+            SetMemoryContents(newValue.GetLowByte(), newValue.GetHighByte());
             Sut.Execute(opcode);
 
             Assert.AreEqual(newValue, GetReg<short>(reg));

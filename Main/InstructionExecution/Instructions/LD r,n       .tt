@@ -11,19 +11,22 @@
 // Do not make changes directly to this (.cs) file.
 // Change <#=Path.GetFileName(Host.TemplateFile)#> instead.
 
+using System;
+
 namespace Konamiman.Z80dotNet
 {
     public partial class Z80InstructionExecutor
     {
-<# foreach(var reg in new[] {"BC","DE","HL","SP","IX","IY"}) { #>
+<# foreach(var reg in new[] {"A","B","C","D","E","H","L", "IXH", "IXL", "IYH", "IYL"}) { #>
         /// <summary>
-        /// The INC <#=reg#> instruction.
+        /// The LD <#=reg#>,n instruction.
         /// </summary>
-        byte INC_<#=reg#>()
+        byte LD_<#=reg#>_n()
         {
+            var value = ProcessorAgent.FetchNextOpcode();
             FetchFinished();
-            <#=Register(reg)#> = <#=Register(reg)#>.Inc();
-            return <#= reg=="IX" || reg=="IY" ? "10" : "6" #>;
+            <#=Register(reg)#> = value;
+            return <#=IfIndexRegister(reg, 11, @else: 7) #>;
         }
 
 <# } #>

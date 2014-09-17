@@ -81,6 +81,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LD %28rr%29,r    .tt</DependentUpon>
     </Compile>
+    <None Include="InstructionExecution\Instructions\LD r,n        .tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LD r,n        1.cs</LastGenOutput>
+    </None>
+    <Compile Include="InstructionExecution\Instructions\LD r,n        1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LD r,n        .tt</DependentUpon>
+    </Compile>
     <Compile Include="InstructionExecution\Instructions\LD rr,nn    .cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

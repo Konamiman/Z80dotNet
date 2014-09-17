@@ -8,10 +8,19 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
     {
         #region Auxiliary methods
 
-        private void SetNextFetches(params byte[] opcodes)
+        private int nextFetchesLength;
+
+        private void SetMemoryContents(params byte[] opcodes)
         {
-			ProcessorAgent.Memory = opcodes;
+			Array.Copy(opcodes, ProcessorAgent.Memory, opcodes.Length);
 		    Registers.PC = 0;
+            nextFetchesLength = opcodes.Length;
+        }
+
+        private void ContinueSettingMemoryContents(params byte[] opcodes)
+        {
+			Array.Copy(opcodes, 0, ProcessorAgent.Memory, nextFetchesLength, opcodes.Length);
+            nextFetchesLength += opcodes.Length;
         }
 
 		FakeInstructionExecutor NewFakeInstructionExecutor()
@@ -53,15 +62,18 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 return Registers;
         }
 
-        int Execute(byte opcode, byte? prefix = null)
+        int Execute(byte opcode, byte? prefix = null, params byte[] nextFetches)
         {
             if (prefix == null)
             {
+                SetMemoryContents(nextFetches);
                 return Sut.Execute(opcode);
             }
             else
             {
-                SetNextFetches(opcode);
+                SetMemoryContents(opcode);
+                ContinueSettingMemoryContents(nextFetches);
+
                 return Sut.Execute(prefix.Value);
             }
 

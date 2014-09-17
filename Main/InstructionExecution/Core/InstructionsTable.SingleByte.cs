@@ -272,14 +272,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files and include them in the table when they are implemented.
 
         /// <summary>
-        /// The LD B,n instruction.
-        /// </summary>
-        byte LD_B_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The RLCA instruction.
         /// </summary>
         byte RLCA()
@@ -320,14 +312,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The LD C,n instruction.
-        /// </summary>
-        byte LD_C_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The RRCA instruction.
         /// </summary>
         byte RRCA()
@@ -339,14 +323,6 @@ namespace Konamiman.Z80dotNet
         /// The DJNZ d instruction.
         /// </summary>
         byte DJNZ_d()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD D,n instruction.
-        /// </summary>
-        byte LD_D_n()
         {
             throw new NotImplementedException();
         }
@@ -392,14 +368,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The LD E,n instruction.
-        /// </summary>
-        byte LD_E_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The RRA instruction.
         /// </summary>
         byte RRA()
@@ -419,14 +387,6 @@ namespace Konamiman.Z80dotNet
         /// The LD (nn),HL instruction.
         /// </summary>
         byte LD_aa_HL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD H,n instruction.
-        /// </summary>
-        byte LD_H_n()
         {
             throw new NotImplementedException();
         }
@@ -467,14 +427,6 @@ namespace Konamiman.Z80dotNet
         /// The DEC HL instruction.
         /// </summary>
         byte DEC_HL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD L,n instruction.
-        /// </summary>
-        byte LD_L_n()
         {
             throw new NotImplementedException();
         }
@@ -563,14 +515,6 @@ namespace Konamiman.Z80dotNet
         /// The DEC SP instruction.
         /// </summary>
         byte DEC_SP()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD A,n instruction.
-        /// </summary>
-        byte LD_A_n()
         {
             throw new NotImplementedException();
         }

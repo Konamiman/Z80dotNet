@@ -29,24 +29,24 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
 		    Sut.InstructionFetchFinished += (sender, e) => fetchFinishedEventsCount++;
 
-            SetNextFetches(0);
+            SetMemoryContents(0);
 			Assert.AreEqual(4, Sut.Execute(0x00));
-		    SetNextFetches(0, Fixture.Create<byte>(), Fixture.Create<byte>());
+		    SetMemoryContents(0, Fixture.Create<byte>(), Fixture.Create<byte>());
             Assert.AreEqual(10, Sut.Execute(0x01));
 
-            SetNextFetches(0);
+            SetMemoryContents(0);
 			Assert.AreEqual(8, Sut.Execute(0xCB));
 
-			SetNextFetches(0x09, 0x09);
+			SetMemoryContents(0x09, 0x09);
 			Assert.AreEqual(15, Sut.Execute(0xDD));
 			Assert.AreEqual(15, Sut.Execute(0xFD));
 
-			SetNextFetches(0x40);
+			SetMemoryContents(0x40);
 			Assert.AreEqual(12, Sut.Execute(0xED));
 
-            SetNextFetches(0xCB, 0);
+            SetMemoryContents(0xCB, 0);
             Assert.AreEqual(23, Sut.Execute(0xDD));
-            SetNextFetches(0xCB, 0);
+            SetMemoryContents(0xCB, 0);
             Assert.AreEqual(23, Sut.Execute(0xFD));
             
 			Assert.AreEqual(8, fetchFinishedEventsCount);
@@ -59,13 +59,13 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
 			Sut.InstructionFetchFinished += (sender, e) => fetchFinishedEventsCount++;
 
-			SetNextFetches(0x3F);
+			SetMemoryContents(0x3F);
 			Assert.AreEqual(8, Sut.Execute(0xED));
-			SetNextFetches(0xC0);
+			SetMemoryContents(0xC0);
 			Assert.AreEqual(8, Sut.Execute(0xED));
-            SetNextFetches(0x80);
+            SetMemoryContents(0x80);
 			Assert.AreEqual(8, Sut.Execute(0xED));
-            SetNextFetches(0x9F);
+            SetMemoryContents(0x9F);
 			Assert.AreEqual(8, Sut.Execute(0xED));
 
 			Assert.AreEqual(4, fetchFinishedEventsCount);
@@ -76,9 +76,9 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 		{
 		    var sut = NewFakeInstructionExecutor();
 
-			SetNextFetches(0x3F);
+			SetMemoryContents(0x3F);
 		    sut.Execute(0xED);
-			SetNextFetches(0xC0);
+			SetMemoryContents(0xC0);
 		    sut.Execute(0xED);
 
 			Assert.AreEqual(new Byte[] {0x3F, 0xC0}, sut.UnsupportedExecuted);
@@ -92,27 +92,27 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 			Sut.Execute(0x00);
 			Assert.AreEqual(0xFF, Registers.R);
 
-            SetNextFetches(Fixture.Create<byte>(), Fixture.Create<byte>());
+            SetMemoryContents(Fixture.Create<byte>(), Fixture.Create<byte>());
 			Sut.Execute(0x01);
 			Assert.AreEqual(0x80, Registers.R);
 
-            SetNextFetches(0);
+            SetMemoryContents(0);
 			Sut.Execute(0xCB);
 			Assert.AreEqual(0x82, Registers.R);
 
-			SetNextFetches(0x09, 0x09);
+			SetMemoryContents(0x09, 0x09);
 			Sut.Execute(0xDD);
 			Sut.Execute(0xFD);
 			Assert.AreEqual(0x86, Registers.R);
 
-			SetNextFetches(0x40);
+			SetMemoryContents(0x40);
 			Sut.Execute(0xED);
 			Assert.AreEqual(0x88, Registers.R);
 
-            SetNextFetches(0xCB, 0);
+            SetMemoryContents(0xCB, 0);
             Sut.Execute(0xDD);
             Assert.AreEqual(0x8A, Registers.R);
-            SetNextFetches(0xCB, 0);
+            SetMemoryContents(0xCB, 0);
             Sut.Execute(0xFD);
             Assert.AreEqual(0x8C, Registers.R);
         }
@@ -124,11 +124,11 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
 		    Sut.InstructionFetchFinished += (sender, e) => fetchFinishedEventsCount++;
 
-            SetNextFetches(0xFD);
+            SetMemoryContents(0xFD);
             Assert.AreEqual(4, Sut.Execute(0xDD));
-            SetNextFetches(0x01);
+            SetMemoryContents(0x01);
             Assert.AreEqual(4, Sut.Execute(0xFD));
-            SetNextFetches(Fixture.Create<byte>(), Fixture.Create<byte>());
+            SetMemoryContents(Fixture.Create<byte>(), Fixture.Create<byte>());
             Assert.AreEqual(10, Sut.Execute(0x01));
 
             Assert.AreEqual(3, fetchFinishedEventsCount);

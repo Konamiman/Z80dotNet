@@ -136,14 +136,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The LD IYH,n instruction.
-        /// </summary>
-        byte LD_IYH_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The ADD IY,IY instruction.
         /// </summary>
         byte ADD_IY_IY()
@@ -163,14 +155,6 @@ namespace Konamiman.Z80dotNet
         /// The DEC IY instruction.
         /// </summary>
         byte DEC_IY()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD IYL,n instruction.
-        /// </summary>
-        byte LD_IYL_n()
         {
             throw new NotImplementedException();
         }

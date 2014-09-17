@@ -136,14 +136,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The LD IXH,n instruction.
-        /// </summary>
-        byte LD_IXH_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The ADD IX,IX instruction.
         /// </summary>
         byte ADD_IX_IX()
@@ -163,14 +155,6 @@ namespace Konamiman.Z80dotNet
         /// The DEC IX instruction.
         /// </summary>
         byte DEC_IX()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD IXL,n instruction.
-        /// </summary>
-        byte LD_IXL_n()
         {
             throw new NotImplementedException();
         }
