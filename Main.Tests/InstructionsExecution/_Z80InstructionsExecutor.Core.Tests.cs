@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using NUnit.Framework;
 using Ploeh.AutoFixture;
 
@@ -10,7 +9,6 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         private Z80InstructionExecutor Sut { get; set; }
         private FakeProcessorAgent ProcessorAgent { get; set; }
         private IZ80Registers Registers { get; set; }
-        private IMemory Memory { get; set; }
         private Fixture Fixture { get; set; }
 
         [SetUp]
@@ -135,90 +133,5 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Assert.AreEqual(3, fetchFinishedEventsCount);
         }
-
-		private void SetNextFetches(params byte[] opcodes)
-        {
-			ProcessorAgent.Memory = opcodes;
-		    Registers.PC = 0;
-        }
-
-		FakeInstructionExecutor NewFakeInstructionExecutor()
-        {
-			var sut = new FakeInstructionExecutor();
-            sut.ProcessorAgent = ProcessorAgent = new FakeProcessorAgent();
-		    Registers = ProcessorAgent.Registers;
-			sut.InstructionFetchFinished += (s, e) => { };
-            return sut;
-        }
-
-        #region Fake classes
-
-        private class FakeInstructionExecutor : Z80InstructionExecutor
-		{
-		    public List<byte> UnsupportedExecuted = new List<byte>();
-
-		    protected override int ExecuteUnsopported_ED_Instruction(byte secondOpcodeByte)
-		    {
-				UnsupportedExecuted.Add(secondOpcodeByte);
-		        return base.ExecuteUnsopported_ED_Instruction(secondOpcodeByte);
-		    }
-        }
-
-        private class FakeProcessorAgent : IZ80ProcessorAgent
-        {
-            public FakeProcessorAgent()
-            {
-                Registers = new Z80Registers();
-                Memory = new byte[65536];
-            }
-
-            public byte[] Memory { get; set; }
-
-            public ushort MemoryPointer { get; set; }
-
-            public byte FetchNextOpcode()
-            {
-                return Memory[Registers.PC++];
-            }
-
-            public byte PeekNextOpcode()
-            {
-                return Memory[Registers.PC];
-            }
-
-            public byte ReadFromMemory(ushort address)
-            {
-                return Memory[address];
-            }
-
-            public void WriteToMemory(ushort address, byte value)
-            {
-                Memory[address] = value;
-            }
-
-            public byte ReadFromPort(byte portNumber)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void WriteToPort(byte portNumber, byte value)
-            {
-                throw new NotImplementedException();
-            }
-
-            public IZ80Registers Registers { get; set; }
-
-            public void SetInterruptMode(byte interruptMode)
-            {
-                throw new NotImplementedException();
-            }
-
-            public void Stop(bool isPause = false)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        #endregion
     }
 }

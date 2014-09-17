@@ -52,33 +52,10 @@
     <Compile Include="BitTests.cs" />
     <Compile Include="ClockSynchronizationHelperTests.cs" />
     <Compile Include="HelloWorld.cs" />
-    <None Include="InstructionsExecution\LD %28rr%29,r.Tests.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>LD %28rr%29,r.Tests1.cs</LastGenOutput>
-    </None>
-    <None Include="InstructionsExecution\LD %28rr%29,nn.Tests.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>LD %28rr%29,nn.Tests.cs</LastGenOutput>
-    </None>
-    <None Include="InstructionsExecution\INC rr.Tests.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>INC rr.Tests1.cs</LastGenOutput>
-    </None>
-    <Compile Include="InstructionsExecution\INC rr.Tests1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>INC rr.Tests.tt</DependentUpon>
-    </Compile>
-    <Compile Include="InstructionsExecution\LD %28rr%29,nn.Tests.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LD %28rr%29,nn.Tests.tt</DependentUpon>
-    </Compile>
-    <Compile Include="InstructionsExecution\LD %28rr%29,r.Tests1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LD %28rr%29,r.Tests.tt</DependentUpon>
-    </Compile>
+    <Compile Include="InstructionsExecution\INC rr          .Tests.cs" />
+    <Compile Include="InstructionsExecution\LD %28rr%29,nn    .Tests.cs" />
+    <Compile Include="InstructionsExecution\LD %28rr%29,r       .Tests.cs" />
+    <Compile Include="InstructionsExecution\_TestUtils.cs" />
     <Compile Include="MainZ80RegistersTests.cs">
       <SubType>Code</SubType>
     </Compile>
