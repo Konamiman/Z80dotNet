@@ -62,6 +62,7 @@
     <Compile Include="InstructionsExecution\LD r,%28rr%29       .Tests.cs" />
     <Compile Include="InstructionsExecution\LD r,n          .Tests.cs" />
     <Compile Include="InstructionsExecution\ADD rr,rr     .Tests.cs" />
+    <Compile Include="InstructionsExecution\RRCA           .Tests.cs" />
     <Compile Include="InstructionsExecution\RLCA           .Tests.cs" />
     <Compile Include="InstructionsExecution\_TestUtils.cs" />
     <Compile Include="MainZ80RegistersTests.cs">

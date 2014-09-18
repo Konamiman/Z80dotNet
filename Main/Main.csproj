@@ -102,6 +102,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ADD rr,rr   1.cs</LastGenOutput>
     </None>
+    <Compile Include="InstructionExecution\Instructions\RRCA        .cs" />
     <Compile Include="InstructionExecution\Instructions\RLCA        .cs" />
     <Compile Include="InstructionExecution\Instructions\NOP2.cs" />
     <Compile Include="InstructionExecution\Instructions\NOP.cs" />
