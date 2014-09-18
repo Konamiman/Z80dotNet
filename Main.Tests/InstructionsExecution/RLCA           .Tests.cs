@@ -5,7 +5,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
     public partial class Z80InstructionsExecutor
     {
-        private const byte opcode = 0x07;
+        private const byte RLCA_opcode = 0x07;
 
         [Test]
         public void RLCA_rotates_byte_correctly()
@@ -15,7 +15,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             for(var i = 0; i < values.Length; i++)
             {
-                Execute(opcode);
+                Execute(RLCA_opcode);
                 Assert.AreEqual(values[i], Registers.Main.A);
             }
         }
@@ -25,16 +25,16 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             Registers.Main.A = 0x60;
 
-            Execute(opcode);
+            Execute(RLCA_opcode);
             Assert.AreEqual(0, Registers.Main.CF);
 
-            Execute(opcode);
+            Execute(RLCA_opcode);
             Assert.AreEqual(1, Registers.Main.CF);
 
-            Execute(opcode);
+            Execute(RLCA_opcode);
             Assert.AreEqual(1, Registers.Main.CF);
 
-            Execute(opcode);
+            Execute(RLCA_opcode);
             Assert.AreEqual(0, Registers.Main.CF);
         }
 
@@ -49,7 +49,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 Registers.Main.NF = 1;
                 Registers.Main.A = value;
 
-                Execute(opcode);
+                Execute(RLCA_opcode);
 
                 Assert.AreEqual(0, Registers.Main.HF);
                 Assert.AreEqual(0, Registers.Main.NF);
@@ -70,7 +70,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             foreach (var value in randomValues)
             {
-                Execute(opcode);
+                Execute(RLCA_opcode);
 
                 Assert.AreEqual(randomSF, Registers.Main.SF);
                 Assert.AreEqual(randomZF, Registers.Main.ZF);
@@ -81,7 +81,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [Test]
         public void RLCA_returns_proper_T_states()
         {
-            var states = Execute(opcode);
+            var states = Execute(RLCA_opcode);
             Assert.AreEqual(4, states);
         }
     }

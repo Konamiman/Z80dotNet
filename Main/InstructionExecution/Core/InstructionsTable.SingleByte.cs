@@ -272,14 +272,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files and include them in the table when they are implemented.
 
         /// <summary>
-        /// The EX AF,AF' instruction.
-        /// </summary>
-        byte EX_AF_AF()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The ADD HL,BC instruction.
         /// </summary>
         byte ADD_HL_BC()

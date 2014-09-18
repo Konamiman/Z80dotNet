@@ -87,6 +87,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LD rr,nn    .tt</DependentUpon>
     </Compile>
+    <Compile Include="InstructionExecution\Instructions\EX AF,AF%27  .cs" />
     <Compile Include="InstructionExecution\Instructions\RLCA        .cs" />
     <Compile Include="InstructionExecution\Instructions\NOP2.cs" />
     <Compile Include="InstructionExecution\Instructions\NOP.cs" />
