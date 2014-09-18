@@ -34,32 +34,23 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
         private T GetReg<T>(string name)
         {
-            return (T)RegProperty(name).GetValue(GetTarget(name), null); 
+            return (T)RegProperty(name).GetValue(Registers, null); 
         }
 
         private void SetReg(string regName, byte value)
         {
-            RegProperty(regName).SetValue(GetTarget(regName), value, null);
+            RegProperty(regName).SetValue(Registers, value, null);
         }
 
         private void SetReg(string regName, short value)
         {
-            RegProperty(regName).SetValue(GetTarget(regName), value, null);
+            RegProperty(regName).SetValue(Registers, value, null);
         }
 
         PropertyInfo RegProperty(string name)
         {
             return
-                typeof(Z80Registers).GetProperty(name) ??
-                typeof(MainZ80Registers).GetProperty(name);
-        }
-
-        object GetTarget(string regName)
-        {
-            if (typeof (Z80Registers).GetProperty(regName) == null)
-                return Registers;
-            else
-                return Registers;
+                typeof(Z80Registers).GetProperty(name);
         }
 
         int Execute(byte opcode, byte? prefix = null, params byte[] nextFetches)

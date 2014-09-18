@@ -102,24 +102,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files and include them in the table when they are implemented.
 
         /// <summary>
-        /// The ADD_IY,BC instruction.
-        /// </summary>
-        byte ADD_IY_BC()
-        {
-            FetchFinished();
-            return 15;
-        }
-
-        /// <summary>
-        /// The ADD IY,DE instruction.
-        /// </summary>
-        byte ADD_IY_DE()
-        {
-            FetchFinished();
-            return 15;
-        }
-
-        /// <summary>
         /// The LD IY,nn instruction.
         /// </summary>
         byte LD_IY_nn()
@@ -131,14 +113,6 @@ namespace Konamiman.Z80dotNet
         /// The LD (nn),IY instruction.
         /// </summary>
         byte LD_aa_IY()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The ADD IY,IY instruction.
-        /// </summary>
-        byte ADD_IY_IY()
         {
             throw new NotImplementedException();
         }
@@ -179,14 +153,6 @@ namespace Konamiman.Z80dotNet
         /// The LD (IY+d),N instruction.
         /// </summary>
         byte LD_aIY_plus_n_N()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The ADD IY,SP instruction.
-        /// </summary>
-        byte ADD_IY_SP()
         {
             throw new NotImplementedException();
         }

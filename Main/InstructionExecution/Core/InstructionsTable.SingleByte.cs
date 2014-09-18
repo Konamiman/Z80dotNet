@@ -272,14 +272,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files and include them in the table when they are implemented.
 
         /// <summary>
-        /// The ADD HL,BC instruction.
-        /// </summary>
-        byte ADD_HL_BC()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The LD A,(BC) instruction.
         /// </summary>
         byte LD_A_aBC()
@@ -323,14 +315,6 @@ namespace Konamiman.Z80dotNet
         /// The JR d instruction.
         /// </summary>
         byte JR_d()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The ADD HL,DE instruction.
-        /// </summary>
-        byte ADD_HL_DE()
         {
             throw new NotImplementedException();
         }
@@ -387,14 +371,6 @@ namespace Konamiman.Z80dotNet
         /// The JR Z,d instruction.
         /// </summary>
         byte JR_Z_d()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The ADD HL,HL instruction.
-        /// </summary>
-        byte ADD_HL_HL()
         {
             throw new NotImplementedException();
         }
@@ -475,14 +451,6 @@ namespace Konamiman.Z80dotNet
         /// The JR C,d instruction.
         /// </summary>
         byte JR_C_d()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The ADD HL,SP instruction.
-        /// </summary>
-        byte ADD_HL_SP()
         {
             throw new NotImplementedException();
         }

@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.Eventing.Reader;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Ploeh.AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution

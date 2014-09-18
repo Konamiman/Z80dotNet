@@ -62,6 +62,11 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>INC r  + DEC r   .cs</LastGenOutput>
     </None>
+    <Compile Include="InstructionExecution\Instructions\ADD rr,rr   1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ADD rr,rr   .tt</DependentUpon>
+    </Compile>
     <Compile Include="InstructionExecution\Instructions\INC r  + DEC r   .cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -88,6 +93,10 @@
       <DependentUpon>LD rr,nn    .tt</DependentUpon>
     </Compile>
     <Compile Include="InstructionExecution\Instructions\EX AF,AF%27  .cs" />
+    <None Include="InstructionExecution\Instructions\ADD rr,rr   .tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ADD rr,rr   1.cs</LastGenOutput>
+    </None>
     <Compile Include="InstructionExecution\Instructions\RLCA        .cs" />
     <Compile Include="InstructionExecution\Instructions\NOP2.cs" />
     <Compile Include="InstructionExecution\Instructions\NOP.cs" />
