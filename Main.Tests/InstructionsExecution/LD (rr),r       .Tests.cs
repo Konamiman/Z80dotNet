@@ -20,7 +20,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
         [Test]
         [TestCaseSource("LD_rr_r_Source")]
-        public void LD_arr_r_works(string destPointerReg, string srcReg, byte opcode)
+        public void LD_arr_r_loads_value_in_memory(string destPointerReg, string srcReg, byte opcode)
         {
             var isHorL = (srcReg == "H" || srcReg == "L");
 

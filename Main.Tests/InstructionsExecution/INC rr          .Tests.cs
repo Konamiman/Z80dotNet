@@ -18,7 +18,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
         [Test]
         [TestCaseSource("INC_rr_Source")]
-        public void INC_rr_works(string reg, byte opcode, byte? prefix)
+        public void INC_rr_increases_register(string reg, byte opcode, byte? prefix)
         {
             SetReg(reg, 0xFFFF.ToShort());
             Execute(opcode, prefix);

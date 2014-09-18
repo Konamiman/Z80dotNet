@@ -22,7 +22,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
         [Test]
         [TestCaseSource("LD_r_n_Source")]
-        public void LD_r_n_works(string reg, byte opcode, byte? prefix)
+        public void LD_r_n_loads_register_with_value(string reg, byte opcode, byte? prefix)
         {
             var oldValue = Fixture.Create<byte>();
             var newValue = Fixture.Create<byte>();

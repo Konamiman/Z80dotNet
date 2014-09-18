@@ -15,7 +15,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
         [Test]
         [TestCaseSource("LD_rr_nn_Source")]
-        public void LD_rr_nn_works(string reg, byte opcode)
+        public void LD_rr_nn_loads_register_with_value(string reg, byte opcode)
         {
             var oldValue = Fixture.Create<short>();
             var newValue = Fixture.Create<short>();
