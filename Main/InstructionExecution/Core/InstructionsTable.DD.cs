@@ -126,14 +126,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The DEC IX instruction.
-        /// </summary>
-        byte DEC_IX()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The INC (IX+d) instruction.
         /// </summary>
         byte INC_aIX_plus_n()

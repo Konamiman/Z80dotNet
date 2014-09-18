@@ -15,17 +15,18 @@ namespace Konamiman.Z80dotNet
 {
     public partial class Z80InstructionExecutor
     {
-<# foreach(var reg in new[] {"BC","DE","HL","SP","IX","IY"}) { #>
+<# foreach(var reg in new[] {"BC","DE","HL","SP","IX","IY"}) {
+   foreach(var isInc in new[] {true, false}) { #>
         /// <summary>
-        /// The INC <#=reg#> instruction.
+        /// The <#=isInc ? "INC" : "DEC"#> <#=reg#> instruction.
         /// </summary>
-        byte INC_<#=reg#>()
+        byte <#=isInc ? "INC" : "DEC"#>_<#=reg#>()
         {
             FetchFinished();
-            <#=Register(reg)#> = <#=Register(reg)#>.Inc();
+            <#=Register(reg)#> = <#=Register(reg)#>.<#=isInc ? "Inc" : "Dec"#>();
             return <#=IfIndexRegister(reg, 10, @else: 6) #>;
         }
 
-<# } #>
+<# }} #>
     }
 }

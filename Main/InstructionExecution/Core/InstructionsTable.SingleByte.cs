@@ -272,14 +272,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files and include them in the table when they are implemented.
 
         /// <summary>
-        /// The DEC BC instruction.
-        /// </summary>
-        byte DEC_BC()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The RRCA instruction.
         /// </summary>
         byte RRCA()
@@ -307,14 +299,6 @@ namespace Konamiman.Z80dotNet
         /// The JR d instruction.
         /// </summary>
         byte JR_d()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The DEC DE instruction.
-        /// </summary>
-        byte DEC_DE()
         {
             throw new NotImplementedException();
         }
@@ -363,14 +347,6 @@ namespace Konamiman.Z80dotNet
         /// The LD HL,(nn) instruction.
         /// </summary>
         byte LD_HL_aa()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The DEC HL instruction.
-        /// </summary>
-        byte DEC_HL()
         {
             throw new NotImplementedException();
         }
@@ -443,14 +419,6 @@ namespace Konamiman.Z80dotNet
         /// The LD A,(nn) instruction.
         /// </summary>
         byte LD_A_aa()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The DEC SP instruction.
-        /// </summary>
-        byte DEC_SP()
         {
             throw new NotImplementedException();
         }

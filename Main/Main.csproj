@@ -72,10 +72,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>INC r  + DEC r   .tt</DependentUpon>
     </Compile>
-    <Compile Include="InstructionExecution\Instructions\INC rr       .cs">
+    <Compile Include="InstructionExecution\Instructions\INC rr + DEC rr  .cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>INC rr       .tt</DependentUpon>
+      <DependentUpon>INC rr + DEC rr  .tt</DependentUpon>
     </Compile>
     <Compile Include="InstructionExecution\Instructions\LD r,%28rr%29    .cs">
       <DependentUpon>LD r,%28rr%29    .tt</DependentUpon>
@@ -134,9 +134,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Execute_xD_Instruction.cs</LastGenOutput>
     </None>
-    <None Include="InstructionExecution\Instructions\INC rr       .tt">
+    <None Include="InstructionExecution\Instructions\INC rr + DEC rr  .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>INC rr       .cs</LastGenOutput>
+      <LastGenOutput>INC rr + DEC rr  .cs</LastGenOutput>
     </None>
     <None Include="InstructionExecution\Instructions\LD r,%28rr%29    .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -159,7 +159,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="InstructionExecution\Instructions\DEC r    --see INC r    .txt" />
+    <None Include="InstructionExecution\Instructions\DEC rr   --see INC rr" />
+    <None Include="InstructionExecution\Instructions\DEC r    --see INC r" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
