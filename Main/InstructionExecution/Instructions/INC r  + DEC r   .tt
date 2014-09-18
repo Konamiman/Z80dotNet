@@ -26,13 +26,13 @@ namespace Konamiman.Z80dotNet
             var newValue = <#=Register(reg)#>.<#=isInc ? "Inc" : "Dec"#>();
             <#=Register(reg)#> = newValue;
 
-            MainRegisters.SF = newValue.GetBit(7);
-            MainRegisters.ZF = (newValue == 0);
-            MainRegisters.HF = ((newValue & 0x0F) == 0x0<#=isInc ? "0" : "F"#>);
-            MainRegisters.PF = (newValue == 0x<#=isInc ? "80" : "7F"#>);
-            MainRegisters.NF = <#=isInc ? "0" : "1"#>;
-			MainRegisters.Flag3 = newValue.GetBit(3);
-			MainRegisters.Flag5 = newValue.GetBit(5);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+            Registers.HF = ((newValue & 0x0F) == 0x0<#=isInc ? "0" : "F"#>);
+            Registers.PF = (newValue == 0x<#=isInc ? "80" : "7F"#>);
+            Registers.NF = <#=isInc ? "0" : "1"#>;
+			Registers.Flag3 = newValue.GetBit(3);
+			Registers.Flag5 = newValue.GetBit(5);
 
             return <#=IsIndexRegister(reg) ? 8 : 4 #>;
         }

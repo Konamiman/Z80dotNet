@@ -13,16 +13,16 @@ namespace Konamiman.Z80dotNet
         private byte INC_A()
         {
             FetchFinished();
-            var newValue = MainRegisters.A.Inc();
-            MainRegisters.A = newValue;
+            var newValue = Registers.A.Inc();
+            Registers.A = newValue;
 
-            MainRegisters.SF = newValue.GetBit(7);
-            MainRegisters.ZF = (newValue == 0);
-            MainRegisters.HF = ((newValue & 0x0F) == 0x00);
-            MainRegisters.PF = (newValue == 0x80);
-            MainRegisters.NF = 0;
-			MainRegisters.Flag3 = newValue.GetBit(3);
-			MainRegisters.Flag5 = newValue.GetBit(5);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+            Registers.HF = ((newValue & 0x0F) == 0x00);
+            Registers.PF = (newValue == 0x80);
+            Registers.NF = 0;
+			Registers.Flag3 = newValue.GetBit(3);
+			Registers.Flag5 = newValue.GetBit(5);
 
             return 4;
         }
@@ -33,16 +33,16 @@ namespace Konamiman.Z80dotNet
         private byte DEC_A()
         {
             FetchFinished();
-            var newValue = MainRegisters.A.Dec();
-            MainRegisters.A = newValue;
+            var newValue = Registers.A.Dec();
+            Registers.A = newValue;
 
-            MainRegisters.SF = newValue.GetBit(7);
-            MainRegisters.ZF = (newValue == 0);
-            MainRegisters.HF = ((newValue & 0x0F) == 0x0F);
-            MainRegisters.PF = (newValue == 0x7F);
-            MainRegisters.NF = 1;
-			MainRegisters.Flag3 = newValue.GetBit(3);
-			MainRegisters.Flag5 = newValue.GetBit(5);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+            Registers.HF = ((newValue & 0x0F) == 0x0F);
+            Registers.PF = (newValue == 0x7F);
+            Registers.NF = 1;
+			Registers.Flag3 = newValue.GetBit(3);
+			Registers.Flag5 = newValue.GetBit(5);
 
             return 4;
         }
@@ -53,16 +53,16 @@ namespace Konamiman.Z80dotNet
         private byte INC_B()
         {
             FetchFinished();
-            var newValue = MainRegisters.B.Inc();
-            MainRegisters.B = newValue;
+            var newValue = Registers.B.Inc();
+            Registers.B = newValue;
 
-            MainRegisters.SF = newValue.GetBit(7);
-            MainRegisters.ZF = (newValue == 0);
-            MainRegisters.HF = ((newValue & 0x0F) == 0x00);
-            MainRegisters.PF = (newValue == 0x80);
-            MainRegisters.NF = 0;
-			MainRegisters.Flag3 = newValue.GetBit(3);
-			MainRegisters.Flag5 = newValue.GetBit(5);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+            Registers.HF = ((newValue & 0x0F) == 0x00);
+            Registers.PF = (newValue == 0x80);
+            Registers.NF = 0;
+			Registers.Flag3 = newValue.GetBit(3);
+			Registers.Flag5 = newValue.GetBit(5);
 
             return 4;
         }
@@ -73,16 +73,16 @@ namespace Konamiman.Z80dotNet
         private byte DEC_B()
         {
             FetchFinished();
-            var newValue = MainRegisters.B.Dec();
-            MainRegisters.B = newValue;
+            var newValue = Registers.B.Dec();
+            Registers.B = newValue;
 
-            MainRegisters.SF = newValue.GetBit(7);
-            MainRegisters.ZF = (newValue == 0);
-            MainRegisters.HF = ((newValue & 0x0F) == 0x0F);
-            MainRegisters.PF = (newValue == 0x7F);
-            MainRegisters.NF = 1;
-			MainRegisters.Flag3 = newValue.GetBit(3);
-			MainRegisters.Flag5 = newValue.GetBit(5);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+            Registers.HF = ((newValue & 0x0F) == 0x0F);
+            Registers.PF = (newValue == 0x7F);
+            Registers.NF = 1;
+			Registers.Flag3 = newValue.GetBit(3);
+			Registers.Flag5 = newValue.GetBit(5);
 
             return 4;
         }
@@ -93,16 +93,16 @@ namespace Konamiman.Z80dotNet
         private byte INC_C()
         {
             FetchFinished();
-            var newValue = MainRegisters.C.Inc();
-            MainRegisters.C = newValue;
+            var newValue = Registers.C.Inc();
+            Registers.C = newValue;
 
-            MainRegisters.SF = newValue.GetBit(7);
-            MainRegisters.ZF = (newValue == 0);
-            MainRegisters.HF = ((newValue & 0x0F) == 0x00);
-            MainRegisters.PF = (newValue == 0x80);
-            MainRegisters.NF = 0;
-			MainRegisters.Flag3 = newValue.GetBit(3);
-			MainRegisters.Flag5 = newValue.GetBit(5);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+            Registers.HF = ((newValue & 0x0F) == 0x00);
+            Registers.PF = (newValue == 0x80);
+            Registers.NF = 0;
+			Registers.Flag3 = newValue.GetBit(3);
+			Registers.Flag5 = newValue.GetBit(5);
 
             return 4;
         }
@@ -113,16 +113,16 @@ namespace Konamiman.Z80dotNet
         private byte DEC_C()
         {
             FetchFinished();
-            var newValue = MainRegisters.C.Dec();
-            MainRegisters.C = newValue;
+            var newValue = Registers.C.Dec();
+            Registers.C = newValue;
 
-            MainRegisters.SF = newValue.GetBit(7);
-            MainRegisters.ZF = (newValue == 0);
-            MainRegisters.HF = ((newValue & 0x0F) == 0x0F);
-            MainRegisters.PF = (newValue == 0x7F);
-            MainRegisters.NF = 1;
-			MainRegisters.Flag3 = newValue.GetBit(3);
-			MainRegisters.Flag5 = newValue.GetBit(5);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+            Registers.HF = ((newValue & 0x0F) == 0x0F);
+            Registers.PF = (newValue == 0x7F);
+            Registers.NF = 1;
+			Registers.Flag3 = newValue.GetBit(3);
+			Registers.Flag5 = newValue.GetBit(5);
 
             return 4;
         }
@@ -133,16 +133,16 @@ namespace Konamiman.Z80dotNet
         private byte INC_D()
         {
             FetchFinished();
-            var newValue = MainRegisters.D.Inc();
-            MainRegisters.D = newValue;
+            var newValue = Registers.D.Inc();
+            Registers.D = newValue;
 
-            MainRegisters.SF = newValue.GetBit(7);
-            MainRegisters.ZF = (newValue == 0);
-            MainRegisters.HF = ((newValue & 0x0F) == 0x00);
-            MainRegisters.PF = (newValue == 0x80);
-            MainRegisters.NF = 0;
-			MainRegisters.Flag3 = newValue.GetBit(3);
-			MainRegisters.Flag5 = newValue.GetBit(5);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+            Registers.HF = ((newValue & 0x0F) == 0x00);
+            Registers.PF = (newValue == 0x80);
+            Registers.NF = 0;
+			Registers.Flag3 = newValue.GetBit(3);
+			Registers.Flag5 = newValue.GetBit(5);
 
             return 4;
         }
@@ -153,16 +153,16 @@ namespace Konamiman.Z80dotNet
         private byte DEC_D()
         {
             FetchFinished();
-            var newValue = MainRegisters.D.Dec();
-            MainRegisters.D = newValue;
+            var newValue = Registers.D.Dec();
+            Registers.D = newValue;
 
-            MainRegisters.SF = newValue.GetBit(7);
-            MainRegisters.ZF = (newValue == 0);
-            MainRegisters.HF = ((newValue & 0x0F) == 0x0F);
-            MainRegisters.PF = (newValue == 0x7F);
-            MainRegisters.NF = 1;
-			MainRegisters.Flag3 = newValue.GetBit(3);
-			MainRegisters.Flag5 = newValue.GetBit(5);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+            Registers.HF = ((newValue & 0x0F) == 0x0F);
+            Registers.PF = (newValue == 0x7F);
+            Registers.NF = 1;
+			Registers.Flag3 = newValue.GetBit(3);
+			Registers.Flag5 = newValue.GetBit(5);
 
             return 4;
         }
@@ -173,16 +173,16 @@ namespace Konamiman.Z80dotNet
         private byte INC_E()
         {
             FetchFinished();
-            var newValue = MainRegisters.E.Inc();
-            MainRegisters.E = newValue;
+            var newValue = Registers.E.Inc();
+            Registers.E = newValue;
 
-            MainRegisters.SF = newValue.GetBit(7);
-            MainRegisters.ZF = (newValue == 0);
-            MainRegisters.HF = ((newValue & 0x0F) == 0x00);
-            MainRegisters.PF = (newValue == 0x80);
-            MainRegisters.NF = 0;
-			MainRegisters.Flag3 = newValue.GetBit(3);
-			MainRegisters.Flag5 = newValue.GetBit(5);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+            Registers.HF = ((newValue & 0x0F) == 0x00);
+            Registers.PF = (newValue == 0x80);
+            Registers.NF = 0;
+			Registers.Flag3 = newValue.GetBit(3);
+			Registers.Flag5 = newValue.GetBit(5);
 
             return 4;
         }
@@ -193,16 +193,16 @@ namespace Konamiman.Z80dotNet
         private byte DEC_E()
         {
             FetchFinished();
-            var newValue = MainRegisters.E.Dec();
-            MainRegisters.E = newValue;
+            var newValue = Registers.E.Dec();
+            Registers.E = newValue;
 
-            MainRegisters.SF = newValue.GetBit(7);
-            MainRegisters.ZF = (newValue == 0);
-            MainRegisters.HF = ((newValue & 0x0F) == 0x0F);
-            MainRegisters.PF = (newValue == 0x7F);
-            MainRegisters.NF = 1;
-			MainRegisters.Flag3 = newValue.GetBit(3);
-			MainRegisters.Flag5 = newValue.GetBit(5);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+            Registers.HF = ((newValue & 0x0F) == 0x0F);
+            Registers.PF = (newValue == 0x7F);
+            Registers.NF = 1;
+			Registers.Flag3 = newValue.GetBit(3);
+			Registers.Flag5 = newValue.GetBit(5);
 
             return 4;
         }
@@ -213,16 +213,16 @@ namespace Konamiman.Z80dotNet
         private byte INC_H()
         {
             FetchFinished();
-            var newValue = MainRegisters.H.Inc();
-            MainRegisters.H = newValue;
+            var newValue = Registers.H.Inc();
+            Registers.H = newValue;
 
-            MainRegisters.SF = newValue.GetBit(7);
-            MainRegisters.ZF = (newValue == 0);
-            MainRegisters.HF = ((newValue & 0x0F) == 0x00);
-            MainRegisters.PF = (newValue == 0x80);
-            MainRegisters.NF = 0;
-			MainRegisters.Flag3 = newValue.GetBit(3);
-			MainRegisters.Flag5 = newValue.GetBit(5);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+            Registers.HF = ((newValue & 0x0F) == 0x00);
+            Registers.PF = (newValue == 0x80);
+            Registers.NF = 0;
+			Registers.Flag3 = newValue.GetBit(3);
+			Registers.Flag5 = newValue.GetBit(5);
 
             return 4;
         }
@@ -233,16 +233,16 @@ namespace Konamiman.Z80dotNet
         private byte DEC_H()
         {
             FetchFinished();
-            var newValue = MainRegisters.H.Dec();
-            MainRegisters.H = newValue;
+            var newValue = Registers.H.Dec();
+            Registers.H = newValue;
 
-            MainRegisters.SF = newValue.GetBit(7);
-            MainRegisters.ZF = (newValue == 0);
-            MainRegisters.HF = ((newValue & 0x0F) == 0x0F);
-            MainRegisters.PF = (newValue == 0x7F);
-            MainRegisters.NF = 1;
-			MainRegisters.Flag3 = newValue.GetBit(3);
-			MainRegisters.Flag5 = newValue.GetBit(5);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+            Registers.HF = ((newValue & 0x0F) == 0x0F);
+            Registers.PF = (newValue == 0x7F);
+            Registers.NF = 1;
+			Registers.Flag3 = newValue.GetBit(3);
+			Registers.Flag5 = newValue.GetBit(5);
 
             return 4;
         }
@@ -253,16 +253,16 @@ namespace Konamiman.Z80dotNet
         private byte INC_L()
         {
             FetchFinished();
-            var newValue = MainRegisters.L.Inc();
-            MainRegisters.L = newValue;
+            var newValue = Registers.L.Inc();
+            Registers.L = newValue;
 
-            MainRegisters.SF = newValue.GetBit(7);
-            MainRegisters.ZF = (newValue == 0);
-            MainRegisters.HF = ((newValue & 0x0F) == 0x00);
-            MainRegisters.PF = (newValue == 0x80);
-            MainRegisters.NF = 0;
-			MainRegisters.Flag3 = newValue.GetBit(3);
-			MainRegisters.Flag5 = newValue.GetBit(5);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+            Registers.HF = ((newValue & 0x0F) == 0x00);
+            Registers.PF = (newValue == 0x80);
+            Registers.NF = 0;
+			Registers.Flag3 = newValue.GetBit(3);
+			Registers.Flag5 = newValue.GetBit(5);
 
             return 4;
         }
@@ -273,16 +273,16 @@ namespace Konamiman.Z80dotNet
         private byte DEC_L()
         {
             FetchFinished();
-            var newValue = MainRegisters.L.Dec();
-            MainRegisters.L = newValue;
+            var newValue = Registers.L.Dec();
+            Registers.L = newValue;
 
-            MainRegisters.SF = newValue.GetBit(7);
-            MainRegisters.ZF = (newValue == 0);
-            MainRegisters.HF = ((newValue & 0x0F) == 0x0F);
-            MainRegisters.PF = (newValue == 0x7F);
-            MainRegisters.NF = 1;
-			MainRegisters.Flag3 = newValue.GetBit(3);
-			MainRegisters.Flag5 = newValue.GetBit(5);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+            Registers.HF = ((newValue & 0x0F) == 0x0F);
+            Registers.PF = (newValue == 0x7F);
+            Registers.NF = 1;
+			Registers.Flag3 = newValue.GetBit(3);
+			Registers.Flag5 = newValue.GetBit(5);
 
             return 4;
         }
@@ -296,13 +296,13 @@ namespace Konamiman.Z80dotNet
             var newValue = Registers.IXH.Inc();
             Registers.IXH = newValue;
 
-            MainRegisters.SF = newValue.GetBit(7);
-            MainRegisters.ZF = (newValue == 0);
-            MainRegisters.HF = ((newValue & 0x0F) == 0x00);
-            MainRegisters.PF = (newValue == 0x80);
-            MainRegisters.NF = 0;
-			MainRegisters.Flag3 = newValue.GetBit(3);
-			MainRegisters.Flag5 = newValue.GetBit(5);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+            Registers.HF = ((newValue & 0x0F) == 0x00);
+            Registers.PF = (newValue == 0x80);
+            Registers.NF = 0;
+			Registers.Flag3 = newValue.GetBit(3);
+			Registers.Flag5 = newValue.GetBit(5);
 
             return 8;
         }
@@ -316,13 +316,13 @@ namespace Konamiman.Z80dotNet
             var newValue = Registers.IXH.Dec();
             Registers.IXH = newValue;
 
-            MainRegisters.SF = newValue.GetBit(7);
-            MainRegisters.ZF = (newValue == 0);
-            MainRegisters.HF = ((newValue & 0x0F) == 0x0F);
-            MainRegisters.PF = (newValue == 0x7F);
-            MainRegisters.NF = 1;
-			MainRegisters.Flag3 = newValue.GetBit(3);
-			MainRegisters.Flag5 = newValue.GetBit(5);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+            Registers.HF = ((newValue & 0x0F) == 0x0F);
+            Registers.PF = (newValue == 0x7F);
+            Registers.NF = 1;
+			Registers.Flag3 = newValue.GetBit(3);
+			Registers.Flag5 = newValue.GetBit(5);
 
             return 8;
         }
@@ -336,13 +336,13 @@ namespace Konamiman.Z80dotNet
             var newValue = Registers.IXL.Inc();
             Registers.IXL = newValue;
 
-            MainRegisters.SF = newValue.GetBit(7);
-            MainRegisters.ZF = (newValue == 0);
-            MainRegisters.HF = ((newValue & 0x0F) == 0x00);
-            MainRegisters.PF = (newValue == 0x80);
-            MainRegisters.NF = 0;
-			MainRegisters.Flag3 = newValue.GetBit(3);
-			MainRegisters.Flag5 = newValue.GetBit(5);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+            Registers.HF = ((newValue & 0x0F) == 0x00);
+            Registers.PF = (newValue == 0x80);
+            Registers.NF = 0;
+			Registers.Flag3 = newValue.GetBit(3);
+			Registers.Flag5 = newValue.GetBit(5);
 
             return 8;
         }
@@ -356,13 +356,13 @@ namespace Konamiman.Z80dotNet
             var newValue = Registers.IXL.Dec();
             Registers.IXL = newValue;
 
-            MainRegisters.SF = newValue.GetBit(7);
-            MainRegisters.ZF = (newValue == 0);
-            MainRegisters.HF = ((newValue & 0x0F) == 0x0F);
-            MainRegisters.PF = (newValue == 0x7F);
-            MainRegisters.NF = 1;
-			MainRegisters.Flag3 = newValue.GetBit(3);
-			MainRegisters.Flag5 = newValue.GetBit(5);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+            Registers.HF = ((newValue & 0x0F) == 0x0F);
+            Registers.PF = (newValue == 0x7F);
+            Registers.NF = 1;
+			Registers.Flag3 = newValue.GetBit(3);
+			Registers.Flag5 = newValue.GetBit(5);
 
             return 8;
         }
@@ -376,13 +376,13 @@ namespace Konamiman.Z80dotNet
             var newValue = Registers.IYH.Inc();
             Registers.IYH = newValue;
 
-            MainRegisters.SF = newValue.GetBit(7);
-            MainRegisters.ZF = (newValue == 0);
-            MainRegisters.HF = ((newValue & 0x0F) == 0x00);
-            MainRegisters.PF = (newValue == 0x80);
-            MainRegisters.NF = 0;
-			MainRegisters.Flag3 = newValue.GetBit(3);
-			MainRegisters.Flag5 = newValue.GetBit(5);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+            Registers.HF = ((newValue & 0x0F) == 0x00);
+            Registers.PF = (newValue == 0x80);
+            Registers.NF = 0;
+			Registers.Flag3 = newValue.GetBit(3);
+			Registers.Flag5 = newValue.GetBit(5);
 
             return 8;
         }
@@ -396,13 +396,13 @@ namespace Konamiman.Z80dotNet
             var newValue = Registers.IYH.Dec();
             Registers.IYH = newValue;
 
-            MainRegisters.SF = newValue.GetBit(7);
-            MainRegisters.ZF = (newValue == 0);
-            MainRegisters.HF = ((newValue & 0x0F) == 0x0F);
-            MainRegisters.PF = (newValue == 0x7F);
-            MainRegisters.NF = 1;
-			MainRegisters.Flag3 = newValue.GetBit(3);
-			MainRegisters.Flag5 = newValue.GetBit(5);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+            Registers.HF = ((newValue & 0x0F) == 0x0F);
+            Registers.PF = (newValue == 0x7F);
+            Registers.NF = 1;
+			Registers.Flag3 = newValue.GetBit(3);
+			Registers.Flag5 = newValue.GetBit(5);
 
             return 8;
         }
@@ -416,13 +416,13 @@ namespace Konamiman.Z80dotNet
             var newValue = Registers.IYL.Inc();
             Registers.IYL = newValue;
 
-            MainRegisters.SF = newValue.GetBit(7);
-            MainRegisters.ZF = (newValue == 0);
-            MainRegisters.HF = ((newValue & 0x0F) == 0x00);
-            MainRegisters.PF = (newValue == 0x80);
-            MainRegisters.NF = 0;
-			MainRegisters.Flag3 = newValue.GetBit(3);
-			MainRegisters.Flag5 = newValue.GetBit(5);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+            Registers.HF = ((newValue & 0x0F) == 0x00);
+            Registers.PF = (newValue == 0x80);
+            Registers.NF = 0;
+			Registers.Flag3 = newValue.GetBit(3);
+			Registers.Flag5 = newValue.GetBit(5);
 
             return 8;
         }
@@ -436,13 +436,13 @@ namespace Konamiman.Z80dotNet
             var newValue = Registers.IYL.Dec();
             Registers.IYL = newValue;
 
-            MainRegisters.SF = newValue.GetBit(7);
-            MainRegisters.ZF = (newValue == 0);
-            MainRegisters.HF = ((newValue & 0x0F) == 0x0F);
-            MainRegisters.PF = (newValue == 0x7F);
-            MainRegisters.NF = 1;
-			MainRegisters.Flag3 = newValue.GetBit(3);
-			MainRegisters.Flag5 = newValue.GetBit(5);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+            Registers.HF = ((newValue & 0x0F) == 0x0F);
+            Registers.PF = (newValue == 0x7F);
+            Registers.NF = 1;
+			Registers.Flag3 = newValue.GetBit(3);
+			Registers.Flag5 = newValue.GetBit(5);
 
             return 8;
         }

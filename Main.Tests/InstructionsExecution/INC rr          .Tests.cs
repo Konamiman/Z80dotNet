@@ -30,10 +30,10 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         public void INC_rr_do_not_modify_flags(string reg, byte opcode, byte? prefix)
         {
             var value = Fixture.Create<byte>();
-            Registers.Main.F = value;
+            Registers.F = value;
             Execute(opcode, prefix);
 
-            Assert.AreEqual(value, Registers.Main.F);
+            Assert.AreEqual(value, Registers.F);
         }
 
         [Test]

@@ -16,7 +16,7 @@ namespace Konamiman.Z80dotNet
         {
             var value = ProcessorAgent.FetchNextOpcode();
             FetchFinished();
-            MainRegisters.A = value;
+            Registers.A = value;
             return 7;
         }
 
@@ -27,7 +27,7 @@ namespace Konamiman.Z80dotNet
         {
             var value = ProcessorAgent.FetchNextOpcode();
             FetchFinished();
-            MainRegisters.B = value;
+            Registers.B = value;
             return 7;
         }
 
@@ -38,7 +38,7 @@ namespace Konamiman.Z80dotNet
         {
             var value = ProcessorAgent.FetchNextOpcode();
             FetchFinished();
-            MainRegisters.C = value;
+            Registers.C = value;
             return 7;
         }
 
@@ -49,7 +49,7 @@ namespace Konamiman.Z80dotNet
         {
             var value = ProcessorAgent.FetchNextOpcode();
             FetchFinished();
-            MainRegisters.D = value;
+            Registers.D = value;
             return 7;
         }
 
@@ -60,7 +60,7 @@ namespace Konamiman.Z80dotNet
         {
             var value = ProcessorAgent.FetchNextOpcode();
             FetchFinished();
-            MainRegisters.E = value;
+            Registers.E = value;
             return 7;
         }
 
@@ -71,7 +71,7 @@ namespace Konamiman.Z80dotNet
         {
             var value = ProcessorAgent.FetchNextOpcode();
             FetchFinished();
-            MainRegisters.H = value;
+            Registers.H = value;
             return 7;
         }
 
@@ -82,7 +82,7 @@ namespace Konamiman.Z80dotNet
         {
             var value = ProcessorAgent.FetchNextOpcode();
             FetchFinished();
-            MainRegisters.L = value;
+            Registers.L = value;
             return 7;
         }
 

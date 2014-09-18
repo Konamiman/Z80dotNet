@@ -13,7 +13,7 @@ namespace Konamiman.Z80dotNet
         byte INC_BC()
         {
             FetchFinished();
-            MainRegisters.BC = MainRegisters.BC.Inc();
+            Registers.BC = Registers.BC.Inc();
             return 6;
         }
 
@@ -23,7 +23,7 @@ namespace Konamiman.Z80dotNet
         byte INC_DE()
         {
             FetchFinished();
-            MainRegisters.DE = MainRegisters.DE.Inc();
+            Registers.DE = Registers.DE.Inc();
             return 6;
         }
 
@@ -33,7 +33,7 @@ namespace Konamiman.Z80dotNet
         byte INC_HL()
         {
             FetchFinished();
-            MainRegisters.HL = MainRegisters.HL.Inc();
+            Registers.HL = Registers.HL.Inc();
             return 6;
         }
 

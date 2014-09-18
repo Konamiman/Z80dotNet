@@ -23,8 +23,8 @@ namespace Konamiman.Z80dotNet
         {
 		    FetchFinished();
             ProcessorAgent.WriteToMemory(
-				MainRegisters.<#=pointer#>.ToUShort(), 
-				MainRegisters.<#=reg#>);
+				Registers.<#=pointer#>.ToUShort(), 
+				Registers.<#=reg#>);
             return 7;
         }
 

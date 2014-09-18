@@ -43,7 +43,7 @@ For sure there are plenty of conceptual mistakes in what I have designed so far.
 
     z80.Start();
 
-    Debug.Assert(z80.Registers.Main.A == 12);
+    Debug.Assert(z80.Registers.A == 12);
     Debug.Assert(z80.TStatesElapsedSinceStart == 25);
 
 ## Instruction execution flow ##

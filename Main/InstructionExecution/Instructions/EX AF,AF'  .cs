@@ -9,8 +9,8 @@
         {
             FetchFinished();
 
-            var temp = MainRegisters.AF;
-            MainRegisters.AF = Registers.Alternate.AF;
+            var temp = Registers.AF;
+            Registers.AF = Registers.Alternate.AF;
             Registers.Alternate.AF = temp;
 
             return 4;

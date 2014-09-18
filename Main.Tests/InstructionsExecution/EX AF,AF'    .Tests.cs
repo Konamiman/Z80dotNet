@@ -13,12 +13,12 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             var mainValue = Fixture.Create<short>();
             var alternateValue = Fixture.Create<short>();
 
-            Registers.Main.AF = mainValue;
+            Registers.AF = mainValue;
             Registers.Alternate.AF = alternateValue;
 
             Execute(EX_AF_AF_opcode);
 
-            Assert.AreEqual(alternateValue, Registers.Main.AF);
+            Assert.AreEqual(alternateValue, Registers.AF);
             Assert.AreEqual(mainValue, Registers.Alternate.AF);
         }
 

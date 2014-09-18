@@ -57,7 +57,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         object GetTarget(string regName)
         {
             if (typeof (Z80Registers).GetProperty(regName) == null)
-                return Registers.Main;
+                return Registers;
             else
                 return Registers;
         }

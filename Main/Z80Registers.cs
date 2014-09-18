@@ -5,28 +5,11 @@ namespace Konamiman.Z80dotNet
     /// Represents a full set of Z80 registers. This is the default implementation of
     /// <see cref="IZ80Registers"/>.
     /// </summary>
-    public class Z80Registers : IZ80Registers
+    public class Z80Registers : MainZ80Registers, IZ80Registers
     {
         public Z80Registers()
         {
-            Main = new MainZ80Registers();
             Alternate = new MainZ80Registers();
-        }
-
-        private IMainZ80Registers _Main;
-        public IMainZ80Registers Main
-        {
-            get
-            {
-                return _Main;
-            }
-            set
-            {
-                if(value == null)
-                    throw new ArgumentNullException("Main");
-
-                _Main = value;
-            }
         }
 
         private IMainZ80Registers _Alternate;

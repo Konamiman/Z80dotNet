@@ -44,10 +44,10 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         public void LD_rr_r_do_not_modify_flags(string destPointerReg, string srcReg, byte opcode)
         {
             var value = Fixture.Create<byte>();
-            Registers.Main.F = value;
+            Registers.F = value;
             Execute(opcode);
 
-            Assert.AreEqual(value, Registers.Main.F);
+            Assert.AreEqual(value, Registers.F);
         }
 
         [Test]

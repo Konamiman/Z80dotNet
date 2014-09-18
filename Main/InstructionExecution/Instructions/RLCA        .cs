@@ -8,13 +8,13 @@
         byte RLCA()
         {
             FetchFinished();
-            var oldValue = MainRegisters.A;
+            var oldValue = Registers.A;
 
-            MainRegisters.A = (byte)((oldValue << 1) | (oldValue >> 7));
+            Registers.A = (byte)((oldValue << 1) | (oldValue >> 7));
 
-            MainRegisters.CF = oldValue.GetBit(7);
-            MainRegisters.HF = 0;
-            MainRegisters.NF = 0;
+            Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
 
             return 4;
         }

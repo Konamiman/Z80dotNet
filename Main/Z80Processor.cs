@@ -206,7 +206,7 @@ namespace Konamiman.Z80dotNet
             Registers.IFF1 = 0;
             Registers.IFF2 = 0;
             Registers.PC = 0;
-            Registers.Main.AF = 0xFFFF.ToShort();
+            Registers.AF = 0xFFFF.ToShort();
             Registers.SP = 0xFFFF.ToShort();
             InterruptMode = 0;
 

@@ -23,7 +23,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.Start();
 
-            Assert.AreEqual(12, Sut.Registers.Main.A);
+            Assert.AreEqual(12, Sut.Registers.A);
             Assert.AreEqual(25, Sut.TStatesElapsedSinceStart);
         }
 
@@ -41,16 +41,16 @@ namespace Konamiman.Z80dotNet.Tests
                     case 0x3E: //LD A,n
                         value = ProcessorAgent.FetchNextOpcode();
                         FetchFinished();
-                        ProcessorAgent.Registers.Main.A = value;
+                        ProcessorAgent.Registers.A = value;
                         return 7;
                     case 0xC6: //ADD A,n
                         value = ProcessorAgent.FetchNextOpcode();
                         FetchFinished();
-                        ProcessorAgent.Registers.Main.A += value; //TODO: Check for overflow, set flags
+                        ProcessorAgent.Registers.A += value; //TODO: Check for overflow, set flags
                         return 4;
                     case 0x3C: //INC A
                         FetchFinished();
-                        ProcessorAgent.Registers.Main.A++; //TODO: Check for overflow, set flags
+                        ProcessorAgent.Registers.A++; //TODO: Check for overflow, set flags
                         return 4;
                     case 0xC9: //RET
                         FetchFinished(true);

@@ -14,8 +14,8 @@ namespace Konamiman.Z80dotNet
         {
 		    FetchFinished();
             ProcessorAgent.WriteToMemory(
-				MainRegisters.BC.ToUShort(), 
-				MainRegisters.A);
+				Registers.BC.ToUShort(), 
+				Registers.A);
             return 7;
         }
 
@@ -26,8 +26,8 @@ namespace Konamiman.Z80dotNet
         {
 		    FetchFinished();
             ProcessorAgent.WriteToMemory(
-				MainRegisters.DE.ToUShort(), 
-				MainRegisters.A);
+				Registers.DE.ToUShort(), 
+				Registers.A);
             return 7;
         }
 
@@ -38,8 +38,8 @@ namespace Konamiman.Z80dotNet
         {
 		    FetchFinished();
             ProcessorAgent.WriteToMemory(
-				MainRegisters.HL.ToUShort(), 
-				MainRegisters.A);
+				Registers.HL.ToUShort(), 
+				Registers.A);
             return 7;
         }
 
@@ -50,8 +50,8 @@ namespace Konamiman.Z80dotNet
         {
 		    FetchFinished();
             ProcessorAgent.WriteToMemory(
-				MainRegisters.HL.ToUShort(), 
-				MainRegisters.B);
+				Registers.HL.ToUShort(), 
+				Registers.B);
             return 7;
         }
 
@@ -62,8 +62,8 @@ namespace Konamiman.Z80dotNet
         {
 		    FetchFinished();
             ProcessorAgent.WriteToMemory(
-				MainRegisters.HL.ToUShort(), 
-				MainRegisters.C);
+				Registers.HL.ToUShort(), 
+				Registers.C);
             return 7;
         }
 
@@ -74,8 +74,8 @@ namespace Konamiman.Z80dotNet
         {
 		    FetchFinished();
             ProcessorAgent.WriteToMemory(
-				MainRegisters.HL.ToUShort(), 
-				MainRegisters.D);
+				Registers.HL.ToUShort(), 
+				Registers.D);
             return 7;
         }
 
@@ -86,8 +86,8 @@ namespace Konamiman.Z80dotNet
         {
 		    FetchFinished();
             ProcessorAgent.WriteToMemory(
-				MainRegisters.HL.ToUShort(), 
-				MainRegisters.E);
+				Registers.HL.ToUShort(), 
+				Registers.E);
             return 7;
         }
 
@@ -98,8 +98,8 @@ namespace Konamiman.Z80dotNet
         {
 		    FetchFinished();
             ProcessorAgent.WriteToMemory(
-				MainRegisters.HL.ToUShort(), 
-				MainRegisters.H);
+				Registers.HL.ToUShort(), 
+				Registers.H);
             return 7;
         }
 
@@ -110,8 +110,8 @@ namespace Konamiman.Z80dotNet
         {
 		    FetchFinished();
             ProcessorAgent.WriteToMemory(
-				MainRegisters.HL.ToUShort(), 
-				MainRegisters.L);
+				Registers.HL.ToUShort(), 
+				Registers.L);
             return 7;
         }
 

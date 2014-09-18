@@ -1,12 +1,7 @@
 <#+
 string Register(string name)
 {
-	return (name=="SP" || IsIndexRegister(name) ? "Registers." : "MainRegisters.") + name;
-}
-
-string TestRegister(string name)
-{
-	return (name=="SP" || IsIndexRegister(name) ? "Registers." : "Registers.Main.") + name;
+	return "Registers." + name;
 }
 
 bool IsIndexRegister(string name)

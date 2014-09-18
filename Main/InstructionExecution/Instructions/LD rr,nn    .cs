@@ -14,7 +14,7 @@ namespace Konamiman.Z80dotNet
         {
             var value = FetchWord();
             FetchFinished();
-            MainRegisters.BC = value;
+            Registers.BC = value;
             return 10;
         }
 
@@ -25,7 +25,7 @@ namespace Konamiman.Z80dotNet
         {
             var value = FetchWord();
             FetchFinished();
-            MainRegisters.DE = value;
+            Registers.DE = value;
             return 10;
         }
 
@@ -36,7 +36,7 @@ namespace Konamiman.Z80dotNet
         {
             var value = FetchWord();
             FetchFinished();
-            MainRegisters.HL = value;
+            Registers.HL = value;
             return 10;
         }
 

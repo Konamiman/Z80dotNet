@@ -18,24 +18,9 @@ namespace Konamiman.Z80dotNet.Tests
         }
 
         [Test]
-        public void Main_and_alternate_registers_are_properly_set()
+        public void Alternate_registers_are_properly_set()
         {
-            Assert.IsInstanceOf<MainZ80Registers>(Sut.Main);
             Assert.IsInstanceOf<MainZ80Registers>(Sut.Alternate);
-        }
-
-        [Test]
-        public void Can_set_Main_to_non_null_value()
-        {
-            var value = new Mock<IMainZ80Registers>().Object;
-            Sut.Main = value;
-            Assert.AreEqual(value, Sut.Main);
-        }
-
-        [Test]
-        public void Cannot_set_Main_to_null()
-        {
-            Assert.Throws<ArgumentNullException>(() => Sut.Main = null);
         }
 
         [Test]

@@ -3,13 +3,8 @@ namespace Konamiman.Z80dotNet
     /// <summary>
     /// Represents a full set of Z80 registers.
     /// </summary>
-    public interface IZ80Registers
+    public interface IZ80Registers : IMainZ80Registers
     {
-        /// <summary>
-        /// The main register set (AF, BC, DE, HL)
-        /// </summary>
-        IMainZ80Registers Main { get; set; }
-
         /// <summary>
         /// The alternate register set (AF', BC', DE', HL')
         /// </summary>

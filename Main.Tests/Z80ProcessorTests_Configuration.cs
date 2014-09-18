@@ -69,13 +69,13 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.Registers.IFF1 = 1;
             Sut.Registers.IFF1 = 1;
             Sut.Registers.PC = 1;
-            Sut.Registers.Main.AF = 0;
+            Sut.Registers.AF = 0;
             Sut.Registers.SP = 0;
             Sut.InterruptMode = 1;
 
             Sut.Reset();
 
-            Assert.AreEqual(0xFFFF.ToShort(), Sut.Registers.Main.AF);
+            Assert.AreEqual(0xFFFF.ToShort(), Sut.Registers.AF);
             Assert.AreEqual(0xFFFF.ToShort(), Sut.Registers.SP);
             Assert.AreEqual(0, Sut.Registers.PC);
             Assert.AreEqual(0, Sut.Registers.IFF1);

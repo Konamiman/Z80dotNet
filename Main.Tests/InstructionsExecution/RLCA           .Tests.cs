@@ -11,31 +11,31 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         public void RLCA_rotates_byte_correctly()
         {
             var values = new byte[] {0xA, 0x14, 0x28, 0x50, 0xA0, 0x41, 0x82, 0x05};
-            Registers.Main.A = 0x05;
+            Registers.A = 0x05;
 
             for(var i = 0; i < values.Length; i++)
             {
                 Execute(RLCA_opcode);
-                Assert.AreEqual(values[i], Registers.Main.A);
+                Assert.AreEqual(values[i], Registers.A);
             }
         }
 
         [Test]
         public void RLCA_sets_CF_correctly()
         {
-            Registers.Main.A = 0x60;
+            Registers.A = 0x60;
 
             Execute(RLCA_opcode);
-            Assert.AreEqual(0, Registers.Main.CF);
+            Assert.AreEqual(0, Registers.CF);
 
             Execute(RLCA_opcode);
-            Assert.AreEqual(1, Registers.Main.CF);
+            Assert.AreEqual(1, Registers.CF);
 
             Execute(RLCA_opcode);
-            Assert.AreEqual(1, Registers.Main.CF);
+            Assert.AreEqual(1, Registers.CF);
 
             Execute(RLCA_opcode);
-            Assert.AreEqual(0, Registers.Main.CF);
+            Assert.AreEqual(0, Registers.CF);
         }
 
         [Test]
@@ -45,14 +45,14 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             foreach (var value in randomValues)
             {
-                Registers.Main.HF = 1;
-                Registers.Main.NF = 1;
-                Registers.Main.A = value;
+                Registers.HF = 1;
+                Registers.NF = 1;
+                Registers.A = value;
 
                 Execute(RLCA_opcode);
 
-                Assert.AreEqual(0, Registers.Main.HF);
-                Assert.AreEqual(0, Registers.Main.NF);
+                Assert.AreEqual(0, Registers.HF);
+                Assert.AreEqual(0, Registers.NF);
             }
         }
 
@@ -64,17 +64,17 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             var randomZF = Fixture.Create<Bit>();
             var randomPF = Fixture.Create<Bit>();
 
-            Registers.Main.SF = randomSF;
-            Registers.Main.ZF = randomZF;
-            Registers.Main.PF = randomPF;
+            Registers.SF = randomSF;
+            Registers.ZF = randomZF;
+            Registers.PF = randomPF;
 
             foreach (var value in randomValues)
             {
                 Execute(RLCA_opcode);
 
-                Assert.AreEqual(randomSF, Registers.Main.SF);
-                Assert.AreEqual(randomZF, Registers.Main.ZF);
-                Assert.AreEqual(randomPF, Registers.Main.PF);
+                Assert.AreEqual(randomSF, Registers.SF);
+                Assert.AreEqual(randomZF, Registers.ZF);
+                Assert.AreEqual(randomPF, Registers.PF);
             }
         }
 

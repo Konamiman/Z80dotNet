@@ -8,7 +8,6 @@ namespace Konamiman.Z80dotNet
     public partial class Z80InstructionExecutor : IZ80InstructionExecutor
     {
         private IZ80Registers Registers;
-        private IMainZ80Registers MainRegisters;
 
         public IZ80ProcessorAgent ProcessorAgent { get; set; }
 
@@ -26,7 +25,6 @@ namespace Konamiman.Z80dotNet
         public int Execute(byte firstOpcodeByte)
         {
             Registers = ProcessorAgent.Registers;
-            MainRegisters = Registers.Main;
 
             switch(firstOpcodeByte)
             {
