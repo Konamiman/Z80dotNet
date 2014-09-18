@@ -3,7 +3,7 @@ using Ploeh.AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
-    public partial class Z80InstructionsExecutor
+    public class EX_AF_AF_tests : InstructionsExecutionTestsBase
     {
         private const byte EX_AF_AF_opcode = 0x08;
 

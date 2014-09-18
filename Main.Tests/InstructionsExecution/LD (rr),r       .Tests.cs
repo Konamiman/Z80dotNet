@@ -3,7 +3,7 @@ using Ploeh.AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
-    public partial class Z80InstructionsExecutor
+    public class LD_arr_r_tests : InstructionsExecutionTestsBase
     {
         static object[] LD_rr_r_Source =
         {

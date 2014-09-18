@@ -3,9 +3,9 @@ using Ploeh.AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
-    public partial class Z80InstructionsExecutor
+    public class INC_r_tests : InstructionsExecutionTestsBase
     {
-        static object[] INC_r_Source =
+        public static object[] INC_r_Source =
         {
             new object[] {"A",   (byte)0x3C, (byte?)null},
             new object[] {"B",   (byte)0x04, (byte?)null},

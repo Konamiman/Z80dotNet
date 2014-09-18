@@ -4,24 +4,8 @@ using Ploeh.AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
-    public partial class Z80InstructionsExecutor
+    public class Z80InstructionsExecutor_core_test : InstructionsExecutionTestsBase
     {
-        private Z80InstructionExecutor Sut { get; set; }
-        private FakeProcessorAgent ProcessorAgent { get; set; }
-        private IZ80Registers Registers { get; set; }
-        private Fixture Fixture { get; set; }
-
-        [SetUp]
-        public void Setup()
-        {
-            Sut = new Z80InstructionExecutor();
-            Sut.ProcessorAgent = ProcessorAgent = new FakeProcessorAgent();
-            Registers = ProcessorAgent.Registers;
-            Sut.InstructionFetchFinished += (s, e) => { };
-
-            Fixture = new Fixture();
-        }
-
 		[Test]
 		public void Instructions_execution_fire_FetchFinished_event_and_return_proper_T_states_count()
 		{

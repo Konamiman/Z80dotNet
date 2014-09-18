@@ -1,29 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using NUnit.Framework;
+using Ploeh.AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
-    public partial class Z80InstructionsExecutor
+    public abstract class InstructionsExecutionTestsBase
     {
+        protected Z80InstructionExecutor Sut { get; set; }
+        protected FakeProcessorAgent ProcessorAgent { get; set; }
+        protected IZ80Registers Registers { get; set; }
+        protected Fixture Fixture { get; set; }
+
+        [SetUp]
+        public void Setup()
+        {
+            Sut = new Z80InstructionExecutor();
+            Sut.ProcessorAgent = ProcessorAgent = new FakeProcessorAgent();
+            Registers = ProcessorAgent.Registers;
+            Sut.InstructionFetchFinished += (s, e) => { };
+
+            Fixture = new Fixture();
+        }
+
         #region Auxiliary methods
 
-        private int nextFetchesLength;
+        protected int nextFetchesLength;
 
-        private void SetMemoryContents(params byte[] opcodes)
+        protected void SetMemoryContents(params byte[] opcodes)
         {
 			Array.Copy(opcodes, ProcessorAgent.Memory, opcodes.Length);
 		    Registers.PC = 0;
             nextFetchesLength = opcodes.Length;
         }
 
-        private void ContinueSettingMemoryContents(params byte[] opcodes)
+        protected void ContinueSettingMemoryContents(params byte[] opcodes)
         {
 			Array.Copy(opcodes, 0, ProcessorAgent.Memory, nextFetchesLength, opcodes.Length);
             nextFetchesLength += opcodes.Length;
         }
 
-		FakeInstructionExecutor NewFakeInstructionExecutor()
+		protected FakeInstructionExecutor NewFakeInstructionExecutor()
         {
 			var sut = new FakeInstructionExecutor();
             sut.ProcessorAgent = ProcessorAgent = new FakeProcessorAgent();
@@ -32,28 +50,28 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             return sut;
         }
 
-        private T GetReg<T>(string name)
+        protected T GetReg<T>(string name)
         {
             return (T)RegProperty(name).GetValue(Registers, null); 
         }
 
-        private void SetReg(string regName, byte value)
+        protected void SetReg(string regName, byte value)
         {
             RegProperty(regName).SetValue(Registers, value, null);
         }
 
-        private void SetReg(string regName, short value)
+        protected void SetReg(string regName, short value)
         {
             RegProperty(regName).SetValue(Registers, value, null);
         }
 
-        PropertyInfo RegProperty(string name)
+        protected PropertyInfo RegProperty(string name)
         {
             return
                 typeof(Z80Registers).GetProperty(name);
         }
 
-        int Execute(byte opcode, byte? prefix = null, params byte[] nextFetches)
+        protected int Execute(byte opcode, byte? prefix = null, params byte[] nextFetches)
         {
             if (prefix == null)
             {
@@ -70,7 +88,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
         }
 
-        object IfIndexRegister(string regName, object value, object @else)
+        protected object IfIndexRegister(string regName, object value, object @else)
         {
             return regName.StartsWith("IX") || regName.StartsWith("IY") ? value : @else;
         }
@@ -79,7 +97,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
         #region Fake classes
 
-        private class FakeInstructionExecutor : Z80InstructionExecutor
+        protected class FakeInstructionExecutor : Z80InstructionExecutor
 		{
 		    public List<byte> UnsupportedExecuted = new List<byte>();
 
@@ -90,7 +108,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 		    }
         }
 
-        private class FakeProcessorAgent : IZ80ProcessorAgent
+        protected class FakeProcessorAgent : IZ80ProcessorAgent
         {
             public FakeProcessorAgent()
             {

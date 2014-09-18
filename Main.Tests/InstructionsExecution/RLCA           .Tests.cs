@@ -3,7 +3,7 @@ using Ploeh.AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
-    public partial class Z80InstructionsExecutor
+    public class RLCA_tests : InstructionsExecutionTestsBase
     {
         private const byte RLCA_opcode = 0x07;
 
