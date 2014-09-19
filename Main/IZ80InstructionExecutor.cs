@@ -32,6 +32,11 @@ namespace Konamiman.Z80dotNet
         /// execution, not including any extra memory or port wait states (but including the automatically
         /// inserted wait state used for port access).</description></item>
         /// </list>
+        /// <para>
+        /// The PC register will point to the address after the supplied opcode byte when this method is invoked,
+        /// and each subsequent call to <see cref="IZ80ProcessorAgent.FetchNextOpcode"/> will further increment
+        /// PC by one. This has to be taken in account when implementing the relative jump instructions (DJNZ and JR).
+        /// </para>
         /// </remarks>
         int Execute(byte firstOpcodeByte);
 

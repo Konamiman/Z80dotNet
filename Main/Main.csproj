@@ -67,7 +67,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ADD rr,rr   .tt</DependentUpon>
     </Compile>
+    <None Include="InstructionExecution\Instructions\JR cc         .tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>JR cc         1.cs</LastGenOutput>
+    </None>
     <Compile Include="InstructionExecution\Instructions\JR               .cs" />
+    <Compile Include="InstructionExecution\Instructions\JR cc         1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JR cc         .tt</DependentUpon>
+    </Compile>
     <Compile Include="InstructionExecution\Instructions\RLA           .cs" />
     <Compile Include="InstructionExecution\Instructions\RRA           .cs" />
     <Compile Include="InstructionExecution\Instructions\INC r  + DEC r   .cs">

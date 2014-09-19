@@ -28,6 +28,11 @@
         /// </summary>
         public int Value { get; private set; }
 
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
+
         #region Implicit conversions
 
         public static implicit operator Bit(int value)
