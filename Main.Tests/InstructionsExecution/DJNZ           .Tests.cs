@@ -8,7 +8,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         private const byte DJNZ_opcode = 0x10;
 
         [Test]
-        public void DNJZ_decreases_B()
+        public void DJNZ_decreases_B()
         {
             var value = Fixture.Create<byte>();
             Registers.B = value;
@@ -19,7 +19,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
 
         [Test]
-        public void DNJZ_does_not_jump_if_B_decreases_to_zero()
+        public void DJNZ_does_not_jump_if_B_decreases_to_zero()
         {
             var instructionAddress = Fixture.Create<ushort>();
 
@@ -30,7 +30,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
 
         [Test]
-        public void DNJZ_returns_proper_T_states_when_no_jump_is_done()
+        public void DJNZ_returns_proper_T_states_when_no_jump_is_done()
         {
             Registers.B = 1;
             var states = Execute(DJNZ_opcode);
@@ -39,7 +39,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
 
         [Test]
-        public void DNJZ_jumps_to_proper_address_if_B_does_not_decrease_to_zero()
+        public void DJNZ_jumps_to_proper_address_if_B_does_not_decrease_to_zero()
         {
             var instructionAddress = Fixture.Create<ushort>();
 
@@ -53,7 +53,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
 
         [Test]
-        public void DNJZ_returns_proper_T_states_when_jump_is_done()
+        public void DJNZ_returns_proper_T_states_when_jump_is_done()
         {
             Registers.B = 0;
             var states = Execute(DJNZ_opcode);

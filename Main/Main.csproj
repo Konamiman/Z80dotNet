@@ -67,6 +67,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ADD rr,rr   .tt</DependentUpon>
     </Compile>
+    <Compile Include="InstructionExecution\Instructions\JR               .cs" />
     <Compile Include="InstructionExecution\Instructions\RLA            .cs" />
     <Compile Include="InstructionExecution\Instructions\INC r  + DEC r   .cs">
       <AutoGen>True</AutoGen>

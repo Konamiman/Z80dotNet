@@ -272,14 +272,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files and include them in the table when they are implemented.
 
         /// <summary>
-        /// The JR d instruction.
-        /// </summary>
-        byte JR_d()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The RRA instruction.
         /// </summary>
         byte RRA()
