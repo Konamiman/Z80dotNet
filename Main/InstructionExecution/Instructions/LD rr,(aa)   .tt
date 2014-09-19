@@ -17,14 +17,14 @@ namespace Konamiman.Z80dotNet
     {
 <# foreach(var reg in new[] {"HL","DE","BC","SP","IX","IY"}) { #>
         /// <summary>
-        /// The LD (aa),<#=reg#> instruction.
+        /// The LD <#=reg#>,(aa) instruction.
         /// </summary>
-        byte LD_aa_<#=reg#>()
+        byte LD_<#=reg#>_aa()
         {
 			var address = FetchWord().ToUShort();
 		    FetchFinished();
 
-			WriteShortToMemory(address, <#=Register(reg)#>);
+			<#=Register(reg)#> = ReadShortFromMemory(address);
 
             return <#=reg=="HL" ? 16 : 20#>;
         }

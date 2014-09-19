@@ -110,14 +110,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The LD IX,(nn) instruction.
-        /// </summary>
-        byte LD_IX_aa()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The INC (IX+d) instruction.
         /// </summary>
         byte INC_aIX_plus_n()

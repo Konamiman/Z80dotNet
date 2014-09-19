@@ -162,14 +162,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The LD BC,(nn) instruction.
-        /// </summary>
-        byte LD_BC_aa()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The LD R,A instruction.
         /// </summary>
         byte LD_R_A()
@@ -229,14 +221,6 @@ namespace Konamiman.Z80dotNet
         /// The ADC HL,DE instruction.
         /// </summary>
         byte ADC_HL_DE()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD DE,(nn) instruction.
-        /// </summary>
-        byte LD_DE_aa()
         {
             throw new NotImplementedException();
         }
@@ -356,14 +340,6 @@ namespace Konamiman.Z80dotNet
         /// The ADC HL,SP instruction.
         /// </summary>
         byte ADC_HL_SP()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD SP,(nn) instruction.
-        /// </summary>
-        byte LD_SP_aa()
         {
             throw new NotImplementedException();
         }

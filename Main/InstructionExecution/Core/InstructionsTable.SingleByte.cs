@@ -280,14 +280,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The LD HL,(nn) instruction.
-        /// </summary>
-        byte LD_HL_aa()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The CPL instruction.
         /// </summary>
         byte CPL()

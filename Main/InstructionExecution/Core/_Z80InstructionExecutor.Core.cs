@@ -122,7 +122,14 @@ namespace Konamiman.Z80dotNet
         private void WriteShortToMemory(ushort address, short value)
         {
             ProcessorAgent.WriteToMemory(address, value.GetLowByte());
-            ProcessorAgent.WriteToMemory((ushort)(address + 1), value.GetHighByte());
+            ProcessorAgent.WriteToMemory(address.Inc(), value.GetHighByte());
+        }
+
+        private short ReadShortFromMemory(ushort address)
+        {
+            return NumberUtils.CreateShort(
+                ProcessorAgent.ReadFromMemory(address),
+                ProcessorAgent.ReadFromMemory(address.Inc()));
         }
 
         #endregion

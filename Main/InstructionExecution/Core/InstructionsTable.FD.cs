@@ -110,14 +110,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The LD IY,(nn) instruction.
-        /// </summary>
-        byte LD_IY_aa()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The INC (IY+d) instruction.
         /// </summary>
         byte INC_aIY_plus_n()
