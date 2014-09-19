@@ -378,5 +378,25 @@ namespace Konamiman.Z80dotNet.Tests
             Assert.AreEqual(0x7FF0, ((ushort)0x8000).AddSignedByte(0xF0));
             Assert.AreEqual(0x7F80, ((ushort)0x8000).AddSignedByte(0x80));
         }
+
+        [Test]
+        public void ToByteArray_works_for_shorts()
+        {
+            short value = 0x1234;
+
+            var actual = value.ToByteArray();
+
+            Assert.AreEqual(new byte[] {0x34, 0x12}, actual);
+        }
+
+        [Test]
+        public void ToByteArray_works_for_ushorts()
+        {
+            ushort value = 0x1234;
+
+            var actual = value.ToByteArray();
+
+            Assert.AreEqual(new byte[] {0x34, 0x12}, actual);
+        }
     }
 }

@@ -77,6 +77,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>JR cc         .tt</DependentUpon>
     </Compile>
+    <Compile Include="InstructionExecution\Instructions\LD %28aa%29,rr   .cs">
+      <DependentUpon>LD %28aa%29,rr   .tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="InstructionExecution\Instructions\RLA           .cs" />
     <Compile Include="InstructionExecution\Instructions\RRA           .cs" />
     <Compile Include="InstructionExecution\Instructions\INC r  + DEC r   .cs">
@@ -151,6 +156,10 @@
     <None Include="InstructionExecution\Instructions\INC rr + DEC rr  .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>INC rr + DEC rr  .cs</LastGenOutput>
+    </None>
+    <None Include="InstructionExecution\Instructions\LD %28aa%29,rr   .tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LD %28aa%29,rr   .cs</LastGenOutput>
     </None>
     <None Include="InstructionExecution\Instructions\LD r,%28rr%29    .tt">
       <Generator>TextTemplatingFileGenerator</Generator>

@@ -160,6 +160,17 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             }
         }
 
+        protected void WriteShortToMemory(ushort address, short value)
+        {
+            ProcessorAgent.Memory[address] = value.GetLowByte();
+            ProcessorAgent.Memory[address + 1] = value.GetHighByte();
+        }
+
+        protected short ReadShortFromMemory(ushort address)
+        {
+            return NumberUtils.CreateShort(ProcessorAgent.Memory[address], ProcessorAgent.Memory[address + 1]);
+        }
+
         #endregion
 
         #region Fake classes

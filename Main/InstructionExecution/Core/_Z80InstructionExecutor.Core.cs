@@ -119,6 +119,12 @@ namespace Konamiman.Z80dotNet
                 highByte: ProcessorAgent.FetchNextOpcode());
         }
 
+        private void WriteShortToMemory(ushort address, short value)
+        {
+            ProcessorAgent.WriteToMemory(address, value.GetLowByte());
+            ProcessorAgent.WriteToMemory((ushort)(address + 1), value.GetHighByte());
+        }
+
         #endregion
     }
 }
