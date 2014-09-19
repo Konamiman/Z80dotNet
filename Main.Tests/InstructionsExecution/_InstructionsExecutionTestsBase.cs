@@ -126,21 +126,31 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Assert.AreEqual(value, Registers.F);
         }
 
+        protected void AssertSetsFlags(byte opcode, byte? prefix = null, params string[] flagNames)
+        {
+            AssertSetsOrResetsFlags(opcode, 1, prefix, flagNames);
+        }
+
         protected void AssertResetsFlags(byte opcode, byte? prefix = null, params string[] flagNames)
+        {
+            AssertSetsOrResetsFlags(opcode, 0, prefix, flagNames);
+        }
+
+        protected void AssertSetsOrResetsFlags(byte opcode, Bit expected, byte? prefix = null, params string[] flagNames)
         {
             var randomValues = Fixture.Create<byte[]>();
 
             foreach (var value in randomValues)
             {
                 foreach (var flag in flagNames)
-                    SetFlag(flag, 1);
+                    SetFlag(flag, !expected);
 
                 Registers.A = value;
 
                 Execute(opcode, prefix);
 
                 foreach (var flag in flagNames)
-                    Assert.AreEqual(0, GetFlag(flag));
+                    Assert.AreEqual(expected, GetFlag(flag));
             }
         }
 

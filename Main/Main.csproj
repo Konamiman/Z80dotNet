@@ -71,6 +71,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>JR cc         1.cs</LastGenOutput>
     </None>
+    <Compile Include="InstructionExecution\Instructions\CPL             .cs" />
     <Compile Include="InstructionExecution\Instructions\JR               .cs" />
     <Compile Include="InstructionExecution\Instructions\JR cc         1.cs">
       <AutoGen>True</AutoGen>

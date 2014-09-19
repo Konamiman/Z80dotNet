@@ -69,6 +69,7 @@
     <Compile Include="InstructionsExecution\ADD rr,rr     .Tests.cs" />
     <Compile Include="InstructionsExecution\RLA             .Tests.cs" />
     <Compile Include="InstructionsExecution\RLCA           .Tests.cs" />
+    <Compile Include="InstructionsExecution\CPL              .Tests.cs" />
     <Compile Include="InstructionsExecution\RRA             .Tests.cs" />
     <Compile Include="InstructionsExecution\RRCA           .Tests.cs" />
     <Compile Include="InstructionsExecution\_InstructionsExecutionTestsBase.cs" />
