@@ -53,7 +53,7 @@
     <Compile Include="ClockSynchronizationHelperTests.cs" />
     <Compile Include="HelloWorld.cs" />
     <Compile Include="InstructionsExecution\DEC r          .Tests.cs" />
-    <Compile Include="InstructionsExecution\DJNZ       .Tests.cs" />
+    <Compile Include="InstructionsExecution\DJNZ           .Tests.cs" />
     <Compile Include="InstructionsExecution\EX AF,AF%27    .Tests.cs" />
     <Compile Include="InstructionsExecution\INC r           .Tests.cs" />
     <Compile Include="InstructionsExecution\DEC rr         .Tests.cs" />
@@ -63,6 +63,7 @@
     <Compile Include="InstructionsExecution\LD r,%28rr%29       .Tests.cs" />
     <Compile Include="InstructionsExecution\LD r,n          .Tests.cs" />
     <Compile Include="InstructionsExecution\ADD rr,rr     .Tests.cs" />
+    <Compile Include="InstructionsExecution\RLA             .Tests.cs" />
     <Compile Include="InstructionsExecution\RLCA           .Tests.cs" />
     <Compile Include="InstructionsExecution\RRCA           .Tests.cs" />
     <Compile Include="InstructionsExecution\_InstructionsExecutionTestsBase.cs" />
