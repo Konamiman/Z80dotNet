@@ -64,11 +64,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [Test]
         public void DJNZ_does_not_modify_flags()
         {
-            var value = Fixture.Create<byte>();
-            Registers.F = value;
-            Execute(DJNZ_opcode);
-
-            Assert.AreEqual(value, Registers.F);
+            AssertNoFlagsAreModified(DJNZ_opcode);
         }
     }
 }

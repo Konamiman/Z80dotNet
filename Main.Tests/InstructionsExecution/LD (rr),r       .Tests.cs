@@ -43,11 +43,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [TestCaseSource("LD_rr_r_Source")]
         public void LD_rr_r_do_not_modify_flags(string destPointerReg, string srcReg, byte opcode)
         {
-            var value = Fixture.Create<byte>();
-            Registers.F = value;
-            Execute(opcode);
-
-            Assert.AreEqual(value, Registers.F);
+            AssertNoFlagsAreModified(opcode);
         }
 
         [Test]

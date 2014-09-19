@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
 using Ploeh.AutoFixture;
@@ -62,6 +63,11 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             return (T)RegProperty(name).GetValue(Registers, null); 
         }
 
+        protected Bit GetFlag(string name)
+        {
+            return (Bit)RegProperty(name + "F").GetValue(Registers, null); 
+        }
+
         protected void SetReg(string regName, byte value)
         {
             RegProperty(regName).SetValue(Registers, value, null);
@@ -72,10 +78,14 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             RegProperty(regName).SetValue(Registers, value, null);
         }
 
+        protected void SetFlag(string flagName, Bit value)
+        {
+            RegProperty(flagName + "F").SetValue(Registers, value, null);
+        }
+
         protected PropertyInfo RegProperty(string name)
         {
-            return
-                typeof(Z80Registers).GetProperty(name);
+            return typeof(Z80Registers).GetProperty(name);
         }
 
         protected int Execute(byte opcode, byte? prefix = null, params byte[] nextFetches)
@@ -105,6 +115,49 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         protected object IfIndexRegister(string regName, object value, object @else)
         {
             return regName.StartsWith("IX") || regName.StartsWith("IY") ? value : @else;
+        }
+
+        protected void AssertNoFlagsAreModified(byte opcode, byte? prefix = null)
+        {
+            var value = Fixture.Create<byte>();
+            Registers.F = value;
+            Execute(opcode, prefix);
+
+            Assert.AreEqual(value, Registers.F);
+        }
+
+        protected void AssertResetsFlags(byte opcode, byte? prefix = null, params string[] flagNames)
+        {
+            var randomValues = Fixture.Create<byte[]>();
+
+            foreach (var value in randomValues)
+            {
+                foreach (var flag in flagNames)
+                    SetFlag(flag, 1);
+
+                Registers.A = value;
+
+                Execute(opcode, prefix);
+
+                foreach (var flag in flagNames)
+                    Assert.AreEqual(0, GetFlag(flag));
+            }
+        }
+
+        protected void AssertDoesNotChangeFlags(byte opcode, byte? prefix = null, params string[] flagNames)
+        {
+            var randomFlags = flagNames.ToDictionary(keySelector: x => x, elementSelector: x => Fixture.Create<Bit>());
+
+            foreach(var flag in flagNames)
+                SetFlag(flag, randomFlags[flag]);
+
+            for(var i = 0; i <= Fixture.Create<byte>(); i++)
+            {
+                Execute(opcode, prefix);
+
+                foreach(var flag in flagNames)
+                    Assert.AreEqual(randomFlags[flag], GetFlag(flag));
+            }
         }
 
         #endregion

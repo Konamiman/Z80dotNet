@@ -41,41 +41,13 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [Test]
         public void RRCA_resets_H_and_N()
         {
-            var randomValues = Fixture.Create<byte[]>();
-
-            foreach (var value in randomValues)
-            {
-                Registers.HF = 1;
-                Registers.NF = 1;
-                Registers.A = value;
-
-                Execute(RRCA_opcode);
-
-                Assert.AreEqual(0, Registers.HF);
-                Assert.AreEqual(0, Registers.NF);
-            }
+            AssertResetsFlags(RRCA_opcode, null, "H", "N");
         }
 
         [Test]
         public void RRCA_does_not_change_SF_ZF_PF()
         {
-            var randomValues = Fixture.Create<byte[]>();
-            var randomSF = Fixture.Create<Bit>();
-            var randomZF = Fixture.Create<Bit>();
-            var randomPF = Fixture.Create<Bit>();
-
-            Registers.SF = randomSF;
-            Registers.ZF = randomZF;
-            Registers.PF = randomPF;
-
-            foreach (var value in randomValues)
-            {
-                Execute(RRCA_opcode);
-
-                Assert.AreEqual(randomSF, Registers.SF);
-                Assert.AreEqual(randomZF, Registers.ZF);
-                Assert.AreEqual(randomPF, Registers.PF);
-            }
+            AssertDoesNotChangeFlags(RRCA_opcode, null, "S", "Z", "P");
         }
 
         [Test]

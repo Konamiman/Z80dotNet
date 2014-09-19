@@ -38,11 +38,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [TestCaseSource("LD_r_n_Source")]
         public void LD_r_n_do_not_modify_flags(string reg, byte opcode, byte? prefix)
         {
-            var value = Fixture.Create<byte>();
-            Registers.F = value;
-            Execute(opcode, prefix);
-
-            Assert.AreEqual(value, Registers.F);
+            AssertNoFlagsAreModified(opcode, prefix);
         }
 
         [Test]

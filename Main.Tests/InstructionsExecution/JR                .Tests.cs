@@ -30,11 +30,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [Test]
         public void JR_does_not_modify_flags()
         {
-            var value = Fixture.Create<byte>();
-            Registers.F = value;
-            Execute(JR_opcode);
-
-            Assert.AreEqual(value, Registers.F);
+            AssertNoFlagsAreModified(JR_opcode);
         }
     }
 }

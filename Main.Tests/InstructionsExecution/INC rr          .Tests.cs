@@ -28,11 +28,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [TestCaseSource("INC_rr_Source")]
         public void INC_rr_do_not_modify_flags(string reg, byte opcode, byte? prefix)
         {
-            var value = Fixture.Create<byte>();
-            Registers.F = value;
-            Execute(opcode, prefix);
-
-            Assert.AreEqual(value, Registers.F);
+            AssertNoFlagsAreModified(opcode, prefix);
         }
 
         [Test]

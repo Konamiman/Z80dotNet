@@ -64,17 +64,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [TestCaseSource("ADD_rr_rr_Source_same_src_and_dest")]
         public void ADD_rr_rr_resets_N(string dest, string src, byte opcode, byte? prefix)
         {
-            var randomValues = Fixture.Create<short[]>();
-
-            foreach(var value in randomValues)
-            {
-                SetReg(src, value);
-                Registers.NF = 1;
-
-                Execute(opcode, prefix);
-
-                Assert.AreEqual(0, Registers.NF);
-            }
+            AssertResetsFlags(opcode, prefix, "N");
         }
 
         [Test]

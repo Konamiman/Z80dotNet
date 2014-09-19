@@ -112,16 +112,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [TestCaseSource("INC_r_Source")]
         public void INC_r_resets_NF(string reg, byte opcode, byte? prefix)
         {
-            var randomValues = Fixture.Create<byte[]>();
-
-            foreach (var value in randomValues)
-            {
-                SetReg(reg, value);
-                Registers.NF = 1;
-
-                Execute(opcode, prefix);
-                Assert.AreEqual(0, Registers.NF);
-            }
+            AssertResetsFlags(opcode, prefix, "N");
         }
 
         [Test]
