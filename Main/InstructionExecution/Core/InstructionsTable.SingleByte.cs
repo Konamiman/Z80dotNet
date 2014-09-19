@@ -272,14 +272,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files and include them in the table when they are implemented.
 
         /// <summary>
-        /// The DJNZ d instruction.
-        /// </summary>
-        byte DJNZ_d()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The RLA instruction.
         /// </summary>
         byte RLA()

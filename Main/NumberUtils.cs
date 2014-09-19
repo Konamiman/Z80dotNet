@@ -207,7 +207,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// Decreases a number and turns it into max value if it passes under its minimum value.
         /// </summary>
-        /// <param name="value">Number to increase</param>
+        /// <param name="value">Number to decrease</param>
         /// <returns>Increased number, or zero</returns>
         public static short Dec(this short value)
         {
@@ -225,9 +225,19 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// Substract a value to a number and overlaps it from its max value if it passes below its minimum value.
+        /// Adds a value to a number and overlaps it from zero if it passes its maximum value.
         /// </summary>
         /// <param name="value">Number to increase</param>
+        /// <returns>Increased number, or zero</returns>
+        public static ushort Add(this ushort value, ushort amount)
+        {
+            return ((((int)value)+amount) & 0xFFFF).ToUShort();
+        }
+
+        /// <summary>
+        /// Substract a value to a number and overlaps it from its max value if it passes below its minimum value.
+        /// </summary>
+        /// <param name="value">Number to decrease</param>
         /// <returns>Increased number, or zero</returns>
         public static short Sub(this short value, short amount)
         {
@@ -237,7 +247,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// Substract a value to a number and overlaps it from its max value if it passes below its minimum value.
         /// </summary>
-        /// <param name="value">Number to increase</param>
+        /// <param name="value">Number to decrease</param>
         /// <returns>Increased number, or zero</returns>
         public static ushort Sub(this ushort value, ushort amount)
         {
@@ -257,7 +267,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// Decreases a number and turns it into max value if it passes under its minimum value.
         /// </summary>
-        /// <param name="value">Number to increase</param>
+        /// <param name="value">Number to decrease</param>
         /// <returns>Increased number, or zero</returns>
         public static byte Dec(this byte value)
         {
@@ -278,7 +288,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// Substract a value to a number and overlaps it from its max value if it passes below its minimum value.
         /// </summary>
-        /// <param name="value">Number to increase</param>
+        /// <param name="value">Number to decrease</param>
         /// <returns>Increased number, or zero</returns>
         public static short Sub(this byte value, byte amount)
         {
@@ -305,6 +315,17 @@ namespace Konamiman.Z80dotNet
         public static bool Between(this byte value, byte fromInclusive, byte toInclusive)
         {
             return value >= fromInclusive && value <= toInclusive;
+        }
+
+        /// <summary>
+        /// Adds a byte interpreted as a signed value.
+        /// </summary>
+        /// <param name="value">Number to increase or decrease</param>
+        /// <param name="amount">Amount to be added or substracted</param>
+        /// <returns>Updated value</returns>
+        public static ushort AddSignedByte(this ushort value, byte amount)
+        {
+            return amount < 0x80 ? value.Add(amount) : value.Sub((ushort)(256 - amount));
         }
     }
 }

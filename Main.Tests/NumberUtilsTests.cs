@@ -256,6 +256,18 @@ namespace Konamiman.Z80dotNet.Tests
         }
 
         [Test]
+        public void Add_ushort_works_for_boundary_values()
+        {
+            Assert.AreEqual(1, 0xFFFE.ToUShort().Add(3));
+        }
+
+        [Test]
+        public void Add_ushort_works_for_non_boundary_values()
+        {
+            Assert.AreEqual(5, ((ushort)2).Add(3));
+        }
+
+        [Test]
         public void Add_short_works_for_boundary_values()
         {
             Assert.AreEqual(1, 0xFFFE.ToShort().Add(3));
@@ -351,6 +363,20 @@ namespace Konamiman.Z80dotNet.Tests
             Assert.True(value.Between(0x7F, 0xFF));
             Assert.True(value.Between(0x80, 0xFF));
             Assert.False(value.Between(0x81, 0xFF));
+        }
+
+        [Test]
+        public void AddSignedByte_works_for_positive_values()
+        {
+            Assert.AreEqual(0x8010, ((ushort)0x8000).AddSignedByte(0x10));
+            Assert.AreEqual(0x807F, ((ushort)0x8000).AddSignedByte(0x7F));
+        }
+
+        [Test]
+        public void AddSignedByte_works_for_negative_values()
+        {
+            Assert.AreEqual(0x7FF0, ((ushort)0x8000).AddSignedByte(0xF0));
+            Assert.AreEqual(0x7F80, ((ushort)0x8000).AddSignedByte(0x80));
         }
     }
 }

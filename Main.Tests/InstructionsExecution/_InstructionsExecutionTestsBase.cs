@@ -27,17 +27,24 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         #region Auxiliary methods
 
         protected int nextFetchesLength;
+        protected int nextFetchesAddress;
 
         protected void SetMemoryContents(params byte[] opcodes)
         {
-			Array.Copy(opcodes, ProcessorAgent.Memory, opcodes.Length);
-		    Registers.PC = 0;
+            SetMemoryContentsAt(0, opcodes);
+        }
+        
+        protected void SetMemoryContentsAt(ushort address, params byte[] opcodes)
+        {
+            Array.Copy(opcodes, 0, ProcessorAgent.Memory, address, opcodes.Length);
+            nextFetchesAddress = address + opcodes.Length;
             nextFetchesLength = opcodes.Length;
         }
 
         protected void ContinueSettingMemoryContents(params byte[] opcodes)
         {
-			Array.Copy(opcodes, 0, ProcessorAgent.Memory, nextFetchesLength, opcodes.Length);
+			Array.Copy(opcodes, 0, ProcessorAgent.Memory, nextFetchesAddress, opcodes.Length);
+            nextFetchesAddress += opcodes.Length;
             nextFetchesLength += opcodes.Length;
         }
 
@@ -73,14 +80,21 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
         protected int Execute(byte opcode, byte? prefix = null, params byte[] nextFetches)
         {
+            return ExecuteAt(0, opcode, prefix, nextFetches);
+
+        }
+
+        protected int ExecuteAt(ushort address, byte opcode, byte? prefix = null, params byte[] nextFetches)
+        {
+            Registers.PC = address.Inc();   //Inc needed to simulate the first fetch made by the enclosing IZ80Processor
             if (prefix == null)
             {
-                SetMemoryContents(nextFetches);
+                SetMemoryContentsAt(address.Inc(), nextFetches);
                 return Sut.Execute(opcode);
             }
             else
             {
-                SetMemoryContents(opcode);
+                SetMemoryContentsAt(address.Inc(), opcode);
                 ContinueSettingMemoryContents(nextFetches);
 
                 return Sut.Execute(prefix.Value);
