@@ -272,14 +272,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files and include them in the table when they are implemented.
 
         /// <summary>
-        /// The DAA instruction.
-        /// </summary>
-        byte DAA()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The LD (nn),A instruction.
         /// </summary>
         byte LD_aa_A()

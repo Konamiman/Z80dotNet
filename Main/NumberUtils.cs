@@ -286,6 +286,16 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
+        /// Adds a value to a number and overlaps it from zero if it passes its maximum value.
+        /// </summary>
+        /// <param name="value">Number to increase</param>
+        /// <returns>Increased number, or zero</returns>
+        public static short Add(this byte value, int amount)
+        {
+            return ((((int)value)+amount) & 0xFF).ToShort();
+        }
+
+        /// <summary>
         /// Substract a value to a number and overlaps it from its max value if it passes below its minimum value.
         /// </summary>
         /// <param name="value">Number to decrease</param>
