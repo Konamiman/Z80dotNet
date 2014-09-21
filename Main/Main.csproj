@@ -80,6 +80,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>JR cc         .tt</DependentUpon>
     </Compile>
+    <Compile Include="InstructionExecution\Instructions\LD A,%28aa%29       .cs" />
     <Compile Include="InstructionExecution\Instructions\LD %28aa%29,A       .cs" />
     <Compile Include="InstructionExecution\Instructions\LD rr,%28aa%29   .cs">
       <DependentUpon>LD rr,%28aa%29   .tt</DependentUpon>

@@ -3,14 +3,14 @@
     public partial class Z80InstructionExecutor
     {
         /// <summary>
-        /// The LD (nn),A instruction.
+        /// The LD A,(nn) instruction.
         /// </summary>
-        private byte LD_aa_A()
+        private byte LD_A_aa()
         {
             var address = FetchWord().ToUShort();
             FetchFinished();
 
-            ProcessorAgent.WriteToMemory(address, Registers.A);
+            Registers.A = ProcessorAgent.ReadFromMemory(address);
 
             return 13;
         }

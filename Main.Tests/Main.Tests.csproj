@@ -60,6 +60,7 @@
     <Compile Include="InstructionsExecution\INC r           .Tests.cs" />
     <Compile Include="InstructionsExecution\DEC rr         .Tests.cs" />
     <Compile Include="InstructionsExecution\INC rr          .Tests.cs" />
+    <Compile Include="InstructionsExecution\LD A,%28aa%29     .Tests.cs" />
     <Compile Include="InstructionsExecution\LD %28aa%29,A     .Tests.cs" />
     <Compile Include="InstructionsExecution\LD rr,%28aa%29     .Tests.cs" />
     <Compile Include="InstructionsExecution\LD %28rr%29,r       .Tests.cs" />

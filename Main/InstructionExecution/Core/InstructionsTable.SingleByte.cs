@@ -304,14 +304,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The LD A,(nn) instruction.
-        /// </summary>
-        byte LD_A_aa()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The CCF instruction.
         /// </summary>
         byte CCF()
