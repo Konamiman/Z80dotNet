@@ -117,7 +117,7 @@ namespace Konamiman.Z80dotNet
             }
             set
             {
-                F = F.SetBit(0, value);
+                F = F.WithBit(0, value);
             }
         }
 
@@ -129,7 +129,7 @@ namespace Konamiman.Z80dotNet
             }
             set
             {
-                F = F.SetBit(1, value);
+                F = F.WithBit(1, value);
             }
         }
 
@@ -141,7 +141,7 @@ namespace Konamiman.Z80dotNet
             }
             set
             {
-                F = F.SetBit(2, value);
+                F = F.WithBit(2, value);
             }
         }
 
@@ -153,7 +153,7 @@ namespace Konamiman.Z80dotNet
             }
             set
             {
-                F = F.SetBit(3, value);
+                F = F.WithBit(3, value);
             }
         }
 
@@ -165,7 +165,7 @@ namespace Konamiman.Z80dotNet
             }
             set
             {
-                F = F.SetBit(4, value);
+                F = F.WithBit(4, value);
             }
         }
 
@@ -177,7 +177,7 @@ namespace Konamiman.Z80dotNet
             }
             set
             {
-                F = F.SetBit(5, value);
+                F = F.WithBit(5, value);
             }
         }
 
@@ -189,7 +189,7 @@ namespace Konamiman.Z80dotNet
             }
             set
             {
-                F = F.SetBit(6, value);
+                F = F.WithBit(6, value);
             }
         }
 
@@ -201,7 +201,7 @@ namespace Konamiman.Z80dotNet
             }
             set
             {
-                F = F.SetBit(7, value);
+                F = F.WithBit(7, value);
             }
         }
     }

@@ -139,42 +139,42 @@ namespace Konamiman.Z80dotNet.Tests
         public void SetBit_works_for_lsb()
         {
             byte lsb0 = 0xFF;
-            Assert.AreEqual(0xFE, lsb0.SetBit(0, 0));
+            Assert.AreEqual(0xFE, lsb0.WithBit(0, 0));
 
             byte lsb1 = 0x00;
-            Assert.AreEqual(0x01, lsb1.SetBit(0, 1));
+            Assert.AreEqual(0x01, lsb1.WithBit(0, 1));
         }
 
         [Test]
         public void SetBit_works_for_msb()
         {
             byte msb0 = 0xFF;
-            Assert.AreEqual(0x7F, msb0.SetBit(7, 0));
+            Assert.AreEqual(0x7F, msb0.WithBit(7, 0));
 
             byte msb1 = 0x00;
-            Assert.AreEqual(0x80, msb1.SetBit(7, 1));
+            Assert.AreEqual(0x80, msb1.WithBit(7, 1));
         }
 
         [Test]
         public void SetBit_works_for_middle_bit()
         {
             byte bit4reset = 0xFF;
-            Assert.AreEqual(0xEF, bit4reset.SetBit(4, 0));
+            Assert.AreEqual(0xEF, bit4reset.WithBit(4, 0));
 
             byte bit4set = 0x00;
-            Assert.AreEqual(0x10, bit4set.SetBit(4, 1));
+            Assert.AreEqual(0x10, bit4set.WithBit(4, 1));
         }
 
         [Test]
         public void SetBit_fails_for_negative_bit_number()
         {
-            Assert.Throws<InvalidOperationException>(() => ((byte)0).SetBit(-1, 0));
+            Assert.Throws<InvalidOperationException>(() => ((byte)0).WithBit(-1, 0));
         }
 
         [Test]
         public void SetBit_fails_for_bit_number_over_7()
         {
-            Assert.Throws<InvalidOperationException>(() => ((byte)0).SetBit(8, 0));
+            Assert.Throws<InvalidOperationException>(() => ((byte)0).WithBit(8, 0));
         }
 
         [Test]

@@ -296,14 +296,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The SCF instruction.
-        /// </summary>
-        byte SCF()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The CCF instruction.
         /// </summary>
         byte CCF()

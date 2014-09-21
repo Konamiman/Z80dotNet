@@ -122,14 +122,14 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// Sets the value of a certain bit in a byte.
+        /// Retuens a copy of the value that has a certain bit set or reset.
         /// The rightmost bit has position 0, the leftmost bit has position 7.
         /// </summary>
         /// <param name="number">The original number</param>
         /// <param name="bitPosition">The bit position to modify</param>
         /// <param name="value">The bit value</param>
         /// <returns>The original number with the bit appropriately modified</returns>
-        public static byte SetBit(this byte number, int bitPosition, Bit value)
+        public static byte WithBit(this byte number, int bitPosition, Bit value)
         {
             if(bitPosition < 0 || bitPosition > 7)
                 throw new InvalidOperationException("bit position must be between 0 and 7");

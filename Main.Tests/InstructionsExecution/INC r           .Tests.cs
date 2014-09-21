@@ -139,12 +139,12 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [TestCaseSource("INC_r_Source")]
         public void INC_r_sets_bits_3_and_5_from_result(string reg, byte opcode, byte? prefix)
         {
-            SetReg(reg, ((byte)0).SetBit(3, 1).SetBit(5, 0));
+            SetReg(reg, ((byte)0).WithBit(3, 1).WithBit(5, 0));
             Execute(opcode, prefix);
             Assert.AreEqual(1, Registers.Flag3);
             Assert.AreEqual(0, Registers.Flag5);
 
-            SetReg(reg, ((byte)0).SetBit(3, 0).SetBit(5, 1));
+            SetReg(reg, ((byte)0).WithBit(3, 0).WithBit(5, 1));
             Execute(opcode, prefix);
             Assert.AreEqual(0, Registers.Flag3);
             Assert.AreEqual(1, Registers.Flag5);

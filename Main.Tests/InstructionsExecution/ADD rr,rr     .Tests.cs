@@ -114,13 +114,13 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [TestCaseSource("ADD_rr_rr_Source")]
         public void ADD_rr_rr_sets_bits_3_and_5_from_high_byte_of_result(string dest, string src, byte opcode, byte? prefix)
         {
-            SetReg(dest, NumberUtils.CreateShort(0, ((byte)0).SetBit(3, 1).SetBit(5, 0)));
+            SetReg(dest, NumberUtils.CreateShort(0, ((byte)0).WithBit(3, 1).WithBit(5, 0)));
             SetReg(src, 0);
             Execute(opcode, prefix);
             Assert.AreEqual(1, Registers.Flag3);
             Assert.AreEqual(0, Registers.Flag5);
 
-            SetReg(dest, NumberUtils.CreateShort(0, ((byte)0).SetBit(3, 0).SetBit(5, 1)));
+            SetReg(dest, NumberUtils.CreateShort(0, ((byte)0).WithBit(3, 0).WithBit(5, 1)));
             Execute(opcode, prefix);
             Assert.AreEqual(0, Registers.Flag3);
             Assert.AreEqual(1, Registers.Flag5);
