@@ -21,10 +21,12 @@ namespace Konamiman.Z80dotNet
             if(Registers.HF || (Registers.A & 0x0F) > 9) temp = (byte)temp.Add(Registers.NF ? 0xFA : 0x06);
             if(Registers.CF || Registers.A > 0x99) temp = (byte)temp.Add(Registers.NF ? 0xA0 : 0x60);
 
-            Registers.F = (byte)((Registers.F & CF_NF) | (Registers.A > 0x99 ? 1 : 0) | ((Registers.A ^ temp) & 0x0F));
+            Registers.F = (byte)((Registers.F & CF_NF) | (Registers.A > 0x99 ? 1 : 0) | ((Registers.A ^ temp) & 0x0F) | (temp & 0x80));
             Registers.A = temp;
 
-            //TODO: Sign, Parity, Zero flags
+            Registers.Flag3 = temp.GetBit(3);
+			Registers.Flag5 = temp.GetBit(5);
+            Registers.PF = Parity[temp];
 
             return 4;
         }

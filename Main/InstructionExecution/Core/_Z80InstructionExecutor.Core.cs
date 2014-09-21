@@ -20,6 +20,7 @@ namespace Konamiman.Z80dotNet
             Initialize_FD_InstructionsTable();
             Initialize_FDCB_InstructionsTable();
             Initialize_SingleByte_InstructionsTable();
+            GenerateParityTable();
         }
 
         public int Execute(byte firstOpcodeByte)

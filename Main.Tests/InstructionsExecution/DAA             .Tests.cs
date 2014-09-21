@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.IO.Ports;
+using NUnit.Framework;
 using Ploeh.AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
@@ -64,7 +65,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
        
         [Test]
         [TestCaseSource("DAA_cases_Source")]
-        public void RRA_returns_proper_T_states(int inputNF, int inputCF, int inputHF, int inputA, int addedValue, int outputC)
+        public void DAA_returns_proper_T_states(int inputNF, int inputCF, int inputHF, int inputA, int addedValue, int outputC)
         {
             Setup(inputNF, inputCF, inputHF, inputA);
 
@@ -83,6 +84,60 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 Setup(flagN, flagC, flagH, valueOfA);
                 Execute(DAA_opcode);
             }
+        }
+
+        [Test]
+        [TestCaseSource("DAA_cases_Source")]
+        public void DAA_generates_PF_properly(int inputNF, int inputCF, int inputHF, int inputA, int addedValue, int outputC)
+        {
+            Setup(inputNF, inputCF, inputHF, inputA);
+
+            Execute(DAA_opcode);
+
+            Assert.AreEqual(Parity[Registers.A], Registers.PF);
+        }
+
+        [Test]
+        [TestCaseSource("DAA_cases_Source")]
+        public void DAA_generates_SF_properly(int inputNF, int inputCF, int inputHF, int inputA, int addedValue, int outputC)
+        {
+            Setup(inputNF, inputCF, inputHF, inputA);
+
+            Execute(DAA_opcode);
+
+            Assert.AreEqual(Registers.A.GetBit(7), Registers.SF);
+        }
+
+        [Test]
+        [TestCaseSource("DAA_cases_Source")]
+        public void DAA_generates_ZF_properly(int inputNF, int inputCF, int inputHF, int inputA, int addedValue, int outputC)
+        {
+            Setup(inputNF, inputCF, inputHF, inputA);
+
+            Execute(DAA_opcode);
+
+            Assert.AreEqual(Registers.A == 0 ? 1 : 0, Registers.ZF);
+        }
+
+        [Test]
+        [TestCaseSource("DAA_cases_Source")]
+        public void DAA_does_not_modify_NF(int inputNF, int inputCF, int inputHF, int inputA, int addedValue, int outputC)
+        {
+            Setup(inputNF, inputCF, inputHF, inputA);
+
+            AssertDoesNotChangeFlags(DAA_opcode, null, "N");
+        }
+
+        [Test]
+        [TestCaseSource("DAA_cases_Source")]
+        public void DAA_sets_bits_3_and_5_from_of_result(int inputNF, int inputCF, int inputHF, int inputA, int addedValue, int outputC)
+        {
+            Setup(inputNF, inputCF, inputHF, inputA);
+
+            Execute(DAA_opcode);
+
+            Assert.AreEqual(Registers.Flag3, Registers.A.GetBit(3));
+            Assert.AreEqual(Registers.Flag5, Registers.A.GetBit(5));
         }
 
         private void Setup(int inputNF, int inputCF, int inputHF, int inputA)

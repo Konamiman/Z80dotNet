@@ -62,6 +62,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>INC r  + DEC r   .cs</LastGenOutput>
     </None>
+    <Compile Include="InstructionExecution\Core\ParityTable.cs" />
     <Compile Include="InstructionExecution\Instructions\ADD rr,rr   1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
