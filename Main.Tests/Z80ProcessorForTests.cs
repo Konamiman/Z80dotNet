@@ -12,8 +12,17 @@
             executionContext = null;
         }
 
+        public bool MustFailIfNoInstructionFetchComplete { get; set; }
+
         protected override void FailIfNoInstructionFetchComplete()
         {
+            if(MustFailIfNoInstructionFetchComplete)
+                base.FailIfNoInstructionFetchComplete();
+        }
+
+        public void SetStartOFStack(short value)
+        {
+            StartOfStack = value;
         }
     }
 }

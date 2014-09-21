@@ -35,6 +35,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Assert.IsTrue(Sut.AutoStopOnDiPlusHalt);
             Assert.IsFalse(Sut.AutoStopOnRetWithStackEmpty);
+            Assert.AreEqual(0xFFFF.ToShort(), Sut.StartOfStack);
 
             Assert.IsInstanceOf<PlainMemory>(Sut.Memory);
             Assert.AreEqual(65536, Sut.Memory.Size);

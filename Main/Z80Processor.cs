@@ -23,6 +23,7 @@ namespace Konamiman.Z80dotNet
             
             AutoStopOnDiPlusHalt = true;
             AutoStopOnRetWithStackEmpty = false;
+            StartOfStack = 0xFFFF.ToShort();
 
             SetMemoryWaitStatesForM1(0, MemorySpaceSize, 0);
             SetMemoryWaitStatesForNonM1(0, MemorySpaceSize, 0);
@@ -79,7 +80,6 @@ namespace Konamiman.Z80dotNet
         {
             ClockSynchronizationHelper.Start();
             executionContext = new InstructionExecutionContext();
-            executionContext.StartOfStack = Registers.SP;
             StopReason = StopReason.NotApplicable;
             State = ProcessorState.Running;
             var totalTStates = 0;
@@ -148,12 +148,12 @@ namespace Konamiman.Z80dotNet
         private void CheckForLdSpInstruction()
         {
             if(executionContext.IsLdSpInstruction)
-                executionContext.StartOfStack = Registers.SP;
+                StartOfStack = Registers.SP;
         }
 
         private bool StackIsEmpty()
         {
-            return executionContext.SpAfterInstructionFetch == executionContext.StartOfStack;
+            return executionContext.SpAfterInstructionFetch == StartOfStack;
         }
 
         private bool InterruptsEnabled
@@ -211,6 +211,7 @@ namespace Konamiman.Z80dotNet
             InterruptMode = 0;
 
             TStatesElapsedSinceReset = 0;
+            StartOfStack = Registers.SP;
         }
 
         public int ExecuteNextInstruction()
@@ -259,6 +260,8 @@ namespace Konamiman.Z80dotNet
                 _InterruptMode = value;
             }
         }
+
+        public short StartOfStack { get; protected set; }
 
         #endregion
 

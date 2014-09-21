@@ -180,6 +180,18 @@ namespace Konamiman.Z80dotNet
         /// <exception cref="System.ArgumentException">Attempt to set a value other than 0, 1 or 2</exception>
         byte InterruptMode { get; set; }
 
+        /// <summary>
+        /// The current address where the stack starts. If <see cref="AutoStopOnDiPlusHalt"/> is <b>true</b>,
+        /// execution will stop automatically when a <c>RET</c> instruction is executed with the SP register
+        /// having this value.
+        /// </summary>
+        /// <remarks>
+        /// This property is set to 0xFFFF when the class is first instantiated and when the <see cref="Start"/>
+        /// and <see cref="Reset"/> methods are executed. Also, when a <c>LD SP,x</c> instruction is executed,
+        /// this property is set to the new value of SP.
+        /// </remarks>
+        short StartOfStack { get; }
+
         #endregion
 
         #region Inside and outside world

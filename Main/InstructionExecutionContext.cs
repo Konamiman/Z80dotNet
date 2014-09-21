@@ -48,12 +48,6 @@ namespace Konamiman.Z80dotNet
             set;
         }
 
-        public short StartOfStack
-        {
-            get;
-            set;
-        }
-
         public bool IsRetInstruction
         {
             get;

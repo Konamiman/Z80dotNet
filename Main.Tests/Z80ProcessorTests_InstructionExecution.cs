@@ -14,7 +14,7 @@ namespace Konamiman.Z80dotNet.Tests
         private const byte NOP_opcode = 0x00;
         private const byte LD_SP_HL_opcode = 0xF9;
 
-        Z80Processor Sut { get; set; }
+        Z80ProcessorForTests Sut { get; set; }
         Fixture Fixture { get; set; }
         Mock<IClockSynchronizationHelper> clockSyncHelper;
 
@@ -23,7 +23,7 @@ namespace Konamiman.Z80dotNet.Tests
         {
             Fixture = new Fixture();
 
-            Sut = new Z80Processor();
+            Sut = new Z80ProcessorForTests();
             Sut.AutoStopOnRetWithStackEmpty = true;
             Sut.Memory[0] = RET_opcode;
 
@@ -57,6 +57,20 @@ namespace Konamiman.Z80dotNet.Tests
         }
 
         [Test]
+        public void Start_sets_StartOfStack_to_0xFFFF()
+        {
+            Sut.SetStartOFStack(Fixture.Create<short>());
+
+            Sut.AutoStopOnDiPlusHalt = true;
+            Sut.Memory[0] = DI_opcode;
+            Sut.Memory[1] = HALT_opcode;
+
+            Sut.Start();
+
+            Assert.AreEqual(0xFFFF.ToShort(), Sut.StartOfStack);
+        }
+
+        [Test]
         public void Starts_sets_global_state_if_passed_as_not_null()
         {
             var state = Fixture.Create<object>();
@@ -83,6 +97,7 @@ namespace Konamiman.Z80dotNet.Tests
             var pc = Fixture.Create<ushort>();
             Sut.Registers.PC = pc;
             Sut.Memory[pc] = RET_opcode;
+            Sut.SetStartOFStack(Sut.Registers.SP);
 
             Sut.Continue();
 
@@ -286,6 +301,29 @@ namespace Konamiman.Z80dotNet.Tests
         }
 
         [Test]
+        public void LD_SP_instructions_change_value_of_StartOfStack()
+        {
+            Sut.AutoStopOnRetWithStackEmpty = true;
+
+            Sut.Memory[0] = LD_SP_HL_opcode;
+            Sut.Memory[1] = RET_opcode;
+            Sut.SetStartOFStack(Fixture.Create<short>());
+
+            var spValue = Fixture.Create<short>();
+
+            DoAfterFetch(b => { if(b == LD_SP_HL_opcode) Sut.Registers.SP = spValue; });
+
+            Sut.Start();
+
+            AssertExecuted(LD_SP_HL_opcode, 1);
+            AssertExecuted(RET_opcode, 1);
+
+            Assert.AreEqual(StopReason.RetWithStackEmpty, Sut.StopReason);
+            Assert.AreEqual(ProcessorState.Stopped , Sut.State);
+            Assert.AreEqual(spValue, Sut.StartOfStack);
+        }
+
+        [Test]
         public void Does_not_auto_stops_when_RET_is_found_with_stack_not_equal_to_initial_value_if_AutoStopOnRetWithStackEmpty_is_true()
         {
             Sut.AutoStopOnRetWithStackEmpty = true;
@@ -403,6 +441,8 @@ namespace Konamiman.Z80dotNet.Tests
         {
             var address = Fixture.Create<byte>();
             var value = Fixture.Create<byte>();
+
+            Sut.MustFailIfNoInstructionFetchComplete = true;
 
             DoBeforeFetch(b =>
             {
@@ -577,6 +617,16 @@ namespace Konamiman.Z80dotNet.Tests
             secondRun = true;
             Sut.Reset();
             Sut.Continue();
+        }
+
+        [Test]
+        public void Reset_sets_StartOfStack_to_0xFFFF()
+        {
+            Sut.SetStartOFStack(Fixture.Create<short>());
+
+            Sut.Reset();
+
+            Assert.AreEqual(0xFFFF.ToShort(), Sut.StartOfStack);
         }
 
         [Test]
