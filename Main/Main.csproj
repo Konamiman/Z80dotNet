@@ -59,14 +59,14 @@
       <LastGenOutput>INC r + INC %28HL%29 + DEC r + DEC %28HL%29   .cs</LastGenOutput>
     </None>
     <Compile Include="InstructionExecution\Core\ParityTable.cs" />
-    <None Include="InstructionExecution\Instructions\ADD A,r     .tt">
+    <None Include="InstructionExecution\Instructions\ADD A,r + ADD A,%28HL%29    .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ADD A,r     1.cs</LastGenOutput>
+      <LastGenOutput>ADD A,r + ADD A,%28HL%29    .cs</LastGenOutput>
     </None>
-    <Compile Include="InstructionExecution\Instructions\ADD A,r     1.cs">
+    <Compile Include="InstructionExecution\Instructions\ADD A,r + ADD A,%28HL%29    .cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ADD A,r     .tt</DependentUpon>
+      <DependentUpon>ADD A,r + ADD A,%28HL%29    .tt</DependentUpon>
     </Compile>
     <Compile Include="InstructionExecution\Instructions\ADD rr,rr   1.cs">
       <AutoGen>True</AutoGen>
@@ -217,6 +217,9 @@
   <ItemGroup>
     <None Include="InstructionExecution\Instructions\DEC rr   --see INC rr" />
     <None Include="InstructionExecution\Instructions\DEC r    --see INC r" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="InstructionExecution\Instructions\ADD A,%28HL%29   --see ADD A,r" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
