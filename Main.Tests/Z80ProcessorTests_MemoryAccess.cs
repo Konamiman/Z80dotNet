@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Net.Sockets;
 using Moq;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 using Ploeh.AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests

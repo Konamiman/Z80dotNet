@@ -1,6 +1,4 @@
-﻿using System.IO.Ports;
-using NUnit.Framework;
-using Ploeh.AutoFixture;
+﻿using NUnit.Framework;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
