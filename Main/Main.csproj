@@ -168,6 +168,7 @@
     <Compile Include="InstructionExecution\Core\_Z80InstructionExecutor.Core.cs" />
     <Compile Include="Z80Processor.cs" />
     <Compile Include="Z80Registers.cs" />
+    <None Include="InstructionExecution\Instructions\_Utils.t4" />
   </ItemGroup>
   <ItemGroup>
     <None Include="InstructionExecution\Core\Execute_xD_Instruction.tt">

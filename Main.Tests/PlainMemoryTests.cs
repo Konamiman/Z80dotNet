@@ -5,6 +5,7 @@ using Ploeh.AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests
 {
+    [Explicit]
     public class PlainMemoryTests
     {
         private int MemorySize { get; set; }
