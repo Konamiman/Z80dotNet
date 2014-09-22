@@ -30,7 +30,7 @@ namespace Konamiman.Z80dotNet
             <#=Register(dest)#> = <#=Register(src)#>;
 
 <# } #>
-            return 4;
+            return <#=src.Length==3 || dest.Length==3 ? 8 : 4#>;
         }
 
 <# }} #>

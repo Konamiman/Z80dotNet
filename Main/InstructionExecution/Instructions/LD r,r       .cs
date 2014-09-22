@@ -98,7 +98,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.IXH = Registers.A;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.IXL = Registers.A;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.IYH = Registers.A;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.IYL = Registers.A;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.IXH = Registers.B;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.IXL = Registers.B;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.IYH = Registers.B;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.IYL = Registers.B;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -358,7 +358,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.IXH = Registers.C;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -370,7 +370,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.IXL = Registers.C;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -382,7 +382,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.IYH = Registers.C;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -394,7 +394,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.IYL = Registers.C;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -488,7 +488,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.IXH = Registers.D;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -500,7 +500,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.IXL = Registers.D;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -512,7 +512,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.IYH = Registers.D;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -524,7 +524,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.IYL = Registers.D;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -618,7 +618,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.IXH = Registers.E;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -630,7 +630,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.IXL = Registers.E;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -642,7 +642,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.IYH = Registers.E;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -654,7 +654,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.IYL = Registers.E;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -748,7 +748,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.IXH = Registers.H;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -760,7 +760,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.IXL = Registers.H;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -772,7 +772,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.IYL = Registers.H;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -866,7 +866,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.A = Registers.IXH;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -878,7 +878,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.B = Registers.IXH;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -890,7 +890,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.C = Registers.IXH;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -902,7 +902,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.D = Registers.IXH;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -914,7 +914,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.E = Registers.IXH;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -924,7 +924,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -936,7 +936,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.A = Registers.IXL;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -948,7 +948,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.B = Registers.IXL;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -960,7 +960,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.C = Registers.IXL;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -972,7 +972,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.D = Registers.IXL;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -984,7 +984,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.E = Registers.IXL;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -996,7 +996,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.IXH = Registers.IXL;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -1006,7 +1006,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -1018,7 +1018,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.A = Registers.IYH;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -1030,7 +1030,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.B = Registers.IYH;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -1042,7 +1042,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.C = Registers.IYH;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -1054,7 +1054,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.D = Registers.IYH;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -1066,7 +1066,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.E = Registers.IYH;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -1076,7 +1076,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -1088,7 +1088,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.A = Registers.IYL;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -1100,7 +1100,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.B = Registers.IYL;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -1112,7 +1112,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.C = Registers.IYL;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -1124,7 +1124,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.D = Registers.IYL;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -1136,7 +1136,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.E = Registers.IYL;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -1148,7 +1148,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.IYH = Registers.IYL;
 
-            return 4;
+            return 8;
         }
 
         /// <summary>
@@ -1158,7 +1158,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            return 4;
+            return 8;
         }
 
     }
