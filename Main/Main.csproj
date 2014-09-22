@@ -75,6 +75,7 @@
       <LastGenOutput>JR cc         1.cs</LastGenOutput>
     </None>
     <Compile Include="InstructionExecution\Instructions\CCF           .cs" />
+    <Compile Include="InstructionExecution\Instructions\LD %28HL%29,n    .cs" />
     <Compile Include="InstructionExecution\Instructions\SCF              .cs" />
     <Compile Include="InstructionExecution\Instructions\DAA            .cs" />
     <Compile Include="InstructionExecution\Instructions\CPL             .cs" />

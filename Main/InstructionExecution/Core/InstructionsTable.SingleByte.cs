@@ -272,14 +272,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files and include them in the table when they are implemented.
 
         /// <summary>
-        /// The LD (HL),n instruction.
-        /// </summary>
-        byte LD_aHL_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The LD B,B instruction.
         /// </summary>
         byte LD_B_B()
