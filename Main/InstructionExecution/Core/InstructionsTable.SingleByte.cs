@@ -270,67 +270,11 @@ namespace Konamiman.Z80dotNet
         }
 
         //TODO: Move instructions to their own files and include them in the table when they are implemented.
-        
-        /// <summary>
-        /// The ADD A,B instruction.
-        /// </summary>
-        byte ADD_A_B()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The ADD A,C instruction.
-        /// </summary>
-        byte ADD_A_C()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The ADD A,D instruction.
-        /// </summary>
-        byte ADD_A_D()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The ADD A,E instruction.
-        /// </summary>
-        byte ADD_A_E()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The ADD A,H instruction.
-        /// </summary>
-        byte ADD_A_H()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The ADD A,L instruction.
-        /// </summary>
-        byte ADD_A_L()
-        {
-            throw new NotImplementedException();
-        }
 
         /// <summary>
         /// The ADD A,(HL) instruction.
         /// </summary>
         byte ADD_A_aHL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The ADD A,A instruction.
-        /// </summary>
-        byte ADD_A_A()
         {
             throw new NotImplementedException();
         }

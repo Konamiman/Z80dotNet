@@ -117,7 +117,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
         [Test]
         [TestCaseSource("INC_r_Source")]
-        public void INC_r_does_not_chance_CF(string reg, byte opcode, byte? prefix)
+        public void INC_r_does_not_change_CF(string reg, byte opcode, byte? prefix)
         {
             var randomValues = Fixture.Create<byte[]>();
 
