@@ -13,8 +13,7 @@
             FetchFinished();
 
             Registers.F = (byte)(Registers.F & HF_NF_reset | CF_set);
-            Registers.Flag3 = Registers.A.GetBit(3);
-            Registers.Flag5 = Registers.A.GetBit(5);
+            SetFlags3and5From(Registers.A);
 
             return 4;
         }

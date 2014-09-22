@@ -13,6 +13,7 @@
 
             Registers.HF = 1;
             Registers.NF = 1;
+            SetFlags3and5From(Registers.A);
 
             return 4;
         }

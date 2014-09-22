@@ -24,8 +24,7 @@ namespace Konamiman.Z80dotNet
             Registers.F = (byte)((Registers.F & CF_NF) | (Registers.A > 0x99 ? 1 : 0) | ((Registers.A ^ temp) & 0x0F) | (temp & 0x80));
             Registers.A = temp;
 
-            Registers.Flag3 = temp.GetBit(3);
-			Registers.Flag5 = temp.GetBit(5);
+            SetFlags3and5From(temp);
             Registers.PF = Parity[temp];
 
             return 4;

@@ -28,7 +28,6 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
         #region Auxiliary methods
 
-        protected int nextFetchesLength;
         protected int nextFetchesAddress;
 
         protected void SetMemoryContents(params byte[] opcodes)
@@ -40,14 +39,12 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             Array.Copy(opcodes, 0, ProcessorAgent.Memory, address, opcodes.Length);
             nextFetchesAddress = address + opcodes.Length;
-            nextFetchesLength = opcodes.Length;
         }
 
         protected void ContinueSettingMemoryContents(params byte[] opcodes)
         {
 			Array.Copy(opcodes, 0, ProcessorAgent.Memory, nextFetchesAddress, opcodes.Length);
             nextFetchesAddress += opcodes.Length;
-            nextFetchesLength += opcodes.Length;
         }
 
 		protected FakeInstructionExecutor NewFakeInstructionExecutor()
@@ -204,7 +201,6 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 	        0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 
 	        1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1 };
         #endregion
-
 
         #region Fake classes
 

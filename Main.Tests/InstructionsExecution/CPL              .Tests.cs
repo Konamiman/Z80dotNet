@@ -10,11 +10,12 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [Test]
         public void CPL_complements_byte_correctly()
         {
-            Registers.A = 0x99;
+            var value = Fixture.Create<byte>();
+            Registers.A = value;
 
             Execute(CPL_opcode);
 
-            Assert.AreEqual(0x66, Registers.A);
+            Assert.AreEqual((byte)(~value), Registers.A);
         }
 
         [Test]
@@ -27,6 +28,19 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         public void CPL_does_not_change_SF_ZF_PF_CF()
         {
             AssertDoesNotChangeFlags(CPL_opcode, null, "S", "Z", "P", "C");
+        }
+
+        [Test]
+        [TestCase(0x00)]
+        [TestCase(0x0F)]
+        [TestCase(0xF0)]
+        [TestCase(0xFF)]
+        public void CPL_sets_bits_3_and_5_from_A(int value)
+        {
+            Registers.A = (byte)value;
+            Execute(CPL_opcode);
+            Assert.AreEqual(Registers.A.GetBit(3), Registers.Flag3);
+            Assert.AreEqual(Registers.A.GetBit(5), Registers.Flag5);
         }
 
         [Test]

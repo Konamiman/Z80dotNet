@@ -51,6 +51,19 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
 
         [Test]
+        [TestCase(0x00)]
+        [TestCase(0xD7)]
+        [TestCase(0x28)]
+        [TestCase(0xFF)]
+        public void RRCA_sets_bits_3_and_5_from_A(int value)
+        {
+            Registers.A = (byte)value;
+            Execute(RRCA_opcode);
+            Assert.AreEqual(Registers.A.GetBit(3), Registers.Flag3);
+            Assert.AreEqual(Registers.A.GetBit(5), Registers.Flag5);
+        }
+
+        [Test]
         public void RRCA_returns_proper_T_states()
         {
             var states = Execute(RRCA_opcode);

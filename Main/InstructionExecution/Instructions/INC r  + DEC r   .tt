@@ -31,8 +31,7 @@ namespace Konamiman.Z80dotNet
             Registers.HF = ((newValue & 0x0F) == 0x0<#=isInc ? "0" : "F"#>);
             Registers.PF = (newValue == 0x<#=isInc ? "80" : "7F"#>);
             Registers.NF = <#=isInc ? "0" : "1"#>;
-			Registers.Flag3 = newValue.GetBit(3);
-			Registers.Flag5 = newValue.GetBit(5);
+			SetFlags3and5From(newValue);
 
             return <#=IsIndexRegister(reg) ? 8 : 4 #>;
         }

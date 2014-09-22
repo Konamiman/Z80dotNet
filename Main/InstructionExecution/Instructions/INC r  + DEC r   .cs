@@ -21,8 +21,7 @@ namespace Konamiman.Z80dotNet
             Registers.HF = ((newValue & 0x0F) == 0x00);
             Registers.PF = (newValue == 0x80);
             Registers.NF = 0;
-			Registers.Flag3 = newValue.GetBit(3);
-			Registers.Flag5 = newValue.GetBit(5);
+			SetFlags3and5From(newValue);
 
             return 4;
         }
@@ -41,8 +40,7 @@ namespace Konamiman.Z80dotNet
             Registers.HF = ((newValue & 0x0F) == 0x0F);
             Registers.PF = (newValue == 0x7F);
             Registers.NF = 1;
-			Registers.Flag3 = newValue.GetBit(3);
-			Registers.Flag5 = newValue.GetBit(5);
+			SetFlags3and5From(newValue);
 
             return 4;
         }
@@ -61,8 +59,7 @@ namespace Konamiman.Z80dotNet
             Registers.HF = ((newValue & 0x0F) == 0x00);
             Registers.PF = (newValue == 0x80);
             Registers.NF = 0;
-			Registers.Flag3 = newValue.GetBit(3);
-			Registers.Flag5 = newValue.GetBit(5);
+			SetFlags3and5From(newValue);
 
             return 4;
         }
@@ -81,8 +78,7 @@ namespace Konamiman.Z80dotNet
             Registers.HF = ((newValue & 0x0F) == 0x0F);
             Registers.PF = (newValue == 0x7F);
             Registers.NF = 1;
-			Registers.Flag3 = newValue.GetBit(3);
-			Registers.Flag5 = newValue.GetBit(5);
+			SetFlags3and5From(newValue);
 
             return 4;
         }
@@ -101,8 +97,7 @@ namespace Konamiman.Z80dotNet
             Registers.HF = ((newValue & 0x0F) == 0x00);
             Registers.PF = (newValue == 0x80);
             Registers.NF = 0;
-			Registers.Flag3 = newValue.GetBit(3);
-			Registers.Flag5 = newValue.GetBit(5);
+			SetFlags3and5From(newValue);
 
             return 4;
         }
@@ -121,8 +116,7 @@ namespace Konamiman.Z80dotNet
             Registers.HF = ((newValue & 0x0F) == 0x0F);
             Registers.PF = (newValue == 0x7F);
             Registers.NF = 1;
-			Registers.Flag3 = newValue.GetBit(3);
-			Registers.Flag5 = newValue.GetBit(5);
+			SetFlags3and5From(newValue);
 
             return 4;
         }
@@ -141,8 +135,7 @@ namespace Konamiman.Z80dotNet
             Registers.HF = ((newValue & 0x0F) == 0x00);
             Registers.PF = (newValue == 0x80);
             Registers.NF = 0;
-			Registers.Flag3 = newValue.GetBit(3);
-			Registers.Flag5 = newValue.GetBit(5);
+			SetFlags3and5From(newValue);
 
             return 4;
         }
@@ -161,8 +154,7 @@ namespace Konamiman.Z80dotNet
             Registers.HF = ((newValue & 0x0F) == 0x0F);
             Registers.PF = (newValue == 0x7F);
             Registers.NF = 1;
-			Registers.Flag3 = newValue.GetBit(3);
-			Registers.Flag5 = newValue.GetBit(5);
+			SetFlags3and5From(newValue);
 
             return 4;
         }
@@ -181,8 +173,7 @@ namespace Konamiman.Z80dotNet
             Registers.HF = ((newValue & 0x0F) == 0x00);
             Registers.PF = (newValue == 0x80);
             Registers.NF = 0;
-			Registers.Flag3 = newValue.GetBit(3);
-			Registers.Flag5 = newValue.GetBit(5);
+			SetFlags3and5From(newValue);
 
             return 4;
         }
@@ -201,8 +192,7 @@ namespace Konamiman.Z80dotNet
             Registers.HF = ((newValue & 0x0F) == 0x0F);
             Registers.PF = (newValue == 0x7F);
             Registers.NF = 1;
-			Registers.Flag3 = newValue.GetBit(3);
-			Registers.Flag5 = newValue.GetBit(5);
+			SetFlags3and5From(newValue);
 
             return 4;
         }
@@ -221,8 +211,7 @@ namespace Konamiman.Z80dotNet
             Registers.HF = ((newValue & 0x0F) == 0x00);
             Registers.PF = (newValue == 0x80);
             Registers.NF = 0;
-			Registers.Flag3 = newValue.GetBit(3);
-			Registers.Flag5 = newValue.GetBit(5);
+			SetFlags3and5From(newValue);
 
             return 4;
         }
@@ -241,8 +230,7 @@ namespace Konamiman.Z80dotNet
             Registers.HF = ((newValue & 0x0F) == 0x0F);
             Registers.PF = (newValue == 0x7F);
             Registers.NF = 1;
-			Registers.Flag3 = newValue.GetBit(3);
-			Registers.Flag5 = newValue.GetBit(5);
+			SetFlags3and5From(newValue);
 
             return 4;
         }
@@ -261,8 +249,7 @@ namespace Konamiman.Z80dotNet
             Registers.HF = ((newValue & 0x0F) == 0x00);
             Registers.PF = (newValue == 0x80);
             Registers.NF = 0;
-			Registers.Flag3 = newValue.GetBit(3);
-			Registers.Flag5 = newValue.GetBit(5);
+			SetFlags3and5From(newValue);
 
             return 4;
         }
@@ -281,8 +268,7 @@ namespace Konamiman.Z80dotNet
             Registers.HF = ((newValue & 0x0F) == 0x0F);
             Registers.PF = (newValue == 0x7F);
             Registers.NF = 1;
-			Registers.Flag3 = newValue.GetBit(3);
-			Registers.Flag5 = newValue.GetBit(5);
+			SetFlags3and5From(newValue);
 
             return 4;
         }
@@ -301,8 +287,7 @@ namespace Konamiman.Z80dotNet
             Registers.HF = ((newValue & 0x0F) == 0x00);
             Registers.PF = (newValue == 0x80);
             Registers.NF = 0;
-			Registers.Flag3 = newValue.GetBit(3);
-			Registers.Flag5 = newValue.GetBit(5);
+			SetFlags3and5From(newValue);
 
             return 8;
         }
@@ -321,8 +306,7 @@ namespace Konamiman.Z80dotNet
             Registers.HF = ((newValue & 0x0F) == 0x0F);
             Registers.PF = (newValue == 0x7F);
             Registers.NF = 1;
-			Registers.Flag3 = newValue.GetBit(3);
-			Registers.Flag5 = newValue.GetBit(5);
+			SetFlags3and5From(newValue);
 
             return 8;
         }
@@ -341,8 +325,7 @@ namespace Konamiman.Z80dotNet
             Registers.HF = ((newValue & 0x0F) == 0x00);
             Registers.PF = (newValue == 0x80);
             Registers.NF = 0;
-			Registers.Flag3 = newValue.GetBit(3);
-			Registers.Flag5 = newValue.GetBit(5);
+			SetFlags3and5From(newValue);
 
             return 8;
         }
@@ -361,8 +344,7 @@ namespace Konamiman.Z80dotNet
             Registers.HF = ((newValue & 0x0F) == 0x0F);
             Registers.PF = (newValue == 0x7F);
             Registers.NF = 1;
-			Registers.Flag3 = newValue.GetBit(3);
-			Registers.Flag5 = newValue.GetBit(5);
+			SetFlags3and5From(newValue);
 
             return 8;
         }
@@ -381,8 +363,7 @@ namespace Konamiman.Z80dotNet
             Registers.HF = ((newValue & 0x0F) == 0x00);
             Registers.PF = (newValue == 0x80);
             Registers.NF = 0;
-			Registers.Flag3 = newValue.GetBit(3);
-			Registers.Flag5 = newValue.GetBit(5);
+			SetFlags3and5From(newValue);
 
             return 8;
         }
@@ -401,8 +382,7 @@ namespace Konamiman.Z80dotNet
             Registers.HF = ((newValue & 0x0F) == 0x0F);
             Registers.PF = (newValue == 0x7F);
             Registers.NF = 1;
-			Registers.Flag3 = newValue.GetBit(3);
-			Registers.Flag5 = newValue.GetBit(5);
+			SetFlags3and5From(newValue);
 
             return 8;
         }
@@ -421,8 +401,7 @@ namespace Konamiman.Z80dotNet
             Registers.HF = ((newValue & 0x0F) == 0x00);
             Registers.PF = (newValue == 0x80);
             Registers.NF = 0;
-			Registers.Flag3 = newValue.GetBit(3);
-			Registers.Flag5 = newValue.GetBit(5);
+			SetFlags3and5From(newValue);
 
             return 8;
         }
@@ -441,8 +420,7 @@ namespace Konamiman.Z80dotNet
             Registers.HF = ((newValue & 0x0F) == 0x0F);
             Registers.PF = (newValue == 0x7F);
             Registers.NF = 1;
-			Registers.Flag3 = newValue.GetBit(3);
-			Registers.Flag5 = newValue.GetBit(5);
+			SetFlags3and5From(newValue);
 
             return 8;
         }

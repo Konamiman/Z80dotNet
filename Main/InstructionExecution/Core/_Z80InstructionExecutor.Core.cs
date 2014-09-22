@@ -133,6 +133,13 @@ namespace Konamiman.Z80dotNet
                 ProcessorAgent.ReadFromMemory(address.Inc()));
         }
 
+        private void SetFlags3and5From(byte value)
+        {
+            const int Flags_3_5 = 0x28;
+
+            Registers.F = (byte)((Registers.F & ~Flags_3_5) | (value & Flags_3_5));
+        }
+
         #endregion
     }
 }

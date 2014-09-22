@@ -46,19 +46,16 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
 
         [Test]
-        public void CCF_sets_bits_3_and_5_from_A()
+        [TestCase(0x00)]
+        [TestCase(0x0F)]
+        [TestCase(0xF0)]
+        [TestCase(0xFF)]
+        public void CCF_sets_bits_3_and_5_from_A(int value)
         {
-            Registers.A = Registers.A.WithBit(3, 1);
-            Registers.A = Registers.A.WithBit(5, 0);
+            Registers.A = (byte)value;
             Execute(CCF_opcode);
-            Assert.AreEqual(1, Registers.Flag3);
-            Assert.AreEqual(0, Registers.Flag5);
-
-            Registers.A = Registers.A.WithBit(3, 0);
-            Registers.A = Registers.A.WithBit(5, 1);
-            Execute(CCF_opcode);
-            Assert.AreEqual(0, Registers.Flag3);
-            Assert.AreEqual(1, Registers.Flag5);
+            Assert.AreEqual(Registers.A.GetBit(3), Registers.Flag3);
+            Assert.AreEqual(Registers.A.GetBit(5), Registers.Flag5);
         }
 
         [Test]
