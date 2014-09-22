@@ -134,41 +134,9 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The LD B,IXH instruction.
-        /// </summary>
-        byte LD_B_IXH()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD B,IXL instruction.
-        /// </summary>
-        byte LD_B_IXL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The LD B,(IX+d) instruction.
         /// </summary>
         byte LD_B_aIX_plus_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD C,IXH instruction.
-        /// </summary>
-        byte LD_C_IXH()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD C,IXL instruction.
-        /// </summary>
-        byte LD_C_IXL()
         {
             throw new NotImplementedException();
         }
@@ -182,41 +150,9 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The LD D,IXH instruction.
-        /// </summary>
-        byte LD_D_IXH()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD D,IXL instruction.
-        /// </summary>
-        byte LD_D_IXL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The LD D,(IX+d) instruction.
         /// </summary>
         byte LD_D_aIX_plus_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD E,IXH instruction.
-        /// </summary>
-        byte LD_E_IXH()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD E,IXL instruction.
-        /// </summary>
-        byte LD_E_IXL()
         {
             throw new NotImplementedException();
         }
@@ -230,54 +166,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The LD IXH,B instruction.
-        /// </summary>
-        byte LD_IXH_B()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD IXH,C instruction.
-        /// </summary>
-        byte LD_IXH_C()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD IXH,D instruction.
-        /// </summary>
-        byte LD_IXH_D()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD IXH,E instruction.
-        /// </summary>
-        byte LD_IXH_E()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD IXH,IXH instruction.
-        /// </summary>
-        byte LD_IXH_IXH()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD IXH,IXL instruction.
-        /// </summary>
-        byte LD_IXH_IXL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The LD H,(IX+d) instruction.
         /// </summary>
         byte LD_H_aIX_plus_n()
@@ -286,73 +174,9 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The LD IXH,A instruction.
-        /// </summary>
-        byte LD_IXH_A()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD IXL,B instruction.
-        /// </summary>
-        byte LD_IXL_B()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD IXL,C instruction.
-        /// </summary>
-        byte LD_IXL_C()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD IXL,D instruction.
-        /// </summary>
-        byte LD_IXL_D()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD IXL,E instruction.
-        /// </summary>
-        byte LD_IXL_E()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD IXL,H instruction.
-        /// </summary>
-        byte LD_IXL_H()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD IXL,IXL instruction.
-        /// </summary>
-        byte LD_IXL_IXL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The LD L,(IX+d) instruction.
         /// </summary>
         byte LD_L_aIX_plus_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD IXL,A instruction.
-        /// </summary>
-        byte LD_IXL_A()
         {
             throw new NotImplementedException();
         }
@@ -409,22 +233,6 @@ namespace Konamiman.Z80dotNet
         /// The LD (IX+d),A instruction.
         /// </summary>
         byte LD_aIX_plus_n_A()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD A,IXH instruction.
-        /// </summary>
-        byte LD_A_IXH()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD A,IXL instruction.
-        /// </summary>
-        byte LD_A_IXL()
         {
             throw new NotImplementedException();
         }

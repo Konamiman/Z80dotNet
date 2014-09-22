@@ -3,6 +3,7 @@
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ include file="..\..\..\_Utils.t4"#>
 <#@ output extension=".cs" #>
@@ -15,8 +16,9 @@ namespace Konamiman.Z80dotNet
 {
     public partial class Z80InstructionExecutor
     {
-<# foreach(var src in new[] {"A","B","C","D","E","H","L"}) {
-   foreach(var dest in new[] {"A","B","C","D","E","H","L"}) { #>
+<# foreach(var src in new[] {"A","B","C","D","E","H","L", "IXH", "IXL", "IYH", "IYL"}) {
+   foreach(var dest in new[] {"A","B","C","D","E","H","L", "IXH", "IXL", "IYH", "IYL"}) {
+		if(IsInvalidCombination(dest, src)) continue; #>
         /// <summary>
         /// The LD <#=dest#>,<#=src#> instruction.
         /// </summary>
@@ -34,3 +36,35 @@ namespace Konamiman.Z80dotNet
 <# }} #>
     }
 }
+<#+
+bool IsInvalidCombination(string dest, string src)
+{
+	var regs=dest+"_"+src;
+	
+	return (new[] {
+		"IYH_H",
+		"IXH_L",
+		"IXL_L",
+		"IYH_L",
+		"IYL_L",
+		"H_IXH",
+		"L_IXH",
+		"IXL_IXH",
+		"IYH_IXH",
+		"IYL_IXH",
+		"H_IXL",
+		"L_IXL",
+		"IYH_IXL",
+		"IYL_IXL",
+		"H_IYH",
+		"L_IYH",
+		"IXH_IYH",
+		"IXL_IYH",
+		"IYL_IYH",
+		"H_IYL",
+		"L_IYL",
+		"IXH_IYL",
+		"IXL_IYL",
+    }).Contains(regs);
+}
+#>

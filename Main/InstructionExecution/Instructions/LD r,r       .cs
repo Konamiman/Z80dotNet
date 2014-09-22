@@ -90,6 +90,54 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
+        /// The LD IXH,A instruction.
+        /// </summary>
+        byte LD_IXH_A()
+        {
+            FetchFinished();
+
+            Registers.IXH = Registers.A;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD IXL,A instruction.
+        /// </summary>
+        byte LD_IXL_A()
+        {
+            FetchFinished();
+
+            Registers.IXL = Registers.A;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD IYH,A instruction.
+        /// </summary>
+        byte LD_IYH_A()
+        {
+            FetchFinished();
+
+            Registers.IYH = Registers.A;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD IYL,A instruction.
+        /// </summary>
+        byte LD_IYL_A()
+        {
+            FetchFinished();
+
+            Registers.IYL = Registers.A;
+
+            return 4;
+        }
+
+        /// <summary>
         /// The LD A,B instruction.
         /// </summary>
         byte LD_A_B()
@@ -167,6 +215,54 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             Registers.L = Registers.B;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD IXH,B instruction.
+        /// </summary>
+        byte LD_IXH_B()
+        {
+            FetchFinished();
+
+            Registers.IXH = Registers.B;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD IXL,B instruction.
+        /// </summary>
+        byte LD_IXL_B()
+        {
+            FetchFinished();
+
+            Registers.IXL = Registers.B;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD IYH,B instruction.
+        /// </summary>
+        byte LD_IYH_B()
+        {
+            FetchFinished();
+
+            Registers.IYH = Registers.B;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD IYL,B instruction.
+        /// </summary>
+        byte LD_IYL_B()
+        {
+            FetchFinished();
+
+            Registers.IYL = Registers.B;
 
             return 4;
         }
@@ -254,6 +350,54 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
+        /// The LD IXH,C instruction.
+        /// </summary>
+        byte LD_IXH_C()
+        {
+            FetchFinished();
+
+            Registers.IXH = Registers.C;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD IXL,C instruction.
+        /// </summary>
+        byte LD_IXL_C()
+        {
+            FetchFinished();
+
+            Registers.IXL = Registers.C;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD IYH,C instruction.
+        /// </summary>
+        byte LD_IYH_C()
+        {
+            FetchFinished();
+
+            Registers.IYH = Registers.C;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD IYL,C instruction.
+        /// </summary>
+        byte LD_IYL_C()
+        {
+            FetchFinished();
+
+            Registers.IYL = Registers.C;
+
+            return 4;
+        }
+
+        /// <summary>
         /// The LD A,D instruction.
         /// </summary>
         byte LD_A_D()
@@ -331,6 +475,54 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             Registers.L = Registers.D;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD IXH,D instruction.
+        /// </summary>
+        byte LD_IXH_D()
+        {
+            FetchFinished();
+
+            Registers.IXH = Registers.D;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD IXL,D instruction.
+        /// </summary>
+        byte LD_IXL_D()
+        {
+            FetchFinished();
+
+            Registers.IXL = Registers.D;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD IYH,D instruction.
+        /// </summary>
+        byte LD_IYH_D()
+        {
+            FetchFinished();
+
+            Registers.IYH = Registers.D;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD IYL,D instruction.
+        /// </summary>
+        byte LD_IYL_D()
+        {
+            FetchFinished();
+
+            Registers.IYL = Registers.D;
 
             return 4;
         }
@@ -418,6 +610,54 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
+        /// The LD IXH,E instruction.
+        /// </summary>
+        byte LD_IXH_E()
+        {
+            FetchFinished();
+
+            Registers.IXH = Registers.E;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD IXL,E instruction.
+        /// </summary>
+        byte LD_IXL_E()
+        {
+            FetchFinished();
+
+            Registers.IXL = Registers.E;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD IYH,E instruction.
+        /// </summary>
+        byte LD_IYH_E()
+        {
+            FetchFinished();
+
+            Registers.IYH = Registers.E;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD IYL,E instruction.
+        /// </summary>
+        byte LD_IYL_E()
+        {
+            FetchFinished();
+
+            Registers.IYL = Registers.E;
+
+            return 4;
+        }
+
+        /// <summary>
         /// The LD A,H instruction.
         /// </summary>
         byte LD_A_H()
@@ -500,6 +740,42 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
+        /// The LD IXH,H instruction.
+        /// </summary>
+        byte LD_IXH_H()
+        {
+            FetchFinished();
+
+            Registers.IXH = Registers.H;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD IXL,H instruction.
+        /// </summary>
+        byte LD_IXL_H()
+        {
+            FetchFinished();
+
+            Registers.IXL = Registers.H;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD IYL,H instruction.
+        /// </summary>
+        byte LD_IYL_H()
+        {
+            FetchFinished();
+
+            Registers.IYL = Registers.H;
+
+            return 4;
+        }
+
+        /// <summary>
         /// The LD A,L instruction.
         /// </summary>
         byte LD_A_L()
@@ -575,6 +851,310 @@ namespace Konamiman.Z80dotNet
         /// The LD L,L instruction.
         /// </summary>
         byte LD_L_L()
+        {
+            FetchFinished();
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD A,IXH instruction.
+        /// </summary>
+        byte LD_A_IXH()
+        {
+            FetchFinished();
+
+            Registers.A = Registers.IXH;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD B,IXH instruction.
+        /// </summary>
+        byte LD_B_IXH()
+        {
+            FetchFinished();
+
+            Registers.B = Registers.IXH;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD C,IXH instruction.
+        /// </summary>
+        byte LD_C_IXH()
+        {
+            FetchFinished();
+
+            Registers.C = Registers.IXH;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD D,IXH instruction.
+        /// </summary>
+        byte LD_D_IXH()
+        {
+            FetchFinished();
+
+            Registers.D = Registers.IXH;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD E,IXH instruction.
+        /// </summary>
+        byte LD_E_IXH()
+        {
+            FetchFinished();
+
+            Registers.E = Registers.IXH;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD IXH,IXH instruction.
+        /// </summary>
+        byte LD_IXH_IXH()
+        {
+            FetchFinished();
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD A,IXL instruction.
+        /// </summary>
+        byte LD_A_IXL()
+        {
+            FetchFinished();
+
+            Registers.A = Registers.IXL;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD B,IXL instruction.
+        /// </summary>
+        byte LD_B_IXL()
+        {
+            FetchFinished();
+
+            Registers.B = Registers.IXL;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD C,IXL instruction.
+        /// </summary>
+        byte LD_C_IXL()
+        {
+            FetchFinished();
+
+            Registers.C = Registers.IXL;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD D,IXL instruction.
+        /// </summary>
+        byte LD_D_IXL()
+        {
+            FetchFinished();
+
+            Registers.D = Registers.IXL;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD E,IXL instruction.
+        /// </summary>
+        byte LD_E_IXL()
+        {
+            FetchFinished();
+
+            Registers.E = Registers.IXL;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD IXH,IXL instruction.
+        /// </summary>
+        byte LD_IXH_IXL()
+        {
+            FetchFinished();
+
+            Registers.IXH = Registers.IXL;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD IXL,IXL instruction.
+        /// </summary>
+        byte LD_IXL_IXL()
+        {
+            FetchFinished();
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD A,IYH instruction.
+        /// </summary>
+        byte LD_A_IYH()
+        {
+            FetchFinished();
+
+            Registers.A = Registers.IYH;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD B,IYH instruction.
+        /// </summary>
+        byte LD_B_IYH()
+        {
+            FetchFinished();
+
+            Registers.B = Registers.IYH;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD C,IYH instruction.
+        /// </summary>
+        byte LD_C_IYH()
+        {
+            FetchFinished();
+
+            Registers.C = Registers.IYH;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD D,IYH instruction.
+        /// </summary>
+        byte LD_D_IYH()
+        {
+            FetchFinished();
+
+            Registers.D = Registers.IYH;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD E,IYH instruction.
+        /// </summary>
+        byte LD_E_IYH()
+        {
+            FetchFinished();
+
+            Registers.E = Registers.IYH;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD IYH,IYH instruction.
+        /// </summary>
+        byte LD_IYH_IYH()
+        {
+            FetchFinished();
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD A,IYL instruction.
+        /// </summary>
+        byte LD_A_IYL()
+        {
+            FetchFinished();
+
+            Registers.A = Registers.IYL;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD B,IYL instruction.
+        /// </summary>
+        byte LD_B_IYL()
+        {
+            FetchFinished();
+
+            Registers.B = Registers.IYL;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD C,IYL instruction.
+        /// </summary>
+        byte LD_C_IYL()
+        {
+            FetchFinished();
+
+            Registers.C = Registers.IYL;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD D,IYL instruction.
+        /// </summary>
+        byte LD_D_IYL()
+        {
+            FetchFinished();
+
+            Registers.D = Registers.IYL;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD E,IYL instruction.
+        /// </summary>
+        byte LD_E_IYL()
+        {
+            FetchFinished();
+
+            Registers.E = Registers.IYL;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD IYH,IYL instruction.
+        /// </summary>
+        byte LD_IYH_IYL()
+        {
+            FetchFinished();
+
+            Registers.IYH = Registers.IYL;
+
+            return 4;
+        }
+
+        /// <summary>
+        /// The LD IYL,IYL instruction.
+        /// </summary>
+        byte LD_IYL_IYL()
         {
             FetchFinished();
 
