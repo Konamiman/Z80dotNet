@@ -76,6 +76,11 @@
     </None>
     <Compile Include="InstructionExecution\Instructions\CCF           .cs" />
     <Compile Include="InstructionExecution\Instructions\LD %28HL%29,n    .cs" />
+    <Compile Include="InstructionExecution\Instructions\LD r,r       .cs">
+      <DependentUpon>LD r,r       .tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="InstructionExecution\Instructions\SCF              .cs" />
     <Compile Include="InstructionExecution\Instructions\DAA            .cs" />
     <Compile Include="InstructionExecution\Instructions\CPL             .cs" />
@@ -171,6 +176,10 @@
     <None Include="InstructionExecution\Instructions\INC rr + DEC rr  .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>INC rr + DEC rr  .cs</LastGenOutput>
+    </None>
+    <None Include="InstructionExecution\Instructions\LD r,r       .tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LD r,r       .cs</LastGenOutput>
     </None>
     <None Include="InstructionExecution\Instructions\LD rr,%28aa%29   .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
