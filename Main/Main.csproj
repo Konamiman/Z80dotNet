@@ -81,6 +81,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="InstructionExecution\Instructions\HALT           .cs" />
     <Compile Include="InstructionExecution\Instructions\SCF              .cs" />
     <Compile Include="InstructionExecution\Instructions\DAA            .cs" />
     <Compile Include="InstructionExecution\Instructions\CPL             .cs" />

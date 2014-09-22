@@ -1,10 +1,10 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using NUnit.Framework;
 using Ploeh.AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests
 {
+    [Explicit]
     public class ClockSynchronizationHelperTests
     {
         private const int MinMicrosecondsToWait = 10*1000;

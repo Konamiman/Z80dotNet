@@ -272,14 +272,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files and include them in the table when they are implemented.
         
         /// <summary>
-        /// The HALT instruction.
-        /// </summary>
-        byte HALT()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The ADD A,B instruction.
         /// </summary>
         byte ADD_A_B()

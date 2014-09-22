@@ -57,6 +57,7 @@
     <Compile Include="InstructionsExecution\DEC %28HL%29       .Tests.cs" />
     <Compile Include="InstructionsExecution\LD %28HL%29,n     .Tests.cs" />
     <Compile Include="InstructionsExecution\LD r,r          .Tests.cs" />
+    <Compile Include="InstructionsExecution\HALT           .Tests.cs" />
     <Compile Include="InstructionsExecution\SCF              .Tests.cs" />
     <Compile Include="InstructionsExecution\DEC r          .Tests.cs" />
     <Compile Include="InstructionsExecution\JR                .Tests.cs" />
