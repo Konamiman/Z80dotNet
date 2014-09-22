@@ -53,6 +53,8 @@
     <Compile Include="ClockSynchronizationHelperTests.cs" />
     <Compile Include="HelloWorld.cs" />
     <Compile Include="InstructionsExecution\CCF              .Tests.cs" />
+    <Compile Include="InstructionsExecution\INC %28HL%29       .Tests.cs" />
+    <Compile Include="InstructionsExecution\DEC %28HL%29       .Tests.cs" />
     <Compile Include="InstructionsExecution\SCF              .Tests.cs" />
     <Compile Include="InstructionsExecution\DEC r          .Tests.cs" />
     <Compile Include="InstructionsExecution\JR                .Tests.cs" />

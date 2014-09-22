@@ -58,9 +58,11 @@
     <Compile Include="InstructionExecution\Core\InstructionsTable.FD.cs" />
     <Compile Include="InstructionExecution\Core\InstructionsTable.ED.cs" />
     <Compile Include="InstructionExecution\Core\InstructionsTable.SingleByte.cs" />
-    <None Include="InstructionExecution\Instructions\INC r  + DEC r   .tt">
+    <None Include="InstructionExecution\Instructions\INC %28HL%29   --see INC r" />
+    <None Include="InstructionExecution\Instructions\DEC %28HL%29   --see INC r" />
+    <None Include="InstructionExecution\Instructions\INC r + INC %28HL%29 + DEC r + DEC %28HL%29   .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>INC r  + DEC r   .cs</LastGenOutput>
+      <LastGenOutput>INC r + INC %28HL%29 + DEC r + DEC %28HL%29   .cs</LastGenOutput>
     </None>
     <Compile Include="InstructionExecution\Core\ParityTable.cs" />
     <Compile Include="InstructionExecution\Instructions\ADD rr,rr   1.cs">
@@ -96,10 +98,10 @@
     </Compile>
     <Compile Include="InstructionExecution\Instructions\RLA           .cs" />
     <Compile Include="InstructionExecution\Instructions\RRA           .cs" />
-    <Compile Include="InstructionExecution\Instructions\INC r  + DEC r   .cs">
+    <Compile Include="InstructionExecution\Instructions\INC r + INC %28HL%29 + DEC r + DEC %28HL%29   .cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>INC r  + DEC r   .tt</DependentUpon>
+      <DependentUpon>INC r + INC %28HL%29 + DEC r + DEC %28HL%29   .tt</DependentUpon>
     </Compile>
     <Compile Include="InstructionExecution\Instructions\INC rr + DEC rr  .cs">
       <AutoGen>True</AutoGen>

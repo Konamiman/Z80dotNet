@@ -15,16 +15,24 @@ namespace Konamiman.Z80dotNet
 {
     public partial class Z80InstructionExecutor
     {
-<# foreach(var reg in new[] {"A","B","C","D","E","H","L","IXH","IXL","IYH","IYL"}) {
+<# foreach(var reg in new[] {"A","B","C","D","E","H","L","IXH","IXL","IYH","IYL","aHL"}) {
    foreach(var isInc in new[] {true, false}) { #>
         /// <summary>
-        /// The <#=isInc ? "INC" : "DEC"#> <#=reg#> instruction.
+        /// The <#=isInc ? "INC" : "DEC"#> <#=reg=="aHL" ? "(HL)" : reg#> instruction.
         /// </summary>
         private byte <#=isInc ? "INC" : "DEC"#>_<#=reg#>()
         {
             FetchFinished();
+
+<# if(reg=="aHL") { #>
+			var address = Registers.HL.ToUShort();
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+			var newValue = oldValue.<#=isInc ? "Inc" : "Dec"#>();
+			ProcessorAgent.WriteToMemory(address, newValue);
+<# } else { #>
             var newValue = <#=Register(reg)#>.<#=isInc ? "Inc" : "Dec"#>();
             <#=Register(reg)#> = newValue;
+<# } #>
 
             Registers.SF = newValue.GetBit(7);
             Registers.ZF = (newValue == 0);
@@ -33,7 +41,7 @@ namespace Konamiman.Z80dotNet
             Registers.NF = <#=isInc ? "0" : "1"#>;
 			SetFlags3and5From(newValue);
 
-            return <#=IsIndexRegister(reg) ? 8 : 4 #>;
+            return <#=reg=="aHL" ? 11 : (IsIndexRegister(reg) ? 8 : 4) #>;
         }
 
 <# }} #>
