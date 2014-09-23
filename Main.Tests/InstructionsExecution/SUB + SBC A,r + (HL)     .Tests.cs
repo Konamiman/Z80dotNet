@@ -10,8 +10,8 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             var combinations = new List<object[]>();
 
-            var registers = new[] {"B", "C", "D", "E", "H", "L"};
-            for(var src = 0; src<=5; src++)
+            var registers = new[] {"B", "C", "D", "E", "H", "L", "(HL)"};
+            for(var src = 0; src<=6; src++)
             {
                 var SUB_opcode = (byte) (src | 0x90);
                 var SBC_opcode = (byte) (src | 0x98);
@@ -39,35 +39,47 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         public void SUBC_A_r_substracts_both_registers_with_or_without_carry(string src, byte opcode, int cf)
         {
             var oldValue = Fixture.Create<byte>();
-            var valueSubstracted = src=="A" ? oldValue : Fixture.Create<byte>();
+            var valueToAdd = src=="A" ? oldValue : Fixture.Create<byte>();
 
-            Registers.CF = cf;
-            Registers.A = oldValue;
-            if(src != "A")
-                SetReg(src, valueSubstracted);
-
+            Setup(src, oldValue, valueToAdd, cf);
             Execute(opcode);
 
-            Assert.AreEqual(oldValue.Sub(valueSubstracted + cf), Registers.A);
+            Assert.AreEqual(oldValue.Sub(valueToAdd + cf), Registers.A);
+        }
+
+        private void Setup(string src, byte oldValue, byte valueToSubstract, int cf = 0)
+        {
+            Registers.A = oldValue;
+            Registers.CF = cf;
+
+            if(src == "(HL)") 
+            {
+                var address = Fixture.Create<ushort>();
+                ProcessorAgent.Memory[address] = valueToSubstract;
+                Registers.HL = address.ToShort();
+            }
+            else if(src != "A")
+            {
+                SetReg(src, valueToSubstract);
+            }
         }
 
         [Test]
         [TestCaseSource("SUBC_A_r_Source")]
         public void SUBC_A_r_sets_SF_appropriately(string src, byte opcode, int cf)
         {
-            Registers.A = 0x02;
-            SetReg(src, 1);
+            Setup(src, 0x02, 1);
 
-            ExecuteWithNoCF(opcode);
+            Execute(opcode);
             Assert.AreEqual(0, Registers.SF);
 
-            ExecuteWithNoCF(opcode);
+            Execute(opcode);
             Assert.AreEqual(0, Registers.SF);
 
-            ExecuteWithNoCF(opcode);
+            Execute(opcode);
             Assert.AreEqual(1, Registers.SF);
 
-            ExecuteWithNoCF(opcode);
+            Execute(opcode);
             Assert.AreEqual(1, Registers.SF);
         }
 
@@ -75,19 +87,18 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [TestCaseSource("SUBC_A_r_Source")]
         public void SUBC_A_r_sets_ZF_appropriately(string src, byte opcode, int cf)
         {
-            Registers.A = 0x03;
-            SetReg(src, 1);
+            Setup(src, 0x03, 1);
 
-            ExecuteWithNoCF(opcode);
+            Execute(opcode);
             Assert.AreEqual(0, Registers.ZF);
 
-            ExecuteWithNoCF(opcode);
+            Execute(opcode);
             Assert.AreEqual(0, Registers.ZF);
 
-            ExecuteWithNoCF(opcode);
+            Execute(opcode);
             Assert.AreEqual(1, Registers.ZF);
 
-            ExecuteWithNoCF(opcode);
+            Execute(opcode);
             Assert.AreEqual(0, Registers.ZF);
         }
 
@@ -97,16 +108,15 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             foreach(byte b in new byte[] { 0x11, 0x81, 0xF1 }) 
             {
-                Registers.A = b;
-                SetReg(src, 1);
+                Setup(src, b, 1);
 
-                ExecuteWithNoCF(opcode);
+                Execute(opcode);
                 Assert.AreEqual(0, Registers.HF);
 
-                ExecuteWithNoCF(opcode);
+                Execute(opcode);
                 Assert.AreEqual(1, Registers.HF);
 
-                ExecuteWithNoCF(opcode);
+                Execute(opcode);
                 Assert.AreEqual(0, Registers.HF);
             }
         }
@@ -139,9 +149,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
         void TestPF(string src, byte opcode, int oldValue, int substractedValue, int expectedPF)
         {
-            Registers.A = (byte)oldValue;
-            Registers.CF = 0;
-            SetReg(src, (byte)substractedValue);
+            Setup(src, (byte)oldValue, (byte)substractedValue);
 
             Execute(opcode);
             Assert.AreEqual(expectedPF, Registers.PF);
@@ -159,16 +167,15 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [TestCaseSource("SUBC_A_r_Source")]
         public void SUBC_A_r_sets_CF_appropriately(string src, byte opcode, int cf)
         {
-            Registers.A = 0x01;
-            SetReg(src, 1);
+            Setup(src, 0x01, 1);
 
-            ExecuteWithNoCF(opcode);
+            Execute(opcode);
             Assert.AreEqual(0, Registers.CF);
 
-            ExecuteWithNoCF(opcode);
+            Execute(opcode);
             Assert.AreEqual(1, Registers.CF);
 
-            ExecuteWithNoCF(opcode);
+            Execute(opcode);
             Assert.AreEqual(0, Registers.CF);
         }
 
@@ -176,14 +183,12 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [TestCaseSource("SUBC_A_r_Source")]
         public void SUBC_A_r_sets_bits_3_and_5_from_result(string src, byte opcode, int cf)
         {
-            Registers.A = (byte)(((byte)0).WithBit(3, 1).WithBit(5, 0) + 1);
-            SetReg(src, 1);
+            Setup(src, (byte)(((byte)0).WithBit(3, 1).WithBit(5, 0) + 1), 1);
             Execute(opcode);
             Assert.AreEqual(1, Registers.Flag3);
             Assert.AreEqual(0, Registers.Flag5);
 
-            Registers.A = (byte)(((byte)0).WithBit(3, 0).WithBit(5, 1) + 1);
-            SetReg(src, 1);
+            Setup(src, (byte)(((byte)0).WithBit(3, 0).WithBit(5, 1) + 1), 1);
             Execute(opcode);
             Assert.AreEqual(0, Registers.Flag3);
             Assert.AreEqual(1, Registers.Flag5);
@@ -195,13 +200,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         public void SUBC_A_r_returns_proper_T_states(string src, byte opcode, int cf)
         {
             var states = Execute(opcode);
-            Assert.AreEqual(4, states);
-        }
-
-        void ExecuteWithNoCF(byte opcode)
-        {
-            Registers.CF = 0;
-            Execute(opcode);
+            Assert.AreEqual(src == "(HL)" ? 7 : 4, states);
         }
     }
 }

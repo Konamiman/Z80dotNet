@@ -10,8 +10,8 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             var combinations = new List<object[]>();
 
-            var registers = new[] {"B", "C", "D", "E", "H", "L"};
-            for(var src = 0; src<=5; src++)
+            var registers = new[] {"B", "C", "D", "E", "H", "L", "(HL)"};
+            for(var src = 0; src<=6; src++)
             {
                 var ADD_opcode = (byte) (src | 0x80);
                 var ADC_opcode = (byte) (src | 0x88);
@@ -39,35 +39,47 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         public void ADDC_A_r_adds_both_registers_with_or_without_carry(string src, byte opcode, int cf)
         {
             var oldValue = Fixture.Create<byte>();
-            var valueAdded = src=="A" ? oldValue : Fixture.Create<byte>();
+            var valueToAdd = src=="A" ? oldValue : Fixture.Create<byte>();
 
-            Registers.CF = cf;
-            Registers.A = oldValue;
-            if(src != "A")
-                SetReg(src, valueAdded);
-
+            Setup(src, oldValue, valueToAdd, cf);
             Execute(opcode);
 
-            Assert.AreEqual(oldValue.Add(valueAdded + cf), Registers.A);
+            Assert.AreEqual(oldValue.Add(valueToAdd + cf), Registers.A);
+        }
+
+        private void Setup(string src, byte oldValue, byte valueToAdd, int cf = 0)
+        {
+            Registers.A = oldValue;
+            Registers.CF = cf;
+
+            if(src == "(HL)") 
+            {
+                var address = Fixture.Create<ushort>();
+                ProcessorAgent.Memory[address] = valueToAdd;
+                Registers.HL = address.ToShort();
+            }
+            else if(src != "A")
+            {
+                SetReg(src, valueToAdd);
+            }
         }
 
         [Test]
         [TestCaseSource("ADDC_A_r_Source")]
         public void ADDC_A_r_sets_SF_appropriately(string src, byte opcode, int cf)
         {
-            Registers.A = 0xFD;
-            SetReg(src, 1);
+            Setup(src, 0xFD, 1);
 
-            ExecuteWithNoCF(opcode);
+            Execute(opcode);
             Assert.AreEqual(1, Registers.SF);
 
-            ExecuteWithNoCF(opcode);
+            Execute(opcode);
             Assert.AreEqual(1, Registers.SF);
 
-            ExecuteWithNoCF(opcode);
+            Execute(opcode);
             Assert.AreEqual(0, Registers.SF);
 
-            ExecuteWithNoCF(opcode);
+            Execute(opcode);
             Assert.AreEqual(0, Registers.SF);
         }
 
@@ -75,19 +87,18 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [TestCaseSource("ADDC_A_r_Source")]
         public void ADDC_A_r_sets_ZF_appropriately(string src, byte opcode, int cf)
         {
-            Registers.A = 0xFD;
-            SetReg(src, 1);
+            Setup(src, 0xFD, 1);
 
-            ExecuteWithNoCF(opcode);
+            Execute(opcode);
             Assert.AreEqual(0, Registers.ZF);
 
-            ExecuteWithNoCF(opcode);
+            Execute(opcode);
             Assert.AreEqual(0, Registers.ZF);
 
-            ExecuteWithNoCF(opcode);
+            Execute(opcode);
             Assert.AreEqual(1, Registers.ZF);
 
-            ExecuteWithNoCF(opcode);
+            Execute(opcode);
             Assert.AreEqual(0, Registers.ZF);
         }
 
@@ -97,16 +108,15 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             foreach(byte b in new byte[] { 0x0E, 0x7E, 0xFE }) 
             {
-                Registers.A = b;
-                SetReg(src, 1);
+                Setup(src, b, 1);
 
-                ExecuteWithNoCF(opcode);
+                Execute(opcode);
                 Assert.AreEqual(0, Registers.HF);
 
-                ExecuteWithNoCF(opcode);
+                Execute(opcode);
                 Assert.AreEqual(1, Registers.HF);
 
-                ExecuteWithNoCF(opcode);
+                Execute(opcode);
                 Assert.AreEqual(0, Registers.HF);
             }
         }
@@ -115,16 +125,15 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [TestCaseSource("ADDC_A_r_Source")]
         public void ADDC_A_r_sets_PF_appropriately(string src, byte opcode, int cf)
         {
-            Registers.A = 0x7E;
-            SetReg(src, 1);
+            Setup(src, 0x7E, 1);
 
-            ExecuteWithNoCF(opcode);
+            Execute(opcode);
             Assert.AreEqual(0, Registers.PF);
 
-            ExecuteWithNoCF(opcode);
+            Execute(opcode);
             Assert.AreEqual(1, Registers.PF);
 
-            ExecuteWithNoCF(opcode);
+            Execute(opcode);
             Assert.AreEqual(0, Registers.PF);
         }
 
@@ -140,16 +149,15 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [TestCaseSource("ADDC_A_r_Source")]
         public void ADDC_A_r_sets_CF_appropriately(string src, byte opcode, int cf)
         {
-            Registers.A = 0xFE;
-            SetReg(src, 1);
+            Setup(src, 0xFE, 1);
 
-            ExecuteWithNoCF(opcode);
+            Execute(opcode);
             Assert.AreEqual(0, Registers.CF);
 
-            ExecuteWithNoCF(opcode);
+            Execute(opcode);
             Assert.AreEqual(1, Registers.CF);
 
-            ExecuteWithNoCF(opcode);
+            Execute(opcode);
             Assert.AreEqual(0, Registers.CF);
         }
 
@@ -157,15 +165,13 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [TestCaseSource("ADDC_A_r_Source")]
         public void ADDC_A_r_sets_bits_3_and_5_from_result(string src, byte opcode, int cf)
         {
-            Registers.A = 0;
-            SetReg(src, ((byte)0).WithBit(3, 1).WithBit(5, 0));
-            ExecuteWithNoCF(opcode);
+            Setup(src, ((byte)0).WithBit(3, 1).WithBit(5, 0), 0);
+            Execute(opcode);
             Assert.AreEqual(1, Registers.Flag3);
             Assert.AreEqual(0, Registers.Flag5);
 
-            Registers.A = 0;
-            SetReg(src, ((byte)0).WithBit(3, 0).WithBit(5, 1));
-            ExecuteWithNoCF(opcode);
+            Setup(src, ((byte)0).WithBit(3, 0).WithBit(5, 1), 0);
+            Execute(opcode);
             Assert.AreEqual(0, Registers.Flag3);
             Assert.AreEqual(1, Registers.Flag5);
         }
@@ -176,13 +182,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         public void ADDC_A_r_returns_proper_T_states(string src, byte opcode, int cf)
         {
             var states = Execute(opcode);
-            Assert.AreEqual(4, states);
-        }
-
-        void ExecuteWithNoCF(byte opcode)
-        {
-            Registers.CF = 0;
-            Execute(opcode);
+            Assert.AreEqual(src == "(HL)" ? 7 : 4, states);
         }
     }
 }

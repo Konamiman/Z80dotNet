@@ -46,10 +46,8 @@
     <Compile Include="BitTests.cs" />
     <Compile Include="ClockSynchronizationHelperTests.cs" />
     <Compile Include="HelloWorld.cs" />
-    <Compile Include="InstructionsExecution\SUB A,%28HL%29 + SBC A,%28HL%29   .Tests.cs" />
-    <Compile Include="InstructionsExecution\ADD A,%28HL%29 + ADC A,%28HL%29   .Tests.cs" />
-    <Compile Include="InstructionsExecution\SUB A,r + SBC a,r     .Tests - Copy.cs" />
-    <Compile Include="InstructionsExecution\ADD A,r + ADC a,r     .Tests.cs" />
+    <Compile Include="InstructionsExecution\SUB + SBC A,r + %28HL%29     .Tests.cs" />
+    <Compile Include="InstructionsExecution\ADD + ADC A,r + %28HL%29     .Tests.cs" />
     <Compile Include="InstructionsExecution\CCF              .Tests.cs" />
     <Compile Include="InstructionsExecution\INC %28HL%29       .Tests.cs" />
     <Compile Include="InstructionsExecution\DEC %28HL%29       .Tests.cs" />
