@@ -53,7 +53,10 @@
     <Compile Include="InstructionExecution\Core\InstructionsTable.ED.cs" />
     <Compile Include="InstructionExecution\Core\InstructionsTable.SingleByte.cs" />
     <None Include="InstructionExecution\Instructions\ADC A,%28HL%29   --see ADD A,r" />
+    <None Include="InstructionExecution\Instructions\ADD A,n         --see ADD A,r" />
     <None Include="InstructionExecution\Instructions\ADC A,r         --see ADD A,r" />
+    <None Include="InstructionExecution\Instructions\ADC A,n         --see ADD A,r" />
+    <None Include="InstructionExecution\Instructions\SBC A,n           --see ADD A,r" />
     <None Include="InstructionExecution\Instructions\SUB A,%28HL%29     --see ADD A,r" />
     <None Include="InstructionExecution\Instructions\INC %28HL%29   --see INC r" />
     <None Include="InstructionExecution\Instructions\DEC %28HL%29   --see INC r" />
@@ -62,14 +65,14 @@
       <LastGenOutput>INC r + INC %28HL%29 + DEC r + DEC %28HL%29   .cs</LastGenOutput>
     </None>
     <Compile Include="InstructionExecution\Core\ParityTable.cs" />
-    <None Include="InstructionExecution\Instructions\ADD + ADC + SUB + SBC A, r + %28HL%29.tt">
+    <None Include="InstructionExecution\Instructions\ADD + ADC + SUB + SBC A, r + n + %28HL%29.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ADD + ADC + SUB + SBC A, r + %28HL%29.cs</LastGenOutput>
+      <LastGenOutput>ADD + ADC + SUB + SBC A, r + n + %28HL%29.cs</LastGenOutput>
     </None>
-    <Compile Include="InstructionExecution\Instructions\ADD + ADC + SUB + SBC A, r + %28HL%29.cs">
+    <Compile Include="InstructionExecution\Instructions\ADD + ADC + SUB + SBC A, r + n + %28HL%29.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ADD + ADC + SUB + SBC A, r + %28HL%29.tt</DependentUpon>
+      <DependentUpon>ADD + ADC + SUB + SBC A, r + n + %28HL%29.tt</DependentUpon>
     </Compile>
     <Compile Include="InstructionExecution\Instructions\ADD rr,rr   1.cs">
       <AutoGen>True</AutoGen>
@@ -177,6 +180,7 @@
     <None Include="InstructionExecution\Instructions\SBC A,%28HL%29     --see ADD A,r" />
     <None Include="InstructionExecution\Instructions\SUB A,r           --see ADD A,r" />
     <None Include="InstructionExecution\Instructions\SBC A,r           --see ADD A,r" />
+    <None Include="InstructionExecution\Instructions\SUB A,n           --see ADD A,r" />
     <None Include="InstructionExecution\Instructions\_Utils.t4" />
   </ItemGroup>
   <ItemGroup>

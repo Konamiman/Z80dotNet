@@ -576,14 +576,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The ADD A,n instruction.
-        /// </summary>
-        byte ADD_A_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The RST 00 instruction.
         /// </summary>
         byte RST_00()
@@ -627,14 +619,6 @@ namespace Konamiman.Z80dotNet
         /// The CALL nn instruction.
         /// </summary>
         byte CALL_nn()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The ADC A,n instruction.
-        /// </summary>
-        byte ADC_A_n()
         {
             throw new NotImplementedException();
         }
@@ -696,14 +680,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The SUB n instruction.
-        /// </summary>
-        byte SUB_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The RST 10 instruction.
         /// </summary>
         byte RST_10()
@@ -747,14 +723,6 @@ namespace Konamiman.Z80dotNet
         /// The CALL C,nn instruction.
         /// </summary>
         byte CALL_C_nn()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The SBC A,n instruction.
-        /// </summary>
-        byte SBC_A_n()
         {
             throw new NotImplementedException();
         }

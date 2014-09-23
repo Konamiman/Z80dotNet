@@ -15,7 +15,7 @@ namespace Konamiman.Z80dotNet
 {
     public partial class Z80InstructionExecutor
     {
-<# foreach(var reg in new[] {"A","B","C","D","E","H","L","aHL"}) {
+<# foreach(var reg in new[] {"A","B","C","D","E","H","L","aHL","n"}) {
    foreach(var withCarry in new[] {true, false}) {
    foreach(var isAdd in new[] {true, false}) {
         var instrName = 
@@ -27,15 +27,18 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte <#=instrName#>_<#=isAdd || withCarry ? "A_" : ""#><#=reg#>()
         {
+<# if(reg=="n") { #>
+			var valueToAdd = ProcessorAgent.FetchNextOpcode();
+<# } #>
             FetchFinished();
 
             var oldValue = Registers.A;
 <# if(reg=="aHL") { #>
-			var valueAdded = ProcessorAgent.ReadFromMemory(Registers.HL.ToUShort());
-<# } else { #>
-            var valueAdded = Registers.<#=reg#>;
+			var valueToAdd = ProcessorAgent.ReadFromMemory(Registers.HL.ToUShort());
+<# } else if(reg!="n") { #>
+            var valueToAdd = Registers.<#=reg#>;
 <# } #>
-			var newValue = (byte)oldValue.<#=isAdd ? "Add" : "Sub"#>(valueAdded<# if(withCarry) { #> + Registers.CF<# } #>);
+			var newValue = (byte)oldValue.<#=isAdd ? "Add" : "Sub"#>(valueToAdd<# if(withCarry) { #> + Registers.CF<# } #>);
             Registers.A = newValue;
 
             Registers.SF = newValue.GetBit(7);
@@ -45,10 +48,10 @@ namespace Konamiman.Z80dotNet
             var newValueMSB = newValue.GetBit(7);
             Registers.CF = (oldValueMSB == <#=isAdd ? 1 : 0#>) && (newValueMSB == <#=isAdd ? 0 : 1#>);
 <# if(isAdd) { #>
-            Registers.PF = (oldValueMSB == valueAdded.GetBit(7)) && (oldValueMSB != newValueMSB);
+            Registers.PF = (oldValueMSB == valueToAdd.GetBit(7)) && (oldValueMSB != newValueMSB);
 <# } else { #>
-			var valueAddedMSB = valueAdded.GetBit(7);
-			Registers.PF = (oldValueMSB != valueAddedMSB) && (valueAddedMSB == newValueMSB);
+			var valueToAddMSB = valueToAdd.GetBit(7);
+			Registers.PF = (oldValueMSB != valueToAddMSB) && (valueToAddMSB == newValueMSB);
 <# } #>
 
             Registers.NF = <#=isAdd ? 0 : 1#>;

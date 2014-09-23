@@ -10,11 +10,11 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             var combinations = new List<object[]>();
 
-            var registers = new[] {"B", "C", "D", "E", "H", "L", "(HL)"};
+            var registers = new[] {"B", "C", "D", "E", "H", "L", "(HL)", "n"};
             for(var src = 0; src<=6; src++)
             {
-                var SUB_opcode = (byte) (src | 0x90);
-                var SBC_opcode = (byte) (src | 0x98);
+                var SUB_opcode = (byte)(src==7 ? 0xD6 : (src | 0x90));
+                var SBC_opcode = (byte)(src==7 ? 0xDE : (src | 0x98));
                 combinations.Add(new object[] {registers[src], SUB_opcode, 0});
                 combinations.Add(new object[] {registers[src], SBC_opcode, 0});
                 combinations.Add(new object[] {registers[src], SBC_opcode, 1});
@@ -52,7 +52,11 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Registers.A = oldValue;
             Registers.CF = cf;
 
-            if(src == "(HL)") 
+            if(src == "n") 
+            {
+                SetMemoryContentsAt(1, valueToSubstract);
+            }
+            else if(src == "(HL)") 
             {
                 var address = Fixture.Create<ushort>();
                 ProcessorAgent.Memory[address] = valueToSubstract;
