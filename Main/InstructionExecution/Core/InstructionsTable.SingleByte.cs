@@ -272,70 +272,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files and include them in the table when they are implemented.
 
         /// <summary>
-        /// The XOR B instruction.
-        /// </summary>
-        byte XOR_B()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The XOR C instruction.
-        /// </summary>
-        byte XOR_C()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The XOR D instruction.
-        /// </summary>
-        byte XOR_D()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The XOR E instruction.
-        /// </summary>
-        byte XOR_E()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The XOR H instruction.
-        /// </summary>
-        byte XOR_H()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The XOR L instruction.
-        /// </summary>
-        byte XOR_L()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The XOR (HL) instruction.
-        /// </summary>
-        byte XOR_aHL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The XOR A instruction.
-        /// </summary>
-        byte XOR_A()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The OR B instruction.
         /// </summary>
         byte OR_B()
@@ -763,14 +699,6 @@ namespace Konamiman.Z80dotNet
         /// The CALL PE,nn instruction.
         /// </summary>
         byte CALL_PE_nn()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The XOR n instruction.
-        /// </summary>
-        byte XOR_n()
         {
             throw new NotImplementedException();
         }

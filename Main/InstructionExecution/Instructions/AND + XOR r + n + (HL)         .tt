@@ -15,11 +15,13 @@ namespace Konamiman.Z80dotNet
 {
     public partial class Z80InstructionExecutor
     {
-<# foreach(var reg in new[] {"A","B","C","D","E","H","L","aHL","n"}) { #>
+<# var operators = new Dictionary<string, string> {{"AND","&"}, {"XOR","^"}};
+   foreach(var reg in new[] {"A","B","C","D","E","H","L","aHL","n"}) {
+   foreach(var instrName in new[] {"AND","XOR"}) { #>
         /// <summary>
-        /// The AND <#=reg=="aHL" ? "(HL)" : reg#> instruction.
+        /// The <#=instrName#> <#=reg=="aHL" ? "(HL)" : reg#> instruction.
         /// </summary>
-        private byte AND_<#=reg#>()
+        private byte <#=instrName#>_<#=reg#>()
         {
 <# if(reg=="n") { #>
 			var argument = ProcessorAgent.FetchNextOpcode();
@@ -32,12 +34,12 @@ namespace Konamiman.Z80dotNet
 <# } else if(reg!="n") { #>
             var argument = Registers.<#=reg#>;
 <# } #>
-			var newValue = (byte)(oldValue & argument);
+			var newValue = (byte)(oldValue <#=operators[instrName]#> argument);
             Registers.A = newValue;
 
             Registers.SF = newValue.GetBit(7);
             Registers.ZF = (newValue == 0);
-            Registers.HF = 1;
+            Registers.HF = <#=instrName == "AND" ? 1 : 0#>;
             Registers.PF = Parity[newValue];
             Registers.NF = 0;
 			Registers.CF = 0;
@@ -46,6 +48,6 @@ namespace Konamiman.Z80dotNet
             return <#=reg=="aHL" || reg=="n" ? 7 : 4#>;
         }
 
-<# } #>
+<# }} #>
     }
 }
