@@ -47,8 +47,7 @@
     <Compile Include="ClockSynchronizationHelperTests.cs" />
     <Compile Include="HelloWorld.cs" />
     <Compile Include="InstructionsExecution\ADC a,%28HL%29   .Tests.cs" />
-    <Compile Include="InstructionsExecution\ADD a,%28HL%29   .Tests.cs" />
-    <Compile Include="InstructionsExecution\ADC a,r     .Tests.cs" />
+    <Compile Include="InstructionsExecution\ADD A,r + ADC a,r     .Tests.cs" />
     <Compile Include="InstructionsExecution\SBC a,%28HL%29   .Tests.cs" />
     <Compile Include="InstructionsExecution\SUB a,%28HL%29   .Tests.cs" />
     <Compile Include="InstructionsExecution\SUB a,r        .Tests.cs" />
@@ -56,7 +55,6 @@
     <Compile Include="InstructionsExecution\INC %28HL%29       .Tests.cs" />
     <Compile Include="InstructionsExecution\DEC %28HL%29       .Tests.cs" />
     <Compile Include="InstructionsExecution\LD %28HL%29,n     .Tests.cs" />
-    <Compile Include="InstructionsExecution\ADD a,r   .Tests.cs" />
     <Compile Include="InstructionsExecution\LD r,r          .Tests.cs" />
     <Compile Include="InstructionsExecution\HALT           .Tests.cs" />
     <Compile Include="InstructionsExecution\SCF              .Tests.cs" />
