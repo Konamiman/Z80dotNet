@@ -17,11 +17,15 @@ namespace Konamiman.Z80dotNet
     {
 <# foreach(var reg in new[] {"A","B","C","D","E","H","L","aHL"}) {
    foreach(var withCarry in new[] {true, false}) {
-        var instrName = withCarry? "ADC" : "ADD"; #>
+   foreach(var isAdd in new[] {true, false}) {
+        var instrName = 
+		   isAdd && withCarry ? "ADC" :
+		   isAdd && !withCarry ? "ADD" :
+		   withCarry ? "SBC" : "SUB"; #>
         /// <summary>
         /// The <#=instrName#> A,<#=reg=="aHL" ? "(HL)" : reg#> instruction.
         /// </summary>
-        private byte <#=instrName#>_A_<#=reg#>()
+        private byte <#=instrName#>_<#=isAdd || withCarry ? "A_" : ""#><#=reg#>()
         {
             FetchFinished();
 
@@ -31,22 +35,28 @@ namespace Konamiman.Z80dotNet
 <# } else { #>
             var valueAdded = Registers.<#=reg#>;
 <# } #>
-			var newValue = (byte)oldValue.Add(valueAdded<# if(withCarry) { #> + Registers.CF<# } #>);
+			var newValue = (byte)oldValue.<#=isAdd ? "Add" : "Sub"#>(valueAdded<# if(withCarry) { #> + Registers.CF<# } #>);
             Registers.A = newValue;
 
             Registers.SF = newValue.GetBit(7);
             Registers.ZF = (newValue == 0);
-            Registers.HF = (newValue & 0x0F) < (oldValue & 0x0F);
+            Registers.HF = (newValue & 0x0F) <#=isAdd ? "<" : ">" #> (oldValue & 0x0F);
             var oldValueMSB = oldValue.GetBit(7);
             var newValueMSB = newValue.GetBit(7);
+            Registers.CF = (oldValueMSB == <#=isAdd ? 1 : 0#>) && (newValueMSB == <#=isAdd ? 0 : 1#>);
+<# if(isAdd) { #>
             Registers.PF = (oldValueMSB == valueAdded.GetBit(7)) && (oldValueMSB != newValueMSB);
-            Registers.CF = (oldValueMSB == 1) && (newValueMSB == 0);
-            Registers.NF = 0;
+<# } else { #>
+			var valueAddedMSB = valueAdded.GetBit(7);
+			Registers.PF = (oldValueMSB != valueAddedMSB) && (valueAddedMSB == newValueMSB);
+<# } #>
+
+            Registers.NF = <#=isAdd ? 0 : 1#>;
             SetFlags3and5From(newValue);
 
             return <#=reg=="aHL" ? 7 : 4#>;
         }
 
-<# }} #>
+<# }}} #>
     }
 }

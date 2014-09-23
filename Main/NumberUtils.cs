@@ -306,6 +306,16 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
+        /// Substract a value to a number and overlaps it from its max value if it passes below its minimum value.
+        /// </summary>
+        /// <param name="value">Number to decrease</param>
+        /// <returns>Increased number, or zero</returns>
+        public static short Sub(this byte value, int amount)
+        {
+            return ((((int)value)-amount) & 0xFF).ToShort();
+        }
+
+        /// <summary>
         /// Increments the value using only the lowest seven bits (the most significant bit is unchanged).
         /// </summary>
         /// <param name="value">Number to increment</param>
