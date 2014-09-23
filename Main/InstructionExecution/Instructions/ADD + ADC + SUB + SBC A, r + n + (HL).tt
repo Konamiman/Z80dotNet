@@ -57,7 +57,7 @@ namespace Konamiman.Z80dotNet
             Registers.NF = <#=isAdd ? 0 : 1#>;
             SetFlags3and5From(newValue);
 
-            return <#=reg=="aHL" ? 7 : 4#>;
+            return <#=reg=="aHL" || reg=="n" ? 7 : 4#>;
         }
 
 <# }}} #>

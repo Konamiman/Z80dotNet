@@ -272,70 +272,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files and include them in the table when they are implemented.
 
         /// <summary>
-        /// The AND B instruction.
-        /// </summary>
-        byte AND_B()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The AND C instruction.
-        /// </summary>
-        byte AND_C()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The AND D instruction.
-        /// </summary>
-        byte AND_D()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The AND E instruction.
-        /// </summary>
-        byte AND_E()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The AND H instruction.
-        /// </summary>
-        byte AND_H()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The AND L instruction.
-        /// </summary>
-        byte AND_L()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The AND (HL) instruction.
-        /// </summary>
-        byte AND_aHL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The AND A instruction.
-        /// </summary>
-        byte AND_A()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The XOR B instruction.
         /// </summary>
         byte XOR_B()
@@ -779,14 +715,6 @@ namespace Konamiman.Z80dotNet
         /// The PUSH HL instruction.
         /// </summary>
         byte PUSH_HL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The AND n instruction.
-        /// </summary>
-        byte AND_n()
         {
             throw new NotImplementedException();
         }

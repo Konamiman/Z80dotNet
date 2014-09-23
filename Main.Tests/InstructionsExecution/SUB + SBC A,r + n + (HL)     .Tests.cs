@@ -204,7 +204,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         public void SUBC_A_r_returns_proper_T_states(string src, byte opcode, int cf)
         {
             var states = Execute(opcode);
-            Assert.AreEqual(src == "(HL)" ? 7 : 4, states);
+            Assert.AreEqual(src == "(HL)" || src == "n" ? 7 : 4, states);
         }
     }
 }

@@ -53,6 +53,12 @@
     <Compile Include="InstructionExecution\Core\InstructionsTable.ED.cs" />
     <Compile Include="InstructionExecution\Core\InstructionsTable.SingleByte.cs" />
     <None Include="InstructionExecution\Instructions\ADC A,%28HL%29   --see ADD A,r" />
+    <None Include="InstructionExecution\Instructions\AND %28HL%29       --see AND r" />
+    <None Include="InstructionExecution\Instructions\AND n            --see AND r" />
+    <None Include="InstructionExecution\Instructions\AND r + n + %28HL%29         .tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AND r + n + %28HL%29         .cs</LastGenOutput>
+    </None>
     <None Include="InstructionExecution\Instructions\ADD A,n         --see ADD A,r" />
     <None Include="InstructionExecution\Instructions\ADC A,r         --see ADD A,r" />
     <None Include="InstructionExecution\Instructions\ADC A,n         --see ADD A,r" />
@@ -69,6 +75,11 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ADD + ADC + SUB + SBC A, r + n + %28HL%29.cs</LastGenOutput>
     </None>
+    <Compile Include="InstructionExecution\Instructions\AND r + n + %28HL%29         .cs">
+      <DependentUpon>AND r + n + %28HL%29         .tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="InstructionExecution\Instructions\ADD + ADC + SUB + SBC A, r + n + %28HL%29.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

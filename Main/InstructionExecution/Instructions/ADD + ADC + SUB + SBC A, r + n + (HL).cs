@@ -878,7 +878,7 @@ namespace Konamiman.Z80dotNet
             Registers.NF = 0;
             SetFlags3and5From(newValue);
 
-            return 4;
+            return 7;
         }
 
         /// <summary>
@@ -905,7 +905,7 @@ namespace Konamiman.Z80dotNet
             Registers.NF = 1;
             SetFlags3and5From(newValue);
 
-            return 4;
+            return 7;
         }
 
         /// <summary>
@@ -931,7 +931,7 @@ namespace Konamiman.Z80dotNet
             Registers.NF = 0;
             SetFlags3and5From(newValue);
 
-            return 4;
+            return 7;
         }
 
         /// <summary>
@@ -958,7 +958,7 @@ namespace Konamiman.Z80dotNet
             Registers.NF = 1;
             SetFlags3and5From(newValue);
 
-            return 4;
+            return 7;
         }
 
     }
