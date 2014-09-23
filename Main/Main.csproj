@@ -52,6 +52,8 @@
     <Compile Include="InstructionExecution\Core\InstructionsTable.FD.cs" />
     <Compile Include="InstructionExecution\Core\InstructionsTable.ED.cs" />
     <Compile Include="InstructionExecution\Core\InstructionsTable.SingleByte.cs" />
+    <None Include="InstructionExecution\Instructions\ADC A,%28HL%29   --see ADD A,r" />
+    <None Include="InstructionExecution\Instructions\ADC A,r         --see ADD A,r" />
     <None Include="InstructionExecution\Instructions\INC %28HL%29   --see INC r" />
     <None Include="InstructionExecution\Instructions\DEC %28HL%29   --see INC r" />
     <None Include="InstructionExecution\Instructions\INC r + INC %28HL%29 + DEC r + DEC %28HL%29   .tt">
@@ -59,14 +61,14 @@
       <LastGenOutput>INC r + INC %28HL%29 + DEC r + DEC %28HL%29   .cs</LastGenOutput>
     </None>
     <Compile Include="InstructionExecution\Core\ParityTable.cs" />
-    <None Include="InstructionExecution\Instructions\ADD A,r + ADD A,%28HL%29    .tt">
+    <None Include="InstructionExecution\Instructions\ADD%28C%29 A,r + ADD%28C%29 A,%28HL%29    .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ADD A,r + ADD A,%28HL%29    .cs</LastGenOutput>
+      <LastGenOutput>ADD%28C%29 A,r + ADD%28C%29 A,%28HL%29    .cs</LastGenOutput>
     </None>
-    <Compile Include="InstructionExecution\Instructions\ADD A,r + ADD A,%28HL%29    .cs">
+    <Compile Include="InstructionExecution\Instructions\ADD%28C%29 A,r + ADD%28C%29 A,%28HL%29    .cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ADD A,r + ADD A,%28HL%29    .tt</DependentUpon>
+      <DependentUpon>ADD%28C%29 A,r + ADD%28C%29 A,%28HL%29    .tt</DependentUpon>
     </Compile>
     <Compile Include="InstructionExecution\Instructions\ADD rr,rr   1.cs">
       <AutoGen>True</AutoGen>

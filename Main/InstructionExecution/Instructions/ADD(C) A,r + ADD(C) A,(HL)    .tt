@@ -15,11 +15,13 @@ namespace Konamiman.Z80dotNet
 {
     public partial class Z80InstructionExecutor
     {
-<# foreach(var reg in new[] {"A","B","C","D","E","H","L","aHL"}) { #>
+<# foreach(var reg in new[] {"A","B","C","D","E","H","L","aHL"}) {
+   foreach(var withCarry in new[] {true, false}) {
+        var instrName = withCarry? "ADC" : "ADD"; #>
         /// <summary>
-        /// The ADD A,<#=reg=="aHL" ? "(HL)" : reg#> instruction.
+        /// The <#=instrName#> A,<#=reg=="aHL" ? "(HL)" : reg#> instruction.
         /// </summary>
-        private byte ADD_A_<#=reg#>()
+        private byte <#=instrName#>_A_<#=reg#>()
         {
             FetchFinished();
 
@@ -29,7 +31,7 @@ namespace Konamiman.Z80dotNet
 <# } else { #>
             var valueAdded = Registers.<#=reg#>;
 <# } #>
-			var newValue = (byte)oldValue.Add(valueAdded);
+			var newValue = (byte)oldValue.Add(valueAdded<# if(withCarry) { #> + Registers.CF<# } #>);
             Registers.A = newValue;
 
             Registers.SF = newValue.GetBit(7);
@@ -45,6 +47,6 @@ namespace Konamiman.Z80dotNet
             return <#=reg=="aHL" ? 7 : 4#>;
         }
 
-<# } #>
+<# }} #>
     }
 }
