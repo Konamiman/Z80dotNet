@@ -272,70 +272,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files and include them in the table when they are implemented.
 
         /// <summary>
-        /// The CP B instruction.
-        /// </summary>
-        byte CP_B()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The CP C instruction.
-        /// </summary>
-        byte CP_C()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The CP D instruction.
-        /// </summary>
-        byte CP_D()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The CP E instruction.
-        /// </summary>
-        byte CP_E()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The CP H instruction.
-        /// </summary>
-        byte CP_H()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The CP L instruction.
-        /// </summary>
-        byte CP_L()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The CP (HL) instruction.
-        /// </summary>
-        byte CP_aHL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The CP A instruction.
-        /// </summary>
-        byte CP_A()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The RET NZ instruction.
         /// </summary>
         byte RET_NZ()
@@ -739,14 +675,6 @@ namespace Konamiman.Z80dotNet
         /// The CALL M,nn instruction.
         /// </summary>
         byte CALL_M_nn()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The CP n instruction.
-        /// </summary>
-        byte CP_n()
         {
             throw new NotImplementedException();
         }

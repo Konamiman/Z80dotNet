@@ -89,7 +89,6 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         protected int Execute(byte opcode, byte? prefix = null, params byte[] nextFetches)
         {
             return ExecuteAt(0, opcode, prefix, nextFetches);
-
         }
 
         protected int ExecuteAt(ushort address, byte opcode, byte? prefix = null, params byte[] nextFetches)

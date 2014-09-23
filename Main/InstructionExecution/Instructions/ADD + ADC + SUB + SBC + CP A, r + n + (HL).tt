@@ -17,13 +17,18 @@ namespace Konamiman.Z80dotNet
     {
 <# foreach(var reg in new[] {"A","B","C","D","E","H","L","aHL","n"}) {
    foreach(var withCarry in new[] {true, false}) {
-   foreach(var isAdd in new[] {true, false}) {
+   for(int i=0; i<=2; i++) {
+	    var isAdd = (i==0);
+	    var isSub = (i==1);
+	    var isCP = (i==2);
+	    if(isCP && withCarry) continue;
         var instrName = 
+		   isCP ? "CP" :
 		   isAdd && withCarry ? "ADC" :
 		   isAdd && !withCarry ? "ADD" :
 		   withCarry ? "SBC" : "SUB"; #>
         /// <summary>
-        /// The <#=instrName#> A,<#=reg=="aHL" ? "(HL)" : reg#> instruction.
+        /// The <#=instrName#> <#=isAdd || (isSub && withCarry) ? "A," : ""#><#=reg=="aHL" ? "(HL)" : reg#> instruction.
         /// </summary>
         private byte <#=instrName#>_<#=isAdd || withCarry ? "A_" : ""#><#=reg#>()
         {
@@ -39,7 +44,9 @@ namespace Konamiman.Z80dotNet
             var valueToAdd = Registers.<#=reg#>;
 <# } #>
 			var newValue = (byte)oldValue.<#=isAdd ? "Add" : "Sub"#>(valueToAdd<# if(withCarry) { #> + Registers.CF<# } #>);
+<# if(!isCP) { #>
             Registers.A = newValue;
+<# } #>
 
             Registers.SF = newValue.GetBit(7);
             Registers.ZF = (newValue == 0);

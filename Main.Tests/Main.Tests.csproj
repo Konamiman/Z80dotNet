@@ -49,7 +49,7 @@
     <Compile Include="InstructionsExecution\OR r + n + %28HL%29                     .Tests.cs" />
     <Compile Include="InstructionsExecution\XOR r + n + %28HL%29                     .Tests.cs" />
     <Compile Include="InstructionsExecution\AND r + n + %28HL%29                     .Tests.cs" />
-    <Compile Include="InstructionsExecution\SUB + SBC A,r + n + %28HL%29     .Tests.cs" />
+    <Compile Include="InstructionsExecution\SUB + SBC + CP A,r + n + %28HL%29     .Tests.cs" />
     <Compile Include="InstructionsExecution\ADD + ADC A,r + n + %28HL%29     .Tests.cs" />
     <Compile Include="InstructionsExecution\CCF              .Tests.cs" />
     <Compile Include="InstructionsExecution\INC %28HL%29       .Tests.cs" />
