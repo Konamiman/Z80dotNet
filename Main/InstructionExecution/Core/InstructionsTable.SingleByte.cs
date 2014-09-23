@@ -272,70 +272,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files and include them in the table when they are implemented.
 
         /// <summary>
-        /// The OR B instruction.
-        /// </summary>
-        byte OR_B()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The OR C instruction.
-        /// </summary>
-        byte OR_C()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The OR D instruction.
-        /// </summary>
-        byte OR_D()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The OR E instruction.
-        /// </summary>
-        byte OR_E()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The OR H instruction.
-        /// </summary>
-        byte OR_H()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The OR L instruction.
-        /// </summary>
-        byte OR_L()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The OR (HL) instruction.
-        /// </summary>
-        byte OR_aHL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The OR A instruction.
-        /// </summary>
-        byte OR_A()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The CP B instruction.
         /// </summary>
         byte CP_B()
@@ -755,14 +691,6 @@ namespace Konamiman.Z80dotNet
         /// The PUSH AF instruction.
         /// </summary>
         byte PUSH_AF()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The OR n instruction.
-        /// </summary>
-        byte OR_n()
         {
             throw new NotImplementedException();
         }

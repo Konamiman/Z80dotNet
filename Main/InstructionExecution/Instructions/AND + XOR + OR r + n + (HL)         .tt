@@ -15,9 +15,9 @@ namespace Konamiman.Z80dotNet
 {
     public partial class Z80InstructionExecutor
     {
-<# var operators = new Dictionary<string, string> {{"AND","&"}, {"XOR","^"}};
+<# var operators = new Dictionary<string, string> {{"AND","&"}, {"XOR","^"}, {"OR","|"}};
    foreach(var reg in new[] {"A","B","C","D","E","H","L","aHL","n"}) {
-   foreach(var instrName in new[] {"AND","XOR"}) { #>
+   foreach(var instrName in operators.Keys) { #>
         /// <summary>
         /// The <#=instrName#> <#=reg=="aHL" ? "(HL)" : reg#> instruction.
         /// </summary>
