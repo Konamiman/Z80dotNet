@@ -3,86 +3,100 @@ using Ploeh.AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
-    public class SUB_A_aHL_tests : InstructionsExecutionTestsBase
+    public class SUBC_A_aHL_tests : InstructionsExecutionTestsBase
     {
         private const byte SUB_A_aHL_opcode = 0x96;
+        private const byte SBC_A_aHL_opcode = 0x9E;
+
+        public static object[] SUBC_A_aHL_Source =
+        {
+            new object[] {SUB_A_aHL_opcode, 0},
+            new object[] {SBC_A_aHL_opcode, 0},
+            new object[] {SBC_A_aHL_opcode, 1}
+        };
 
         [Test]
-        public void SUB_A_aHL_substracts_value_from_memory()
+        [TestCaseSource("SUBC_A_aHL_Source")]
+        public void SUBC_A_aHL_substracts_values_appropriately_with_or_without_CF(byte opcode, int cf)
         {
             var oldValue = Fixture.Create<byte>();
             var valueSubstracted = Fixture.Create<byte>();
 
-            Setup(oldValue, valueSubstracted);
-            Execute(SUB_A_aHL_opcode);
+            Setup(oldValue, valueSubstracted, cf);
+            Execute(opcode);
 
-            Assert.AreEqual(oldValue.Sub(valueSubstracted), Registers.A);
+            Assert.AreEqual(oldValue.Sub(valueSubstracted + cf), Registers.A);
         }
 
-        private void Setup(byte oldValue, byte valueToSub)
+        private void Setup(byte oldValue, byte valueToAdd, int cf = 0)
         {
             Registers.A = oldValue;
+            Registers.CF = cf;
             var address = Fixture.Create<ushort>();
-            ProcessorAgent.Memory[address] = valueToSub;
+            ProcessorAgent.Memory[address] = valueToAdd;
             Registers.HL = address.ToShort();
         }
 
         [Test]
-        public void SUB_A_aHL_sets_SF_appropriately()
+        [TestCaseSource("SUBC_A_aHL_Source")]
+        public void SUBC_A_aHL_sets_SF_appropriately(byte opcode, int cf)
         {
             Setup(0x02, 1);
 
-            Execute(SUB_A_aHL_opcode);
+            ExecuteWithNoCF(opcode);
             Assert.AreEqual(0, Registers.SF);
 
-            Execute(SUB_A_aHL_opcode);
+            ExecuteWithNoCF(opcode);
             Assert.AreEqual(0, Registers.SF);
 
-            Execute(SUB_A_aHL_opcode);
+            ExecuteWithNoCF(opcode);
             Assert.AreEqual(1, Registers.SF);
 
-            Execute(SUB_A_aHL_opcode);
+            ExecuteWithNoCF(opcode);
             Assert.AreEqual(1, Registers.SF);
         }
 
         [Test]
-        public void SUB_A_aHL_sets_ZF_appropriately()
+        [TestCaseSource("SUBC_A_aHL_Source")]
+        public void SUBC_A_aHL_sets_ZF_appropriately(byte opcode, int cf)
         {
             Setup(0x03, 1);
 
-            Execute(SUB_A_aHL_opcode);
+            ExecuteWithNoCF(opcode);
             Assert.AreEqual(0, Registers.ZF);
 
-            Execute(SUB_A_aHL_opcode);
+            ExecuteWithNoCF(opcode);
             Assert.AreEqual(0, Registers.ZF);
 
-            Execute(SUB_A_aHL_opcode);
+            ExecuteWithNoCF(opcode);
             Assert.AreEqual(1, Registers.ZF);
 
-            Execute(SUB_A_aHL_opcode);
+            ExecuteWithNoCF(opcode);
             Assert.AreEqual(0, Registers.ZF);
         }
 
         [Test]
-        public void SUB_A_aHL_sets_HF_appropriately()
+        [TestCaseSource("SUBC_A_aHL_Source")]
+        public void SUBC_A_aHL_sets_HF_appropriately(byte opcode, int cf)
         {
             foreach(byte b in new byte[] { 0x11, 0x81, 0xF1 }) 
             {
                 Setup(b, 1);
 
-                Execute(SUB_A_aHL_opcode);
+                ExecuteWithNoCF(opcode);
                 Assert.AreEqual(0, Registers.HF);
 
-                Execute(SUB_A_aHL_opcode);
+                ExecuteWithNoCF(opcode);
                 Assert.AreEqual(1, Registers.HF);
 
-                Execute(SUB_A_aHL_opcode);
+                ExecuteWithNoCF(opcode);
                 Assert.AreEqual(0, Registers.HF);
             }
         }
 
         [Test]
-        public void SUB_A_aHL_sets_PF_appropriately()
+        [TestCaseSource("SUBC_A_aHL_Source")]
+        public void SUBC_A_aHL_sets_PF_appropriately(byte opcode, int cf)
         {
             //http://stackoverflow.com/a/8037485/4574
 
@@ -115,45 +129,55 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
 
         [Test]
-        public void SUB_A_aHL_sets_NF()
+        [TestCaseSource("SUBC_A_aHL_Source")]
+        public void SUBC_A_aHL_sets_NF(byte opcode, int cf)
         {
             AssertSetsFlags(SUB_A_aHL_opcode, null, "N");
         }
 
         [Test]
-        public void SUB_A_aHL_sets_CF_appropriately()
+        [TestCaseSource("SUBC_A_aHL_Source")]
+        public void SUBC_A_aHL_sets_CF_appropriately(byte opcode, int cf)
         {
             Setup(0x01, 1);
 
-            Execute(SUB_A_aHL_opcode);
+            ExecuteWithNoCF(opcode);
             Assert.AreEqual(0, Registers.CF);
 
-            Execute(SUB_A_aHL_opcode);
+            ExecuteWithNoCF(opcode);
             Assert.AreEqual(1, Registers.CF);
 
-            Execute(SUB_A_aHL_opcode);
+            ExecuteWithNoCF(opcode);
             Assert.AreEqual(0, Registers.CF);
         }
 
         [Test]
-        public void SUB_A_aHL_sets_bits_3_and_5_from_result()
+        [TestCaseSource("SUBC_A_aHL_Source")]
+        public void SUBC_A_aHL_sets_bits_3_and_5_from_result(byte opcode, int cf)
         {
             Setup((byte)(((byte)0).WithBit(3, 1).WithBit(5, 0) + 1), 1);
-            Execute(SUB_A_aHL_opcode);
+            ExecuteWithNoCF(opcode);
             Assert.AreEqual(1, Registers.Flag3);
             Assert.AreEqual(0, Registers.Flag5);
 
             Setup((byte)(((byte)0).WithBit(3, 0).WithBit(5, 1) + 1), 1);
-            Execute(SUB_A_aHL_opcode);
+            ExecuteWithNoCF(opcode);
             Assert.AreEqual(0, Registers.Flag3);
             Assert.AreEqual(1, Registers.Flag5);
         }
 
         [Test]
-        public void SUB_A_aHL_returns_proper_T_states()
+        [TestCaseSource("SUBC_A_aHL_Source")]
+        public void SUBC_A_aHL_aHLeturns_proper_T_states(byte opcode, int cf)
         {
-            var states = Execute(SUB_A_aHL_opcode);
+            var states = Execute(opcode);
             Assert.AreEqual(7, states);
+        }
+
+        void ExecuteWithNoCF(byte opcode)
+        {
+            Registers.CF = 0;
+            Execute(opcode);
         }
     }
 }
