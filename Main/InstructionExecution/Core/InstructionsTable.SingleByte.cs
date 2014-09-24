@@ -278,13 +278,5 @@ namespace Konamiman.Z80dotNet
         {
             throw new NotImplementedException();
         }
-
-        /// <summary>
-        /// The IN A,(n) instruction.
-        /// </summary>
-        byte IN_A_n()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

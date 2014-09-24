@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using NUnit.Framework;
 using Ploeh.AutoFixture;
 
@@ -29,6 +28,11 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         #region Auxiliary methods
 
         protected int nextFetchesAddress;
+
+        protected void SetPortValue(byte portNumber, byte value)
+        {
+            ProcessorAgent.Ports[portNumber] = value;
+        }
 
         protected void SetMemoryContents(params byte[] opcodes)
         {
@@ -220,9 +224,12 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             {
                 Registers = new Z80Registers();
                 Memory = new byte[65536];
+                Ports = new byte[256];
             }
 
             public byte[] Memory { get; set; }
+
+            public byte[] Ports { get; set; }
 
             public ushort MemoryPointer { get; set; }
 
@@ -248,12 +255,12 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             public byte ReadFromPort(byte portNumber)
             {
-                throw new NotImplementedException();
+                return Ports[portNumber];
             }
 
             public void WriteToPort(byte portNumber, byte value)
             {
-                throw new NotImplementedException();
+                Ports[portNumber] = value;
             }
 
             public IZ80Registers Registers { get; set; }
