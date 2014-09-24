@@ -55,7 +55,7 @@ namespace Konamiman.Z80dotNet
 			Registers.PC = newAddress;
 <# } #>
 
-            return <#=isCall ? 17 : isRet ? 11 : 10#>;
+            return <#=isCall ? 17 : (isRet && flag != "") ? 11 : 10#>;
         }
 
 <# }}} #>

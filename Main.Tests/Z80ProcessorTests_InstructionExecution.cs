@@ -437,7 +437,7 @@ namespace Konamiman.Z80dotNet.Tests
         #region Invoking agent members at the right time
 
         [Test]
-        public void ProcessorAgent_members_other_than_FetchNextOpcode_can_be_invoked_only_after_instruction_fetch_complete()
+        public void ProcessorAgent_members_other_than_FetchNextOpcode_and_Registers_can_be_invoked_only_after_instruction_fetch_complete()
         {
             var address = Fixture.Create<byte>();
             var value = Fixture.Create<byte>();
@@ -451,7 +451,7 @@ namespace Konamiman.Z80dotNet.Tests
                 Assert.Throws<InvalidOperationException>(() => Sut.WriteToMemory(address, value));
                 Assert.Throws<InvalidOperationException>(() => Sut.WriteToPort(address, value));
                 Assert.Throws<InvalidOperationException>(() => Sut.SetInterruptMode(0));
-                Assert.Throws<InvalidOperationException>(() => ((IZ80ProcessorAgent)Sut).Registers.ToString());
+                var dummy = ((IZ80ProcessorAgent)Sut).Registers;
                 Assert.Throws<InvalidOperationException>(() => Sut.Stop());
             });
 

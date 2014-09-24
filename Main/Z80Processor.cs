@@ -709,9 +709,6 @@ namespace Konamiman.Z80dotNet
         {
             get
             {
-                if(executionContext != null)
-                    FailIfNoInstructionFetchComplete();
-
                 return _Registers;
             }
         }

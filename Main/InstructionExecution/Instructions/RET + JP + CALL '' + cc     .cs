@@ -22,7 +22,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.SP = Registers.SP.Add(2);
 
-            return 11;
+            return 10;
         }
 
         /// <summary>

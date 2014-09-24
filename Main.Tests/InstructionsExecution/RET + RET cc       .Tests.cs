@@ -79,7 +79,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             SetFlagIfNotNull(flagName, flagValue);
             var states = Execute(opcode);
 
-            Assert.AreEqual(11, states);
+            Assert.AreEqual(flagName == null ? 10 : 11, states);
         }
 
         [Test]

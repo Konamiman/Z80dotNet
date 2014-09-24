@@ -10,7 +10,6 @@ namespace Konamiman.Z80dotNet.Tests
         {
             var Sut = new Z80Processor();
             Sut.AutoStopOnRetWithStackEmpty = true;
-            Sut.InstructionExecutor = new HelloWorldInstructionExecutor();
 
             var program = new byte[]
             {
@@ -24,55 +23,7 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.Start();
 
             Assert.AreEqual(12, Sut.Registers.A);
-            Assert.AreEqual(25, Sut.TStatesElapsedSinceStart);
-        }
-
-        //TODO: Remove this class and use the normal Z80InstructionExecutor when it has all the appropriate instructions implemented.
-        private class HelloWorldInstructionExecutor : IZ80InstructionExecutor
-        {
-            public IZ80ProcessorAgent ProcessorAgent { get; set; }
-
-            public int Execute(byte firstOpcodeByte)
-            {
-                byte value;
-
-                switch (firstOpcodeByte)
-                {
-                    case 0x3E: //LD A,n
-                        value = ProcessorAgent.FetchNextOpcode();
-                        FetchFinished();
-                        ProcessorAgent.Registers.A = value;
-                        return 7;
-                    case 0xC6: //ADD A,n
-                        value = ProcessorAgent.FetchNextOpcode();
-                        FetchFinished();
-                        ProcessorAgent.Registers.A += value; //TODO: Check for overflow, set flags
-                        return 4;
-                    case 0x3C: //INC A
-                        FetchFinished();
-                        ProcessorAgent.Registers.A++; //TODO: Check for overflow, set flags
-                        return 4;
-                    case 0xC9: //RET
-                        FetchFinished(true);
-                        //TODO: Update PC and SP
-                        return 10;
-                    default: //treat as NOP
-                        return 4;
-                }
-            }
-
-
-            private void FetchFinished(bool isRet = false, bool isHalt = false, bool isLdSp = false)
-            {
-                InstructionFetchFinished(this, new InstructionFetchFinishedEventArgs()
-                {
-                    IsRetInstruction = isRet,
-                    IsHaltInstruction = isHalt,
-                    IsLdSpInstruction = isLdSp
-                });
-            }
-
-            public event EventHandler<InstructionFetchFinishedEventArgs> InstructionFetchFinished;
+            Assert.AreEqual(28, Sut.TStatesElapsedSinceStart);
         }
     }
 }
