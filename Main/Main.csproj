@@ -110,6 +110,7 @@
       <LastGenOutput>JR cc         1.cs</LastGenOutput>
     </None>
     <Compile Include="InstructionExecution\Instructions\CCF           .cs" />
+    <Compile Include="InstructionExecution\Instructions\EX AF,AF%27   - Copy.cs" />
     <Compile Include="InstructionExecution\Instructions\LD %28HL%29,n    .cs" />
     <Compile Include="InstructionExecution\Instructions\LD r,r       .cs">
       <DependentUpon>LD r,r       .tt</DependentUpon>

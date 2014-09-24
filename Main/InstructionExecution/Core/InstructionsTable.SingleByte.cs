@@ -304,14 +304,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The EX DE,HL instruction.
-        /// </summary>
-        byte EX_DE_HL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The DI instruction.
         /// </summary>
         byte DI()
