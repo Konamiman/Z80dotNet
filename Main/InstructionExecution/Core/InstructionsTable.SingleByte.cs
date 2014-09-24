@@ -286,13 +286,5 @@ namespace Konamiman.Z80dotNet
         {
             throw new NotImplementedException();
         }
-
-        /// <summary>
-        /// The EX (SP),HL instruction.
-        /// </summary>
-        byte EX_aSP_HL()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
