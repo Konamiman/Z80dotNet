@@ -14,7 +14,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            var sp = Registers.SP.ToUShort();
+			var sp = Registers.SP.ToUShort();
             var newPC = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
                 ProcessorAgent.ReadFromMemory(sp.Inc()));
@@ -35,7 +35,7 @@ namespace Konamiman.Z80dotNet
             if(Registers.CF == 0)
                 return 5;
 
-            var sp = Registers.SP.ToUShort();
+			var sp = Registers.SP.ToUShort();
             var newPC = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
                 ProcessorAgent.ReadFromMemory(sp.Inc()));
@@ -56,7 +56,7 @@ namespace Konamiman.Z80dotNet
             if(Registers.CF == 1)
                 return 5;
 
-            var sp = Registers.SP.ToUShort();
+			var sp = Registers.SP.ToUShort();
             var newPC = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
                 ProcessorAgent.ReadFromMemory(sp.Inc()));
@@ -77,7 +77,7 @@ namespace Konamiman.Z80dotNet
             if(Registers.ZF == 0)
                 return 5;
 
-            var sp = Registers.SP.ToUShort();
+			var sp = Registers.SP.ToUShort();
             var newPC = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
                 ProcessorAgent.ReadFromMemory(sp.Inc()));
@@ -98,7 +98,7 @@ namespace Konamiman.Z80dotNet
             if(Registers.ZF == 1)
                 return 5;
 
-            var sp = Registers.SP.ToUShort();
+			var sp = Registers.SP.ToUShort();
             var newPC = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
                 ProcessorAgent.ReadFromMemory(sp.Inc()));
@@ -119,7 +119,7 @@ namespace Konamiman.Z80dotNet
             if(Registers.PF == 0)
                 return 5;
 
-            var sp = Registers.SP.ToUShort();
+			var sp = Registers.SP.ToUShort();
             var newPC = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
                 ProcessorAgent.ReadFromMemory(sp.Inc()));
@@ -140,7 +140,7 @@ namespace Konamiman.Z80dotNet
             if(Registers.PF == 1)
                 return 5;
 
-            var sp = Registers.SP.ToUShort();
+			var sp = Registers.SP.ToUShort();
             var newPC = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
                 ProcessorAgent.ReadFromMemory(sp.Inc()));
@@ -161,7 +161,7 @@ namespace Konamiman.Z80dotNet
             if(Registers.SF == 0)
                 return 5;
 
-            var sp = Registers.SP.ToUShort();
+			var sp = Registers.SP.ToUShort();
             var newPC = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
                 ProcessorAgent.ReadFromMemory(sp.Inc()));
@@ -182,7 +182,7 @@ namespace Konamiman.Z80dotNet
             if(Registers.SF == 1)
                 return 5;
 
-            var sp = Registers.SP.ToUShort();
+			var sp = Registers.SP.ToUShort();
             var newPC = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
                 ProcessorAgent.ReadFromMemory(sp.Inc()));

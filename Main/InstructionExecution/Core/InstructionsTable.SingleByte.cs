@@ -272,14 +272,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files and include them in the table when they are implemented.
 
         /// <summary>
-        /// The POP BC instruction.
-        /// </summary>
-        byte POP_BC()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The JP NZ,nn instruction.
         /// </summary>
         byte JP_NZ_nn()
@@ -347,14 +339,6 @@ namespace Konamiman.Z80dotNet
         /// The RST 08 instruction.
         /// </summary>
         byte RST_08()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The POP DE instruction.
-        /// </summary>
-        byte POP_DE()
         {
             throw new NotImplementedException();
         }
@@ -440,14 +424,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The POP HL instruction.
-        /// </summary>
-        byte POP_HL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The JP PO,nn instruction.
         /// </summary>
         byte JP_PO_nn()
@@ -523,14 +499,6 @@ namespace Konamiman.Z80dotNet
         /// The RST 28 instruction.
         /// </summary>
         byte RST_28()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The POP AF instruction.
-        /// </summary>
-        byte POP_AF()
         {
             throw new NotImplementedException();
         }

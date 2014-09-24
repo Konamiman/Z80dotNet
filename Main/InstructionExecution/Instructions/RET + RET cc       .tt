@@ -38,13 +38,7 @@ namespace Konamiman.Z80dotNet
                 return 5;
 <# } #>
 
-            var sp = Registers.SP.ToUShort();
-            var newPC = NumberUtils.CreateShort(
-                ProcessorAgent.ReadFromMemory(sp),
-                ProcessorAgent.ReadFromMemory(sp.Inc()));
-            Registers.PC = newPC.ToUShort();
-
-            Registers.SP = Registers.SP.Add(2);
+<# PopFromStack("PC", isUshort: true); #>
 
             return 11;
         }

@@ -30,7 +30,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             var oldSP = Registers.SP;
 
             SetFlag(flagName, !(Bit)flagValue);
-            ExecuteAt(instructionAddress, opcode, nextFetches: new[] {Fixture.Create<byte>()});
+            ExecuteAt(instructionAddress, opcode);
 
             Assert.AreEqual(instructionAddress + 1, Registers.PC);
             Assert.AreEqual(oldSP, Registers.SP);
