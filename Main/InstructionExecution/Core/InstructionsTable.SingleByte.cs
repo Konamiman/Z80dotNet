@@ -272,22 +272,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files and include them in the table when they are implemented.
 
         /// <summary>
-        /// The JP NZ,nn instruction.
-        /// </summary>
-        byte JP_NZ_nn()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The JP nn instruction.
-        /// </summary>
-        byte JP_nn()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The CALL NZ,nn instruction.
         /// </summary>
         byte CALL_NZ_nn()
@@ -312,14 +296,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The JP Z,nn instruction.
-        /// </summary>
-        byte JP_Z_nn()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The CALL Z,nn instruction.
         /// </summary>
         byte CALL_Z_nn()
@@ -339,14 +315,6 @@ namespace Konamiman.Z80dotNet
         /// The RST 08 instruction.
         /// </summary>
         byte RST_08()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The JP NC,nn instruction.
-        /// </summary>
-        byte JP_NC_nn()
         {
             throw new NotImplementedException();
         }
@@ -392,14 +360,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The JP C,nn instruction.
-        /// </summary>
-        byte JP_C_nn()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The IN A,(n) instruction.
         /// </summary>
         byte IN_A_n()
@@ -419,14 +379,6 @@ namespace Konamiman.Z80dotNet
         /// The RST 18 instruction.
         /// </summary>
         byte RST_18()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The JP PO,nn instruction.
-        /// </summary>
-        byte JP_PO_nn()
         {
             throw new NotImplementedException();
         }
@@ -472,14 +424,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The JP PE,nn instruction.
-        /// </summary>
-        byte JP_PE_nn()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The EX DE,HL instruction.
         /// </summary>
         byte EX_DE_HL()
@@ -499,14 +443,6 @@ namespace Konamiman.Z80dotNet
         /// The RST 28 instruction.
         /// </summary>
         byte RST_28()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The JP P,nn instruction.
-        /// </summary>
-        byte JP_P_nn()
         {
             throw new NotImplementedException();
         }
@@ -547,14 +483,6 @@ namespace Konamiman.Z80dotNet
         /// The LD SP,HL instruction.
         /// </summary>
         byte LD_SP_HL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The JP M,nn instruction.
-        /// </summary>
-        byte JP_M_nn()
         {
             throw new NotImplementedException();
         }

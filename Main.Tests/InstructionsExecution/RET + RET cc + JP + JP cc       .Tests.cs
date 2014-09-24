@@ -32,7 +32,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             SetFlag(flagName, !(Bit)flagValue);
             ExecuteAt(instructionAddress, opcode);
 
-            Assert.AreEqual(instructionAddress + 1, Registers.PC);
+            Assert.AreEqual(instructionAddress.Inc(), Registers.PC);
             Assert.AreEqual(oldSP, Registers.SP);
         }
 

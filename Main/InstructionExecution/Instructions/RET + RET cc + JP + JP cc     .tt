@@ -24,25 +24,33 @@ namespace Konamiman.Z80dotNet
     };
     foreach(var flag in new[] {"","C","Z","P","S"}) {
     foreach(var flagValue in new[] {1, 0}) {
+	foreach(var isRet in new[] {true, false}) {
         if(flag=="" && flagValue==1) continue;
         var name=names[flag+flagValue]; #>
         /// <summary>
-        /// The RET<#=name=="" ? "" : " "+name+""#> instruction.
+        /// The <#=isRet ? "RET" : "JP"#><#=name=="" ? "" : " "+name+""#> instruction.
         /// </summary>
-        private byte RET<#=name=="" ? "" : "_"+name#>()
+        private byte <#=isRet ? "RET" : "JP"#><#=name=="" ? "" : "_"+name#><#=isRet ? "" : "_nn"#>()
         {
+<# if(!isRet) { #>
+			var newAddress = FetchWord().ToUShort();
+<# } #>
             FetchFinished();
 <# if(flag!="") { #>
 
             if(Registers.<#=flag#>F == <#=flagValue ^ 1#>)
-                return 5;
+                return <#=isRet ? 5 : 10#>;
 <# } #>
 
-<# PopFromStack("PC", isUshort: true); #>
+<# if(isRet)
+	    PopFromStack("PC", isUshort: true);
+   else { #>
+			Registers.PC = newAddress;
+<# } #>
 
-            return 11;
+            return <#=isRet ? 11 : 10#>;
         }
 
-<# }} #>
+<# }}} #>
     }
 }

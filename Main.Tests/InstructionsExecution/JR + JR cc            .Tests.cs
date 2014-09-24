@@ -27,7 +27,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             SetFlag(flagName, !(Bit)flagValue);
             ExecuteAt(instructionAddress, opcode, nextFetches: new[] {Fixture.Create<byte>()});
 
-            Assert.AreEqual(instructionAddress + 2, Registers.PC);
+            Assert.AreEqual(instructionAddress.Add(2), Registers.PC);
         }
 
         [Test]

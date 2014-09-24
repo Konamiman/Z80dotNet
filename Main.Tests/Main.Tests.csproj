@@ -47,7 +47,8 @@
     <Compile Include="ClockSynchronizationHelperTests.cs" />
     <Compile Include="HelloWorld.cs" />
     <Compile Include="InstructionsExecution\POP rr          .Tests.cs" />
-    <Compile Include="InstructionsExecution\RET + RET cc       .Tests.cs" />
+    <Compile Include="InstructionsExecution\JP + JP cc       .Tests.cs" />
+    <Compile Include="InstructionsExecution\RET + RET cc + JP + JP cc       .Tests.cs" />
     <Compile Include="InstructionsExecution\OR r + n + %28HL%29                     .Tests.cs" />
     <Compile Include="InstructionsExecution\XOR r + n + %28HL%29                     .Tests.cs" />
     <Compile Include="InstructionsExecution\AND r + n + %28HL%29                     .Tests.cs" />
