@@ -272,14 +272,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files and include them in the table when they are implemented.
 
         /// <summary>
-        /// The CALL NZ,nn instruction.
-        /// </summary>
-        byte CALL_NZ_nn()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The PUSH BC instruction.
         /// </summary>
         byte PUSH_BC()
@@ -296,22 +288,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The CALL Z,nn instruction.
-        /// </summary>
-        byte CALL_Z_nn()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The CALL nn instruction.
-        /// </summary>
-        byte CALL_nn()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The RST 08 instruction.
         /// </summary>
         byte RST_08()
@@ -323,14 +299,6 @@ namespace Konamiman.Z80dotNet
         /// The OUT (n),A instruction.
         /// </summary>
         byte OUT_n_A()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The CALL NC,nn instruction.
-        /// </summary>
-        byte CALL_NC_nn()
         {
             throw new NotImplementedException();
         }
@@ -368,14 +336,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The CALL C,nn instruction.
-        /// </summary>
-        byte CALL_C_nn()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The RST 18 instruction.
         /// </summary>
         byte RST_18()
@@ -387,14 +347,6 @@ namespace Konamiman.Z80dotNet
         /// The EX (SP),HL instruction.
         /// </summary>
         byte EX_aSP_HL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The CALL PO,nn instruction.
-        /// </summary>
-        byte CALL_PO_nn()
         {
             throw new NotImplementedException();
         }
@@ -432,14 +384,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The CALL PE,nn instruction.
-        /// </summary>
-        byte CALL_PE_nn()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The RST 28 instruction.
         /// </summary>
         byte RST_28()
@@ -451,14 +395,6 @@ namespace Konamiman.Z80dotNet
         /// The DI instruction.
         /// </summary>
         byte DI()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The CALL P,nn instruction.
-        /// </summary>
-        byte CALL_P_nn()
         {
             throw new NotImplementedException();
         }
@@ -491,14 +427,6 @@ namespace Konamiman.Z80dotNet
         /// The EI instruction.
         /// </summary>
         byte EI()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The CALL M,nn instruction.
-        /// </summary>
-        byte CALL_M_nn()
         {
             throw new NotImplementedException();
         }

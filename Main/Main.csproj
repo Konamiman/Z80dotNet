@@ -54,8 +54,10 @@
     <Compile Include="InstructionExecution\Core\InstructionsTable.SingleByte.cs" />
     <None Include="InstructionExecution\Instructions\ADC A,%28HL%29   --see ADD A,r" />
     <None Include="InstructionExecution\Instructions\AND %28HL%29       --see AND r" />
+    <None Include="InstructionExecution\Instructions\CALL                 --see RET" />
     <None Include="InstructionExecution\Instructions\JP                    --see RET" />
     <None Include="InstructionExecution\Instructions\JP cc                --see RET" />
+    <None Include="InstructionExecution\Instructions\CALL cc            --see RET" />
     <None Include="InstructionExecution\Instructions\POP rr               .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>POP rr               .cs</LastGenOutput>
@@ -110,19 +112,19 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="InstructionExecution\Instructions\HALT           .cs" />
-    <None Include="InstructionExecution\Instructions\RET + RET cc + JP + JP cc     .tt">
+    <None Include="InstructionExecution\Instructions\RET + JP + CALL %27%27 + cc     .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>RET + RET cc + JP + JP cc     .cs</LastGenOutput>
+      <LastGenOutput>RET + JP + CALL %27%27 + cc     .cs</LastGenOutput>
     </None>
     <Compile Include="InstructionExecution\Instructions\POP rr               .cs">
       <DependentUpon>POP rr               .tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="InstructionExecution\Instructions\RET + RET cc + JP + JP cc     .cs">
+    <Compile Include="InstructionExecution\Instructions\RET + JP + CALL %27%27 + cc     .cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RET + RET cc + JP + JP cc     .tt</DependentUpon>
+      <DependentUpon>RET + JP + CALL %27%27 + cc     .tt</DependentUpon>
     </Compile>
     <Compile Include="InstructionExecution\Instructions\SCF              .cs" />
     <Compile Include="InstructionExecution\Instructions\DAA            .cs" />

@@ -26,4 +26,15 @@ void PopFromStack(string reg, bool isUshort = false)
 <#+
 }
 
+void PushToStack(string reg, bool isUshort = false)
+{ #>
+			var valueToPush = Registers.<#=reg#><#=isUshort ? ".ToShort()" : "" #>;
+			var sp = Registers.SP.Dec();
+			ProcessorAgent.WriteToMemory(sp.ToUShort(), valueToPush.GetHighByte());
+			sp = sp.Dec();
+			ProcessorAgent.WriteToMemory(sp.ToUShort(), valueToPush.GetLowByte());
+			Registers.SP = sp;
+<#+
+}
+
 #>

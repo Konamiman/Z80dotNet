@@ -22,15 +22,19 @@ namespace Konamiman.Z80dotNet
        {"P0","PO"},{"P1","PE"},
        {"S0","P"},{"S1","M"}
     };
+	var instrNames = new[] {"RET", "JP", "CALL"};
     foreach(var flag in new[] {"","C","Z","P","S"}) {
     foreach(var flagValue in new[] {1, 0}) {
-	foreach(var isRet in new[] {true, false}) {
+	for(int i=0; i<=2; i++) {
+		var isRet = (i==0);
+		var isJp = (i==1);
+		var isCall = (i==2);
         if(flag=="" && flagValue==1) continue;
         var name=names[flag+flagValue]; #>
         /// <summary>
-        /// The <#=isRet ? "RET" : "JP"#><#=name=="" ? "" : " "+name+""#> instruction.
+        /// The <#=instrNames[i]#><#=name=="" ? "" : " "+name+""#> instruction.
         /// </summary>
-        private byte <#=isRet ? "RET" : "JP"#><#=name=="" ? "" : "_"+name#><#=isRet ? "" : "_nn"#>()
+        private byte <#=instrNames[i]#><#=name=="" ? "" : "_"+name#><#=!isRet ? "_nn" : ""#>()
         {
 <# if(!isRet) { #>
 			var newAddress = FetchWord().ToUShort();
@@ -44,11 +48,14 @@ namespace Konamiman.Z80dotNet
 
 <# if(isRet)
 	    PopFromStack("PC", isUshort: true);
-   else { #>
+   else if(isCall) 
+		PushToStack("PC", isUshort: true);
+   
+   if(isJp || isCall) { #>
 			Registers.PC = newAddress;
 <# } #>
 
-            return <#=isRet ? 11 : 10#>;
+            return <#=isCall ? 17 : isRet ? 11 : 10#>;
         }
 
 <# }}} #>
