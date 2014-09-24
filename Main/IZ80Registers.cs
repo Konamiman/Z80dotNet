@@ -38,13 +38,11 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The IFF1 flag. It has always the value 0 or 1.
         /// </summary>
-        /// <exception cref="System.InvalidOperationException">Attempt to set a value other than 0 or 1</exception>
         Bit IFF1 { get; set; }
 
         /// <summary>
         /// The IFF2 flag. It has always the value 0 or 1.
         /// </summary>
-        /// <exception cref="System.InvalidOperationException">Attempt to set a value other than 0 or 1</exception>
         Bit IFF2 { get; set; }
 
         /// <summary>

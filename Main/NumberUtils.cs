@@ -276,9 +276,10 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// Adds a value to a number and overlaps it from zero if it passes its maximum value.
+        /// Adds a value to the number and overlaps it from zero if it passes its maximum value.
         /// </summary>
         /// <param name="value">Number to increase</param>
+        /// <param name="amount">Amount to add to the number</param>
         /// <returns>Increased number, or zero</returns>
         public static short Add(this byte value, byte amount)
         {
@@ -286,9 +287,10 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// Adds a value to a number and overlaps it from zero if it passes its maximum value.
+        /// Adds a value to the number and overlaps it from zero if it passes its maximum value.
         /// </summary>
         /// <param name="value">Number to increase</param>
+        /// <param name="amount">Amount to add to the number</param>
         /// <returns>Increased number, or zero</returns>
         public static short Add(this byte value, int amount)
         {
@@ -296,9 +298,10 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// Substract a value to a number and overlaps it from its max value if it passes below its minimum value.
+        /// Substract a value to the number and overlaps it from its max value if it passes below its minimum value.
         /// </summary>
         /// <param name="value">Number to decrease</param>
+        /// <param name="amount">Amount to substract to the number</param>
         /// <returns>Increased number, or zero</returns>
         public static short Sub(this byte value, byte amount)
         {
@@ -306,9 +309,10 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// Substract a value to a number and overlaps it from its max value if it passes below its minimum value.
+        /// Substract a value to the number and overlaps it from its max value if it passes below its minimum value.
         /// </summary>
         /// <param name="value">Number to decrease</param>
+        /// <param name="amount">Amount to substract to the number</param>
         /// <returns>Increased number, or zero</returns>
         public static short Sub(this byte value, int amount)
         {

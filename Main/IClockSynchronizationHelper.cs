@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace Konamiman.Z80dotNet
 {
     /// <summary>

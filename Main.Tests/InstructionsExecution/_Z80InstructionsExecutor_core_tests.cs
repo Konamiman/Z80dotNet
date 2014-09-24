@@ -1,11 +1,17 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Ploeh.AutoFixture;
+using System;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
     public class Z80InstructionsExecutor_core_test : InstructionsExecutionTestsBase
     {
+        private const byte NOP_opcode = 0x00;
+        private const byte LD_BC_nn_opcode = 0x01;
+        private const byte ADD_HL_BC_opcode = 0x09;
+        private const byte IN_B_C_opcode = 0x40;
+        private const byte RLC_B_opcode = 0x00;
+
 		[Test]
 		public void Instructions_execution_fire_FetchFinished_event_and_return_proper_T_states_count()
 		{
@@ -14,17 +20,17 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 		    Sut.InstructionFetchFinished += (sender, e) => fetchFinishedEventsCount++;
 
             SetMemoryContents(0);
-			Assert.AreEqual(4, Execute(0x00));
+			Assert.AreEqual(4, Execute(NOP_opcode));
 		    SetMemoryContents(0, Fixture.Create<byte>(), Fixture.Create<byte>());
-            Assert.AreEqual(10, Execute(0x01));
+            Assert.AreEqual(10, Execute(LD_BC_nn_opcode));
 
             SetMemoryContents(0);
 			Assert.AreEqual(8, Execute(0xCB, nextFetches: 0));
 
-			Assert.AreEqual(15, Execute(0x09, 0xDD));
-			Assert.AreEqual(15, Execute(0x09, 0xFD));
+			Assert.AreEqual(15, Execute(ADD_HL_BC_opcode, 0xDD));
+			Assert.AreEqual(15, Execute(ADD_HL_BC_opcode, 0xFD));
 
-			Assert.AreEqual(12, Execute(0x40, 0xED));
+			Assert.AreEqual(12, Execute(IN_B_C_opcode, 0xED));
 
             Assert.AreEqual(23, Execute(0xCB, 0xDD, 0));
             Assert.AreEqual(23, Execute(0xCB, 0xFD, 0));
@@ -63,22 +69,22 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
 			Registers.R = 0xFE;
 
-			Execute(0x00);
+			Execute(NOP_opcode);
 			Assert.AreEqual(0xFF, Registers.R);
 
-            Execute(0x01, null, Fixture.Create<byte>(), Fixture.Create<byte>());
+            Execute(LD_BC_nn_opcode, null, Fixture.Create<byte>(), Fixture.Create<byte>());
 			Assert.AreEqual(0x80, Registers.R);
 
-			Execute(0, 0xCB);
+			Execute(RLC_B_opcode, 0xCB);
 			Assert.AreEqual(0x82, Registers.R);
 
-            Execute(0x09, 0xDD);
+            Execute(ADD_HL_BC_opcode, 0xDD);
    			Assert.AreEqual(0x84, Registers.R);
 
-            Execute(0x09, 0xFD);
+            Execute(ADD_HL_BC_opcode, 0xFD);
 			Assert.AreEqual(0x86, Registers.R);
 
-			Execute(0x40, 0xED);
+			Execute(IN_B_C_opcode, 0xED);
 			Assert.AreEqual(0x88, Registers.R);
 
             Execute(0xCB, 0xDD, 0);

@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Konamiman.Z80dotNet
+﻿namespace Konamiman.Z80dotNet
 {
     public partial class Z80InstructionExecutor
     {

@@ -5,6 +5,14 @@ namespace Konamiman.Z80dotNet
     /// </summary>
     public class MemoryAccessEventArgs : ProcessorEventArgs
     {
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        /// <param name="eventType">Type of event being processed</param>
+        /// <param name="address">Memory or port address being accessed</param>
+        /// <param name="value">Initial value for the <see cref="Value"/> property</param>
+        /// <param name="localUserState">Initial value for the <see cref="ProcessorEventArgs.LocalUserState"/> property</param>
+        /// <param name="cancelMemoryAccess">Initial value for the <see cref="CancelMemoryAccess"/> property</param>
         public MemoryAccessEventArgs(
             MemoryAccessEventType eventType,
             ushort address,

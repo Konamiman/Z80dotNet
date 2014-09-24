@@ -1,7 +1,7 @@
-﻿using System;
-using System.Linq;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Ploeh.AutoFixture;
+using System;
+using System.Linq;
 
 namespace Konamiman.Z80dotNet.Tests
 {

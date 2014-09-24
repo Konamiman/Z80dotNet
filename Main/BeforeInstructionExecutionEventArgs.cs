@@ -5,6 +5,10 @@ namespace Konamiman.Z80dotNet
     /// </summary>
     public class BeforeInstructionExecutionEventArgs : ProcessorEventArgs
     {
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        /// <param name="opcode">The full opcode bytes of the instruction that is about to be executed.</param>
         public BeforeInstructionExecutionEventArgs(byte[] opcode)
         {
             this.Opcode = opcode;

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Ploeh.AutoFixture;
+using System.Collections.Generic;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {

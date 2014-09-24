@@ -1,7 +1,7 @@
-﻿using System;
-using Moq;
+﻿using Moq;
 using NUnit.Framework;
 using Ploeh.AutoFixture;
+using System;
 
 namespace Konamiman.Z80dotNet.Tests
 {

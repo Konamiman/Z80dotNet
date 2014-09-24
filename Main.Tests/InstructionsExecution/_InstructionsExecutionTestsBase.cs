@@ -1,9 +1,9 @@
-﻿using System;
+﻿using NUnit.Framework;
+using Ploeh.AutoFixture;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using NUnit.Framework;
-using Ploeh.AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {

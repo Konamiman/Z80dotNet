@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Ploeh.AutoFixture;
+using System.Diagnostics;
 
 namespace Konamiman.Z80dotNet.Tests
 {
