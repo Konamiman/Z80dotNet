@@ -58,9 +58,14 @@
     <None Include="InstructionExecution\Instructions\JP                    --see RET" />
     <None Include="InstructionExecution\Instructions\JP cc                --see RET" />
     <None Include="InstructionExecution\Instructions\CALL cc            --see RET" />
-    <None Include="InstructionExecution\Instructions\POP rr               .tt">
+    <None Include="InstructionExecution\Instructions\POP rr             --see PUSH rr" />
+    <None Include="InstructionExecution\Instructions\PUSH rr + POP rr               .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>POP rr               .cs</LastGenOutput>
+      <LastGenOutput>PUSH rr + POP rr               .cs</LastGenOutput>
+    </None>
+    <None Include="InstructionExecution\Instructions\RST           .tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RST           .cs</LastGenOutput>
     </None>
     <None Include="InstructionExecution\Instructions\RET cc             --see RET" />
     <None Include="InstructionExecution\Instructions\XOR %28HL%29       --see AND r" />
@@ -116,8 +121,13 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RET + JP + CALL %27%27 + cc     .cs</LastGenOutput>
     </None>
-    <Compile Include="InstructionExecution\Instructions\POP rr               .cs">
-      <DependentUpon>POP rr               .tt</DependentUpon>
+    <Compile Include="InstructionExecution\Instructions\PUSH rr + POP rr               .cs">
+      <DependentUpon>PUSH rr + POP rr               .tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="InstructionExecution\Instructions\RST           .cs">
+      <DependentUpon>RST           .tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>

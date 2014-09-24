@@ -272,33 +272,9 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files and include them in the table when they are implemented.
 
         /// <summary>
-        /// The RST 00 instruction.
-        /// </summary>
-        byte RST_00()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The RST 08 instruction.
-        /// </summary>
-        byte RST_08()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The OUT (n),A instruction.
         /// </summary>
         byte OUT_n_A()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The RST 10 instruction.
-        /// </summary>
-        byte RST_10()
         {
             throw new NotImplementedException();
         }
@@ -320,25 +296,9 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The RST 18 instruction.
-        /// </summary>
-        byte RST_18()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The EX (SP),HL instruction.
         /// </summary>
         byte EX_aSP_HL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The RST 20 instruction.
-        /// </summary>
-        byte RST_20()
         {
             throw new NotImplementedException();
         }
@@ -360,25 +320,9 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The RST 28 instruction.
-        /// </summary>
-        byte RST_28()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The DI instruction.
         /// </summary>
         byte DI()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The RST 30 instruction.
-        /// </summary>
-        byte RST_30()
         {
             throw new NotImplementedException();
         }
@@ -395,14 +339,6 @@ namespace Konamiman.Z80dotNet
         /// The EI instruction.
         /// </summary>
         byte EI()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The RST 38 instruction.
-        /// </summary>
-        byte RST_38()
         {
             throw new NotImplementedException();
         }
