@@ -46,7 +46,7 @@ namespace Konamiman.Z80dotNet
         byte LD_SP_nn()
         {
             var value = FetchWord();
-            FetchFinished();
+            FetchFinished(isLdSp: true);
             Registers.SP = value;
             return 10;
         }

@@ -22,7 +22,7 @@ namespace Konamiman.Z80dotNet
         byte LD_<#=reg#>_nn()
         {
             var value = FetchWord();
-            FetchFinished();
+            FetchFinished(<# if(reg=="SP") {#>isLdSp: true<# } #>);
             <#=Register(reg)#> = value;
             return 10;
         }

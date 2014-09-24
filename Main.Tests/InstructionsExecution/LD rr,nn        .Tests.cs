@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Linq;
+using NUnit.Framework;
 using Ploeh.AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
@@ -26,6 +27,23 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Sut.Execute(opcode);
 
             Assert.AreEqual(newValue, GetReg<short>(reg));
+        }
+
+        [Test]
+        [TestCaseSource("LD_rr_nn_Source")]
+        public void LD_SP_nn_fires_FetchFinished_with_isLdSp_true(string reg, byte opcode)
+        {
+            var eventFired = false;
+
+            Sut.InstructionFetchFinished += (sender, e) =>
+            {
+                eventFired = true;
+                Assert.True((reg=="SP" && e.IsLdSpInstruction) | (reg != "SP" && !e.IsLdSpInstruction));
+            };
+
+            Execute(opcode);
+
+            Assert.IsTrue(eventFired);
         }
 
         [Test]
