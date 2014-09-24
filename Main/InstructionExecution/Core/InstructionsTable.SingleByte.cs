@@ -302,13 +302,5 @@ namespace Konamiman.Z80dotNet
         {
             throw new NotImplementedException();
         }
-
-        /// <summary>
-        /// The LD SP,HL instruction.
-        /// </summary>
-        byte LD_SP_HL()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
