@@ -294,13 +294,5 @@ namespace Konamiman.Z80dotNet
         {
             throw new NotImplementedException();
         }
-
-        /// <summary>
-        /// The JP (HL) instruction.
-        /// </summary>
-        byte JP_aHL()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

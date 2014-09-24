@@ -126,6 +126,7 @@
     <Compile Include="InstructionExecution\Instructions\EXX          .cs" />
     <Compile Include="InstructionExecution\Instructions\DI               .cs" />
     <Compile Include="InstructionExecution\Instructions\LD SP,HL   .cs" />
+    <Compile Include="InstructionExecution\Instructions\JP %28HL%29      .cs" />
     <Compile Include="InstructionExecution\Instructions\PUSH rr + POP rr               .cs">
       <DependentUpon>PUSH rr + POP rr               .tt</DependentUpon>
       <AutoGen>True</AutoGen>
