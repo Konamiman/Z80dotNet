@@ -12,7 +12,7 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte RET()
         {
-            FetchFinished();
+            FetchFinished(isRet: true);
 
 			var sp = Registers.SP.ToUShort();
             var newPC = NumberUtils.CreateShort(
@@ -62,7 +62,7 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte RET_C()
         {
-            FetchFinished();
+            FetchFinished(isRet: true);
 
             if(Registers.CF == 0)
                 return 5;
@@ -121,7 +121,7 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte RET_NC()
         {
-            FetchFinished();
+            FetchFinished(isRet: true);
 
             if(Registers.CF == 1)
                 return 5;
@@ -180,7 +180,7 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte RET_Z()
         {
-            FetchFinished();
+            FetchFinished(isRet: true);
 
             if(Registers.ZF == 0)
                 return 5;
@@ -239,7 +239,7 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte RET_NZ()
         {
-            FetchFinished();
+            FetchFinished(isRet: true);
 
             if(Registers.ZF == 1)
                 return 5;
@@ -298,7 +298,7 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte RET_PE()
         {
-            FetchFinished();
+            FetchFinished(isRet: true);
 
             if(Registers.PF == 0)
                 return 5;
@@ -357,7 +357,7 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte RET_PO()
         {
-            FetchFinished();
+            FetchFinished(isRet: true);
 
             if(Registers.PF == 1)
                 return 5;
@@ -416,7 +416,7 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte RET_M()
         {
-            FetchFinished();
+            FetchFinished(isRet: true);
 
             if(Registers.SF == 0)
                 return 5;
@@ -475,7 +475,7 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte RET_P()
         {
-            FetchFinished();
+            FetchFinished(isRet: true);
 
             if(Registers.SF == 1)
                 return 5;

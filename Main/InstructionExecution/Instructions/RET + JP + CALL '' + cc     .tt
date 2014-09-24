@@ -39,7 +39,7 @@ namespace Konamiman.Z80dotNet
 <# if(!isRet) { #>
 			var newAddress = FetchWord().ToUShort();
 <# } #>
-            FetchFinished();
+            FetchFinished(<#if(isRet) {#>isRet: true<# } #>);
 <# if(flag!="") { #>
 
             if(Registers.<#=flag#>F == <#=flagValue ^ 1#>)

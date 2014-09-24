@@ -95,5 +95,23 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Assert.AreEqual(value, Registers.F);
         }
+
+        [Test]
+        [TestCaseSource("RET_cc_Source")]
+        [TestCaseSource("RET_Source")]
+        public void LD_SP_HL_fires_FetchFinished_with_isLdSp_true(string flagName, byte opcode, int flagValue)
+        {
+            var eventFired = false;
+
+            Sut.InstructionFetchFinished += (sender, e) =>
+            {
+                eventFired = true;
+                Assert.True(e.IsRetInstruction);
+            };
+
+            Execute(opcode);
+
+            Assert.IsTrue(eventFired);
+        }
     }
 }

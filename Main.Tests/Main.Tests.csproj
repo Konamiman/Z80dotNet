@@ -54,7 +54,7 @@
     <Compile Include="InstructionsExecution\PUSH rr         .Tests.cs" />
     <Compile Include="InstructionsExecution\POP rr          .Tests.cs" />
     <Compile Include="InstructionsExecution\JP + JP cc       .Tests.cs" />
-    <Compile Include="InstructionsExecution\RET + RET cc + JP + JP cc       .Tests.cs" />
+    <Compile Include="InstructionsExecution\RET + RET cc       .Tests.cs" />
     <Compile Include="InstructionsExecution\OR r + n + %28HL%29                     .Tests.cs" />
     <Compile Include="InstructionsExecution\EXX               .Tests.cs" />
     <Compile Include="InstructionsExecution\XOR r + n + %28HL%29                     .Tests.cs" />
