@@ -15,19 +15,23 @@ namespace Konamiman.Z80dotNet
 {
     public partial class Z80InstructionExecutor
     {
-<#  foreach(var reg in new[] {"AF","BC","DE","HL"}) { #>
+<#  foreach(var reg in new[] {"AF","BC","DE","HL"}) { 
+    foreach(var isPush in new[] {true, false}) { #>
         /// <summary>
-        /// The POP <#=reg#> instruction.
+        /// The <#=isPush ? "PUSH" : "POP"#> <#=reg#> instruction.
         /// </summary>
-        private byte POP_<#=reg#>()
+        private byte <#=isPush ? "PUSH" : "POP"#>_<#=reg#>()
         {
             FetchFinished();
 
-<# PopFromStack(reg); #>
+<# if(isPush)
+	   PushToStack(reg);
+   else
+	   PopFromStack(reg); #>
 
-            return 10;
+            return <#=isPush ? 11 :10#>;
         }
 
-<# } #>
+<# }} #>
     }
 }

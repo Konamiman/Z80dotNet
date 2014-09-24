@@ -272,14 +272,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files and include them in the table when they are implemented.
 
         /// <summary>
-        /// The PUSH BC instruction.
-        /// </summary>
-        byte PUSH_BC()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The RST 00 instruction.
         /// </summary>
         byte RST_00()
@@ -299,14 +291,6 @@ namespace Konamiman.Z80dotNet
         /// The OUT (n),A instruction.
         /// </summary>
         byte OUT_n_A()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The PUSH DE instruction.
-        /// </summary>
-        byte PUSH_DE()
         {
             throw new NotImplementedException();
         }
@@ -352,14 +336,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The PUSH HL instruction.
-        /// </summary>
-        byte PUSH_HL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The RST 20 instruction.
         /// </summary>
         byte RST_20()
@@ -395,14 +371,6 @@ namespace Konamiman.Z80dotNet
         /// The DI instruction.
         /// </summary>
         byte DI()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The PUSH AF instruction.
-        /// </summary>
-        byte PUSH_AF()
         {
             throw new NotImplementedException();
         }
