@@ -280,14 +280,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The EXX instruction.
-        /// </summary>
-        byte EXX()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The IN A,(n) instruction.
         /// </summary>
         byte IN_A_n()

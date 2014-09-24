@@ -121,6 +121,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RET + JP + CALL %27%27 + cc     .cs</LastGenOutput>
     </None>
+    <Compile Include="InstructionExecution\Instructions\EXX          .cs" />
     <Compile Include="InstructionExecution\Instructions\PUSH rr + POP rr               .cs">
       <DependentUpon>PUSH rr + POP rr               .tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -197,8 +198,8 @@
     <Compile Include="InstructionExecution\Instructions\DJNZ         .cs" />
     <Compile Include="InstructionExecution\Instructions\RRCA        .cs" />
     <Compile Include="InstructionExecution\Instructions\RLCA        .cs" />
-    <Compile Include="InstructionExecution\Instructions\NOP2.cs" />
-    <Compile Include="InstructionExecution\Instructions\NOP.cs" />
+    <Compile Include="InstructionExecution\Instructions\NOP2        .cs" />
+    <Compile Include="InstructionExecution\Instructions\NOP          .cs" />
     <Compile Include="InstructionFetchFinishedEventArgs.cs" />
     <Compile Include="InstructionFetchFinishedEventNotFiredException.cs" />
     <Compile Include="IZ80InstructionExecutor.cs" />
