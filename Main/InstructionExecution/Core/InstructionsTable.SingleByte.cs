@@ -272,14 +272,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files and include them in the table when they are implemented.
 
         /// <summary>
-        /// The RET NZ instruction.
-        /// </summary>
-        byte RET_NZ()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The POP BC instruction.
         /// </summary>
         byte POP_BC()
@@ -328,22 +320,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The RET Z instruction.
-        /// </summary>
-        byte RET_Z()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The RET instruction.
-        /// </summary>
-        byte RET()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The JP Z,nn instruction.
         /// </summary>
         byte JP_Z_nn()
@@ -371,14 +347,6 @@ namespace Konamiman.Z80dotNet
         /// The RST 08 instruction.
         /// </summary>
         byte RST_08()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The RET NC instruction.
-        /// </summary>
-        byte RET_NC()
         {
             throw new NotImplementedException();
         }
@@ -432,14 +400,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The RET C instruction.
-        /// </summary>
-        byte RET_C()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The EXX instruction.
         /// </summary>
         byte EXX()
@@ -475,14 +435,6 @@ namespace Konamiman.Z80dotNet
         /// The RST 18 instruction.
         /// </summary>
         byte RST_18()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The RET PO instruction.
-        /// </summary>
-        byte RET_PO()
         {
             throw new NotImplementedException();
         }
@@ -536,14 +488,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The RET PE instruction.
-        /// </summary>
-        byte RET_PE()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The JP (HL) instruction.
         /// </summary>
         byte JP_aHL()
@@ -579,14 +523,6 @@ namespace Konamiman.Z80dotNet
         /// The RST 28 instruction.
         /// </summary>
         byte RST_28()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The RET P instruction.
-        /// </summary>
-        byte RET_P()
         {
             throw new NotImplementedException();
         }
@@ -635,14 +571,6 @@ namespace Konamiman.Z80dotNet
         /// The RST 30 instruction.
         /// </summary>
         byte RST_30()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The RET M instruction.
-        /// </summary>
-        byte RET_M()
         {
             throw new NotImplementedException();
         }

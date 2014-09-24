@@ -16,8 +16,8 @@ namespace Konamiman.Z80dotNet
     public partial class Z80InstructionExecutor
     {
 <# foreach(var flag in new[] {"C","Z"}) {
-   foreach(var bitSet in new[] {true, false}) {
-        var name = (bitSet ? "" : "N") + flag; #>
+   foreach(var flagValue in new[] {1, 0}) {
+        var name = (flagValue==1 ? "" : "N") + flag; #>
         /// <summary>
         /// The JR <#=name#>,d instruction.
         /// </summary>
@@ -26,7 +26,7 @@ namespace Konamiman.Z80dotNet
             var offset = ProcessorAgent.FetchNextOpcode();
             FetchFinished();
 
-            if(Registers.<#=flag#>F == <#=bitSet ? 0 : 1#>)
+            if(Registers.<#=flag#>F == <#=flagValue ^ 1#>)
                 return 7;
 
             Registers.PC = Registers.PC.AddSignedByte(offset);

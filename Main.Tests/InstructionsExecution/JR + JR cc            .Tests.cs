@@ -3,7 +3,7 @@ using Ploeh.AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
-    public class JR_cc_tests : InstructionsExecutionTestsBase
+    public class JR_and_JR_cc_tests : InstructionsExecutionTestsBase
     {
         public static object[] jr_cc_Source =
         {
@@ -75,7 +75,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [Test]
         [TestCaseSource("jr_cc_Source")]
         [TestCaseSource("jr_Source")]
-        public void JR_and_JT_cc_do_not_modify_flags(string flagName, byte opcode, int flagValue)
+        public void JR_and_JR_cc_do_not_modify_flags(string flagName, byte opcode, int flagValue)
         {
             Registers.F = Fixture.Create<byte>();
             SetFlagIfNotNull(flagName, flagValue);
