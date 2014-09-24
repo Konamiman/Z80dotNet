@@ -268,15 +268,5 @@ namespace Konamiman.Z80dotNet
                 RST_38    //FF
             };
         }
-
-        //TODO: Move instructions to their own files and include them in the table when they are implemented.
-
-        /// <summary>
-        /// The OUT (n),A instruction.
-        /// </summary>
-        byte OUT_n_A()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

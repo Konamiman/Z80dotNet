@@ -34,6 +34,11 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             ProcessorAgent.Ports[portNumber] = value;
         }
 
+        protected byte GetPortValue(byte portNumber)
+        {
+            return ProcessorAgent.Ports[portNumber];
+        }
+
         protected void SetMemoryContents(params byte[] opcodes)
         {
             SetMemoryContentsAt(0, opcodes);
