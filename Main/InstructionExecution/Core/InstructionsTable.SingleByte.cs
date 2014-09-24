@@ -304,25 +304,9 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The DI instruction.
-        /// </summary>
-        byte DI()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The LD SP,HL instruction.
         /// </summary>
         byte LD_SP_HL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The EI instruction.
-        /// </summary>
-        byte EI()
         {
             throw new NotImplementedException();
         }

@@ -110,6 +110,7 @@
       <LastGenOutput>JR cc         1.cs</LastGenOutput>
     </None>
     <Compile Include="InstructionExecution\Instructions\CCF           .cs" />
+    <Compile Include="InstructionExecution\Instructions\EI                .cs" />
     <Compile Include="InstructionExecution\Instructions\EX AF,AF%27   - Copy.cs" />
     <Compile Include="InstructionExecution\Instructions\LD %28HL%29,n    .cs" />
     <Compile Include="InstructionExecution\Instructions\LD r,r       .cs">
@@ -123,6 +124,7 @@
       <LastGenOutput>RET + JP + CALL %27%27 + cc     .cs</LastGenOutput>
     </None>
     <Compile Include="InstructionExecution\Instructions\EXX          .cs" />
+    <Compile Include="InstructionExecution\Instructions\DI               .cs" />
     <Compile Include="InstructionExecution\Instructions\PUSH rr + POP rr               .cs">
       <DependentUpon>PUSH rr + POP rr               .tt</DependentUpon>
       <AutoGen>True</AutoGen>
