@@ -59,8 +59,7 @@
     <Compile Include="InstructionsExecution\HALT           .Tests.cs" />
     <Compile Include="InstructionsExecution\SCF              .Tests.cs" />
     <Compile Include="InstructionsExecution\DEC r          .Tests.cs" />
-    <Compile Include="InstructionsExecution\JR                .Tests.cs" />
-    <Compile Include="InstructionsExecution\JR cc            .Tests.cs" />
+    <Compile Include="InstructionsExecution\JR + JR cc            .Tests.cs" />
     <Compile Include="InstructionsExecution\DJNZ           .Tests.cs" />
     <Compile Include="InstructionsExecution\EX AF,AF%27    .Tests.cs" />
     <Compile Include="InstructionsExecution\INC r           .Tests.cs" />
