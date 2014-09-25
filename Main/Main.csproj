@@ -35,246 +35,246 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AfterInstructionExecutionEventArgs.cs" />
-    <Compile Include="Bit.cs" />
-    <Compile Include="IExecutionStopper.cs" />
-    <Compile Include="IClockSynchronizationHelper.cs" />
-    <Compile Include="InstructionExecutionContext.cs" />
-    <Compile Include="InstructionExecution\Core\Execute_xD_Instruction.cs">
+    <Compile Include="EventArgs\AfterInstructionExecutionEventArgs.cs" />
+    <Compile Include="Data Types and Utils\Bit.cs" />
+    <Compile Include="Dependencies Interfaces\IExecutionStopper.cs" />
+    <Compile Include="Dependencies Interfaces\IClockSynchronizationHelper.cs" />
+    <Compile Include="Data Types and Utils\InstructionExecutionContext.cs" />
+    <Compile Include="Instructions Execution\Core\Execute_xD_Instruction.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Execute_xD_Instruction.tt</DependentUpon>
     </Compile>
-    <Compile Include="InstructionExecution\Core\InstructionsTable.CB.cs" />
-    <Compile Include="InstructionExecution\Core\InstructionsTable.FDCB.cs" />
-    <Compile Include="InstructionExecution\Core\InstructionsTable.DDCB.cs" />
-    <Compile Include="InstructionExecution\Core\InstructionsTable.DD.cs" />
-    <Compile Include="InstructionExecution\Core\InstructionsTable.FD.cs" />
-    <Compile Include="InstructionExecution\Core\InstructionsTable.ED.cs" />
-    <Compile Include="InstructionExecution\Core\InstructionsTable.SingleByte.cs" />
-    <None Include="InstructionExecution\Instructions\ADC A,%28HL%29   --see ADD A,r" />
-    <None Include="InstructionExecution\Instructions\AND %28HL%29       --see AND r" />
-    <None Include="InstructionExecution\Instructions\CALL                 --see RET" />
-    <None Include="InstructionExecution\Instructions\JP                    --see RET" />
-    <None Include="InstructionExecution\Instructions\JP cc                --see RET" />
-    <None Include="InstructionExecution\Instructions\CALL cc            --see RET" />
-    <None Include="InstructionExecution\Instructions\POP rr             --see PUSH rr" />
-    <None Include="InstructionExecution\Instructions\PUSH rr + POP rr               .tt">
+    <Compile Include="Instructions Execution\Core\InstructionsTable.CB.cs" />
+    <Compile Include="Instructions Execution\Core\InstructionsTable.FDCB.cs" />
+    <Compile Include="Instructions Execution\Core\InstructionsTable.DDCB.cs" />
+    <Compile Include="Instructions Execution\Core\InstructionsTable.DD.cs" />
+    <Compile Include="Instructions Execution\Core\InstructionsTable.FD.cs" />
+    <Compile Include="Instructions Execution\Core\InstructionsTable.ED.cs" />
+    <Compile Include="Instructions Execution\Core\InstructionsTable.SingleByte.cs" />
+    <None Include="Instructions Execution\Instructions\ADC A,%28HL%29   --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\AND %28HL%29       --see AND r" />
+    <None Include="Instructions Execution\Instructions\CALL                 --see RET" />
+    <None Include="Instructions Execution\Instructions\JP                    --see RET" />
+    <None Include="Instructions Execution\Instructions\JP cc                --see RET" />
+    <None Include="Instructions Execution\Instructions\CALL cc            --see RET" />
+    <None Include="Instructions Execution\Instructions\POP rr             --see PUSH rr" />
+    <None Include="Instructions Execution\Instructions\PUSH rr + POP rr               .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PUSH rr + POP rr               .cs</LastGenOutput>
     </None>
-    <None Include="InstructionExecution\Instructions\RST           .tt">
+    <None Include="Instructions Execution\Instructions\RST           .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RST           .cs</LastGenOutput>
     </None>
-    <None Include="InstructionExecution\Instructions\RET cc             --see RET" />
-    <None Include="InstructionExecution\Instructions\XOR %28HL%29       --see AND r" />
-    <None Include="InstructionExecution\Instructions\AND n            --see AND r" />
-    <None Include="InstructionExecution\Instructions\AND + XOR + OR r + n + %28HL%29         .tt">
+    <None Include="Instructions Execution\Instructions\RET cc             --see RET" />
+    <None Include="Instructions Execution\Instructions\XOR %28HL%29       --see AND r" />
+    <None Include="Instructions Execution\Instructions\AND n            --see AND r" />
+    <None Include="Instructions Execution\Instructions\AND + XOR + OR r + n + %28HL%29         .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AND + XOR + OR r + n + %28HL%29         .cs</LastGenOutput>
     </None>
-    <None Include="InstructionExecution\Instructions\ADD A,n         --see ADD A,r" />
-    <None Include="InstructionExecution\Instructions\ADC A,r         --see ADD A,r" />
-    <None Include="InstructionExecution\Instructions\ADC A,n         --see ADD A,r" />
-    <None Include="InstructionExecution\Instructions\SBC A,n           --see ADD A,r" />
-    <None Include="InstructionExecution\Instructions\SUB A,%28HL%29     --see ADD A,r" />
-    <None Include="InstructionExecution\Instructions\INC %28HL%29   --see INC r" />
-    <None Include="InstructionExecution\Instructions\DEC %28HL%29   --see INC r" />
-    <None Include="InstructionExecution\Instructions\INC r + INC %28HL%29 + DEC r + DEC %28HL%29   .tt">
+    <None Include="Instructions Execution\Instructions\ADD A,n         --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\ADC A,r         --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\ADC A,n         --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\SBC A,n           --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\SUB A,%28HL%29     --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\INC %28HL%29   --see INC r" />
+    <None Include="Instructions Execution\Instructions\DEC %28HL%29   --see INC r" />
+    <None Include="Instructions Execution\Instructions\INC r + INC %28HL%29 + DEC r + DEC %28HL%29   .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>INC r + INC %28HL%29 + DEC r + DEC %28HL%29   .cs</LastGenOutput>
     </None>
-    <Compile Include="InstructionExecution\Core\ParityTable.cs" />
-    <None Include="InstructionExecution\Instructions\ADD + ADC + SUB + SBC + CP A, r + n + %28HL%29.tt">
+    <Compile Include="Instructions Execution\Core\ParityTable.cs" />
+    <None Include="Instructions Execution\Instructions\ADD + ADC + SUB + SBC + CP A, r + n + %28HL%29.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ADD + ADC + SUB + SBC + CP A, r + n + %28HL%29.cs</LastGenOutput>
     </None>
-    <Compile Include="InstructionExecution\Instructions\AND + XOR + OR r + n + %28HL%29         .cs">
+    <Compile Include="Instructions Execution\Instructions\AND + XOR + OR r + n + %28HL%29         .cs">
       <DependentUpon>AND + XOR + OR r + n + %28HL%29         .tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="InstructionExecution\Instructions\ADD + ADC + SUB + SBC + CP A, r + n + %28HL%29.cs">
+    <Compile Include="Instructions Execution\Instructions\ADD + ADC + SUB + SBC + CP A, r + n + %28HL%29.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ADD + ADC + SUB + SBC + CP A, r + n + %28HL%29.tt</DependentUpon>
     </Compile>
-    <Compile Include="InstructionExecution\Instructions\ADD rr,rr   1.cs">
+    <Compile Include="Instructions Execution\Instructions\ADD rr,rr   1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ADD rr,rr   .tt</DependentUpon>
     </Compile>
-    <None Include="InstructionExecution\Instructions\JR cc         .tt">
+    <None Include="Instructions Execution\Instructions\JR cc         .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>JR cc         1.cs</LastGenOutput>
     </None>
-    <Compile Include="InstructionExecution\Instructions\CCF           .cs" />
-    <Compile Include="InstructionExecution\Instructions\EI                .cs" />
-    <Compile Include="InstructionExecution\Instructions\EX AF,AF%27   - Copy.cs" />
-    <Compile Include="InstructionExecution\Instructions\OUT %28n%29,A    .cs" />
-    <Compile Include="InstructionExecution\Instructions\LD %28HL%29,n    .cs" />
-    <Compile Include="InstructionExecution\Instructions\LD r,r       .cs">
+    <Compile Include="Instructions Execution\Instructions\CCF           .cs" />
+    <Compile Include="Instructions Execution\Instructions\EI                .cs" />
+    <Compile Include="Instructions Execution\Instructions\EX AF,AF%27   - Copy.cs" />
+    <Compile Include="Instructions Execution\Instructions\OUT %28n%29,A    .cs" />
+    <Compile Include="Instructions Execution\Instructions\LD %28HL%29,n    .cs" />
+    <Compile Include="Instructions Execution\Instructions\LD r,r       .cs">
       <DependentUpon>LD r,r       .tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="InstructionExecution\Instructions\HALT           .cs" />
-    <None Include="InstructionExecution\Instructions\RET + JP + CALL %27%27 + cc     .tt">
+    <Compile Include="Instructions Execution\Instructions\HALT           .cs" />
+    <None Include="Instructions Execution\Instructions\RET + JP + CALL %27%27 + cc     .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RET + JP + CALL %27%27 + cc     .cs</LastGenOutput>
     </None>
-    <Compile Include="InstructionExecution\Instructions\EXX          .cs" />
-    <Compile Include="InstructionExecution\Instructions\DI               .cs" />
-    <Compile Include="InstructionExecution\Instructions\LD SP,HL   .cs" />
-    <Compile Include="InstructionExecution\Instructions\JP %28HL%29      .cs" />
-    <Compile Include="InstructionExecution\Instructions\EX %28SP%29,HL   .cs" />
-    <Compile Include="InstructionExecution\Instructions\IN A,%28n%29     .cs" />
-    <Compile Include="InstructionExecution\Instructions\PUSH rr + POP rr               .cs">
+    <Compile Include="Instructions Execution\Instructions\EXX          .cs" />
+    <Compile Include="Instructions Execution\Instructions\DI               .cs" />
+    <Compile Include="Instructions Execution\Instructions\LD SP,HL   .cs" />
+    <Compile Include="Instructions Execution\Instructions\JP %28HL%29      .cs" />
+    <Compile Include="Instructions Execution\Instructions\EX %28SP%29,HL   .cs" />
+    <Compile Include="Instructions Execution\Instructions\IN A,%28n%29     .cs" />
+    <Compile Include="Instructions Execution\Instructions\PUSH rr + POP rr               .cs">
       <DependentUpon>PUSH rr + POP rr               .tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="InstructionExecution\Instructions\RST           .cs">
+    <Compile Include="Instructions Execution\Instructions\RST           .cs">
       <DependentUpon>RST           .tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="InstructionExecution\Instructions\RET + JP + CALL %27%27 + cc     .cs">
+    <Compile Include="Instructions Execution\Instructions\RET + JP + CALL %27%27 + cc     .cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RET + JP + CALL %27%27 + cc     .tt</DependentUpon>
     </Compile>
-    <Compile Include="InstructionExecution\Instructions\SCF              .cs" />
-    <Compile Include="InstructionExecution\Instructions\DAA            .cs" />
-    <Compile Include="InstructionExecution\Instructions\CPL             .cs" />
-    <Compile Include="InstructionExecution\Instructions\JR               .cs" />
-    <Compile Include="InstructionExecution\Instructions\JR cc         1.cs">
+    <Compile Include="Instructions Execution\Instructions\SCF              .cs" />
+    <Compile Include="Instructions Execution\Instructions\DAA            .cs" />
+    <Compile Include="Instructions Execution\Instructions\CPL             .cs" />
+    <Compile Include="Instructions Execution\Instructions\JR               .cs" />
+    <Compile Include="Instructions Execution\Instructions\JR cc         1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>JR cc         .tt</DependentUpon>
     </Compile>
-    <Compile Include="InstructionExecution\Instructions\LD A,%28aa%29       .cs" />
-    <Compile Include="InstructionExecution\Instructions\LD %28aa%29,A       .cs" />
-    <Compile Include="InstructionExecution\Instructions\LD rr,%28aa%29   .cs">
+    <Compile Include="Instructions Execution\Instructions\LD A,%28aa%29       .cs" />
+    <Compile Include="Instructions Execution\Instructions\LD %28aa%29,A       .cs" />
+    <Compile Include="Instructions Execution\Instructions\LD rr,%28aa%29   .cs">
       <DependentUpon>LD rr,%28aa%29   .tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="InstructionExecution\Instructions\LD %28aa%29,rr   .cs">
+    <Compile Include="Instructions Execution\Instructions\LD %28aa%29,rr   .cs">
       <DependentUpon>LD %28aa%29,rr   .tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="InstructionExecution\Instructions\RLA           .cs" />
-    <Compile Include="InstructionExecution\Instructions\RRA           .cs" />
-    <Compile Include="InstructionExecution\Instructions\INC r + INC %28HL%29 + DEC r + DEC %28HL%29   .cs">
+    <Compile Include="Instructions Execution\Instructions\RLA           .cs" />
+    <Compile Include="Instructions Execution\Instructions\RRA           .cs" />
+    <Compile Include="Instructions Execution\Instructions\INC r + INC %28HL%29 + DEC r + DEC %28HL%29   .cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>INC r + INC %28HL%29 + DEC r + DEC %28HL%29   .tt</DependentUpon>
     </Compile>
-    <Compile Include="InstructionExecution\Instructions\INC rr + DEC rr  .cs">
+    <Compile Include="Instructions Execution\Instructions\INC rr + DEC rr  .cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>INC rr + DEC rr  .tt</DependentUpon>
     </Compile>
-    <Compile Include="InstructionExecution\Instructions\LD r,%28rr%29    .cs">
+    <Compile Include="Instructions Execution\Instructions\LD r,%28rr%29    .cs">
       <DependentUpon>LD r,%28rr%29    .tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="InstructionExecution\Instructions\LD %28rr%29,r    .cs">
+    <Compile Include="Instructions Execution\Instructions\LD %28rr%29,r    .cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LD %28rr%29,r    .tt</DependentUpon>
     </Compile>
-    <Compile Include="InstructionExecution\Instructions\LD r,n       .cs">
+    <Compile Include="Instructions Execution\Instructions\LD r,n       .cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LD r,n       .tt</DependentUpon>
     </Compile>
-    <Compile Include="InstructionExecution\Instructions\LD rr,nn    .cs">
+    <Compile Include="Instructions Execution\Instructions\LD rr,nn    .cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LD rr,nn    .tt</DependentUpon>
     </Compile>
-    <Compile Include="InstructionExecution\Instructions\EX AF,AF%27  .cs" />
-    <None Include="InstructionExecution\Instructions\ADD rr,rr   .tt">
+    <Compile Include="Instructions Execution\Instructions\EX AF,AF%27  .cs" />
+    <None Include="Instructions Execution\Instructions\ADD rr,rr   .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ADD rr,rr   1.cs</LastGenOutput>
     </None>
-    <Compile Include="InstructionExecution\Instructions\DJNZ         .cs" />
-    <Compile Include="InstructionExecution\Instructions\RRCA        .cs" />
-    <Compile Include="InstructionExecution\Instructions\RLCA        .cs" />
-    <Compile Include="InstructionExecution\Instructions\NOP2        .cs" />
-    <Compile Include="InstructionExecution\Instructions\NOP          .cs" />
-    <Compile Include="InstructionFetchFinishedEventArgs.cs" />
-    <Compile Include="InstructionFetchFinishedEventNotFiredException.cs" />
-    <Compile Include="IZ80InstructionExecutor.cs" />
-    <Compile Include="IMainZ80Registers.cs" />
-    <Compile Include="IMemory.cs" />
-    <Compile Include="BeforeInstructionExecutionEventArgs.cs" />
+    <Compile Include="Instructions Execution\Instructions\DJNZ         .cs" />
+    <Compile Include="Instructions Execution\Instructions\RRCA        .cs" />
+    <Compile Include="Instructions Execution\Instructions\RLCA        .cs" />
+    <Compile Include="Instructions Execution\Instructions\NOP2        .cs" />
+    <Compile Include="Instructions Execution\Instructions\NOP          .cs" />
+    <Compile Include="EventArgs\InstructionFetchFinishedEventArgs.cs" />
+    <Compile Include="Custom Exceptions\InstructionFetchFinishedEventNotFiredException.cs" />
+    <Compile Include="Dependencies Interfaces\IZ80InstructionExecutor.cs" />
+    <Compile Include="Dependencies Interfaces\IMainZ80Registers.cs" />
+    <Compile Include="Dependencies Interfaces\IMemory.cs" />
+    <Compile Include="EventArgs\BeforeInstructionExecutionEventArgs.cs" />
     <Compile Include="IZ80Processor.cs" />
-    <Compile Include="IZ80ProcessorAgent.cs" />
-    <Compile Include="IZ80Registers.cs" />
-    <Compile Include="MainZ80Registers.cs" />
-    <Compile Include="MemoryAccessEventArgs.cs" />
-    <Compile Include="MemoryAccessEventType.cs" />
-    <Compile Include="MemoryAccessMode.cs" />
-    <Compile Include="ClockSynchronizationHelper.cs" />
-    <Compile Include="PlainMemory.cs" />
-    <Compile Include="ProcessorEventArgs.cs" />
-    <Compile Include="ProcessorState.cs" />
+    <Compile Include="Dependencies Interfaces\IZ80ProcessorAgent.cs" />
+    <Compile Include="Dependencies Interfaces\IZ80Registers.cs" />
+    <Compile Include="Dependencies Implementations\MainZ80Registers.cs" />
+    <Compile Include="EventArgs\MemoryAccessEventArgs.cs" />
+    <Compile Include="Enums\MemoryAccessEventType.cs" />
+    <Compile Include="Enums\MemoryAccessMode.cs" />
+    <Compile Include="Dependencies Implementations\ClockSynchronizationHelper.cs" />
+    <Compile Include="Dependencies Implementations\PlainMemory.cs" />
+    <Compile Include="EventArgs\ProcessorEventArgs.cs" />
+    <Compile Include="Enums\ProcessorState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="NumberUtils.cs" />
-    <Compile Include="StopReason.cs" />
-    <Compile Include="InstructionExecution\Core\_Z80InstructionExecutor.Core.cs" />
+    <Compile Include="Data Types and Utils\NumberUtils.cs" />
+    <Compile Include="Enums\StopReason.cs" />
+    <Compile Include="Instructions Execution\Core\_Z80InstructionExecutor.Core.cs" />
     <Compile Include="Z80Processor.cs" />
-    <Compile Include="Z80Registers.cs" />
-    <None Include="InstructionExecution\Instructions\SBC A,%28HL%29     --see ADD A,r" />
-    <None Include="InstructionExecution\Instructions\SUB A,r           --see ADD A,r" />
-    <None Include="InstructionExecution\Instructions\SBC A,r           --see ADD A,r" />
-    <None Include="InstructionExecution\Instructions\SUB A,n           --see ADD A,r" />
-    <None Include="InstructionExecution\Instructions\XOR n            --see AND r" />
-    <None Include="InstructionExecution\Instructions\OR n               --see AND r" />
-    <None Include="InstructionExecution\Instructions\XOR r             --see AND r" />
-    <None Include="InstructionExecution\Instructions\OR r                --see AND r" />
-    <None Include="InstructionExecution\Instructions\_Utils.t4" />
+    <Compile Include="Dependencies Implementations\Z80Registers.cs" />
+    <None Include="Instructions Execution\Instructions\SBC A,%28HL%29     --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\SUB A,r           --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\SBC A,r           --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\SUB A,n           --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\XOR n            --see AND r" />
+    <None Include="Instructions Execution\Instructions\OR n               --see AND r" />
+    <None Include="Instructions Execution\Instructions\XOR r             --see AND r" />
+    <None Include="Instructions Execution\Instructions\OR r                --see AND r" />
+    <None Include="Instructions Execution\Instructions\_Utils.t4" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="InstructionExecution\Core\Execute_xD_Instruction.tt">
+    <None Include="Instructions Execution\Core\Execute_xD_Instruction.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Execute_xD_Instruction.cs</LastGenOutput>
     </None>
-    <None Include="InstructionExecution\Instructions\INC rr + DEC rr  .tt">
+    <None Include="Instructions Execution\Instructions\INC rr + DEC rr  .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>INC rr + DEC rr  .cs</LastGenOutput>
     </None>
-    <None Include="InstructionExecution\Instructions\LD r,r       .tt">
+    <None Include="Instructions Execution\Instructions\LD r,r       .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LD r,r       .cs</LastGenOutput>
     </None>
-    <None Include="InstructionExecution\Instructions\LD rr,%28aa%29   .tt">
+    <None Include="Instructions Execution\Instructions\LD rr,%28aa%29   .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LD rr,%28aa%29   .cs</LastGenOutput>
     </None>
-    <None Include="InstructionExecution\Instructions\LD %28aa%29,rr   .tt">
+    <None Include="Instructions Execution\Instructions\LD %28aa%29,rr   .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LD %28aa%29,rr   .cs</LastGenOutput>
     </None>
-    <None Include="InstructionExecution\Instructions\LD r,%28rr%29    .tt">
+    <None Include="Instructions Execution\Instructions\LD r,%28rr%29    .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LD r,%28rr%29    .cs</LastGenOutput>
     </None>
-    <None Include="InstructionExecution\Instructions\LD %28rr%29,r    .tt">
+    <None Include="Instructions Execution\Instructions\LD %28rr%29,r    .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LD %28rr%29,r    .cs</LastGenOutput>
     </None>
-    <None Include="InstructionExecution\Instructions\LD r,n       .tt">
+    <None Include="Instructions Execution\Instructions\LD r,n       .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LD r,n       .cs</LastGenOutput>
     </None>
-    <None Include="InstructionExecution\Instructions\LD rr,nn    .tt">
+    <None Include="Instructions Execution\Instructions\LD rr,nn    .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LD rr,nn    .cs</LastGenOutput>
     </None>
@@ -283,12 +283,13 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="InstructionExecution\Instructions\DEC rr   --see INC rr" />
-    <None Include="InstructionExecution\Instructions\DEC r    --see INC r" />
+    <None Include="Instructions Execution\Instructions\DEC rr   --see INC rr" />
+    <None Include="Instructions Execution\Instructions\DEC r    --see INC r" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="InstructionExecution\Instructions\ADD A,%28HL%29   --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\ADD A,%28HL%29   --see ADD A,r" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

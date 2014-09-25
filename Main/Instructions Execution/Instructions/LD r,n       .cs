@@ -3,6 +3,7 @@
 // Do not make changes directly to this (.cs) file.
 // Change LD r,n       .tt instead.
 
+using System;
 
 namespace Konamiman.Z80dotNet
 {
