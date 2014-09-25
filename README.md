@@ -54,7 +54,7 @@ This is a work in progress project. So far that's what is done:
 
 The following resources have been used to develop this project:
 
-* [Z80 official user manual](www.zilog.com/manage_directlink.php?filepath=docs/z80/um0080)
+* [Z80 official user manual](http://www.zilog.com/manage_directlink.php?filepath=docs/z80/um0080)
 * [The undocumented Z80 documented](http://www.myquest.nl/z80undocumented/) by Sean Young.
 * [Z80 instructions table](http://clrhome.org/table/) at [ClrHome.org](http://clrhome.org)
 * [Z80 technical reference](http://www.worldofspectrum.org/faq/reference/z80reference.htm) at [WorldOfSpectrum.org](http://www.worldofspectrum.org)
