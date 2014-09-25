@@ -4,7 +4,7 @@ using System.Linq;
 namespace Konamiman.Z80dotNet
 {
     /// <summary>
-    /// The implementation of the <see cref="IZ80Processor"/> class.
+    /// The implementation of the <see cref="IZ80Processor"/> interface.
     /// </summary>
     public class Z80Processor : IZ80Processor, IZ80ProcessorAgent
     {

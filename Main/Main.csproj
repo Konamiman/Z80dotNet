@@ -53,8 +53,11 @@
     <Compile Include="Instructions Execution\Core\InstructionsTable.ED.cs" />
     <Compile Include="Instructions Execution\Core\InstructionsTable.SingleByte.cs" />
     <None Include="Instructions Execution\Instructions\ADC A,%28HL%29   --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\CP n                --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\AND %28HL%29       --see AND r" />
     <None Include="Instructions Execution\Instructions\CALL                 --see RET" />
+    <None Include="Instructions Execution\Instructions\CP %28HL%29           --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\CP r                 --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\JP                    --see RET" />
     <None Include="Instructions Execution\Instructions\JP cc                --see RET" />
     <None Include="Instructions Execution\Instructions\CALL cc            --see RET" />
