@@ -22,27 +22,27 @@ Z80.NET is a Z80 processor simulator that can be used as the core component for 
 
 ## How to use
 
-1. Create an instance of [the Z80Processor class](src/Develop/Main/Z80Processor.cs).
-2. Optionally, plug your own implementations of one or more of the [dependencies](src/Develop/Docs/Dependencies.md).
-3. [Configure your instance as appropriate](src/Develop/Docs/Configuration.md).
-4. Optionally, capture [the memory access events](src/Develop/Docs/MemoryEvents.md) and/or [the instruction execution events](src/Develop/Docs/InstructionEvents.md).
-5. Start the simulated processor execution by using one of [the execution control methods](src/Develop/Docs/ExecutionControlMethods.md).
-6. Execution will stop (and the execution method invoked will then return) when one of [the execution stopping conditions is met](src/Develop/Docs/StoppingConditions.md). You can then check [the processor state](src/Develop/Docs/State.md) and, if desired, resume execution.   
+1. Create an instance of [the Z80Processor class](src/develop/Main/Z80Processor.cs).
+2. Optionally, plug your own implementations of one or more of the [dependencies](src/develop/Docs/Dependencies.md).
+3. [Configure your instance as appropriate](src/develop/Docs/Configuration.md).
+4. Optionally, capture [the memory access events](src/develop/Docs/MemoryEvents.md) and/or [the instruction execution events](src/develop/Docs/InstructionEvents.md).
+5. Start the simulated processor execution by using one of [the execution control methods](src/develop/Docs/ExecutionControlMethods.md).
+6. Execution will stop (and the execution method invoked will then return) when one of [the execution stopping conditions is met](src/develop/Docs/StoppingConditions.md). You can then check [the processor state](src/develop/Docs/State.md) and, if desired, resume execution.   
 
-Execution is completely synchronous: one single thread is used for everything, including firing events. As seen in the Hello World example, you just invoke a starting method and wait until it returns (there are means to force this to happen, see [the execution stopping conditions is met](src/Develop/Docs/StoppingConditions.md)). If you want some kind of multithreading, you'll have to implement it by yourself, I just tried to keep things simple. :-)
+Execution is completely synchronous: one single thread is used for everything, including firing events. As seen in the Hello World example, you just invoke a starting method and wait until it returns (there are means to force this to happen, see [the execution stopping conditions is met](src/develop/Docs/StoppingConditions.md)). If you want some kind of multithreading, you'll have to implement it by yourself, I just tried to keep things simple. :-)
 
 Interaction of the processor with the hosting code and its outside world (memory and ports) can be achieved by handling the class events, by plugging custom implementations of the dependencies, or both. Take a look at:
 
-* [Instruction execution workflow](src/Develop/Docs/InstructionExecutionWorkflow.md)
-* [Memory and ports access workflow](src/Develop/Docs/MemoryAccessWorkflow.md)
+* [Instruction execution workflow](src/develop/Docs/InstructionExecutionWorkflow.md)
+* [Memory and ports access workflow](src/develop/Docs/MemoryAccessWorkflow.md)
 
 ## Done & to do
 
 This is a work in progress project. So far that's what is done:
 
-* [The Z80Processor class](src/Develop/Main/Z80Processor.cs) and all of its [dependencies](src/Develop/Docs/Dependencies.md).
-* [The infrastructure for executing instructions](src/Develop/Main/Instructions%20Execution/Core) and part of [the instructions themselves](src/Develop/Main/Instructions%20Execution/Instructions).
-* [A good bunch of unit tests](src/Develop/Main.Tests).
+* [The Z80Processor class](src/develop/Main/Z80Processor.cs) and all of its [dependencies](src/develop/Docs/Dependencies.md).
+* [The infrastructure for executing instructions](src/develop/Main/Instructions%20Execution/Core) and part of [the instructions themselves](src/develop/Main/Instructions%20Execution/Instructions).
+* [A good bunch of unit tests](src/develop/Main.Tests).
 
 ...and that's what's left:
 
@@ -58,7 +58,7 @@ The following resources have been used to develop this project:
 * [The undocumented Z80 documented](http://www.myquest.nl/z80undocumented/) by Sean Young.
 * [Z80 instructions table](http://clrhome.org/table/) at [ClrHome.org](http://clrhome.org)
 * [Z80 technical reference](http://www.worldofspectrum.org/faq/reference/z80reference.htm) at [WorldOfSpectrum.org](http://www.worldofspectrum.org)
-* [Complete Z80 instruction set](http://www.ticalc.org/archives/files/fileinfo/195/19571.html) from [ticalc.org](http://www.ticalc.org). The [instruction tables in the code](src/Develop/Main/Instructions%20Execution/Core) were automatically generated from a modified version of this file. 
+* [Complete Z80 instruction set](http://www.ticalc.org/archives/files/fileinfo/195/19571.html) from [ticalc.org](http://www.ticalc.org). The [instruction tables in the code](src/develop/Main/Instructions%20Execution/Core) were automatically generated from a modified version of this file. 
 
 
 ## But who am I? ##
