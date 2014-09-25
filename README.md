@@ -4,21 +4,24 @@ Z80.NET is a Z80 processor simulator that can be used as the core component for 
 
 ## Hello, world! ##
 
-    var z80 = new Z80Processor();
-    z80.AutoStopOnRetWithStackEmpty = true;
+```
+#!csharp
+var z80 = new Z80Processor();
+z80.AutoStopOnRetWithStackEmpty = true;
 
-    var program = new byte[] {
-        0x3E, 0x07, //LD A,7
-        0xC6, 0x04, //ADD A,4
-        0x3C,       //INC A
-        0xC9        //RET
-    };
-    z80.Memory.SetContents(0, program);
+var program = new byte[] {
+    0x3E, 0x07, //LD A,7
+    0xC6, 0x04, //ADD A,4
+    0x3C,       //INC A
+    0xC9        //RET
+};
+z80.Memory.SetContents(0, program);
 
-    z80.Start();
+z80.Start();
 
-    Debug.Assert(z80.Registers.A == 12);
-    Debug.Assert(z80.TStatesElapsedSinceStart == 28);
+Debug.Assert(z80.Registers.A == 12);
+Debug.Assert(z80.TStatesElapsedSinceStart == 28);
+```
 
 ## How to use
 
@@ -44,7 +47,7 @@ This is a work in progress project. So far that's what is done:
 * [The infrastructure for executing instructions](src/develop/Main/Instructions%20Execution/Core) and part of [the instructions themselves](src/develop/Main/Instructions%20Execution/Instructions).
 * [A good bunch of unit tests](src/develop/Main.Tests).
 
-...and that's what's left:
+...and that's what's left to do:
 
 * The rest of the instructions
 * The interrupts mechanism
