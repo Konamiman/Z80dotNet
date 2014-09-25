@@ -1,32 +1,6 @@
 ## What is this? ##
 
-So, one day I was doing I don't remember what, and then a weird idea came to my mind...
-
-> What if I develop a Z80 simulator in .NET?
-
-_"Nah"_, I replied to myself, _"you're never going to have enough free time for that"_. But somehow, the idea was stuck in my mind... so I agreed with myself to at least _start_ the project and define a minimum set of interfaces and data classes... just in case.
-
-## How would it be supposed to work, in case it is done some day? ##
-
-The `Z80Processor` class (which does not exist yet, just its interface has been defined) is a virtual Z80 processor. The idea is that it should be complete enough for being capable of acting as the core class for processor simulators and computer emulators.
-
-How to use it? You simply:
-
-* Create an instance of the `Z80Processor` class and configure it (at the very least the memory contents).
-* Optionally, plug your own implementation of `IMemory` in the `Memory` property of the class (the default memory implementation is a plain array of bytes).
-* Subscribe to the `MemoryAccess` and `InstructionExecution` events.
-* Invoke the `Start` method.
-* Communicate with the processor by using the above mentioned events. When you want the `Start` method to return, you invoke the `Stop` method.
-
-Or alternatively, instead of invoking the `Start` method, you invoke `ExecuteNextInstruction` instead (useful for step-by-step debuggers).
-
-That's it, all synchronous, all event based. Easy peasy.
-
-## That's all?? ##
-
-Well, that's the basic idea, but there's nothing implemented yet. Anyway you can get more details by taking a look at the source code, which is (I hope) pretty well documented.
-
-For sure there are plenty of conceptual mistakes in what I have designed so far... if so, please send me a slap in the face! (use the link below to get my contact details)
+Z80.NET is a Z80 processor simulator that can be used as the core component for developing computer emulators, or to exercise pieces of Z80 code in custom test code. It is written in C# targetting the .NET Framework 4 Client Profile.  
 
 ## Hello, world! ##
 
@@ -34,59 +8,59 @@ For sure there are plenty of conceptual mistakes in what I have designed so far.
     z80.AutoStopOnRetWithStackEmpty = true;
 
     var program = new byte[] {
-        0x3E, 0x07, //LD A,7   (7T)
-        0xC6, 0x04, //ADD A,4  (4T)
-        0x3C,       //INC A    (4T)
-        0xC9        //RET      (10T)
+        0x3E, 0x07, //LD A,7
+        0xC6, 0x04, //ADD A,4
+        0x3C,       //INC A
+        0xC9        //RET
     };
     z80.Memory.SetContents(0, program);
 
     z80.Start();
 
     Debug.Assert(z80.Registers.A == 12);
-    Debug.Assert(z80.TStatesElapsedSinceStart == 25);
+    Debug.Assert(z80.TStatesElapsedSinceStart == 28);
 
-## Instruction execution flow ##
+## How to use
 
-The following chain of operations is followed for instructions execution after the `Start` or the `Continue` method is invoked. The referred members belong to the `IZ80Processor` interface unless otherwise stated. Note that there is a separate subflow for memory access:
+1. Create an instance of [the Z80Processor class](Main/Z80Processor.cs).
+2. Optionally, plug your own implementations of one or more of the [dependencies](Docs/Dependencies.md).
+3. [Configure your instance as appropriate](Docs/Configuration.md).
+4. Optionally, capture [the memory access events](Docs/MemoryEvents.md) and/or [the instruction execution events](Docs/InstructionEvents.md).
+5. Start the simulated processor execution by using one of [the execution control methods](Docs/ExecutionControlMethods.md).
+6. Execution will stop (and the execution method invoked will then return) when one of [the execution stopping conditions is met](Docs/StoppingConditions.md). You can then check [the processor state](Docs/State.md) and, if desired, resume execution.   
 
-**This is all work in progress and highly provisional!** Sugestions for improvement are welcome.
+Execution is completely synchronous: one single thread is used for everything, including firing events. As seen in the Hello World example, you just invoke a starting method and wait until it returns (there are means to force this to happen, see [the execution stopping conditions is met](Docs/StoppingConditions.md)). If you want some kind of multithreading, you'll have to implement it by yourself, I just tried to keep things simple. :-)
 
-1. The first opcode byte of the next instruction to be executed is retrieved by reading `Memory[Registers.PC]`.
-2. The `InstructionExecutor.Execute` method is executed.
-3. The code of the `InstructionExecutor.Execute` method executes its `ProcessorAgent.FetchNextOpcode` method, if necessary, in order to retrieve additional opcde bytes for the instruction.
-4. The code of the `InstructionExecutor.Execute` method fires the `InstructionExecutor.InstructionFetchFinished` event.
-5. The `BeforeInstructionExecution` event is triggered, with the fetched opcode bytes in its `BeforeInstructionExecutionEventArgs`.
-6. The code of the `InstructionExecutor.Execute` method processes the instruction, using the members of its `ProcessorAgent` as appropriate to access registers, memory and ports. It can request execution termination by invoking `ProcessorAgent.Stop` (the default implementation of `IZ80InstructionExecutor` does never do this). It returns the count of T states required to execute the instruction.
-7. The `AfterInstructionExecution` event is triggered. The code listening the event has an opportunity to request execution termination by invoking `AfterInstructionExecutionEventArgs.ExecutionStopper.Stop`.
-8. `ClockSynchronizationHelper.TryWait` is executed, passing the value returned by `InstructionExecutor.Execute` plus any additional extra wait states as the T states count.
-9. `TStatesElapsedSinceStart` and `TStatesElapsedSinceReset` are increased by the value returned by `InstructionExecutor.Execute`.
-10. If `Stop` was invoked in step 6 or in step 7; or if the instruction was RET and `AutoStopOnRetWithStackEmpty` is true; or if the instruction was HALT, interrupts are disabled and `AutoStopOnDiPlusHalt` is true; the `Start` method returns.
-11. Start again in step 1.
+Interaction of the processor with the hosting code and its outside world (memory and ports) can be achieved by handling the class events, by plugging custom implementations of the dependencies, or both. Take a look at:
 
-## Memory access flow ##
+* [Instruction execution workflow](Docs/InstructionExecutionWorkflow.md)
+* [Memory and ports access workflow](Docs/MemoryAccessWorkflow.md)
 
-The following chain of operations is followed whenever memory is read, either because opcodes are being fetched or as part of the processing of an instruction:
+## Done & to do
 
-1. The `MemoryAccess` event is triggered with `MemoryAccessEventArgs.EventType` equal to `BeforeMemoryRead`.
-2. **If** the configured memory access mode for the affected address is `ReadAndWrite` or `ReadOnly`, **and** the `CancelMemoryAccess` property of the event has **not** been set to true, the value is read by accessing `Memory[address]`. Otherwise, a value of FFh is assumed.
-3. The `MemoryAccess` event is triggered with `MemoryAccessEventArgs.EventType` equal to `AfterMemoryRead`. The code listening the event has the opportunity to change the value.
-4. The value in `MemoryAccessEventArgs.Value` is assumed to be the obtained value and is processed appropriately.
+This is a work in progress project. So far that's what is done:
 
-As for the operations for a memory write, they are as follows:
+* [The Z80Processor class](Main/Z80Processor.cs) and all of its [dependencies](Docs/Dependencies.md).
+* [The infrastructure for executing instructions](Main/Instructions%20Execution/Core) and part of [the instructions themselves](Main/Instructions%20Execution/Instructions).
+* [A good bunch of unit tests](Main.Tests).
 
-1. The `MemoryAccess` event is triggered with `MemoryAccessEventArgs.EventType` equal to `BeforeMemoryWrite`. The code listening the event has the opportunity to change the value to be written.
-2. **If** the configured memory access mode for the affected address is `ReadAndWrite` or `WriteOnly`, **and** the `CancelMemoryAccess` property of the event has **not** been set to true, the value is written to `Memory[address]`.
-3. The `MemoryAccess` event is triggered with `MemoryAccessEventArgs.EventType` equal to `AfterMemoryWrite`.
+...and that's what's left:
 
-The code of the processor class takes care of the extra wait states needed for timing purposes.
+* The rest of the instructions
+* The interrupts mechanism
+* The code could probably benefit from some optimizations for speed
 
-The flow for accessing I/O ports is simular, but `PortsSpace` is used instead of `Memory` and the 'Port' members of `MemoryAccessEventArgs.EventType` are used instead of the 'Memory' members.
+## Resources
 
-## Interrupts ##
+The following resources have been used to develop this project:
 
-To do...
+* [Z80 official user manual](www.zilog.com/manage_directlink.php?filepath=docs/z80/um0080)
+* [The undocumented Z80 documented](http://www.myquest.nl/z80undocumented/) by Sean Young.
+* [Z80 instructions table](http://clrhome.org/table/) at [ClrHome.org](http://clrhome.org)
+* [Z80 technical reference](http://www.worldofspectrum.org/faq/reference/z80reference.htm) at [WorldOfSpectrum.org](http://www.worldofspectrum.org)
+* [Complete Z80 instruction set](http://www.ticalc.org/archives/files/fileinfo/195/19571.html) from [ticalc.org](http://www.ticalc.org). The [instruction tables in the code](Main/Instructions%20Execution/Core) were automatically generated from a modified version of this file. 
 
-## But who are you? ##
+
+## But who am I? ##
 
 I'm [Konamiman, the MSX freak](http://www.konamiman.com). No more, no less.
