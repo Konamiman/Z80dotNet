@@ -38,7 +38,7 @@
     <Compile Include="EventArgs\AfterInstructionExecutionEventArgs.cs" />
     <Compile Include="Data Types and Utils\Bit.cs" />
     <Compile Include="Dependencies Interfaces\IExecutionStopper.cs" />
-    <Compile Include="Dependencies Interfaces\IClockSynchronizationHelper.cs" />
+    <Compile Include="Dependencies Interfaces\IClockSynchronizer.cs" />
     <Compile Include="Data Types and Utils\InstructionExecutionContext.cs" />
     <Compile Include="Instructions Execution\Core\Execute_xD_Instruction.cs">
       <AutoGen>True</AutoGen>
@@ -224,7 +224,7 @@
     <Compile Include="EventArgs\MemoryAccessEventArgs.cs" />
     <Compile Include="Enums\MemoryAccessEventType.cs" />
     <Compile Include="Enums\MemoryAccessMode.cs" />
-    <Compile Include="Dependencies Implementations\ClockSynchronizationHelper.cs" />
+    <Compile Include="Dependencies Implementations\ClockSynchronizer.cs" />
     <Compile Include="Dependencies Implementations\PlainMemory.cs" />
     <Compile Include="EventArgs\ProcessorEventArgs.cs" />
     <Compile Include="Enums\ProcessorState.cs" />

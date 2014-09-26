@@ -9,14 +9,14 @@ namespace Konamiman.Z80dotNet.Tests
     {
         private const int MinMicrosecondsToWait = 10*1000;
 
-        private ClockSynchronizationHelper Sut { get; set; }
+        private ClockSynchronizer Sut { get; set; }
         private Fixture Fixture { get; set; }
 
         [SetUp]
         [Repeat(1000)]
         public void Setup()
         {
-            Sut = new ClockSynchronizationHelper();
+            Sut = new ClockSynchronizer();
             Sut.EffectiveClockFrequencyInMHz = 1;
             Fixture = new Fixture();
         }

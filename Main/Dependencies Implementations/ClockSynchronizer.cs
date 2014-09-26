@@ -4,9 +4,9 @@ using System.Threading;
 namespace Konamiman.Z80dotNet
 {
     /// <summary>
-    /// Default implementation of <see cref="IClockSynchronizationHelper"/>.
+    /// Default implementation of <see cref="IClockSynchronizer"/>.
     /// </summary>
-    public class ClockSynchronizationHelper : IClockSynchronizationHelper
+    public class ClockSynchronizer : IClockSynchronizer
     {
         private const int MinMicrosecondsToWait = 10*1000;
 

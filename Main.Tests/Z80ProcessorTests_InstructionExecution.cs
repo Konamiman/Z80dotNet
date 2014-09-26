@@ -16,7 +16,7 @@ namespace Konamiman.Z80dotNet.Tests
 
         Z80ProcessorForTests Sut { get; set; }
         Fixture Fixture { get; set; }
-        Mock<IClockSynchronizationHelper> clockSyncHelper;
+        Mock<IClockSynchronizer> clockSyncHelper;
 
         [SetUp]
         public void Setup()
@@ -27,10 +27,10 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.AutoStopOnRetWithStackEmpty = true;
             Sut.Memory[0] = RET_opcode;
 
-            clockSyncHelper = new Mock<IClockSynchronizationHelper>();
+            clockSyncHelper = new Mock<IClockSynchronizer>();
 
             Sut.InstructionExecutor = new FakeInstructionExecutor() {ProcessorAgent = Sut};
-            Sut.ClockSynchronizationHelper = clockSyncHelper.Object;
+            Sut.ClockSynchronizer = clockSyncHelper.Object;
         }
 
         [Test]

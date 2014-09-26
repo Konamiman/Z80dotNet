@@ -16,7 +16,7 @@ namespace Konamiman.Z80dotNet
 
         public Z80Processor()
         {
-            ClockSynchronizationHelper = new ClockSynchronizationHelper();
+            ClockSynchronizer = new ClockSynchronizer();
 
             ClockFrequencyInMHz = 4;
             ClockSpeedFactor = 1;
@@ -78,7 +78,7 @@ namespace Konamiman.Z80dotNet
 
         private int UnsafeInstructionExecutionLoop(bool isSingleInstruction)
         {
-            ClockSynchronizationHelper.Start();
+            ClockSynchronizer.Start();
             executionContext = new InstructionExecutionContext();
             StopReason = StopReason.NotApplicable;
             State = ProcessorState.Running;
@@ -108,10 +108,10 @@ namespace Konamiman.Z80dotNet
                 if(isSingleInstruction)
                     executionContext.StopReason = StopReason.ExecuteNextInstructionInvoked;
                 else
-                    ClockSynchronizationHelper.TryWait(totalTStates);
+                    ClockSynchronizer.TryWait(totalTStates);
             }
 
-            ClockSynchronizationHelper.Stop();
+            ClockSynchronizer.Stop();
             this.StopReason = executionContext.StopReason;
             this.State =
                 StopReason == StopReason.PauseInvoked
@@ -378,7 +378,7 @@ namespace Konamiman.Z80dotNet
                 throw new ArgumentException(string.Format("Clock frequency multiplied by clock speed factor must be a number between {0} and {1}", MinEffectiveClockSpeed, MaxEffectiveClockSpeed));
 
             this.effectiveClockFrequency = effectiveClockFrequency;
-            ClockSynchronizationHelper.EffectiveClockFrequencyInMHz = effectiveClockFrequency;
+            ClockSynchronizer.EffectiveClockFrequencyInMHz = effectiveClockFrequency;
         }
 
         private decimal _ClockSpeedFactor = 1;
@@ -456,20 +456,20 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        private IClockSynchronizationHelper _ClockSynchronizationHelper;
-        public IClockSynchronizationHelper ClockSynchronizationHelper
+        private IClockSynchronizer clockSynchronizer;
+        public IClockSynchronizer ClockSynchronizer
         {
             get
             {
-                return _ClockSynchronizationHelper;
+                return clockSynchronizer;
             }
             set
             {
                 if(value == null)
                     throw new ArgumentNullException("ClockSynchronizationHelper");
 
-                _ClockSynchronizationHelper = value;
-                _ClockSynchronizationHelper.EffectiveClockFrequencyInMHz = effectiveClockFrequency;
+                clockSynchronizer = value;
+                clockSynchronizer.EffectiveClockFrequencyInMHz = effectiveClockFrequency;
             }
         }
 

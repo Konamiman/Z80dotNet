@@ -56,7 +56,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Assert.IsInstanceOf<Z80InstructionExecutor>(Sut.InstructionExecutor);
             Assert.AreSame(Sut, Sut.InstructionExecutor.ProcessorAgent);
-            Assert.IsInstanceOf<ClockSynchronizationHelper>(Sut.ClockSynchronizationHelper);
+            Assert.IsInstanceOf<ClockSynchronizer>(Sut.ClockSynchronizer);
 
             Assert.AreEqual(StopReason.NeverRan, Sut.StopReason);
             Assert.AreEqual(ProcessorState.Stopped, Sut.State);
@@ -390,24 +390,24 @@ namespace Konamiman.Z80dotNet.Tests
         [Test]
         public void Can_set_ClockSynchronizationHelper_to_non_null_value()
         {
-            var value = new Mock<IClockSynchronizationHelper>().Object;
-            Sut.ClockSynchronizationHelper = value;
-            Assert.AreEqual(value, Sut.ClockSynchronizationHelper);
+            var value = new Mock<IClockSynchronizer>().Object;
+            Sut.ClockSynchronizer = value;
+            Assert.AreEqual(value, Sut.ClockSynchronizer);
         }
 
         [Test]
         public void Cannot_set_ClockSynchronizationHelper_to_null()
         {
-            Assert.Throws<ArgumentNullException>(() => Sut.ClockSynchronizationHelper = null);
+            Assert.Throws<ArgumentNullException>(() => Sut.ClockSynchronizer = null);
         }
 
         [Test]
         public void Sets_ClockSynchronizationHelper_clockSpeed_to_processor_speed_by_speed_factor()
         {
-            var mock = new Mock<IClockSynchronizationHelper>();
+            var mock = new Mock<IClockSynchronizer>();
             Sut.ClockFrequencyInMHz = 2;
             Sut.ClockSpeedFactor = 3;
-            Sut.ClockSynchronizationHelper = mock.Object;
+            Sut.ClockSynchronizer = mock.Object;
 
             mock.VerifySet(m => m.EffectiveClockFrequencyInMHz = 2 * 3);
         }
