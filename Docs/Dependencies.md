@@ -14,9 +14,9 @@ The default implementation is [PlainMemory](../Main/Dependencies%20Implementatio
 
 _NOTE_: The Z80Processor class may not access the memory objects at all for certain memory positions, depending on how the memory access mode is configured. See the documentation about [configuration](Configuration.md) 
 
-### IZ80Registers
+### IZ80Registers, IMainZ80Registers
 
-The [IZ80Registers interface](../Main/Dependencies%20Interfaces/IZ80Registers.cs) represents the complete Z80 register set, including all the general purpose registers (AF, BC, DE, HL, IX, IY, alternate) and the special registers (PC, SP, I, R, IFF0, IFF1).
+The [IZ80Registers interface](../Main/Dependencies%20Interfaces/IZ80Registers.cs), which inherits from [IMainZ80Registers](../Main/Dependencies%20Interfaces/IMainZ80Registers.cs), represents the complete Z80 register set, including all the general purpose registers (AF, BC, DE, HL, IX, IY, alternate) and the special registers (PC, SP, I, R, IFF0, IFF1).
 
 The default implementation is [Z80Registers](../Main/Dependencies%20Implementations/Z80Registers.cs), which simply stores the 16 bit registers in the exposed properties and uses bit and byte manipulation operations to manage the flags and the 8 bit registers (A, B, etc).
 
@@ -38,4 +38,4 @@ The default implementation is [ClockSynchronizer](../Main/Dependencies%20Impleme
 
 [IZ80Processor](../Main/IZ80Processor.cs) holds one instance of IZ80InstructionExecutor in the `ClockSynchronizer ` property.
 
-_NOTE:_ Real time syncrhonization is not performed when the processor is running in single instruction execution mode. See the documentation about [the execution control methods](Docs/ExecutionControlMethods.md).
+_NOTE:_ Real time syncrhonization is not performed when the processor is running in single instruction execution mode. See the documentation about [the execution control methods](ExecutionControlMethods.md).
