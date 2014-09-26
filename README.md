@@ -1,3 +1,6 @@
+# Z80.NET #
+
+
 ## What is this? ##
 
 Z80.NET is a Z80 processor simulator that can be used as the core component for developing computer emulators, or to exercise pieces of Z80 code in custom test code. It is written in C# targetting the .NET Framework 4 Client Profile.  
@@ -34,7 +37,7 @@ Debug.Assert(z80.TStatesElapsedSinceStart == 28);
 5. Start the simulated processor execution by using one of [the execution control methods](Docs/ExecutionControlMethods.md).
 6. Execution will stop (and the execution method invoked will then return) when one of [the execution stopping conditions is met](Docs/StoppingConditions.md). You can then check [the processor state](Docs/State.md) and, if desired, resume execution.   
 
-Execution is completely synchronous: one single thread is used for everything, including firing events. As seen in the Hello World example, you just invoke one of the starting method and wait until it returns (there are means to force this to happen, see [the execution stopping conditions is met](Docs/StoppingConditions.md)). If you want some kind of multithreading, you'll have to implement it by yourself, I just tried to keep things simple. :-)
+Execution is completely synchronous: one single thread is used for everything, including firing events. As seen in the Hello World example, you just invoke one of the starting methods and wait until it returns (there are means to force this to happen, see [the execution stopping conditions is met](Docs/StoppingConditions.md)). If you want some kind of multithreading, you'll have to implement it by yourself, I just tried to keep things simple. :-)
 
 Interaction of the processor with the hosting code and the outside world (memory and ports) can be achieved by handling the class events, by plugging custom implementations of the dependencies, or both at the same time. As for the memory and ports access, take a look at:
 
