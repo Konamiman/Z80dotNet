@@ -14,7 +14,7 @@ There is a [IExecutionStopper interface](../Main/Dependencies%20Interfaces/IExec
 
 ### Auto stop on RET with stack empty
 
-If the `AutoStopOnRetWithStackEmpty` property is [configured](configuration.md) with a value of _true_, execution will stop after a return instruction (`RET`, `RETI` or `RETN`) is executed if the stack was empty prior to its execution.
+If the `AutoStopOnRetWithStackEmpty` property is [configured](Configuration.md) with a value of _true_, execution will stop after a return instruction (`RET`, `RETI` or `RETN`) is executed if the stack was empty prior to its execution.
 
 "The stack is empty" means that the value of the SP register is equal to the value returned by the `StartOfStack` property of [IZ80Processor](../Main/IZ80Processor.cs). The value of this property is set according to these rules:
 
@@ -28,7 +28,7 @@ This feature allows to use the processor class to exercise small pieces of Z80 c
 
 ### Auto stop on HALT with interrupts disabled
 
-If the `AutoStopOnDiPlusHalt` property is [configured](configuration.md) with a value of _true_, execution will stop after a `HALT` instruction is executed if interrupts were disabled prior to its execution.
+If the `AutoStopOnDiPlusHalt` property is [configured](Configuration.md) with a value of _true_, execution will stop after a `HALT` instruction is executed if interrupts were disabled prior to its execution.
 
 This property is _true_ by default and it is usually not a good idea to set it to _false_. Note that if this property is _false_ and a `HALT` instruction is executed with the interrupts disabled, the only way to stop execution is to manually invoke the `Stop` method as explained above.
 
