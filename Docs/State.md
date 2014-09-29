@@ -14,4 +14,4 @@
 
 * **`InterruptMode`**: The current interrupt mode as set by an `IM n` instruction.
 
-* **`StartOfStack`**: The current start of stack address as set by a reset or by a `LD SP` instruction. This value is relevant for the auto stop on empty stack functionality, see [execution stop conditions](StopConditionss.md).
+* **`StartOfStack`**: The current start of stack address as set by a reset or by a `LD SP` instruction. This value is relevant for the auto stop on empty stack functionality, see [execution stop conditions](StopConditions.md).
