@@ -17,4 +17,4 @@ The code of the processor class takes care of the extra wait states needed for t
 
 The flow for accessing I/O ports is similar, but `PortsSpace` is used instead of `Memory` and the 'Port' members of `MemoryAccessEventArgs.EventType` are used instead of the 'Memory' members.
 
-Note that [MemoryAccessEventArgs](../Main/EventArgs/MemoryAccessEventArgs.cs) inherits from [ProcessorEventArgs](Main/EventArgs/ProcessorEventArgs.cs), which defines the `LocalUserState` property. This property is propagated from the 'before' event to the 'after' event and can be used by the events handling code at its convenience.
+Note that [MemoryAccessEventArgs](../Main/EventArgs/MemoryAccessEventArgs.cs) inherits from [ProcessorEventArgs](../Main/EventArgs/ProcessorEventArgs.cs), which defines the `LocalUserState` property. This property is propagated from the 'before' event to the 'after' event and can be used by the events handling code at its convenience.
