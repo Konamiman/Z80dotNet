@@ -18,11 +18,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{43991AEE-1
 	ProjectSection(SolutionItems) = preProject
 		Docs\Configuration.md = Docs\Configuration.md
 		Docs\Dependencies.md = Docs\Dependencies.md
-		Docs\ExecutionControlMethods.md = Docs\ExecutionControlMethods.md
-		Docs\InstructionEvents.md = Docs\InstructionEvents.md
-		Docs\InstructionExecutionWorkflow.md = Docs\InstructionExecutionWorkflow.md
-		Docs\MemoryAccessWorkflow.md = Docs\MemoryAccessWorkflow.md
-		Docs\MemoryEvents.md = Docs\MemoryEvents.md
+		Docs\HowExecutionWorks.md = Docs\HowExecutionWorks.md
+		Docs\InstructionExecutionFlow.md = Docs\InstructionExecutionFlow.md
+		Docs\MemoryAccessFlow.md = Docs\MemoryAccessFlow.md
 		Docs\State.md = Docs\State.md
 		Docs\StoppingConditions.md = Docs\StoppingConditions.md
 	EndProjectSection
