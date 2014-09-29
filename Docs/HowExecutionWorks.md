@@ -4,7 +4,7 @@ The [Z80Processor class](../Main/Z80Processor.cs) simulates the processor execut
 
 ### Instruction execution loop mode
 
-This mode is initiated when the `Start` method or the `Continue` method of [IZ80Processor](../Main/IZ80Processor.cs) is invoked. In this mode the processor just starts executing instructions in the order in which they are stored in memory, and does not stop until any of the [execution stopping conditions](StoppingConditions.md) applies. Control of the process is achieved by handling [the memory access events](Docs/MemoryAccessFlow.md) and/or [the instruction execution events](Docs/InstructionExecutionFlow.md).
+This mode is initiated when the `Start` method or the `Continue` method of [IZ80Processor](../Main/IZ80Processor.cs) is invoked. In this mode the processor just starts executing instructions in the order in which they are stored in memory, and does not stop until any of the [execution stopping conditions](StoppingConditions.md) applies. Control of the process is achieved by handling [the memory access events](MemoryAccessFlow.md) and/or [the instruction execution events](InstructionExecutionFlow.md).
 
 The difference between `Start` and `Continue` is that the former does a processor reset prior to starting execution, while the later does not. A reset simply sets the PC, IFF0 and IF1 registers, as well as the interrupt mode, to zero; and sets the AF and PC registers to FFFFh. There is also a separate `Reset` method that does the same without otherwise modifying the processor state.
 
