@@ -1,19 +1,21 @@
 ## Instruction execution flow ##
 
-The following chain of operations is followed for instructions execution after the `Start` or the `Continue` method is invoked. The referred members belong to the `IZ80Processor` interface unless otherwise stated. Note that there is a separate subflow for memory access:
+The following is the chain of operations performed by [IZ80Processor](../Main/IZ80Processor.cs) when executing one instruction, either as part of the instructions execution loop or when executing one single instruction (see [how execution works](HowExecutionWorks.md)).
 
-**This is all work in progress and highly provisional!** Sugestions for improvement are welcome.
+1. The first opcode byte of the instruction to be executed is retrieved by reading `Memory[Registers.PC]`.
+2. The `InstructionExecutor.Execute` method is invoked.
 
-1. The first opcode byte of the next instruction to be executed is retrieved by reading `Memory[Registers.PC]`.
-2. The `InstructionExecutor.Execute` method is executed.
-3. The code of the `InstructionExecutor.Execute` method executes its `ProcessorAgent.FetchNextOpcode` method, if necessary, in order to retrieve additional opcde bytes for the instruction.
-4. The code of the `InstructionExecutor.Execute` method fires the `InstructionExecutor.InstructionFetchFinished` event.
-5. The `BeforeInstructionExecution` event is triggered, with the fetched opcode bytes in its `BeforeInstructionExecutionEventArgs`.
-6. The code of the `InstructionExecutor.Execute` method processes the instruction, using the members of its `ProcessorAgent` as appropriate to access registers, memory and ports. It can request execution termination by invoking `ProcessorAgent.Stop` (the default implementation of `IZ80InstructionExecutor` does never do this). It returns the count of T states required to execute the instruction.
-7. The `AfterInstructionExecution` event is triggered. The code listening the event has an opportunity to request execution termination by invoking `AfterInstructionExecutionEventArgs.ExecutionStopper.Stop`.
-8. `ClockSynchronizationHelper.TryWait` is executed, passing the value returned by `InstructionExecutor.Execute` plus any additional extra wait states as the T states count.
-9. `TStatesElapsedSinceStart` and `TStatesElapsedSinceReset` are increased by the value returned by `InstructionExecutor.Execute`.
-10. If `Stop` was invoked in step 6 or in step 7; or if the instruction was RET and `AutoStopOnRetWithStackEmpty` is true; or if the instruction was HALT, interrupts are disabled and `AutoStopOnDiPlusHalt` is true; the `Start` method returns.
-11. Start again in step 1.
+The code for `InstructionExecutor.Execute` does then the following:
 
-WIP...
+3. The `ProcessorAgent.FetchNextOpcode` method is invoked, if necessary, in order to retrieve additional opcde bytes for the instruction.
+4. The `InstructionExecutor.InstructionFetchFinished` event is fired. _This causes `IZ80Processor` to fire the `BeforeInstructionExecution` event_.
+6. The instruction is processed, using the members of `ProcessorAgent` as appropriate to access registers, memory and ports. _Execution termination can be requested at this point by invoking `ProcessorAgent.Stop` (the default implementation of `IZ80InstructionExecutor` does never do this)_. 
+7. The method terminates, returning the count of T states required to execute the instruction.
+
+Control returns then to `IZ80Processor`:
+
+8. The `AfterInstructionExecution` event is triggered. _The code that handles the event has an opportunity to request execution termination by invoking `AfterInstructionExecutionEventArgs.ExecutionStopper.Stop`_.
+8. `IClockSynchronizer.TryWait` is executed, having the value returned by `InstructionExecutor.Execute` plus any additional extra wait states passed as the T states count.
+9. `TStatesElapsedSinceStart` and `TStatesElapsedSinceReset` are increased by the same value calculated in the previous step.
+10. If one of [the execution stop conditions](StopConditions.md) is met, [the method that initiated the execution](HowExecutionWorks.md) returns.
+11. If inside an instruction execution loop, the flow starts again for the next instruction.
