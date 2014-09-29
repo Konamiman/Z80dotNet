@@ -14,19 +14,19 @@ namespace Konamiman.Z80dotNet
         Stopped,
 
         /// <summary>
-        /// Not running. The <see cref="IZ80Processor.Start"/> or <see cref="IZ80Processor.ExecuteNextInstruction"/>
-        /// were invoked and finished with an invocation of <see cref="IExecutionStopper.Stop"/>
+        /// Not running. The <see cref="IZ80Processor.Start"/> method or the <see cref="IZ80Processor.ExecuteNextInstruction"/>
+        /// method was invoked and finished with an invocation of <see cref="IExecutionStopper.Stop"/>
         /// with <c>isPause=true</c>.
         /// </summary>
         Paused,
 
         /// <summary>
-        /// Running. The <see cref="IZ80Processor.Start"/> was invoked and has not returned yet.
+        /// Running. The <see cref="IZ80Processor.Start"/> method was invoked and has not returned yet.
         /// </summary>
         Running,
 
         /// <summary>
-        /// Executing only one instruction. The <see cref="IZ80Processor.ExecuteNextInstruction"/> was invoked
+        /// Executing only one instruction. The <see cref="IZ80Processor.ExecuteNextInstruction"/> methodwas invoked
         /// and has not returned yet.
         /// </summary>
         ExecutingOneInstruction

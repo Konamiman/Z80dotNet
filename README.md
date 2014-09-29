@@ -33,16 +33,13 @@ Debug.Assert(z80.TStatesElapsedSinceStart == 28);
 1. Create an instance of [the Z80Processor class](Main/Z80Processor.cs).
 2. Optionally, plug your own implementations of one or more of the [dependencies](Docs/Dependencies.md).
 3. [Configure your instance](Docs/Configuration.md) as appropriate.
-4. Optionally, capture [the memory access events](Docs/MemoryEvents.md) and/or [the instruction execution events](Docs/InstructionEvents.md).
-5. Start the simulated processor execution by using one of [the execution control methods](Docs/ExecutionControlMethods.md).
+4. Optionally, capture [the memory access events](Docs/MemoryAccessFlow.md) and/or [the instruction execution events](Docs/InstructionExecutionFlow.md).
+5. [Start the simulated processor execution](Docs/HowExecutionWorks.md) by using one of the execution control methods.
 6. Execution will stop (and the execution method invoked will then return) when one of [the execution stopping conditions is met](Docs/StoppingConditions.md). You can then check [the processor state](Docs/State.md) and, if desired, resume execution.   
 
 Execution is completely synchronous: one single thread is used for everything, including firing events. As seen in the Hello World example, you just invoke one of the starting methods and wait until it returns (there are means to force this to happen, see [the execution stopping conditions is met](Docs/StoppingConditions.md)). If you want some kind of multithreading, you'll have to implement it by yourself, I just tried to keep things simple. :-)
 
-Interaction of the processor with the hosting code and the outside world (memory and ports) can be achieved by handling the class events, by plugging custom implementations of the dependencies, or both at the same time. As for the memory and ports access, take a look at:
-
-* [Instruction execution workflow](Docs/InstructionExecutionWorkflow.md)
-* [Memory and ports access workflow](Docs/MemoryAccessWorkflow.md)
+Interaction of the processor with the hosting code and the outside world (memory and ports) can be achieved by handling the class events, by plugging custom implementations of the dependencies, or both at the same time.
 
 ## Done & to do
 
