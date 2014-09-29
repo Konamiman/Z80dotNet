@@ -1,6 +1,6 @@
 ## Execution Stop Conditions
 
-Once [the processor execution has started](HowExecutionWorks.md), it will stop (and the invoked execution starter method will return) only when one of the stopping conditions is met. This section explains what are the possible stopping conditions.
+Once [the processor execution has started](HowExecutionWorks.md), it will stop (and the invoked execution starter method will return) only when one of the execution stop conditions is met. This section explains what are the possible stop conditions.
 
 Note that no matter what, execution always stops after an instruction has been executed completely, including the update of registers and T states counters. An instruction will never be aborted in mid-execution.
 

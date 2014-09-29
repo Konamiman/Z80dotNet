@@ -4,9 +4,9 @@ The [Z80Processor class](../Main/Z80Processor.cs) can be configured by using a s
 
 _NOTE:_ Remember that plugging [custom dependencies](Dependencies.md) is an alternative (or complementary) way to customize the behavior of the processor class.
 
-* **`AutoSopOnDiPlusHalt`**:  When this value is true, the processor execution will stop automatically if a HALT instruction is executed when interrupts are disabled. See the [stopping conditions](StoppingConditions.md) documentation for details. The default value is _true_.
+* **`AutoSopOnDiPlusHalt`**:  When this value is true, the processor execution will stop automatically if a HALT instruction is executed when interrupts are disabled. See the [execution stop conditions](StopConditionss.md) documentation for details. The default value is _true_.
 
-* **`AutoStopOnRetWithStackEmpty `**: When this value is true, the processor execution will stop automatically if a RET instruction is executed when the stack is empty. See the [stopping conditions](StoppingConditions.md) documentation for details. The default value is _false_.
+* **`AutoStopOnRetWithStackEmpty `**: When this value is true, the processor execution will stop automatically if a RET instruction is executed when the stack is empty. See the [execution stop conditions](StopConditionss.md) documentation for details. The default value is _false_.
 
 * **`ClockFrequencyInMhz`** and **`ClockSpeedFactor`**: These two values, when multiplied, hold the clock speed at which the simulated processor runs; this information is only relevant for [the clock synchronizer](../Main/Dependencies%20Interfaces/IClockSynchronizer.cs). There are two properties to help in the development of computer emulators, so it is possible to fix the clock frequency to the value for the real system but allow the user to tune the speed factor as appropriate. The default value is 4 (MHz) for the clock frequency and 1 for the speed factor.
 
