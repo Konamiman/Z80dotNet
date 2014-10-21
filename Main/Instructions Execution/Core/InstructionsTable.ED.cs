@@ -59,7 +59,7 @@ namespace Konamiman.Z80dotNet
                 RETI,    //6D
                 IM_0,    //6E
                 RLD,    //6F
-                IN_C,    //70
+                IN_F_C,    //70
                 OUT_C_0,    //71
                 SBC_HL_SP,    //72
                 LD_aa_SP,    //73
@@ -104,15 +104,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files when they are implemented.
 
         /// <summary>
-        /// The IN B,(C) instruction.
-        /// </summary>
-        byte IN_B_C()
-        {
-            FetchFinished();
-            return 12;
-        }
-
-        /// <summary>
         /// The OUT (C),B instruction.
         /// </summary>
         byte OUT_C_B()
@@ -133,14 +124,6 @@ namespace Konamiman.Z80dotNet
         /// The LD I,A instruction.
         /// </summary>
         byte LD_I_A()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The IN C,(C) instruction.
-        /// </summary>
-        byte IN_C_C()
         {
             throw new NotImplementedException();
         }
@@ -170,14 +153,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The IN D,(C) instruction.
-        /// </summary>
-        byte IN_D_C()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The OUT (C),D instruction.
         /// </summary>
         byte OUT_C_D()
@@ -197,14 +172,6 @@ namespace Konamiman.Z80dotNet
         /// The LD A,I instruction.
         /// </summary>
         byte LD_A_I()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The IN E,(C) instruction.
-        /// </summary>
-        byte IN_E_C()
         {
             throw new NotImplementedException();
         }
@@ -234,14 +201,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The IN H,(C) instruction.
-        /// </summary>
-        byte IN_H_C()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The OUT (C),H instruction.
         /// </summary>
         byte OUT_C_H()
@@ -261,14 +220,6 @@ namespace Konamiman.Z80dotNet
         /// The RRD instruction.
         /// </summary>
         byte RRD()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The IN L,(C) instruction.
-        /// </summary>
-        byte IN_L_C()
         {
             throw new NotImplementedException();
         }
@@ -297,14 +248,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The IN (C) instruction.
-        /// </summary>
-        byte IN_C()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The OUT (C),0 instruction.
         /// </summary>
         byte OUT_C_0()
@@ -316,14 +259,6 @@ namespace Konamiman.Z80dotNet
         /// The SBC HL,SP instruction.
         /// </summary>
         byte SBC_HL_SP()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The IN A,(C) instruction.
-        /// </summary>
-        byte IN_A_C()
         {
             throw new NotImplementedException();
         }

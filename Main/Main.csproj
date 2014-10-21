@@ -58,6 +58,10 @@
     <None Include="Instructions Execution\Instructions\CALL                 --see RET" />
     <None Include="Instructions Execution\Instructions\CP %28HL%29           --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\CP r                 --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\IN r,%28C%29.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IN r,%28C%29.cs</LastGenOutput>
+    </None>
     <None Include="Instructions Execution\Instructions\JP                    --see RET" />
     <None Include="Instructions Execution\Instructions\JP cc                --see RET" />
     <None Include="Instructions Execution\Instructions\CALL cc            --see RET" />
@@ -115,6 +119,11 @@
     <Compile Include="Instructions Execution\Instructions\CCF           .cs" />
     <Compile Include="Instructions Execution\Instructions\EI                .cs" />
     <Compile Include="Instructions Execution\Instructions\EX AF,AF%27   - Copy.cs" />
+    <Compile Include="Instructions Execution\Instructions\IN r,%28C%29.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IN r,%28C%29.tt</DependentUpon>
+    </Compile>
     <Compile Include="Instructions Execution\Instructions\OUT %28n%29,A    .cs" />
     <Compile Include="Instructions Execution\Instructions\LD %28HL%29,n    .cs" />
     <Compile Include="Instructions Execution\Instructions\LD r,r       .cs">
@@ -292,7 +301,6 @@
   <ItemGroup>
     <None Include="Instructions Execution\Instructions\ADD A,%28HL%29   --see ADD A,r" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
