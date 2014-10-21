@@ -65,6 +65,10 @@
     <None Include="Instructions Execution\Instructions\JP                    --see RET" />
     <None Include="Instructions Execution\Instructions\JP cc                --see RET" />
     <None Include="Instructions Execution\Instructions\CALL cc            --see RET" />
+    <None Include="Instructions Execution\Instructions\OUT %28C%29,r    .tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>OUT %28C%29,r    .cs</LastGenOutput>
+    </None>
     <None Include="Instructions Execution\Instructions\POP rr             --see PUSH rr" />
     <None Include="Instructions Execution\Instructions\PUSH rr + POP rr               .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -123,6 +127,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>IN r,%28C%29.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Instructions Execution\Instructions\OUT %28C%29,r    .cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OUT %28C%29,r    .tt</DependentUpon>
     </Compile>
     <Compile Include="Instructions Execution\Instructions\OUT %28n%29,A    .cs" />
     <Compile Include="Instructions Execution\Instructions\LD %28HL%29,n    .cs" />

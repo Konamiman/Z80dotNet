@@ -104,15 +104,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files when they are implemented.
 
         /// <summary>
-        /// The OUT (C),B instruction.
-        /// </summary>
-        byte OUT_C_B()
-        {
-            FetchFinished();
-            return 12;
-        }
-
-        /// <summary>
         /// The SBC HL,BC instruction.
         /// </summary>
         byte SBC_HL_BC()
@@ -124,14 +115,6 @@ namespace Konamiman.Z80dotNet
         /// The LD I,A instruction.
         /// </summary>
         byte LD_I_A()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The OUT (C),C instruction.
-        /// </summary>
-        byte OUT_C_C()
         {
             throw new NotImplementedException();
         }
@@ -153,14 +136,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The OUT (C),D instruction.
-        /// </summary>
-        byte OUT_C_D()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The SBC HL,DE instruction.
         /// </summary>
         byte SBC_HL_DE()
@@ -172,14 +147,6 @@ namespace Konamiman.Z80dotNet
         /// The LD A,I instruction.
         /// </summary>
         byte LD_A_I()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The OUT (C),E instruction.
-        /// </summary>
-        byte OUT_C_E()
         {
             throw new NotImplementedException();
         }
@@ -201,14 +168,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The OUT (C),H instruction.
-        /// </summary>
-        byte OUT_C_H()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The SBC HL,HL instruction.
         /// </summary>
         byte SBC_HL_HL()
@@ -220,14 +179,6 @@ namespace Konamiman.Z80dotNet
         /// The RRD instruction.
         /// </summary>
         byte RRD()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The OUT (C),L instruction.
-        /// </summary>
-        byte OUT_C_L()
         {
             throw new NotImplementedException();
         }
@@ -248,25 +199,9 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The OUT (C),0 instruction.
-        /// </summary>
-        byte OUT_C_0()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The SBC HL,SP instruction.
         /// </summary>
         byte SBC_HL_SP()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The OUT (C),A instruction.
-        /// </summary>
-        byte OUT_C_A()
         {
             throw new NotImplementedException();
         }
