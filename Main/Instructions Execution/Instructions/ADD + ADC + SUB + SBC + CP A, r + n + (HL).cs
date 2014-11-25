@@ -316,7 +316,7 @@ namespace Konamiman.Z80dotNet
             var newValueMSB = newValue.GetBit(7);
             Registers.CF = (oldValueMSB == 0) && (newValueMSB == 1);
 			var valueToAddMSB = valueToAdd.GetBit(7);
-			Registers.PF = (oldValueMSB != valueToAddMSB) && (valueToAddMSB == newValueMSB);
+            Registers.PF = (oldValueMSB != valueToAddMSB) && (valueToAddMSB == newValueMSB);
 
             Registers.NF = 1;
             SetFlags3and5From(newValue);

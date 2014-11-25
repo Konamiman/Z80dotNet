@@ -79,6 +79,10 @@
       <LastGenOutput>RST           .cs</LastGenOutput>
     </None>
     <None Include="Instructions Execution\Instructions\RET cc             --see RET" />
+    <None Include="Instructions Execution\Instructions\SBC HL,rr       .tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SBC HL,rr       .cs</LastGenOutput>
+    </None>
     <None Include="Instructions Execution\Instructions\XOR %28HL%29       --see AND r" />
     <None Include="Instructions Execution\Instructions\AND n            --see AND r" />
     <None Include="Instructions Execution\Instructions\AND + XOR + OR r + n + %28HL%29         .tt">
@@ -165,6 +169,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RET + JP + CALL %27%27 + cc     .tt</DependentUpon>
+    </Compile>
+    <Compile Include="Instructions Execution\Instructions\SBC HL,rr       .cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SBC HL,rr       .tt</DependentUpon>
     </Compile>
     <Compile Include="Instructions Execution\Instructions\SCF              .cs" />
     <Compile Include="Instructions Execution\Instructions\DAA            .cs" />
