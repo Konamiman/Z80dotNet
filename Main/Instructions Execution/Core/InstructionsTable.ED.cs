@@ -183,14 +183,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The NEG instruction.
-        /// </summary>
-        byte NEG()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The RETI instruction.
         /// </summary>
         byte RETI()
