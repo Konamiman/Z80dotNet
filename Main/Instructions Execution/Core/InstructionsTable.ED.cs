@@ -199,14 +199,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The RETN instruction.
-        /// </summary>
-        byte RETN()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The IM 0 instruction.
         /// </summary>
         byte IM_0()

@@ -74,6 +74,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PUSH rr + POP rr               .cs</LastGenOutput>
     </None>
+    <None Include="Instructions Execution\Instructions\RETN            .tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RETN            .cs</LastGenOutput>
+    </None>
     <None Include="Instructions Execution\Instructions\RST           .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RST           .cs</LastGenOutput>
@@ -160,6 +164,11 @@
       <DependentUpon>PUSH rr + POP rr               .tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Instructions Execution\Instructions\RETN            .cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RETN            .tt</DependentUpon>
     </Compile>
     <Compile Include="Instructions Execution\Instructions\RST           .cs">
       <DependentUpon>RST           .tt</DependentUpon>

@@ -55,6 +55,7 @@
     <Compile Include="Instructions Execution\EX DE,HL     .Tests.cs" />
     <Compile Include="Instructions Execution\DI + EI          .Tests.cs" />
     <Compile Include="Instructions Execution\LD SP,HL      .Tests.cs" />
+    <Compile Include="Instructions Execution\RETN       .Tests.cs" />
     <Compile Include="Instructions Execution\RST               .Tests.cs" />
     <Compile Include="Instructions Execution\CALL + CALL cc       .Tests.cs" />
     <Compile Include="Instructions Execution\PUSH rr         .Tests.cs" />

@@ -99,7 +99,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [Test]
         [TestCaseSource("RET_cc_Source")]
         [TestCaseSource("RET_Source")]
-        public void LD_SP_HL_fires_FetchFinished_with_isLdSp_true(string flagName, byte opcode, int flagValue)
+        public void LRET_fires_FetchFinished_with_isRet_true(string flagName, byte opcode, int flagValue)
         {
             var eventFired = false;
 
