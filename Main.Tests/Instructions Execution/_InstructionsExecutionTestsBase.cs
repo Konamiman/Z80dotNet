@@ -238,6 +238,8 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             public ushort MemoryPointer { get; set; }
 
+            public byte CurrentInterruptMode { get; private set; }
+
             public byte FetchNextOpcode()
             {
                 return Memory[Registers.PC++];
@@ -272,7 +274,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             public void SetInterruptMode(byte interruptMode)
             {
-                throw new NotImplementedException();
+                CurrentInterruptMode = interruptMode;
             }
 
             public void Stop(bool isPause = false)

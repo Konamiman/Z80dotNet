@@ -74,6 +74,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PUSH rr + POP rr               .cs</LastGenOutput>
     </None>
+    <None Include="Instructions Execution\Instructions\IM 0 + IM 1 + IM 2        .tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IM 0 + IM 1 + IM 2        .cs</LastGenOutput>
+    </None>
     <None Include="Instructions Execution\Instructions\RETN            .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RETN            .cs</LastGenOutput>
@@ -162,6 +166,11 @@
     <Compile Include="Instructions Execution\Instructions\IN A,%28n%29     .cs" />
     <Compile Include="Instructions Execution\Instructions\PUSH rr + POP rr               .cs">
       <DependentUpon>PUSH rr + POP rr               .tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Instructions Execution\Instructions\IM 0 + IM 1 + IM 2        .cs">
+      <DependentUpon>IM 0 + IM 1 + IM 2        .tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>

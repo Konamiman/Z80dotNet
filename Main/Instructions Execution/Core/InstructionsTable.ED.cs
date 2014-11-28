@@ -191,30 +191,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The IM 2 instruction.
-        /// </summary>
-        byte IM_2()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The IM 0 instruction.
-        /// </summary>
-        byte IM_0()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The IM 1 instruction.
-        /// </summary>
-        byte IM_1()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The LDI instruction.
         /// </summary>
         byte LDI()
