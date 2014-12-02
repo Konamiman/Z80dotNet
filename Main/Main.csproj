@@ -53,6 +53,7 @@
     <Compile Include="Instructions Execution\Core\InstructionsTable.ED.cs" />
     <Compile Include="Instructions Execution\Core\InstructionsTable.SingleByte.cs" />
     <None Include="Instructions Execution\Instructions\ADC A,%28HL%29   --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\ADC HL,rr      --see SBC HL,rr" />
     <None Include="Instructions Execution\Instructions\CP n                --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\AND %28HL%29       --see AND r" />
     <None Include="Instructions Execution\Instructions\CALL                 --see RET" />
@@ -87,9 +88,9 @@
       <LastGenOutput>RST           .cs</LastGenOutput>
     </None>
     <None Include="Instructions Execution\Instructions\RET cc             --see RET" />
-    <None Include="Instructions Execution\Instructions\SBC HL,rr       .tt">
+    <None Include="Instructions Execution\Instructions\ADC HL,rr + SBC HL,rr       .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>SBC HL,rr       .cs</LastGenOutput>
+      <LastGenOutput>ADC HL,rr + SBC HL,rr       .cs</LastGenOutput>
     </None>
     <None Include="Instructions Execution\Instructions\XOR %28HL%29       --see AND r" />
     <None Include="Instructions Execution\Instructions\AND n            --see AND r" />
@@ -191,10 +192,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RET + JP + CALL %27%27 + cc     .tt</DependentUpon>
     </Compile>
-    <Compile Include="Instructions Execution\Instructions\SBC HL,rr       .cs">
+    <Compile Include="Instructions Execution\Instructions\ADC HL,rr + SBC HL,rr       .cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SBC HL,rr       .tt</DependentUpon>
+      <DependentUpon>ADC HL,rr + SBC HL,rr       .tt</DependentUpon>
     </Compile>
     <Compile Include="Instructions Execution\Instructions\SCF              .cs" />
     <Compile Include="Instructions Execution\Instructions\DAA            .cs" />

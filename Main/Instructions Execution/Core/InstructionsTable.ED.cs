@@ -104,25 +104,9 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files when they are implemented.
 
         /// <summary>
-        /// The ADC HL,BC instruction.
-        /// </summary>
-        byte ADC_HL_BC()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The LD R,A instruction.
         /// </summary>
         byte LD_R_A()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The ADC HL,DE instruction.
-        /// </summary>
-        byte ADC_HL_DE()
         {
             throw new NotImplementedException();
         }
@@ -143,25 +127,9 @@ namespace Konamiman.Z80dotNet
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// The ADC HL,HL instruction.
-        /// </summary>
-        byte ADC_HL_HL()
-        {
-            throw new NotImplementedException();
-        }
-
         /// The RLD instruction.
         /// </summary>
         byte RLD()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The ADC HL,SP instruction.
-        /// </summary>
-        byte ADC_HL_SP()
         {
             throw new NotImplementedException();
         }
