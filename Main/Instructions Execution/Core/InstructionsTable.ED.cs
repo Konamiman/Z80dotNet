@@ -120,14 +120,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The LD A,I instruction.
-        /// </summary>
-        byte LD_A_I()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The ADC HL,DE instruction.
         /// </summary>
         byte ADC_HL_DE()
