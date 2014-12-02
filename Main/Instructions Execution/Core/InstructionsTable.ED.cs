@@ -104,14 +104,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files when they are implemented.
 
         /// <summary>
-        /// The LD I,A instruction.
-        /// </summary>
-        byte LD_I_A()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The ADC HL,BC instruction.
         /// </summary>
         byte ADC_HL_BC()

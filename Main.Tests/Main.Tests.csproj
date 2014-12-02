@@ -46,6 +46,7 @@
     <Compile Include="BitTests.cs" />
     <Compile Include="ClockSynchronizationHelperTests.cs" />
     <Compile Include="HelloWorld.cs" />
+    <Compile Include="Instructions Execution\LD I,A              .Tests.cs" />
     <Compile Include="Instructions Execution\EX %28SP%29,HL     .Tests.cs" />
     <Compile Include="Instructions Execution\IM 0 + IM 1 + IM 2      .Tests.cs" />
     <Compile Include="Instructions Execution\OUT %28C%29,r.        .Tests.cs" />

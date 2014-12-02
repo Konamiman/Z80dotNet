@@ -72,7 +72,10 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
         protected Bit GetFlag(string name)
         {
-            return (Bit)RegProperty(name + "F").GetValue(Registers, null); 
+            if(name.Length == 1)
+                name += "F";
+
+            return (Bit)RegProperty(name).GetValue(Registers, null); 
         }
 
         protected void SetReg(string regName, byte value)
@@ -87,7 +90,10 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
         protected void SetFlag(string flagName, Bit value)
         {
-            RegProperty(flagName + "F").SetValue(Registers, value, null);
+            if(flagName.Length == 1)
+                flagName += "F";
+
+            RegProperty(flagName).SetValue(Registers, value, null);
         }
 
         protected PropertyInfo RegProperty(string name)
@@ -162,6 +168,9 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
         protected void AssertDoesNotChangeFlags(byte opcode, byte? prefix = null, params string[] flagNames)
         {
+            if(flagNames.Length == 0)
+                flagNames = new[] {"C", "H", "S", "Z", "P", "N", "Flag3", "Flag5"};
+            
             var randomFlags = flagNames.ToDictionary(keySelector: x => x, elementSelector: x => Fixture.Create<Bit>());
 
             foreach(var flag in flagNames)
