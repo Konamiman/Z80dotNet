@@ -27,6 +27,24 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
+        /// The RETI instruction.
+        /// </summary>
+        private byte RETI()
+        {
+            FetchFinished(isRet: true);
+
+			var sp = Registers.SP.ToUShort();
+            var newPC = NumberUtils.CreateShort(
+                ProcessorAgent.ReadFromMemory(sp),
+                ProcessorAgent.ReadFromMemory(sp.Inc()));
+            Registers.PC = newPC.ToUShort();
+
+            Registers.SP = Registers.SP.Add(2);
+
+            return 14;
+        }
+
+        /// <summary>
         /// The JP instruction.
         /// </summary>
         private byte JP_nn()

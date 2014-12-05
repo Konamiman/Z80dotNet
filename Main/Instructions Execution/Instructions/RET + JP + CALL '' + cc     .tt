@@ -20,14 +20,16 @@ namespace Konamiman.Z80dotNet
        {"P0","PO"},{"P1","PE"},
        {"S0","P"},{"S1","M"}
     };
-	var instrNames = new[] {"RET", "JP", "CALL"};
+	var instrNames = new[] {"RET", "RETI", "JP", "CALL"};
     foreach(var flag in new[] {"","C","Z","P","S"}) {
     foreach(var flagValue in new[] {1, 0}) {
-	for(int i=0; i<=2; i++) {
-		var isRet = (i==0);
-		var isJp = (i==1);
-		var isCall = (i==2);
+	for(int i=0; i<=3; i++) {
+		var isRet = (i==0 || i==1);
+		var isReti = (i==1);
+		var isJp = (i==2);
+		var isCall = (i==3);
         if(flag=="" && flagValue==1) continue;
+	    if(isReti && flag != "") continue;
         var name=names[flag+flagValue]; #>
         /// <summary>
         /// The <#=instrNames[i]#><#=name=="" ? "" : " "+name+""#> instruction.
@@ -53,7 +55,7 @@ namespace Konamiman.Z80dotNet
 			Registers.PC = newAddress;
 <# } #>
 
-            return <#=isCall ? 17 : (isRet && flag != "") ? 11 : 10#>;
+            return <#=isCall ? 17 : isReti ? 14 : (isRet && flag != "") ? 11 : 10#>;
         }
 
 <# }}} #>

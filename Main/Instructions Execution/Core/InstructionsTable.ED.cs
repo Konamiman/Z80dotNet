@@ -135,14 +135,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The RETI instruction.
-        /// </summary>
-        byte RETI()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The LDI instruction.
         /// </summary>
         byte LDI()

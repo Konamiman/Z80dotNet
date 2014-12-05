@@ -5,6 +5,9 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
     public class RET_and_RET_cc_tests : InstructionsExecutionTestsBase
     {
+        private const int RETI_opcode = 0x4D ;
+        private const int RETI_prefix = 0xED;
+
         public static object[] RET_cc_Source =
         {
             new object[] {"Z", (byte)0xC0, 0},
@@ -112,6 +115,30 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Execute(opcode);
 
             Assert.IsTrue(eventFired);
+        }
+
+        [Test]
+        public void RETI_returns_to_pushed_address()
+        {
+            var instructionAddress = Fixture.Create<ushort>();
+            var returnAddress = Fixture.Create<ushort>();
+            var oldSP = Fixture.Create<short>();
+
+            Registers.SP = oldSP;
+            SetMemoryContentsAt(oldSP.ToUShort(), returnAddress.GetLowByte());
+            SetMemoryContentsAt(oldSP.ToUShort().Inc(), returnAddress.GetHighByte());
+
+            ExecuteAt(instructionAddress, RETI_opcode, RETI_prefix);
+
+            Assert.AreEqual(returnAddress, Registers.PC);
+            Assert.AreEqual(oldSP.Add(2), Registers.SP);
+        }
+
+        [Test]
+        public void RETI_returns_proper_T_states()
+        {
+            var states = Execute(RETI_opcode, RETI_prefix);
+            Assert.AreEqual(14, states);
         }
     }
 }
