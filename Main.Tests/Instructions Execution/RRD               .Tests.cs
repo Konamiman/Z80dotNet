@@ -81,9 +81,9 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
 
         [Test]
-        public void RRD_sets_NF()
+        public void RRD_resets_NF()
         {
-            AssertSetsFlags(opcode, prefix, "N");
+            AssertResetsFlags(opcode, prefix, "N");
         }
 
         [Test]
