@@ -103,13 +103,6 @@ namespace Konamiman.Z80dotNet
 
         //TODO: Move instructions to their own files when they are implemented.
 
-        /// The RLD instruction.
-        /// </summary>
-        byte RLD()
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
         /// The LDI instruction.
         /// </summary>

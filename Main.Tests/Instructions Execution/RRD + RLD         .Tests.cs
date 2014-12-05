@@ -3,13 +3,19 @@ using Ploeh.AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
-    public class RRD_tests : InstructionsExecutionTestsBase
+    public class RRD_RLD_tests : InstructionsExecutionTestsBase
     {
-        private const byte opcode = 0x67;
         private const byte prefix = 0xED;
 
+        public static object[] RRD_RLD_Source =
+        {
+            new object[] {(byte)0x67, "R"},
+            new object[] {(byte)0x6F, "L"}
+        };
+
         [Test]
-        public void RRD_moves_data_appropriately()
+        [TestCaseSource("RRD_RLD_Source")]
+        public void RRD_RLD_moves_data_appropriately(byte opcode, string direction)
         {
             var oldHLContents = "1001 0110".AsBinaryByte();
             var oldAValue = "0011 1010".AsBinaryByte();
@@ -17,8 +23,15 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             
             Execute(opcode, prefix);
 
-            var expectedHLContents = "1010 1001".AsBinaryByte();
-            var expectedAValue = "0011 0110".AsBinaryByte();
+            byte expectedHLContents, expectedAValue;
+            if(direction == "R") {
+                expectedHLContents = "1010 1001".AsBinaryByte();
+                expectedAValue = "0011 0110".AsBinaryByte();
+            }
+            else {
+                expectedHLContents = "0110 1010".AsBinaryByte();
+                expectedAValue = "0011 1001".AsBinaryByte();
+            }
 
             AssertMemoryContents(address, expectedHLContents);
             Assert.AreEqual(expectedAValue, Registers.A);
@@ -39,7 +52,8 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
 
         [Test]
-        public void RRD_sets_SF_appropriately()
+        [TestCaseSource("RRD_RLD_Source")]
+        public void RRD_RLD_sets_SF_appropriately(byte opcode, string direction)
         {
             for(int i=0; i<=255; i++)
             {
@@ -51,7 +65,8 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
 
         [Test]
-        public void RRD_sets_ZF_appropriately()
+        [TestCaseSource("RRD_RLD_Source")]
+        public void RRD_RLD_sets_ZF_appropriately(byte opcode, string direction)
         {
             for(int i=0; i<=255; i++)
             {
@@ -63,13 +78,15 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
 
         [Test]
-        public void RRD_resets_HF()
+        [TestCaseSource("RRD_RLD_Source")]
+        public void RRD_RLD_resets_HF(byte opcode, string direction)
         {
             AssertResetsFlags(opcode, prefix, "H");
         }
 
         [Test]
-        public void RRD_sets_PF_as_parity()
+        [TestCaseSource("RRD_RLD_Source")]
+        public void RRD_RLD_sets_PF_as_parity(byte opcode, string direction)
         {
             for(int i=0; i<=255; i++)
             {
@@ -81,19 +98,22 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
 
         [Test]
-        public void RRD_resets_NF()
+        [TestCaseSource("RRD_RLD_Source")]
+        public void RRD_RLD_resets_NF(byte opcode, string direction)
         {
             AssertResetsFlags(opcode, prefix, "N");
         }
 
         [Test]
-        public void RRD_does_not_chance_CF()
+        [TestCaseSource("RRD_RLD_Source")]
+        public void RRD_RLD_does_not_chance_CF(byte opcode, string direction)
         {
             AssertDoesNotChangeFlags(opcode, prefix, "C");
         }
 
         [Test]
-        public void DEC_aHL_sets_bits_3_and_5_from_result()
+        [TestCaseSource("RRD_RLD_Source")]
+        public void RRD_RLD_sets_bits_3_and_5_from_result(byte opcode, string direction)
         {
             for(int i=0; i<=255; i++)
             {
@@ -106,7 +126,8 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
 
         [Test]
-        public void RRD_returns_proper_T_states()
+        [TestCaseSource("RRD_RLD_Source")]
+        public void RRD_RLD_returns_proper_T_states(byte opcode, string direction)
         {
             var states = Execute(opcode, prefix);
             Assert.AreEqual(18, states);

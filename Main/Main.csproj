@@ -53,6 +53,7 @@
     <Compile Include="Instructions Execution\Core\InstructionsTable.ED.cs" />
     <Compile Include="Instructions Execution\Core\InstructionsTable.SingleByte.cs" />
     <None Include="Instructions Execution\Instructions\ADC A,%28HL%29   --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\RLD               --see RRD" />
     <None Include="Instructions Execution\Instructions\LD R,A           --see LD I,A" />
     <None Include="Instructions Execution\Instructions\LD A,R            --see LD A,I" />
     <None Include="Instructions Execution\Instructions\ADC HL,rr      --see SBC HL,rr" />
@@ -154,7 +155,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LD I,A + LD R,A      .tt</DependentUpon>
     </Compile>
-    <Compile Include="Instructions Execution\Instructions\RRD           .cs" />
+    <None Include="Instructions Execution\Instructions\RRD + RLD           .tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RRD + RLD           1.cs</LastGenOutput>
+    </None>
     <Compile Include="Instructions Execution\Instructions\NEG          .cs" />
     <Compile Include="Instructions Execution\Instructions\EI                .cs" />
     <Compile Include="Instructions Execution\Instructions\EX AF,AF%27   - Copy.cs" />
@@ -200,6 +204,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>RETN            .tt</DependentUpon>
+    </Compile>
+    <Compile Include="Instructions Execution\Instructions\RRD + RLD           1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RRD + RLD           .tt</DependentUpon>
     </Compile>
     <Compile Include="Instructions Execution\Instructions\RST           .cs">
       <DependentUpon>RST           .tt</DependentUpon>
