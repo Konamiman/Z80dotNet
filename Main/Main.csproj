@@ -54,6 +54,8 @@
     <Compile Include="Instructions Execution\Core\InstructionsTable.SingleByte.cs" />
     <None Include="Instructions Execution\Instructions\ADC A,%28HL%29   --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\LDD               --see LDI" />
+    <None Include="Instructions Execution\Instructions\LDIR               --see LDI" />
+    <None Include="Instructions Execution\Instructions\LDDR               --see LDI - Copy" />
     <None Include="Instructions Execution\Instructions\RLD               --see RRD" />
     <None Include="Instructions Execution\Instructions\LD R,A           --see LD I,A" />
     <None Include="Instructions Execution\Instructions\LD A,R            --see LD A,I" />
@@ -160,14 +162,14 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RRD + RLD           1.cs</LastGenOutput>
     </None>
-    <None Include="Instructions Execution\Instructions\LDI + LDD      .tt">
+    <None Include="Instructions Execution\Instructions\LDI + LDD + LDIR + LDDR      .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>LDI + LDD      1.cs</LastGenOutput>
+      <LastGenOutput>LDI + LDD + LDIR + LDDR      .cs</LastGenOutput>
     </None>
-    <Compile Include="Instructions Execution\Instructions\LDI + LDD      1.cs">
+    <Compile Include="Instructions Execution\Instructions\LDI + LDD + LDIR + LDDR      .cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LDI + LDD      .tt</DependentUpon>
+      <DependentUpon>LDI + LDD + LDIR + LDDR      .tt</DependentUpon>
     </Compile>
     <Compile Include="Instructions Execution\Instructions\NEG          .cs" />
     <Compile Include="Instructions Execution\Instructions\EI                .cs" />
