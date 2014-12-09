@@ -12,11 +12,12 @@ namespace Konamiman.Z80dotNet
 {
     public partial class Z80InstructionExecutor
     {
-<# var instructions = new[] {"LDI", "LDD"};
-    for (int i = 0; i <= 1; i++)
+<# var instructions = new[] {"LDI", "LDD", "LDIR", "LDDR"};
+    for (int i = 0; i < 4; i++)
     {
         var instr = instructions[i];
-        var incBC = (i == 0); #>
+        var incBC = (i == 0 || i == 2);
+		var repeat = (i == 2 || i == 3); #>
         /// <summary>
         /// The <#=instr#> instruction.
         /// </summary>
@@ -43,8 +44,15 @@ namespace Konamiman.Z80dotNet
             Registers.Flag3 = valuePlusA.GetBit(3);
             Registers.Flag5 = valuePlusA.GetBit(1);
 
-            return 16;
-        }
+<# if(repeat) { #>
+			if(counter != 0) {
+				Registers.PC = Registers.PC.Sub(2);
+				return 21;
+			}
+<# } #>
+
+	        return 16;
+		}
 
 <# } #>
 	}

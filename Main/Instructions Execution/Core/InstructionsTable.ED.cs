@@ -151,16 +151,6 @@ namespace Konamiman.Z80dotNet
             throw new NotImplementedException();
         }
 
-
-
-        /// <summary>
-        /// The LDIR instruction.
-        /// </summary>
-        byte LDIR()
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
         /// The CPIR instruction.
         /// </summary>
@@ -181,14 +171,6 @@ namespace Konamiman.Z80dotNet
         /// The OUTIR instruction.
         /// </summary>
         byte OTIR()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LDDR instruction.
-        /// </summary>
-        byte LDDR()
         {
             throw new NotImplementedException();
         }
