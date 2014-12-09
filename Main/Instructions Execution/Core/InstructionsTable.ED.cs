@@ -104,14 +104,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files when they are implemented.
 
         /// <summary>
-        /// The LDI instruction.
-        /// </summary>
-        byte LDI()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The CPI instruction.
         /// </summary>
         byte CPI()
@@ -131,14 +123,6 @@ namespace Konamiman.Z80dotNet
         /// The OUTI instruction.
         /// </summary>
         byte OUTI()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LDD instruction.
-        /// </summary>
-        byte LDD()
         {
             throw new NotImplementedException();
         }

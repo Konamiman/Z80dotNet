@@ -159,6 +159,15 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RRD + RLD           1.cs</LastGenOutput>
     </None>
+    <None Include="Instructions Execution\Instructions\LDI + LDD      .tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LDI + LDD      1.cs</LastGenOutput>
+    </None>
+    <Compile Include="Instructions Execution\Instructions\LDI + LDD      1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LDI + LDD      .tt</DependentUpon>
+    </Compile>
     <Compile Include="Instructions Execution\Instructions\NEG          .cs" />
     <Compile Include="Instructions Execution\Instructions\EI                .cs" />
     <Compile Include="Instructions Execution\Instructions\EX AF,AF%27   - Copy.cs" />
