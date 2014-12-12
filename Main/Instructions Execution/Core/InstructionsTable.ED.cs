@@ -104,25 +104,9 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files when they are implemented.
 
         /// <summary>
-        /// The INI instruction.
-        /// </summary>
-        byte INI()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The OUTI instruction.
         /// </summary>
         byte OUTI()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The IND instruction.
-        /// </summary>
-        byte IND()
         {
             throw new NotImplementedException();
         }

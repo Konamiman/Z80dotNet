@@ -53,6 +53,7 @@
     <Compile Include="Instructions Execution\Core\InstructionsTable.ED.cs" />
     <Compile Include="Instructions Execution\Core\InstructionsTable.SingleByte.cs" />
     <None Include="Instructions Execution\Instructions\ADC A,%28HL%29   --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\IND                --see INI" />
     <None Include="Instructions Execution\Instructions\CPDR                 --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\CPI                 --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\CPD                 --see ADD A,r" />
@@ -148,6 +149,15 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LD A,I + LD A,R      1.cs</LastGenOutput>
     </None>
+    <None Include="Instructions Execution\Instructions\INI + IND     .tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>INI + IND     1.cs</LastGenOutput>
+    </None>
+    <Compile Include="Instructions Execution\Instructions\INI + IND     1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>INI + IND     .tt</DependentUpon>
+    </Compile>
     <Compile Include="Instructions Execution\Instructions\LD A,I + LD A,R      1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -46,6 +46,7 @@
     <Compile Include="BitTests.cs" />
     <Compile Include="ClockSynchronizationHelperTests.cs" />
     <Compile Include="HelloWorld.cs" />
+    <Compile Include="Instructions Execution\INI              .Tests.cs" />
     <Compile Include="Instructions Execution\LDI + LDD + LDIR + LDDR   .Tets.cs" />
     <Compile Include="Instructions Execution\RRD + RLD         .Tests.cs" />
     <Compile Include="Instructions Execution\LD A,I  + LD A,R        .Tests.cs" />

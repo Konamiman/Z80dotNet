@@ -207,6 +207,16 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// Decreases a number and turns it into max value if it passes under its minimum value.
         /// </summary>
+        /// <param name="value">Number to increase</param>
+        /// <returns>Increased number, or zero</returns>
+        public static ushort Dec(this ushort value)
+        {
+            return ((((int)value)-1) & 0xFFFF).ToUShort();
+        }
+
+        /// <summary>
+        /// Decreases a number and turns it into max value if it passes under its minimum value.
+        /// </summary>
         /// <param name="value">Number to decrease</param>
         /// <returns>Increased number, or zero</returns>
         public static short Dec(this short value)
