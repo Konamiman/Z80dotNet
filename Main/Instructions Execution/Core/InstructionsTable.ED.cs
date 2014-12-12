@@ -104,14 +104,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files when they are implemented.
 
         /// <summary>
-        /// The CPI instruction.
-        /// </summary>
-        byte CPI()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The INI instruction.
         /// </summary>
         byte INI()
@@ -123,14 +115,6 @@ namespace Konamiman.Z80dotNet
         /// The OUTI instruction.
         /// </summary>
         byte OUTI()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The CPD instruction.
-        /// </summary>
-        byte CPD()
         {
             throw new NotImplementedException();
         }

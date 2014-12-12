@@ -101,7 +101,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             return typeof(Z80Registers).GetProperty(name);
         }
 
-        protected int Execute(byte opcode, byte? prefix = null, params byte[] nextFetches)
+        protected virtual int Execute(byte opcode, byte? prefix = null, params byte[] nextFetches)
         {
             return ExecuteAt(0, opcode, prefix, nextFetches);
         }

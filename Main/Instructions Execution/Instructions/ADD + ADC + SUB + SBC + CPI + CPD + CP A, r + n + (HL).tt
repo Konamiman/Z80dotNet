@@ -14,20 +14,33 @@ namespace Konamiman.Z80dotNet
     {
 <# foreach(var reg in new[] {"A","B","C","D","E","H","L","aHL","n"}) {
    foreach(var withCarry in new[] {true, false}) {
-   for(int i=0; i<=2; i++) {
+   for(int i=0; i<=4; i++) {
 	    var isAdd = (i==0);
 	    var isSub = (i==1);
 	    var isCP = (i==2);
-	    if(isCP && withCarry) continue;
+        var isCPI = (i==3);
+		var isCPD = (i==4);
+        var isCompare = (isCP || isCPI || isCPD);
+		var isCompareInc = (isCPI || isCPD);
+	    if(isCompare && withCarry) continue;
+        if(isCompareInc && reg != "A") continue;
         var instrName = 
+		   isCPI ? "CPI" :
+		   isCPD ? "CPD" :
 		   isCP ? "CP" :
 		   isAdd && withCarry ? "ADC" :
 		   isAdd && !withCarry ? "ADD" :
 		   withCarry ? "SBC" : "SUB"; #>
         /// <summary>
-        /// The <#=instrName#> <#=isAdd || (isSub && withCarry) ? "A," : ""#><#=reg=="aHL" ? "(HL)" : reg#> instruction.
+<# if(isCompareInc) { #>
+		/// The <#=instrName #> instruction.
         /// </summary>
-        private byte <#=instrName#>_<#=isAdd || withCarry ? "A_" : ""#><#=reg#>()
+		private byte <#=instrName#>()
+<# } else { #>
+        /// The <#=instrName #> <#=isAdd || (isSub && withCarry) ? "A," : "" #><#=reg == "aHL" ? "(HL)" : reg #> instruction.
+		/// </summary>
+		private byte <#=instrName#>_<#=isAdd || withCarry ? "A_" : ""#><#=reg#>()
+<# } #>
         {
 <# if(reg=="n") { #>
 			var valueToAdd = ProcessorAgent.FetchNextOpcode();
@@ -35,33 +48,47 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.A;
-<# if(reg=="aHL") { #>
+<# if(reg=="aHL" || isCompareInc) { #>
 			var valueToAdd = ProcessorAgent.ReadFromMemory(Registers.HL.ToUShort());
 <# } else if(reg!="n") { #>
             var valueToAdd = Registers.<#=reg#>;
 <# } #>
 			var newValue = (byte)oldValue.<#=isAdd ? "Add" : "Sub"#>(valueToAdd<# if(withCarry) { #> + Registers.CF<# } #>);
-<# if(!isCP) { #>
+<# if(!isCompare) { #>
             Registers.A = newValue;
+<# } #>
+<# if (isCompareInc) { #>
+            Registers.HL = Registers.HL.<#=isCPI ? "Inc" : "Dec"#>();
+			Registers.BC = Registers.BC.Dec();
 <# } #>
 
             Registers.SF = newValue.GetBit(7);
             Registers.ZF = (newValue == 0);
             Registers.HF = (newValue & 0x0F) <#=isAdd ? "<" : ">" #> (oldValue & 0x0F);
+<# if (!isCompareInc) { #>
             var oldValueMSB = oldValue.GetBit(7);
             var newValueMSB = newValue.GetBit(7);
-            Registers.CF = (oldValueMSB == <#=isAdd ? 1 : 0#>) && (newValueMSB == <#=isAdd ? 0 : 1#>);
-<# if(isAdd) { #>
+            Registers.CF = (oldValueMSB == <#=isAdd ? 1 : 0 #>) && (newValueMSB == <#=isAdd ? 0 : 1 #>);
+<# } #>
+<# if (isAdd) { #>
             Registers.PF = (oldValueMSB == valueToAdd.GetBit(7)) && (oldValueMSB != newValueMSB);
+<# } else if(isCompareInc) { #>
+			Registers.PF = (Registers.BC != 0);
 <# } else { #>
 			var valueToAddMSB = valueToAdd.GetBit(7);
 			Registers.PF = (oldValueMSB != valueToAddMSB) && (valueToAddMSB == newValueMSB);
 <# } #>
 
             Registers.NF = <#=isAdd ? 0 : 1#>;
-            SetFlags3and5From(newValue);
+<# if (isCompareInc) { #>
+			var valueForFlags3And5 = newValue.Sub(Registers.HF).GetLowByte();
+			Registers.Flag3 = valueForFlags3And5.GetBit(3);
+			Registers.Flag5 = valueForFlags3And5.GetBit(1);
+<# } else { #>
+			SetFlags3and5From(newValue);
+<# } #>
 
-            return <#=reg=="aHL" || reg=="n" ? 7 : 4#>;
+            return <#=isCompareInc ? 16 : reg=="aHL" || reg=="n" ? 7 : 4#>;
         }
 
 <# }}} #>

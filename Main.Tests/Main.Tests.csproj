@@ -74,7 +74,7 @@
     <Compile Include="Instructions Execution\NEG         .Tests.cs" />
     <Compile Include="Instructions Execution\XOR r + n + %28HL%29                     .Tests.cs" />
     <Compile Include="Instructions Execution\AND r + n + %28HL%29                     .Tests.cs" />
-    <Compile Include="Instructions Execution\SUB + SBC + CP A,r + n + %28HL%29     .Tests.cs" />
+    <Compile Include="Instructions Execution\SUB + SBC + CPI + CPD + CP A,r + n + %28HL%29     .Tests.cs" />
     <Compile Include="Instructions Execution\ADD + ADC A,r + n + %28HL%29     .Tests.cs" />
     <Compile Include="Instructions Execution\CCF              .Tests.cs" />
     <Compile Include="Instructions Execution\INC %28HL%29       .Tests.cs" />
