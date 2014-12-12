@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Linq;
+using NUnit.Framework;
 using Ploeh.AutoFixture;
 using System.Collections.Generic;
 
@@ -6,7 +7,8 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
     public class SUB_SBC_CPI_CPD_CP_r_tests : InstructionsExecutionTestsBase
     {
-        private const byte cpidPrefix = 0xED;
+        private const byte cpidrPrefix = 0xED;
+        private readonly byte[] cpidrOpcodes = new byte[] {0xA1, 0xA9, 0xB1, 0xFF};
 
         static SUB_SBC_CPI_CPD_CP_r_tests()
         {
@@ -27,10 +29,13 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             SUB_SBC_A_r_Source = combinations.ToArray();
             CP_r_Source = CP_combinations.ToArray();
+
+            CPID_R_Source = CPI_Source.Concat(CPD_Source).Concat(CPIR_Source).Concat(CPDR_Source).ToArray();
         }
 
         public static object[] SUB_SBC_A_r_Source;
         public static object[] CP_r_Source;
+        public static object[] CPID_R_Source;
 
         public static object[] SUB_SBC_A_A_Source =
         {
@@ -54,6 +59,17 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             new object[] {"CPD", (byte)0xA9, 0},
         };
 
+        public static object[] CPIR_Source =
+        {
+            new object[] {"CPIR", (byte)0xB1, 0},
+        };
+
+        public static object[] CPDR_Source =
+        {
+            new object[] {"CPDR", (byte)0xFF, 0}, //can't use B9 because it's "CP C" without prefix
+        };
+
+
         [Test]
         [TestCaseSource("SUB_SBC_A_r_Source")]
         [TestCaseSource("SUB_SBC_A_A_Source")]
@@ -71,8 +87,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [Test]
         [TestCaseSource("CP_r_Source")]
         [TestCaseSource("CP_A_Source")]
-        [TestCaseSource("CPI_Source")]
-        [TestCaseSource("CPD_Source")]
+        [TestCaseSource("CPID_R_Source")]
         public void CPs_do_not_change_A(string src, byte opcode, int cf)
         {
             var oldValue = Fixture.Create<byte>();
@@ -93,7 +108,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             {
                 SetMemoryContentsAt(1, valueToSubstract);
             }
-            else if(src == "(HL)" || src == "CPI" || src == "CPD") 
+            else if(src == "(HL)" || src.StartsWith("CP")) 
             {
                 var address = Fixture.Create<ushort>();
                 ProcessorAgent.Memory[address] = valueToSubstract;
@@ -108,8 +123,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [Test]
         [TestCaseSource("SUB_SBC_A_r_Source")]
         [TestCaseSource("CP_r_Source")]
-        [TestCaseSource("CPI_Source")]
-        [TestCaseSource("CPD_Source")]
+        [TestCaseSource("CPID_R_Source")]
         public void SUB_SBC_CPs_set_SF_appropriately(string src, byte opcode, int cf)
         {
             Setup(src, 0x02, 1);
@@ -132,8 +146,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [Test]
         [TestCaseSource("SUB_SBC_A_r_Source")]
         [TestCaseSource("CP_r_Source")]
-        [TestCaseSource("CPI_Source")]
-        [TestCaseSource("CPD_Source")]
+        [TestCaseSource("CPID_R_Source")]
         public void SUB_SBC_CPs_set_ZF_appropriately(string src, byte opcode, int cf)
         {
             Setup(src, 0x03, 1);
@@ -156,8 +169,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [Test]
         [TestCaseSource("SUB_SBC_A_r_Source")]
         [TestCaseSource("CP_r_Source")]
-        [TestCaseSource("CPI_Source")]
-        [TestCaseSource("CPD_Source")]
+        [TestCaseSource("CPID_R_Source")]
         public void SUB_SBC_CPs_set_HF_appropriately(string src, byte opcode, int cf)
         {
             foreach(byte b in new byte[] { 0x11, 0x81, 0xF1 }) 
@@ -215,8 +227,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [TestCaseSource("SUB_SBC_A_r_Source")]
         [TestCaseSource("SUB_SBC_A_A_Source")]
         [TestCaseSource("CP_r_Source")]
-        [TestCaseSource("CPI_Source")]
-        [TestCaseSource("CPD_Source")]
+        [TestCaseSource("CPID_R_Source")]
         public void SUB_SBC_CPs_sets_NF(string src, byte opcode, int cf)
         {
             AssertSetsFlags(opcode, null, "N");
@@ -267,17 +278,15 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
 
         [Test]
-        [TestCaseSource("CPI_Source")]
-        [TestCaseSource("CPD_Source")]
-        public void CPI_CPD_do_not_change_C(string src, byte opcode, int cf)
+        [TestCaseSource("CPID_R_Source")]
+        public void CPI_CPD_CPIR_CPRD_do_not_change_C(string src, byte opcode, int cf)
         {
-            AssertDoesNotChangeFlags(opcode, cpidPrefix, "C");
+            AssertDoesNotChangeFlags(opcode, cpidrPrefix, "C");
         }
 
         [Test]
-        [TestCaseSource("CPI_Source")]
-        [TestCaseSource("CPD_Source")]
-        public void CPI_CPD_resets_PF_if_BC_reaches_zero(string src, byte opcode, int cf)
+        [TestCaseSource("CPID_R_Source")]
+        public void CPI_CPD_CPIR_CPDR_reset_PF_if_BC_reaches_zero(string src, byte opcode, int cf)
         {
             Registers.BC = 128;
             for(int i = 0; i <= 256; i++)
@@ -291,7 +300,8 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
         [Test]
         [TestCaseSource("CPI_Source")]
-        public void CPI_increases_HL(string src, byte opcode, int cf)
+        [TestCaseSource("CPIR_Source")]
+        public void CPI_CPIR_increase_HL(string src, byte opcode, int cf)
         {
             var address = Fixture.Create<short>();
 
@@ -304,7 +314,8 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
         [Test]
         [TestCaseSource("CPD_Source")]
-        public void CPD_decreases_HL(string src, byte opcode, int cf)
+        [TestCaseSource("CPDR_Source")]
+        public void CPD_CPDR_decrease_HL(string src, byte opcode, int cf)
         {
             var address = Fixture.Create<short>();
 
@@ -316,9 +327,8 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
 
         [Test]
-        [TestCaseSource("CPI_Source")]
-        [TestCaseSource("CPD_Source")]
-        public void CPI_CPD_decrease_BC(string src, byte opcode, int cf)
+        [TestCaseSource("CPID_R_Source")]
+        public void CPI_CPD_CPIR_CPDR_decrease_BC(string src, byte opcode, int cf)
         {
             var count = Fixture.Create<short>();
 
@@ -331,6 +341,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
         [Test]
         [TestCaseSource("CPI_Source")]
+        [TestCaseSource("CPD_Source")]
         public void CPI_CPD_return_proper_T_states(string src, byte opcode, int cf)
         {
             var states = Execute(opcode);
@@ -338,8 +349,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
 
         [Test]
-        [TestCaseSource("CPI_Source")]
-        [TestCaseSource("CPD_Source")]
+        [TestCaseSource("CPID_R_Source")]
         public void CPI_CPD_set_Flag3_from_bit_3_of_A_minus_aHL_minus_HF_and_Flag5_from_bit_1(string src, byte opcode, int cf)
         {
             var valueInMemory = Fixture.Create<byte>();
@@ -360,10 +370,98 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             }
         }
 
+        [Test]
+        [TestCaseSource("CPIR_Source")]
+        [TestCaseSource("CPDR_Source")]
+        public void CPIR_CPDR_decrease_PC_if_Z_is_1_but_BC_is_not_0(string src, byte opcode, int cf)
+        {
+            var dataAddress = Fixture.Create<ushort>();
+            var runAddress = Fixture.Create<ushort>();
+            var data = Fixture.Create<byte>();
+
+            ProcessorAgent.Memory[dataAddress] = data;
+            Registers.A = data;
+            Registers.HL = dataAddress.ToShort();
+            Registers.BC = Fixture.Create<short>();
+
+            ExecuteAt(runAddress, opcode, cpidrPrefix);
+
+            Assert.AreEqual(runAddress.Add(2), Registers.PC);
+        }
+
+        [Test]
+        [TestCaseSource("CPIR_Source")]
+        [TestCaseSource("CPDR_Source")]
+        public void CPIR_CPDR_decrease_PC_if_BC_is_0_but_Z_is_not_0(string src, byte opcode, int cf)
+        {
+            if(opcode==0xFF) opcode = 0xB9;
+
+            var dataAddress = Fixture.Create<ushort>();
+            var runAddress = Fixture.Create<ushort>();
+            var data1 = Fixture.Create<byte>();
+            var data2 = Fixture.Create<byte>();
+
+            ProcessorAgent.Memory[dataAddress] = data1;
+            Registers.A = data2;
+            Registers.HL = dataAddress.ToShort();
+            Registers.BC = 1;
+
+            ExecuteAt(runAddress, opcode, cpidrPrefix);
+
+            Assert.AreEqual(runAddress.Add(2), Registers.PC);
+        }
+
+        [Test]
+        [TestCaseSource("CPIR_Source")]
+        [TestCaseSource("CPDR_Source")]
+        public void CPIR_CPDR_do_not_decrease_PC_if_BC_is_not_0_and_Z_is_0(string src, byte opcode, int cf)
+        {
+            if(opcode==0xFF) opcode = 0xB9;
+
+            var dataAddress = Fixture.Create<ushort>();
+            var runAddress = Fixture.Create<ushort>();
+            var data1 = Fixture.Create<byte>();
+            var data2 = Fixture.Create<byte>();
+
+            ProcessorAgent.Memory[dataAddress] = data1;
+            Registers.A = data2;
+            Registers.HL = dataAddress.ToShort();
+            Registers.BC = 1000;
+
+            ExecuteAt(runAddress, opcode, cpidrPrefix);
+
+            Assert.AreEqual(runAddress, Registers.PC);
+        }
+
+        [Test]
+        [TestCaseSource("CPIR_Source")]
+        [TestCaseSource("CPDR_Source")]
+        public void CPIR_CPDR_return_proper_T_states_depending_on_PC_being_decreased_or_not(string src, byte opcode, int cf)
+        {
+            if(opcode==0xFF) opcode = 0xB9;
+
+            var dataAddress = Fixture.Create<ushort>();
+            var runAddress = Fixture.Create<ushort>();
+            var data1 = Fixture.Create<byte>();
+            var data2 = Fixture.Create<byte>();
+
+            ProcessorAgent.Memory[dataAddress] = data1;
+            Registers.A = data2;
+            Registers.HL = dataAddress.ToShort();
+            Registers.BC = 2;
+
+            var states = ExecuteAt(runAddress, opcode, cpidrPrefix);
+            Assert.AreEqual(21, states);
+
+            Registers.HL = dataAddress.ToShort();
+            states = ExecuteAt(runAddress, opcode, cpidrPrefix);
+            Assert.AreEqual(16, states);
+        }
+
         protected override int Execute(byte opcode, byte? prefix = null, params byte[] nextFetches)
         {
-            if(opcode == 0xA1 || opcode == 0xA9)
-                return base.Execute(opcode, cpidPrefix, nextFetches);
+            if(cpidrOpcodes.Contains(opcode))
+                return base.Execute(opcode == 0xFF ? (byte)0xB9 : opcode, cpidrPrefix, nextFetches);
             else
                 return base.Execute(opcode, null, nextFetches);
         }

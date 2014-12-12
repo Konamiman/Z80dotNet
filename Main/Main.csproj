@@ -53,8 +53,10 @@
     <Compile Include="Instructions Execution\Core\InstructionsTable.ED.cs" />
     <Compile Include="Instructions Execution\Core\InstructionsTable.SingleByte.cs" />
     <None Include="Instructions Execution\Instructions\ADC A,%28HL%29   --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\CPDR                 --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\CPI                 --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\CPD                 --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\CPIR                 --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\LDD               --see LDI" />
     <None Include="Instructions Execution\Instructions\LDIR               --see LDI" />
     <None Include="Instructions Execution\Instructions\LDDR               --see LDI - Copy" />
@@ -118,19 +120,19 @@
       <LastGenOutput>INC r + INC %28HL%29 + DEC r + DEC %28HL%29   .cs</LastGenOutput>
     </None>
     <Compile Include="Instructions Execution\Core\ParityTable.cs" />
-    <None Include="Instructions Execution\Instructions\ADD + ADC + SUB + SBC + CPI + CPD + CP A, r + n + %28HL%29.tt">
+    <None Include="Instructions Execution\Instructions\ADD + ADC + SUB + SBC + CPI%28R%29 + CPD%28R%29 + CP A, r + n + %28HL%29.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ADD + ADC + SUB + SBC + CPI + CPD + CP A, r + n + %28HL%29.cs</LastGenOutput>
+      <LastGenOutput>ADD + ADC + SUB + SBC + CPI%28R%29 + CPD%28R%29 + CP A, r + n + %28HL%29.cs</LastGenOutput>
     </None>
     <Compile Include="Instructions Execution\Instructions\AND + XOR + OR r + n + %28HL%29         .cs">
       <DependentUpon>AND + XOR + OR r + n + %28HL%29         .tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Instructions Execution\Instructions\ADD + ADC + SUB + SBC + CPI + CPD + CP A, r + n + %28HL%29.cs">
+    <Compile Include="Instructions Execution\Instructions\ADD + ADC + SUB + SBC + CPI%28R%29 + CPD%28R%29 + CP A, r + n + %28HL%29.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ADD + ADC + SUB + SBC + CPI + CPD + CP A, r + n + %28HL%29.tt</DependentUpon>
+      <DependentUpon>ADD + ADC + SUB + SBC + CPI%28R%29 + CPD%28R%29 + CP A, r + n + %28HL%29.tt</DependentUpon>
     </Compile>
     <Compile Include="Instructions Execution\Instructions\ADD rr,rr   1.cs">
       <AutoGen>True</AutoGen>

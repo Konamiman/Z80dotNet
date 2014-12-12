@@ -136,14 +136,6 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The CPIR instruction.
-        /// </summary>
-        byte CPIR()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The INIR instruction.
         /// </summary>
         byte INIR()
@@ -155,14 +147,6 @@ namespace Konamiman.Z80dotNet
         /// The OUTIR instruction.
         /// </summary>
         byte OTIR()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The CPDR instruction.
-        /// </summary>
-        byte CPDR()
         {
             throw new NotImplementedException();
         }

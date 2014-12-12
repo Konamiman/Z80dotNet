@@ -14,17 +14,22 @@ namespace Konamiman.Z80dotNet
     {
 <# foreach(var reg in new[] {"A","B","C","D","E","H","L","aHL","n"}) {
    foreach(var withCarry in new[] {true, false}) {
-   for(int i=0; i<=4; i++) {
+   for(int i=0; i<=6; i++) {
 	    var isAdd = (i==0);
 	    var isSub = (i==1);
 	    var isCP = (i==2);
         var isCPI = (i==3);
 		var isCPD = (i==4);
-        var isCompare = (isCP || isCPI || isCPD);
-		var isCompareInc = (isCPI || isCPD);
+		var isCPIR = (i==5);
+		var isCPDR = (i==6);
+        var isCompare = (isCP || isCPI || isCPD || isCPIR || isCPDR);
+		var isCompareInc = (isCPI || isCPD || isCPIR || isCPDR);
+        var isCompareRepeat = (isCPIR || isCPDR);
 	    if(isCompare && withCarry) continue;
         if(isCompareInc && reg != "A") continue;
         var instrName = 
+		   isCPIR ? "CPIR" :
+		   isCPDR ? "CPDR" :
 		   isCPI ? "CPI" :
 		   isCPD ? "CPD" :
 		   isCP ? "CP" :
@@ -58,8 +63,10 @@ namespace Konamiman.Z80dotNet
             Registers.A = newValue;
 <# } #>
 <# if (isCompareInc) { #>
-            Registers.HL = Registers.HL.<#=isCPI ? "Inc" : "Dec"#>();
-			Registers.BC = Registers.BC.Dec();
+			var counter = Registers.BC;
+            Registers.HL = Registers.HL.<#=isCPI || isCPIR ? "Inc" : "Dec"#>();
+			counter = counter.Dec();
+			Registers.BC = counter;
 <# } #>
 
             Registers.SF = newValue.GetBit(7);
@@ -86,6 +93,13 @@ namespace Konamiman.Z80dotNet
 			Registers.Flag5 = valueForFlags3And5.GetBit(1);
 <# } else { #>
 			SetFlags3and5From(newValue);
+<# } #>
+<# if(isCompareRepeat) { #>
+
+			if(counter != 0 && Registers.ZF == 0) {
+				Registers.PC = Registers.PC.Sub(2);
+				return 21;
+			}
 <# } #>
 
             return <#=isCompareInc ? 16 : reg=="aHL" || reg=="n" ? 7 : 4#>;
