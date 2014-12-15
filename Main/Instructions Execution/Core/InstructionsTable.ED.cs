@@ -120,25 +120,9 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
-        /// The INIR instruction.
-        /// </summary>
-        byte INIR()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The OUTIR instruction.
         /// </summary>
         byte OTIR()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The INDR instruction.
-        /// </summary>
-        byte INDR()
         {
             throw new NotImplementedException();
         }

@@ -58,6 +58,8 @@
     <None Include="Instructions Execution\Instructions\CPI                 --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\CPD                 --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\CPIR                 --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\INDR              --see INI" />
+    <None Include="Instructions Execution\Instructions\INIR                --see INI" />
     <None Include="Instructions Execution\Instructions\LDD               --see LDI" />
     <None Include="Instructions Execution\Instructions\LDIR               --see LDI" />
     <None Include="Instructions Execution\Instructions\LDDR               --see LDI - Copy" />
@@ -149,14 +151,14 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LD A,I + LD A,R      1.cs</LastGenOutput>
     </None>
-    <None Include="Instructions Execution\Instructions\INI + IND     .tt">
+    <None Include="Instructions Execution\Instructions\INI + IND + INIR + INDR    .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>INI + IND     1.cs</LastGenOutput>
+      <LastGenOutput>INI + IND + INIR + INDR    .cs</LastGenOutput>
     </None>
-    <Compile Include="Instructions Execution\Instructions\INI + IND     1.cs">
+    <Compile Include="Instructions Execution\Instructions\INI + IND + INIR + INDR    .cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>INI + IND     .tt</DependentUpon>
+      <DependentUpon>INI + IND + INIR + INDR    .tt</DependentUpon>
     </Compile>
     <Compile Include="Instructions Execution\Instructions\LD A,I + LD A,R      1.cs">
       <AutoGen>True</AutoGen>
