@@ -46,7 +46,7 @@ Interaction of the processor with the hosting code and the outside world (memory
 This is a work in progress project. So far that's what is done:
 
 * [The Z80Processor class](Main/Z80Processor.cs) and all of its [dependencies](Docs/Dependencies.md).
-* [The infrastructure for executing instructions](Main/Instructions%20Execution/Core) and part of [the instructions themselves](Main/Instructions%20Execution/Instructions).
+* [The infrastructure for executing instructions](Main/Instructions%20Execution/Core) and part of [the instructions themselves](Main/Instructions%20Execution/Instructions). All the single byte instructions and those prefixed with 0xED are implemented by now.
 * [A good bunch of unit tests](Main.Tests).
 
 ...and that's what's left to do:
@@ -65,6 +65,9 @@ The following resources have been used to develop this project:
 * [Z80 technical reference](http://www.worldofspectrum.org/faq/reference/z80reference.htm) at [WorldOfSpectrum.org](http://www.worldofspectrum.org)
 * [Complete Z80 instruction set](http://www.ticalc.org/archives/files/fileinfo/195/19571.html) from [ticalc.org](http://www.ticalc.org). The [instruction tables in the code](Main/Instructions%20Execution/Core) were automatically generated from a modified version of this file. 
 
+## Last but not least...
+
+...if you like this project **[please consider donating!](http://www.konamiman.com#donate)** My kids need moar shoes!
 
 ## But who am I? ##
 
