@@ -52,12 +52,17 @@
     <Compile Include="Instructions Execution\Core\InstructionsTable.FD.cs" />
     <Compile Include="Instructions Execution\Core\InstructionsTable.ED.cs" />
     <Compile Include="Instructions Execution\Core\InstructionsTable.SingleByte.cs" />
+    <None Include="IND                --see INI" />
     <None Include="Instructions Execution\Instructions\ADC A,%28HL%29   --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\IND                --see INI" />
     <None Include="Instructions Execution\Instructions\CPDR                 --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\CPI                 --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\CPD                 --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\CPIR                 --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\OUTI                --see INI" />
+    <None Include="Instructions Execution\Instructions\OUTD                --see INI" />
+    <None Include="Instructions Execution\Instructions\OTDR                --see INI" />
+    <None Include="Instructions Execution\Instructions\OTIR               --see INI" />
     <None Include="Instructions Execution\Instructions\INDR              --see INI" />
     <None Include="Instructions Execution\Instructions\INIR                --see INI" />
     <None Include="Instructions Execution\Instructions\LDD               --see LDI" />
@@ -151,14 +156,14 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LD A,I + LD A,R      1.cs</LastGenOutput>
     </None>
-    <None Include="Instructions Execution\Instructions\INI + IND + INIR + INDR    .tt">
+    <None Include="Instructions Execution\Instructions\INI + IND + INIR + INDR + OUTI + OUTD + OTIR + OTDR    .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>INI + IND + INIR + INDR    .cs</LastGenOutput>
+      <LastGenOutput>INI + IND + INIR + INDR + OUTI + OUTD + OTIR + OTDR    .cs</LastGenOutput>
     </None>
-    <Compile Include="Instructions Execution\Instructions\INI + IND + INIR + INDR    .cs">
+    <Compile Include="Instructions Execution\Instructions\INI + IND + INIR + INDR + OUTI + OUTD + OTIR + OTDR    .cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>INI + IND + INIR + INDR    .tt</DependentUpon>
+      <DependentUpon>INI + IND + INIR + INDR + OUTI + OUTD + OTIR + OTDR    .tt</DependentUpon>
     </Compile>
     <Compile Include="Instructions Execution\Instructions\LD A,I + LD A,R      1.cs">
       <AutoGen>True</AutoGen>

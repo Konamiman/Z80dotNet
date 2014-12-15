@@ -100,39 +100,5 @@ namespace Konamiman.Z80dotNet
                 OTDR,        //BB
             };
         }
-
-        //TODO: Move instructions to their own files when they are implemented.
-
-        /// <summary>
-        /// The OUTI instruction.
-        /// </summary>
-        byte OUTI()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The OUTD instruction.
-        /// </summary>
-        byte OUTD()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The OUTIR instruction.
-        /// </summary>
-        byte OTIR()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The OUTDR instruction.
-        /// </summary>
-        byte OTDR()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

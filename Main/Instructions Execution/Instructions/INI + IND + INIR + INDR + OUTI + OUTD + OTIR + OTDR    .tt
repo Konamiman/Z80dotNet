@@ -12,11 +12,12 @@ namespace Konamiman.Z80dotNet
 {
     public partial class Z80InstructionExecutor
     {
-<# var instructions = new[] {"INI", "IND", "INIR", "INDR"};
-   for(int i=0; i<=3; i++) { 
+<# var instructions = new[] {"INI", "IND", "INIR", "INDR", "OUTI", "OUTD", "OTIR", "OTDR"};
+   for(int i=0; i<instructions.Length; i++) { 
 		var instr = instructions[i];
-        var isInc = (i == 0 || i == 2);
-        var isRepeat = (i == 2 || i == 3); #>
+        var isInc = (instr.EndsWith("I") || instr.EndsWith("IR"));
+        var isRepeat = (instr.EndsWith("R"));
+        var isOut = (instr.StartsWith("O")); #>
         /// <summary>
         /// The <#=instr#> instruction.
         /// </summary>
@@ -26,8 +27,13 @@ namespace Konamiman.Z80dotNet
 
             var portNumber = Registers.C;
             var address = Registers.HL;
+<# if (isOut) { #>
+            var value = ProcessorAgent.ReadFromMemory(address.ToUShort());
+            ProcessorAgent.WriteToPort(portNumber, value);
+<# } else { #>
             var value = ProcessorAgent.ReadFromPort(portNumber);
             ProcessorAgent.WriteToMemory(address.ToUShort(), value);
+<# } #>
 
             Registers.HL = address.<#=isInc ? "Inc" : "Dec" #>();
             var counter = Registers.B;

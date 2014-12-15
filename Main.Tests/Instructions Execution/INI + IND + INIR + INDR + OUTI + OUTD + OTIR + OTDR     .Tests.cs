@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Linq;
+using NUnit.Framework;
 using Ploeh.AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
@@ -6,6 +7,22 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
     public class INI_IND_INIR_INDR_tests : InstructionsExecutionTestsBase
     {
         private const byte prefix = 0xED;
+
+        static INI_IND_INIR_INDR_tests()
+        {
+            All_Source =
+                INI_Source
+                    .Concat(IND_Source)
+                    .Concat(INIR_Source)
+                    .Concat(INDR_Source)
+                    .Concat(OUTI_Source)
+                    .Concat(OUTD_Source)
+                    .Concat(OTIR_Source)
+                    .Concat(OTDR_Source)
+                    .ToArray();
+        }
+
+        public static object[] All_Source;
 
         public static object[] INI_Source =
         {
@@ -27,6 +44,26 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             new object[] { (byte)0xBA }
         };
 
+        public static object[] OUTI_Source =
+        {
+            new object[] { (byte)0xA3 }
+        };
+
+        public static object[] OUTD_Source =
+        {
+            new object[] { (byte)0xAB }
+        };
+
+        public static object[] OTIR_Source =
+        {
+            new object[] { (byte)0xB3 }
+        };
+
+        public static object[] OTDR_Source =
+        {
+            new object[] { (byte)0xBB }
+        };
+
         [Test]
         [TestCaseSource("INI_Source")]
         [TestCaseSource("IND_Source")]
@@ -42,22 +79,45 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Registers.HL = address.ToShort();
             ProcessorAgent.Memory[address] = oldValue;
 
-            ExecuteRead(opcode, portNumber, value);
+            ExecuteWithPortSetup(opcode, portNumber, value);
 
             var actual = ProcessorAgent.Memory[address];
             Assert.AreEqual(value, actual);
         }
 
         [Test]
+        [TestCaseSource("OUTI_Source")]
+        [TestCaseSource("OUTD_Source")]
+        [TestCaseSource("OTIR_Source")]
+        [TestCaseSource("OTDR_Source")]
+        public void OUTI_OUTD_OTIR_OTDR_write_value_from_aHL_into_port_aC(byte opcode)
+        {
+            var portNumber = Fixture.Create<byte>();
+            var value = Fixture.Create<byte>();
+            var oldValue = Fixture.Create<byte>();
+            var address = Fixture.Create<ushort>();
+
+            Registers.HL = address.ToShort();
+            ProcessorAgent.Memory[address] = value;
+
+            ExecuteWithPortSetup(opcode, portNumber, oldValue);
+
+            var actual = ProcessorAgent.Ports[portNumber];
+            Assert.AreEqual(value, actual);
+        }
+
+        [Test]
         [TestCaseSource("INI_Source")]
         [TestCaseSource("INIR_Source")]
-        public void INI_INIR_increase_HL(byte opcode)
+        [TestCaseSource("OUTI_Source")]
+        [TestCaseSource("OTIR_Source")]
+        public void INI_INIR_OUTI_OTIR_increase_HL(byte opcode)
         {
             var address = Fixture.Create<ushort>();
 
             Registers.HL = address.ToShort();
 
-            ExecuteRead(opcode);
+            ExecuteWithPortSetup(opcode);
 
             var expected = address.Inc();
             Assert.AreEqual(expected, Registers.HL);
@@ -66,79 +126,66 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [Test]
         [TestCaseSource("IND_Source")]
         [TestCaseSource("INDR_Source")]
-        public void IND_INDR_decrease_HL(byte opcode)
+        [TestCaseSource("OUTD_Source")]
+        [TestCaseSource("OTDR_Source")]
+        public void IND_INDR_OUTD_OTDR_decrease_HL(byte opcode)
         {
             var address = Fixture.Create<ushort>();
 
             Registers.HL = address.ToShort();
 
-            ExecuteRead(opcode);
+            ExecuteWithPortSetup(opcode);
 
             var expected = address.Dec();
             Assert.AreEqual(expected, Registers.HL);
         }
 
         [Test]
-        [TestCaseSource("INI_Source")]
-        [TestCaseSource("IND_Source")]
-        [TestCaseSource("INIR_Source")]
-        [TestCaseSource("INDR_Source")]
-        public void INI_IND_INIR_INDR_decrease_B(byte opcode)
+        [TestCaseSource("All_Source")]
+        public void INI_IND_INIR_INDR_OUTI_OUTD_OTIR_OTDR_decrease_B(byte opcode)
         {
             var counter = Fixture.Create<byte>();
 
             Registers.B = counter;
 
-            ExecuteRead(opcode);
+            ExecuteWithPortSetup(opcode);
 
             var expected = counter.Dec();
             Assert.AreEqual(expected, Registers.B);
         }
 
         [Test]
-        [TestCaseSource("INI_Source")]
-        [TestCaseSource("IND_Source")]
-        [TestCaseSource("INIR_Source")]
-        [TestCaseSource("INDR_Source")]
-        public void INI_IND_INIR_INDR_set_Z_if_B_reaches_zero(byte opcode)
+        [TestCaseSource("All_Source")]
+        public void INI_IND_INIR_INDR_OUTI_OUTD_OTIR_OTDR_set_Z_if_B_reaches_zero(byte opcode)
         {
             for (int i = 0; i < 256; i++)
             {
                 byte b = (byte)i;
                 Registers.B = b;
 
-                ExecuteRead(opcode);
+                ExecuteWithPortSetup(opcode);
 
                 Assert.AreEqual(b-1 == 0, (bool)Registers.ZF);
             }
         }
 
         [Test]
-        [TestCaseSource("INI_Source")]
-        [TestCaseSource("IND_Source")]
-        [TestCaseSource("INIR_Source")]
-        [TestCaseSource("INDR_Source")]
-        public void INI_IND_INIR_INDR_set_NF(byte opcode)
+        [TestCaseSource("All_Source")]
+        public void INI_IND_INIR_INDR_OUTI_OUTD_OTIR_OTDR_set_NF(byte opcode)
         {
             AssertSetsFlags(opcode, prefix, "N");
         }
 
         [Test]
-        [TestCaseSource("INI_Source")]
-        [TestCaseSource("IND_Source")]
-        [TestCaseSource("INIR_Source")]
-        [TestCaseSource("INDR_Source")]
-        public void INI_IND_INIR_INDR_do_not_change_CF(byte opcode)
+        [TestCaseSource("All_Source")]
+        public void INI_IND_INIR_INDR_OUTI_OUTD_OTIR_OTDR_do_not_change_CF(byte opcode)
         {
             AssertDoesNotChangeFlags(opcode, prefix, "C");
         }
 
         [Test]
-        [TestCaseSource("INI_Source")]
-        [TestCaseSource("IND_Source")]
-        [TestCaseSource("INIR_Source")]
-        [TestCaseSource("INDR_Source")]
-        public void INI_IND_INIR_INDR_set_bits_3_and_5_from_result_of_decrementing_B(byte opcode)
+        [TestCaseSource("All_Source")]
+        public void INI_IND_INIR_INDR_OUTI_OUTD_OTIR_OTDR_set_bits_3_and_5_from_result_of_decrementing_B(byte opcode)
         {
             Registers.B = ((byte)1).WithBit(3, 1).WithBit(5, 0);
             Execute(opcode, prefix);
@@ -152,11 +199,8 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
 
         [Test]
-        [TestCaseSource("INI_Source")]
-        [TestCaseSource("IND_Source")]
-        [TestCaseSource("INIR_Source")]
-        [TestCaseSource("INDR_Source")]
-        public void INI_IND_INIR_INDR_set_SF_appropriately(byte opcode)
+        [TestCaseSource("All_Source")]
+        public void INI_IND_INIR_INDR_OUTI_OUTD_OTIR_OTDR_set_SF_appropriately(byte opcode)
         {
             Registers.B = 0x02;
 
@@ -176,7 +220,9 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [Test]
         [TestCaseSource("INI_Source")]
         [TestCaseSource("IND_Source")]
-        public void INI_IND_return_proper_T_states(byte opcode)
+        [TestCaseSource("OUTI_Source")]
+        [TestCaseSource("OUTD_Source")]
+        public void INI_IND_OUTI_OUTD_return_proper_T_states(byte opcode)
         {
             var states = Execute(opcode, prefix);
             Assert.AreEqual(16, states);
@@ -185,7 +231,9 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [Test]
         [TestCaseSource("INIR_Source")]
         [TestCaseSource("INDR_Source")]
-        public void INIR_INDR_decrease_PC_by_two_if_counter_does_not_reach_zero(byte opcode)
+        [TestCaseSource("OTIR_Source")]
+        [TestCaseSource("OTDR_Source")]
+        public void INIR_INDR_OTIR_OTDR_decrease_PC_by_two_if_counter_does_not_reach_zero(byte opcode)
         {
             var dataAddress = Fixture.Create<ushort>();
             var runAddress = Fixture.Create<ushort>();
@@ -206,7 +254,9 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [Test]
         [TestCaseSource("INIR_Source")]
         [TestCaseSource("INDR_Source")]
-        public void INIR_INDR_do_not_decrease_PC_by_two_if_counter_reaches_zero(byte opcode)
+        [TestCaseSource("OTIR_Source")]
+        [TestCaseSource("OTDR_Source")]
+        public void INIR_INDR_OTIR_OTDR_do_not_decrease_PC_by_two_if_counter_reaches_zero(byte opcode)
         {
             var dataAddress = Fixture.Create<ushort>();
             var runAddress = Fixture.Create<ushort>();
@@ -227,7 +277,9 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [Test]
         [TestCaseSource("INIR_Source")]
         [TestCaseSource("INDR_Source")]
-        public void INIR_INDR_return_proper_T_states_depending_of_value_of_B(byte opcode)
+        [TestCaseSource("OTIR_Source")]
+        [TestCaseSource("OTDR_Source")]
+        public void INIR_INDR_OTIR_OTDR_return_proper_T_states_depending_of_value_of_B(byte opcode)
         {
             Registers.B = 128;
             for(int i = 0; i <= 256; i++)
@@ -239,7 +291,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             }
         }
 
-        private int ExecuteRead(byte opcode, byte portNumber = 0, byte portValue = 0)
+        private int ExecuteWithPortSetup(byte opcode, byte portNumber = 0, byte portValue = 0)
         {
             Registers.C = portNumber;
             SetPortValue(portNumber, portValue);
