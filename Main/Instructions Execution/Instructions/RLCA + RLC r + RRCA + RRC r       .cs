@@ -398,5 +398,200 @@ namespace Konamiman.Z80dotNet
             return 4;
         }
 
+		/// <summary>
+        /// The RL A instruction
+        /// </summary>
+        byte RL_A()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.A;
+	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
+		    Registers.CF = oldValue.GetBit(7);
+            Registers.A = newValue;
+	
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The RL B instruction
+        /// </summary>
+        byte RL_B()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.B;
+	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
+		    Registers.CF = oldValue.GetBit(7);
+            Registers.B = newValue;
+	
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The RL C instruction
+        /// </summary>
+        byte RL_C()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.C;
+	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
+		    Registers.CF = oldValue.GetBit(7);
+            Registers.C = newValue;
+	
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The RL D instruction
+        /// </summary>
+        byte RL_D()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.D;
+	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
+		    Registers.CF = oldValue.GetBit(7);
+            Registers.D = newValue;
+	
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The RL E instruction
+        /// </summary>
+        byte RL_E()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.E;
+	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
+		    Registers.CF = oldValue.GetBit(7);
+            Registers.E = newValue;
+	
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The RL H instruction
+        /// </summary>
+        byte RL_H()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.H;
+	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
+		    Registers.CF = oldValue.GetBit(7);
+            Registers.H = newValue;
+	
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The RL L instruction
+        /// </summary>
+        byte RL_L()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.L;
+	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
+		    Registers.CF = oldValue.GetBit(7);
+            Registers.L = newValue;
+	
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The RL (HL) instruction
+        /// </summary>
+        byte RL_aHL()
+        {
+            FetchFinished();
+
+			var address = Registers.HL.ToUShort();
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+            var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
+		    Registers.CF = oldValue.GetBit(7);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 15;
+        }
+
+		/// <summary>
+        /// The RLA instruction
+        /// </summary>
+        byte RLA()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.A;
+	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
+		    Registers.CF = oldValue.GetBit(7);
+            Registers.A = newValue;
+	
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            return 4;
+        }
+
 	}
 }

@@ -59,6 +59,7 @@
     <None Include="Instructions Execution\Instructions\CPI                 --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\CPD                 --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\CPIR                 --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\RL %28HL%29           --see RLCA" />
     <None Include="Instructions Execution\Instructions\RLC r               --see RLCA" />
     <None Include="Instructions Execution\Instructions\OUTI                --see INI" />
     <None Include="Instructions Execution\Instructions\OUTD                --see INI" />
@@ -70,6 +71,7 @@
     <None Include="Instructions Execution\Instructions\LDIR               --see LDI" />
     <None Include="Instructions Execution\Instructions\LDDR               --see LDI - Copy" />
     <None Include="Instructions Execution\Instructions\RLC %28HL%29         --see RLCA" />
+    <None Include="Instructions Execution\Instructions\RL r                 --see RLCA" />
     <None Include="Instructions Execution\Instructions\RRC r               --see RLCA" />
     <None Include="Instructions Execution\Instructions\RLCA + RLC r + RRCA + RRC r       .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -292,7 +294,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Instructions Execution\Instructions\RLA           .cs" />
     <Compile Include="Instructions Execution\Instructions\RRA           .cs" />
     <Compile Include="Instructions Execution\Instructions\INC r + INC %28HL%29 + DEC r + DEC %28HL%29   .cs">
       <AutoGen>True</AutoGen>
