@@ -52,7 +52,6 @@
     <Compile Include="Instructions Execution\Core\InstructionsTable.FD.cs" />
     <Compile Include="Instructions Execution\Core\InstructionsTable.ED.cs" />
     <Compile Include="Instructions Execution\Core\InstructionsTable.SingleByte.cs" />
-    <None Include="IND                --see INI" />
     <None Include="Instructions Execution\Instructions\ADC A,%28HL%29   --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\BIT b,%28HL%29         --see BIT B,r" />
     <None Include="Instructions Execution\Instructions\RES b,r              --see SET B,r" />

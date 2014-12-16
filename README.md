@@ -46,7 +46,7 @@ Interaction of the processor with the hosting code and the outside world (memory
 This is a work in progress project. So far that's what is done:
 
 * [The Z80Processor class](Main/Z80Processor.cs) and all of its [dependencies](Docs/Dependencies.md).
-* [The infrastructure for executing instructions](Main/Instructions%20Execution/Core) and part of [the instructions themselves](Main/Instructions%20Execution/Instructions). All the single byte instructions and those prefixed with 0xED are implemented by now.
+* [The infrastructure for executing instructions](Main/Instructions%20Execution/Core) and part of [the instructions themselves](Main/Instructions%20Execution/Instructions). All the single byte instructions and those prefixed with 0xED and 0xCB are implemented by now.
 * [A good bunch of unit tests](Main.Tests).
 
 ...and that's what's left to do:
