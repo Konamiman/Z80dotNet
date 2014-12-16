@@ -54,6 +54,7 @@
     <Compile Include="Instructions Execution\Core\InstructionsTable.SingleByte.cs" />
     <None Include="IND                --see INI" />
     <None Include="Instructions Execution\Instructions\ADC A,%28HL%29   --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\BIT b,%28HL%29         --see BIT B,r" />
     <None Include="Instructions Execution\Instructions\IND                --see INI" />
     <None Include="Instructions Execution\Instructions\CPDR                 --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\CPI                 --see ADD A,r" />
@@ -80,9 +81,9 @@
     <None Include="Instructions Execution\Instructions\RLC %28HL%29         --see RLCA" />
     <None Include="Instructions Execution\Instructions\RL r                 --see RLCA" />
     <None Include="Instructions Execution\Instructions\RRC r               --see RLCA" />
-    <None Include="Instructions Execution\Instructions\RLCA + RLC r + RRCA + RRC r       .tt">
+    <None Include="Instructions Execution\Instructions\RLCA + rotation and shift       .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>RLCA + RLC r + RRCA + RRC r       .cs</LastGenOutput>
+      <LastGenOutput>RLCA + rotation and shift       .cs</LastGenOutput>
     </None>
     <None Include="Instructions Execution\Instructions\RLD               --see RRD" />
     <None Include="Instructions Execution\Instructions\LD R,A           --see LD I,A" />
@@ -170,6 +171,15 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>JR cc         1.cs</LastGenOutput>
     </None>
+    <None Include="Instructions Execution\Instructions\BIT b,r + BIT b,%28HL%29     .tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BIT b,r + BIT b,%28HL%29     1.cs</LastGenOutput>
+    </None>
+    <Compile Include="Instructions Execution\Instructions\BIT b,r + BIT b,%28HL%29     1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BIT b,r + BIT b,%28HL%29     .tt</DependentUpon>
+    </Compile>
     <Compile Include="Instructions Execution\Instructions\CCF           .cs" />
     <None Include="Instructions Execution\Instructions\LD A,I + LD A,R      .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -257,10 +267,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RETN            .tt</DependentUpon>
     </Compile>
-    <Compile Include="Instructions Execution\Instructions\RLCA + RLC r + RRCA + RRC r       .cs">
+    <Compile Include="Instructions Execution\Instructions\RLCA + rotation and shift       .cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RLCA + RLC r + RRCA + RRC r       .tt</DependentUpon>
+      <DependentUpon>RLCA + rotation and shift       .tt</DependentUpon>
     </Compile>
     <Compile Include="Instructions Execution\Instructions\RRD + RLD           1.cs">
       <AutoGen>True</AutoGen>

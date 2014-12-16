@@ -200,6 +200,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             if(reg == "(HL)") {
                 var address = Fixture.Create<ushort>();
+                if(address < 10) address += 10;
                 ProcessorAgent.Memory[address] = value;
                 Registers.HL = address.ToShort();
             }
