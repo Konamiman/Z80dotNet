@@ -17,9 +17,9 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
 	        var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
-            Registers.CF = oldValue.GetBit(7);
             Registers.A = newValue;
 	
+			Registers.CF = oldValue.GetBit(7);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);
@@ -39,9 +39,9 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.B;
 	        var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
-            Registers.CF = oldValue.GetBit(7);
             Registers.B = newValue;
 	
+			Registers.CF = oldValue.GetBit(7);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);
@@ -61,9 +61,9 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.C;
 	        var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
-            Registers.CF = oldValue.GetBit(7);
             Registers.C = newValue;
 	
+			Registers.CF = oldValue.GetBit(7);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);
@@ -83,9 +83,9 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.D;
 	        var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
-            Registers.CF = oldValue.GetBit(7);
             Registers.D = newValue;
 	
+			Registers.CF = oldValue.GetBit(7);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);
@@ -105,9 +105,9 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.E;
 	        var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
-            Registers.CF = oldValue.GetBit(7);
             Registers.E = newValue;
 	
+			Registers.CF = oldValue.GetBit(7);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);
@@ -127,9 +127,9 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.H;
 	        var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
-            Registers.CF = oldValue.GetBit(7);
             Registers.H = newValue;
 	
+			Registers.CF = oldValue.GetBit(7);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);
@@ -149,9 +149,9 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.L;
 	        var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
-            Registers.CF = oldValue.GetBit(7);
             Registers.L = newValue;
 	
+			Registers.CF = oldValue.GetBit(7);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);
@@ -172,9 +172,9 @@ namespace Konamiman.Z80dotNet
 			var address = Registers.HL.ToUShort();
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
             var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
-            Registers.CF = oldValue.GetBit(7);
 			ProcessorAgent.WriteToMemory(address, newValue);
     
+			Registers.CF = oldValue.GetBit(7);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);
@@ -194,9 +194,9 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
 	        var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
-            Registers.CF = oldValue.GetBit(7);
             Registers.A = newValue;
 	
+			Registers.CF = oldValue.GetBit(7);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);
@@ -212,9 +212,9 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
 	        var newValue = (byte)((oldValue >> 1) | (oldValue << 7));
-		    Registers.CF = oldValue.GetBit(0);
             Registers.A = newValue;
 	
+			Registers.CF = oldValue.GetBit(0);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);
@@ -234,9 +234,9 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.B;
 	        var newValue = (byte)((oldValue >> 1) | (oldValue << 7));
-		    Registers.CF = oldValue.GetBit(0);
             Registers.B = newValue;
 	
+			Registers.CF = oldValue.GetBit(0);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);
@@ -256,9 +256,9 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.C;
 	        var newValue = (byte)((oldValue >> 1) | (oldValue << 7));
-		    Registers.CF = oldValue.GetBit(0);
             Registers.C = newValue;
 	
+			Registers.CF = oldValue.GetBit(0);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);
@@ -278,9 +278,9 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.D;
 	        var newValue = (byte)((oldValue >> 1) | (oldValue << 7));
-		    Registers.CF = oldValue.GetBit(0);
             Registers.D = newValue;
 	
+			Registers.CF = oldValue.GetBit(0);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);
@@ -300,9 +300,9 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.E;
 	        var newValue = (byte)((oldValue >> 1) | (oldValue << 7));
-		    Registers.CF = oldValue.GetBit(0);
             Registers.E = newValue;
 	
+			Registers.CF = oldValue.GetBit(0);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);
@@ -322,9 +322,9 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.H;
 	        var newValue = (byte)((oldValue >> 1) | (oldValue << 7));
-		    Registers.CF = oldValue.GetBit(0);
             Registers.H = newValue;
 	
+			Registers.CF = oldValue.GetBit(0);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);
@@ -344,9 +344,9 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.L;
 	        var newValue = (byte)((oldValue >> 1) | (oldValue << 7));
-		    Registers.CF = oldValue.GetBit(0);
             Registers.L = newValue;
 	
+			Registers.CF = oldValue.GetBit(0);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);
@@ -367,9 +367,9 @@ namespace Konamiman.Z80dotNet
 			var address = Registers.HL.ToUShort();
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
             var newValue = (byte)((oldValue >> 1) | (oldValue << 7));
-		    Registers.CF = oldValue.GetBit(0);
 			ProcessorAgent.WriteToMemory(address, newValue);
     
+			Registers.CF = oldValue.GetBit(0);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);
@@ -389,9 +389,9 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
 	        var newValue = (byte)((oldValue >> 1) | (oldValue << 7));
-		    Registers.CF = oldValue.GetBit(0);
             Registers.A = newValue;
 	
+			Registers.CF = oldValue.GetBit(0);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);
@@ -407,9 +407,9 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
 	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
-		    Registers.CF = oldValue.GetBit(7);
             Registers.A = newValue;
 	
+			Registers.CF = oldValue.GetBit(7);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);
@@ -429,9 +429,9 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.B;
 	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
-		    Registers.CF = oldValue.GetBit(7);
             Registers.B = newValue;
 	
+			Registers.CF = oldValue.GetBit(7);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);
@@ -451,9 +451,9 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.C;
 	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
-		    Registers.CF = oldValue.GetBit(7);
             Registers.C = newValue;
 	
+			Registers.CF = oldValue.GetBit(7);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);
@@ -473,9 +473,9 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.D;
 	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
-		    Registers.CF = oldValue.GetBit(7);
             Registers.D = newValue;
 	
+			Registers.CF = oldValue.GetBit(7);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);
@@ -495,9 +495,9 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.E;
 	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
-		    Registers.CF = oldValue.GetBit(7);
             Registers.E = newValue;
 	
+			Registers.CF = oldValue.GetBit(7);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);
@@ -517,9 +517,9 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.H;
 	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
-		    Registers.CF = oldValue.GetBit(7);
             Registers.H = newValue;
 	
+			Registers.CF = oldValue.GetBit(7);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);
@@ -539,9 +539,9 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.L;
 	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
-		    Registers.CF = oldValue.GetBit(7);
             Registers.L = newValue;
 	
+			Registers.CF = oldValue.GetBit(7);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);
@@ -562,9 +562,9 @@ namespace Konamiman.Z80dotNet
 			var address = Registers.HL.ToUShort();
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
             var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
-		    Registers.CF = oldValue.GetBit(7);
 			ProcessorAgent.WriteToMemory(address, newValue);
     
+			Registers.CF = oldValue.GetBit(7);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);
@@ -584,9 +584,204 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
 	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
-		    Registers.CF = oldValue.GetBit(7);
             Registers.A = newValue;
 	
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            return 4;
+        }
+
+		/// <summary>
+        /// The RR A instruction
+        /// </summary>
+        byte RR_A()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.A;
+	        var newValue = (byte)((oldValue >> 1) | (Registers.CF ? 0x80 : 0));
+            Registers.A = newValue;
+	
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The RR B instruction
+        /// </summary>
+        byte RR_B()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.B;
+	        var newValue = (byte)((oldValue >> 1) | (Registers.CF ? 0x80 : 0));
+            Registers.B = newValue;
+	
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The RR C instruction
+        /// </summary>
+        byte RR_C()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.C;
+	        var newValue = (byte)((oldValue >> 1) | (Registers.CF ? 0x80 : 0));
+            Registers.C = newValue;
+	
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The RR D instruction
+        /// </summary>
+        byte RR_D()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.D;
+	        var newValue = (byte)((oldValue >> 1) | (Registers.CF ? 0x80 : 0));
+            Registers.D = newValue;
+	
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The RR E instruction
+        /// </summary>
+        byte RR_E()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.E;
+	        var newValue = (byte)((oldValue >> 1) | (Registers.CF ? 0x80 : 0));
+            Registers.E = newValue;
+	
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The RR H instruction
+        /// </summary>
+        byte RR_H()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.H;
+	        var newValue = (byte)((oldValue >> 1) | (Registers.CF ? 0x80 : 0));
+            Registers.H = newValue;
+	
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The RR L instruction
+        /// </summary>
+        byte RR_L()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.L;
+	        var newValue = (byte)((oldValue >> 1) | (Registers.CF ? 0x80 : 0));
+            Registers.L = newValue;
+	
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The RR (HL) instruction
+        /// </summary>
+        byte RR_aHL()
+        {
+            FetchFinished();
+
+			var address = Registers.HL.ToUShort();
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+            var newValue = (byte)((oldValue >> 1) | (Registers.CF ? 0x80 : 0));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 15;
+        }
+
+		/// <summary>
+        /// The RRA instruction
+        /// </summary>
+        byte RRA()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.A;
+	        var newValue = (byte)((oldValue >> 1) | (Registers.CF ? 0x80 : 0));
+            Registers.A = newValue;
+	
+			Registers.CF = oldValue.GetBit(0);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);

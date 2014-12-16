@@ -12,8 +12,9 @@ namespace Konamiman.Z80dotNet
 {
     public partial class Z80InstructionExecutor
     {
-<#  foreach (var instrType in new[] {"RLC", "RRC", "RL"}) {
+<#  foreach (var instrType in new[] {"RLC", "RRC", "RL", "RR"}) {
     foreach (var regName in new[] {"A", "B", "C", "D", "E", "H", "L", "(HL)", ""}) {
+        var isLeft = (instrType[1] == 'L');
         var isOldInstr = (regName == "");
         var oldInstrName = instrType + "A";
         var reg = isOldInstr ? "A" : regName;
@@ -30,16 +31,16 @@ namespace Konamiman.Z80dotNet
 <# GetOldValueFromRegOrMem(reg); #>
 <# if (instrType == "RLC") { #>
         var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
-            Registers.CF = oldValue.GetBit(7);
 <# } else if (instrType == "RRC") { #>
         var newValue = (byte)((oldValue >> 1) | (oldValue << 7));
-		    Registers.CF = oldValue.GetBit(0);
 <# } else if (instrType == "RL") { #>
         var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
-		    Registers.CF = oldValue.GetBit(7);
+<# } else if (instrType == "RR") { #>
+        var newValue = (byte)((oldValue >> 1) | (Registers.CF ? 0x80 : 0));
 <# } #>
 <# SetNewValueToRegOrMem(reg); #>
 
+			Registers.CF = oldValue.GetBit(<#=isLeft ? 7 : 0#>);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);

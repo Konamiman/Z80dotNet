@@ -48,6 +48,7 @@
     <Compile Include="HelloWorld.cs" />
     <Compile Include="Instructions Execution\INI + IND + INIR + INDR + OUTI + OUTD + OTIR + OTDR     .Tests.cs" />
     <Compile Include="Instructions Execution\LDI + LDD + LDIR + LDDR   .Tets.cs" />
+    <Compile Include="Instructions Execution\RR             .Tests.cs" />
     <Compile Include="Instructions Execution\RL             .Tests.cs" />
     <Compile Include="Instructions Execution\RRC            .Tests.cs" />
     <Compile Include="Instructions Execution\RLC            .Tests.cs" />

@@ -60,6 +60,8 @@
     <None Include="Instructions Execution\Instructions\CPD                 --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\CPIR                 --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\RL %28HL%29           --see RLCA" />
+    <None Include="Instructions Execution\Instructions\RR %28HL%29           --see RLCA" />
+    <None Include="Instructions Execution\Instructions\RR r                 --see RLCA" />
     <None Include="Instructions Execution\Instructions\RLC r               --see RLCA" />
     <None Include="Instructions Execution\Instructions\OUTI                --see INI" />
     <None Include="Instructions Execution\Instructions\OUTD                --see INI" />
@@ -294,7 +296,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Instructions Execution\Instructions\RRA           .cs" />
     <Compile Include="Instructions Execution\Instructions\INC r + INC %28HL%29 + DEC r + DEC %28HL%29   .cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
