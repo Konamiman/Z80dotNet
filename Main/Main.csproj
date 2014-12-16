@@ -61,6 +61,8 @@
     <None Include="Instructions Execution\Instructions\CPIR                 --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\RL %28HL%29           --see RLCA" />
     <None Include="Instructions Execution\Instructions\SLL r                 --see RLCA" />
+    <None Include="Instructions Execution\Instructions\SRL %28HL%29           --see RLCA" />
+    <None Include="Instructions Execution\Instructions\SRL r                 --see RLCA" />
     <None Include="Instructions Execution\Instructions\SRA %28HL%29           --see RLCA" />
     <None Include="Instructions Execution\Instructions\SLA r                 --see RLCA" />
     <None Include="Instructions Execution\Instructions\RR %28HL%29           --see RLCA" />
@@ -126,7 +128,6 @@
       <LastGenOutput>ADC HL,rr + SBC HL,rr       .cs</LastGenOutput>
     </None>
     <None Include="Instructions Execution\Instructions\SLA %28HL%29           --see RLCA" />
-    <None Include="Instructions Execution\Instructions\SLL %28HL%29           --see RLCA" />
     <None Include="Instructions Execution\Instructions\SRA r                 --see RLCA" />
     <None Include="Instructions Execution\Instructions\XOR %28HL%29       --see AND r" />
     <None Include="Instructions Execution\Instructions\AND n            --see AND r" />
