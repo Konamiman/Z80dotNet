@@ -218,6 +218,35 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 return GetReg<byte>(reg);
             }
         }
+        
+        protected static object[] GetBitInstructionsSource(byte baseOpcode)
+        {
+            var bases = new[]
+            {
+                new object[] {"A", 7},
+                new object[] {"B", 0},
+                new object[] {"C", 1},
+                new object[] {"D", 2},
+                new object[] {"E", 3},
+                new object[] {"H", 4},
+                new object[] {"L", 5},
+                new object[] {"(HL)", 6}
+            };
+
+            var sources = new List<object[]>();
+            for (var bit = 0; bit <= 7; bit++)
+            {
+                foreach (var instr in bases)
+                {
+                    var reg = (string) instr[0];
+                    var regCode = (int) instr[1];
+                    var opcode = baseOpcode | (bit << 3) | regCode;
+                    sources.Add(new object[] {reg, bit, (byte) opcode});
+                }
+            }
+
+            return sources.ToArray();
+        }
 
         #endregion
 
