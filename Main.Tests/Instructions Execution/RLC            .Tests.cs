@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -19,39 +18,18 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             new object[] {"(HL)", (byte)0x06},
         };
 
-        private void Setup(string reg, byte value)
-        {
-            if(reg == "(HL)") {
-                var address = Fixture.Create<ushort>();
-                ProcessorAgent.Memory[address] = value;
-                Registers.HL = address.ToShort();
-            }
-            else {
-                SetReg(reg, value);
-            }
-        }
-
-        private byte Value(string reg)
-        {
-            if(reg == "(HL)") {
-                return ProcessorAgent.Memory[Registers.HL];
-            }
-            else {
-                return GetReg<byte>(reg);
-            }
-        }
-
+        
         [Test]
         [TestCaseSource("RLC_Source")]
         public void RLC_rotates_byte_correctly(string reg, byte opcode)
         {
             var values = new byte[] {0xA, 0x14, 0x28, 0x50, 0xA0, 0x41, 0x82, 0x05};
-            Setup(reg, 0x05);
+            SetupRegOrMem(reg, 0x05);
 
             for(var i = 0; i < values.Length; i++)
             {
                 Execute(opcode, prefix);
-                Assert.AreEqual(values[i], Value(reg));
+                Assert.AreEqual(values[i], ValueOfRegOrMem(reg));
             }
         }
 
@@ -59,7 +37,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [TestCaseSource("RLC_Source")]
         public void RLC_sets_CF_correctly(string reg, byte opcode)
         {
-            Setup(reg, 0x60);
+            SetupRegOrMem(reg, 0x60);
 
             Execute(opcode, prefix);
             Assert.AreEqual(0, Registers.CF);
@@ -85,7 +63,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [TestCaseSource("RLC_Source")]
         public void RLC_sets_SF_appropriately(string reg, byte opcode)
         {
-            Setup(reg, 0x20);
+            SetupRegOrMem(reg, 0x20);
 
             Execute(opcode, prefix);
             Assert.AreEqual(0, Registers.SF);
@@ -103,9 +81,9 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             for(int i=0; i<256; i++) 
             {
-                Setup(reg, (byte)i);
+                SetupRegOrMem(reg, (byte)i);
                 Execute(opcode, prefix);
-                Assert.AreEqual(Value(reg)==0, (bool)Registers.ZF);
+                Assert.AreEqual(ValueOfRegOrMem(reg)==0, (bool)Registers.ZF);
             }
         }
 
@@ -115,9 +93,9 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             for(int i=0; i<256; i++) 
             {
-                Setup(reg, (byte)i);
+                SetupRegOrMem(reg, (byte)i);
                 Execute(opcode, prefix);
-                Assert.AreEqual(Parity[Value(reg)], Registers.PF);
+                Assert.AreEqual(Parity[ValueOfRegOrMem(reg)], Registers.PF);
             }
         }
 
@@ -127,9 +105,9 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             foreach (var b in new byte[] {0x00, 0xD7, 0x28, 0xFF})
             {
-                Setup(reg, b);
+                SetupRegOrMem(reg, b);
                 Execute(opcode, prefix);
-                var value = Value(reg);
+                var value = ValueOfRegOrMem(reg);
                 Assert.AreEqual(value.GetBit(3), Registers.Flag3);
                 Assert.AreEqual(value.GetBit(5), Registers.Flag5);
             }

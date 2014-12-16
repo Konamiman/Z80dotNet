@@ -25,18 +25,9 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-<# if(isMemHL) { #>
-			var address = Registers.HL.ToUShort();
-			var oldValue = ProcessorAgent.ReadFromMemory(address);
-<# } else { #>
-            var oldValue = Registers.<#=reg#>;
-<# } #>
-            var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
-<# if(isMemHL) { #>
-			ProcessorAgent.WriteToMemory(address, newValue);
-<# } else { #>
-            Registers.<#=reg#> = newValue;
-<# } #>
+<# GetOldValueFromRegOrMem(reg); #>
+        var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
+<# SetNewValueToRegOrMem(reg); #>
 
             Registers.CF = oldValue.GetBit(7);
             Registers.HF = 0;

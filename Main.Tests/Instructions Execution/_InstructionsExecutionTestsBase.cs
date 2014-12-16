@@ -196,6 +196,28 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             return NumberUtils.CreateShort(ProcessorAgent.Memory[address], ProcessorAgent.Memory[address + 1]);
         }
 
+        protected void SetupRegOrMem(string reg, byte value)
+        {
+            if(reg == "(HL)") {
+                var address = Fixture.Create<ushort>();
+                ProcessorAgent.Memory[address] = value;
+                Registers.HL = address.ToShort();
+            }
+            else {
+                SetReg(reg, value);
+            }
+        }
+
+        protected byte ValueOfRegOrMem(string reg)
+        {
+            if(reg == "(HL)") {
+                return ProcessorAgent.Memory[Registers.HL];
+            }
+            else {
+                return GetReg<byte>(reg);
+            }
+        }
+
         #endregion
 
         #region ParityTable
