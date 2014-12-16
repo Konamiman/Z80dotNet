@@ -13,7 +13,7 @@ namespace Konamiman.Z80dotNet
 {
     public partial class Z80InstructionExecutor
     {
-<# foreach(var reg in new[] {"BC","DE","HL","SP"}) { #>
+<# foreach(var reg in new[] {"BC","DE","HL","SP","IX","IY"}) { #>
         /// <summary>
         /// The LD <#=reg#>,nn instruction.
         /// </summary>
@@ -22,7 +22,7 @@ namespace Konamiman.Z80dotNet
             var value = FetchWord();
             FetchFinished(<# if(reg=="SP") {#>isLdSp: true<# } #>);
             <#=Register(reg)#> = value;
-            return 10;
+            return <#=reg[0]=='I' ? 14 : 10 #>;
         }
 
 <# } #>
