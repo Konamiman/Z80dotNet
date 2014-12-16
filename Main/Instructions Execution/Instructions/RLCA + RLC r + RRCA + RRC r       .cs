@@ -1142,5 +1142,182 @@ namespace Konamiman.Z80dotNet
 			return 15;
         }
 
+		/// <summary>
+        /// The SLL A instruction
+        /// </summary>
+        byte SLL_A()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.A;
+	        var newValue = (byte)((oldValue << 1) | 1);
+            Registers.A = newValue;
+	
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The SLL B instruction
+        /// </summary>
+        byte SLL_B()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.B;
+	        var newValue = (byte)((oldValue << 1) | 1);
+            Registers.B = newValue;
+	
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The SLL C instruction
+        /// </summary>
+        byte SLL_C()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.C;
+	        var newValue = (byte)((oldValue << 1) | 1);
+            Registers.C = newValue;
+	
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The SLL D instruction
+        /// </summary>
+        byte SLL_D()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.D;
+	        var newValue = (byte)((oldValue << 1) | 1);
+            Registers.D = newValue;
+	
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The SLL E instruction
+        /// </summary>
+        byte SLL_E()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.E;
+	        var newValue = (byte)((oldValue << 1) | 1);
+            Registers.E = newValue;
+	
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The SLL H instruction
+        /// </summary>
+        byte SLL_H()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.H;
+	        var newValue = (byte)((oldValue << 1) | 1);
+            Registers.H = newValue;
+	
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The SLL L instruction
+        /// </summary>
+        byte SLL_L()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.L;
+	        var newValue = (byte)((oldValue << 1) | 1);
+            Registers.L = newValue;
+	
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The SLL (HL) instruction
+        /// </summary>
+        byte SLL_aHL()
+        {
+            FetchFinished();
+
+			var address = Registers.HL.ToUShort();
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+            var newValue = (byte)((oldValue << 1) | 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 15;
+        }
+
 	}
 }
