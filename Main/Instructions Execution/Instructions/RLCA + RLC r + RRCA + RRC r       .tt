@@ -12,38 +12,45 @@ namespace Konamiman.Z80dotNet
 {
     public partial class Z80InstructionExecutor
     {
-<# foreach(var regName in new[] { "A", "B", "C", "D", "E", "H", "L", "(HL)", "" }) {
+<#  foreach (var instrType in new[] {"RLC", "RRC"}) {
+    foreach (var regName in new[] {"A", "B", "C", "D", "E", "H", "L", "(HL)", ""}) {
         var isOldInstr = (regName == "");
+        var oldInstrName = instrType + "A";
         var reg = isOldInstr ? "A" : regName;
         var isMemHL = (reg == "(HL)");
-		var instrName = isOldInstr ? "RLCA" : "RLC " + reg;
-		var methodName = isOldInstr ? "RLCA" : "RLC_" + (isMemHL ? "aHL" : reg); #>
+        var instrName = isOldInstr ? oldInstrName : instrType + " " + reg;
+        var methodName = isOldInstr ? oldInstrName : instrType + "_" + (isMemHL ? "aHL" : reg); #>
 		/// <summary>
-        /// The <#=instrName#> instruction
+        /// The <#=instrName #> instruction
         /// </summary>
-        byte <#=methodName#>()
+        byte <#=methodName #>()
         {
             FetchFinished();
 
 <# GetOldValueFromRegOrMem(reg); #>
+<# if (instrType == "RLC") { #>
         var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
+            Registers.CF = oldValue.GetBit(7);
+<# } else if (instrType == "RRC") { #>
+        var newValue = (byte)((oldValue >> 1) | (oldValue << 7));
+		    Registers.CF = oldValue.GetBit(0);
+<# } #>
 <# SetNewValueToRegOrMem(reg); #>
 
-            Registers.CF = oldValue.GetBit(7);
             Registers.HF = 0;
             Registers.NF = 0;
             SetFlags3and5From(newValue);
-<# if(!isOldInstr) { #>
+<# if (!isOldInstr) { #>
             Registers.SF = newValue.GetBit(7);
             Registers.ZF = (newValue == 0);
 			Registers.PF = Parity[newValue];
 
-			return <#=isMemHL ? 15 : 8#>;
+			return <#=isMemHL ? 15 : 8 #>;
 <# } else { #>
             return 4;
 <# } #>
         }
 
-<# } #>
+<# }} #>
 	}
 }

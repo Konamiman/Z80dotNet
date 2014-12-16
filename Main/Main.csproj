@@ -70,9 +70,10 @@
     <None Include="Instructions Execution\Instructions\LDIR               --see LDI" />
     <None Include="Instructions Execution\Instructions\LDDR               --see LDI - Copy" />
     <None Include="Instructions Execution\Instructions\RLC %28HL%29         --see RLCA" />
-    <None Include="Instructions Execution\Instructions\RLCA + RLC r       .tt">
+    <None Include="Instructions Execution\Instructions\RRC r               --see RLCA" />
+    <None Include="Instructions Execution\Instructions\RLCA + RLC r + RRCA + RRC r       .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>RLCA + RLC r       .cs</LastGenOutput>
+      <LastGenOutput>RLCA + RLC r + RRCA + RRC r       .cs</LastGenOutput>
     </None>
     <None Include="Instructions Execution\Instructions\RLD               --see RRD" />
     <None Include="Instructions Execution\Instructions\LD R,A           --see LD I,A" />
@@ -107,6 +108,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RETN            .cs</LastGenOutput>
     </None>
+    <None Include="Instructions Execution\Instructions\RRC %28HL%29          --see RLCA" />
     <None Include="Instructions Execution\Instructions\RST           .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>RST           .cs</LastGenOutput>
@@ -244,10 +246,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RETN            .tt</DependentUpon>
     </Compile>
-    <Compile Include="Instructions Execution\Instructions\RLCA + RLC r       .cs">
+    <Compile Include="Instructions Execution\Instructions\RLCA + RLC r + RRCA + RRC r       .cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RLCA + RLC r       .tt</DependentUpon>
+      <DependentUpon>RLCA + RLC r + RRCA + RRC r       .tt</DependentUpon>
     </Compile>
     <Compile Include="Instructions Execution\Instructions\RRD + RLD           1.cs">
       <AutoGen>True</AutoGen>
@@ -328,7 +330,6 @@
       <LastGenOutput>ADD rr,rr   1.cs</LastGenOutput>
     </None>
     <Compile Include="Instructions Execution\Instructions\DJNZ         .cs" />
-    <Compile Include="Instructions Execution\Instructions\RRCA        .cs" />
     <Compile Include="Instructions Execution\Instructions\NOP2        .cs" />
     <Compile Include="Instructions Execution\Instructions\NOP          .cs" />
     <Compile Include="EventArgs\InstructionFetchFinishedEventArgs.cs" />
