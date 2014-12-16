@@ -965,5 +965,182 @@ namespace Konamiman.Z80dotNet
 			return 15;
         }
 
+		/// <summary>
+        /// The SRA A instruction
+        /// </summary>
+        byte SRA_A()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.A;
+	        var newValue = (byte)((oldValue >> 1) | (oldValue & 0x80));
+            Registers.A = newValue;
+	
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The SRA B instruction
+        /// </summary>
+        byte SRA_B()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.B;
+	        var newValue = (byte)((oldValue >> 1) | (oldValue & 0x80));
+            Registers.B = newValue;
+	
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The SRA C instruction
+        /// </summary>
+        byte SRA_C()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.C;
+	        var newValue = (byte)((oldValue >> 1) | (oldValue & 0x80));
+            Registers.C = newValue;
+	
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The SRA D instruction
+        /// </summary>
+        byte SRA_D()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.D;
+	        var newValue = (byte)((oldValue >> 1) | (oldValue & 0x80));
+            Registers.D = newValue;
+	
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The SRA E instruction
+        /// </summary>
+        byte SRA_E()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.E;
+	        var newValue = (byte)((oldValue >> 1) | (oldValue & 0x80));
+            Registers.E = newValue;
+	
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The SRA H instruction
+        /// </summary>
+        byte SRA_H()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.H;
+	        var newValue = (byte)((oldValue >> 1) | (oldValue & 0x80));
+            Registers.H = newValue;
+	
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The SRA L instruction
+        /// </summary>
+        byte SRA_L()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.L;
+	        var newValue = (byte)((oldValue >> 1) | (oldValue & 0x80));
+            Registers.L = newValue;
+	
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The SRA (HL) instruction
+        /// </summary>
+        byte SRA_aHL()
+        {
+            FetchFinished();
+
+			var address = Registers.HL.ToUShort();
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+            var newValue = (byte)((oldValue >> 1) | (oldValue & 0x80));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 15;
+        }
+
 	}
 }
