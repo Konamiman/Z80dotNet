@@ -12,10 +12,11 @@ namespace Konamiman.Z80dotNet
 {
     public partial class Z80InstructionExecutor
     {
-<#  foreach (var instrType in new[] {"RLC", "RRC", "RL", "RR"}) {
+<#  foreach (var instrType in new[] {"RLC", "RRC", "RL", "RR", "SLA"}) {
     foreach (var regName in new[] {"A", "B", "C", "D", "E", "H", "L", "(HL)", ""}) {
         var isLeft = (instrType[1] == 'L');
         var isOldInstr = (regName == "");
+        if(isOldInstr && instrType.StartsWith("S")) continue;
         var oldInstrName = instrType + "A";
         var reg = isOldInstr ? "A" : regName;
         var isMemHL = (reg == "(HL)");
@@ -37,6 +38,8 @@ namespace Konamiman.Z80dotNet
         var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
 <# } else if (instrType == "RR") { #>
         var newValue = (byte)((oldValue >> 1) | (Registers.CF ? 0x80 : 0));
+<# } else if (instrType == "SLA") { #>
+        var newValue = (byte)(oldValue << 1);
 <# } #>
 <# SetNewValueToRegOrMem(reg); #>
 

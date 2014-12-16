@@ -788,5 +788,182 @@ namespace Konamiman.Z80dotNet
             return 4;
         }
 
+		/// <summary>
+        /// The SLA A instruction
+        /// </summary>
+        byte SLA_A()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.A;
+	        var newValue = (byte)(oldValue << 1);
+            Registers.A = newValue;
+	
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The SLA B instruction
+        /// </summary>
+        byte SLA_B()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.B;
+	        var newValue = (byte)(oldValue << 1);
+            Registers.B = newValue;
+	
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The SLA C instruction
+        /// </summary>
+        byte SLA_C()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.C;
+	        var newValue = (byte)(oldValue << 1);
+            Registers.C = newValue;
+	
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The SLA D instruction
+        /// </summary>
+        byte SLA_D()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.D;
+	        var newValue = (byte)(oldValue << 1);
+            Registers.D = newValue;
+	
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The SLA E instruction
+        /// </summary>
+        byte SLA_E()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.E;
+	        var newValue = (byte)(oldValue << 1);
+            Registers.E = newValue;
+	
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The SLA H instruction
+        /// </summary>
+        byte SLA_H()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.H;
+	        var newValue = (byte)(oldValue << 1);
+            Registers.H = newValue;
+	
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The SLA L instruction
+        /// </summary>
+        byte SLA_L()
+        {
+            FetchFinished();
+
+            var oldValue = Registers.L;
+	        var newValue = (byte)(oldValue << 1);
+            Registers.L = newValue;
+	
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 8;
+        }
+
+		/// <summary>
+        /// The SLA (HL) instruction
+        /// </summary>
+        byte SLA_aHL()
+        {
+            FetchFinished();
+
+			var address = Registers.HL.ToUShort();
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+            var newValue = (byte)(oldValue << 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 15;
+        }
+
 	}
 }

@@ -60,6 +60,7 @@
     <None Include="Instructions Execution\Instructions\CPD                 --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\CPIR                 --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\RL %28HL%29           --see RLCA" />
+    <None Include="Instructions Execution\Instructions\SLA r                 --see RLCA" />
     <None Include="Instructions Execution\Instructions\RR %28HL%29           --see RLCA" />
     <None Include="Instructions Execution\Instructions\RR r                 --see RLCA" />
     <None Include="Instructions Execution\Instructions\RLC r               --see RLCA" />
@@ -122,6 +123,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ADC HL,rr + SBC HL,rr       .cs</LastGenOutput>
     </None>
+    <None Include="Instructions Execution\Instructions\SLA %28HL%29           --see RLCA" />
     <None Include="Instructions Execution\Instructions\XOR %28HL%29       --see AND r" />
     <None Include="Instructions Execution\Instructions\AND n            --see AND r" />
     <None Include="Instructions Execution\Instructions\AND + XOR + OR r + n + %28HL%29         .tt">
