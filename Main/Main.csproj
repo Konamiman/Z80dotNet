@@ -55,6 +55,13 @@
     <None Include="IND                --see INI" />
     <None Include="Instructions Execution\Instructions\ADC A,%28HL%29   --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\BIT b,%28HL%29         --see BIT B,r" />
+    <None Include="Instructions Execution\Instructions\RES b,r              --see SET B,r" />
+    <None Include="Instructions Execution\Instructions\SET b,%28HL%29         --see SET B,r" />
+    <None Include="Instructions Execution\Instructions\RES b,%28HL%29         --see SET B,r" />
+    <None Include="Instructions Execution\Instructions\SET b,r + SET b,%28HL%29 + RES b,r + RES b,%28HL%29   .tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SET b,r + SET b,%28HL%29 + RES b,r + RES b,%28HL%29   .cs</LastGenOutput>
+    </None>
     <None Include="Instructions Execution\Instructions\IND                --see INI" />
     <None Include="Instructions Execution\Instructions\CPDR                 --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\CPI                 --see ADD A,r" />
@@ -175,6 +182,11 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BIT b,r + BIT b,%28HL%29     1.cs</LastGenOutput>
     </None>
+    <Compile Include="Instructions Execution\Instructions\SET b,r + SET b,%28HL%29 + RES b,r + RES b,%28HL%29   .cs">
+      <DependentUpon>SET b,r + SET b,%28HL%29 + RES b,r + RES b,%28HL%29   .tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Instructions Execution\Instructions\BIT b,r + BIT b,%28HL%29     1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
