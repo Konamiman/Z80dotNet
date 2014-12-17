@@ -88,8 +88,8 @@
     <Compile Include="Instructions Execution\SUB + SBC + CPI + CPD + CP A,r + n + %28HL%29     .Tests.cs" />
     <Compile Include="Instructions Execution\ADD + ADC A,r + n + %28HL%29     .Tests.cs" />
     <Compile Include="Instructions Execution\CCF              .Tests.cs" />
-    <Compile Include="Instructions Execution\INC %28HL%29       .Tests.cs" />
-    <Compile Include="Instructions Execution\DEC %28HL%29       .Tests.cs" />
+    <Compile Include="Instructions Execution\INC %28HL%29 + INC %28IX+n%29 + INC %28IY+n%29      .Tests.cs" />
+    <Compile Include="Instructions Execution\DEC %28HL%29 + DEC %28IX+n%29 + DEC %28IY+n%29       .Tests.cs" />
     <Compile Include="Instructions Execution\LD %28HL%29,n     .Tests.cs" />
     <Compile Include="Instructions Execution\LD r,r          .Tests.cs" />
     <Compile Include="Instructions Execution\HALT           .Tests.cs" />

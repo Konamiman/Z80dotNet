@@ -214,6 +214,24 @@ namespace Konamiman.Z80dotNet.Tests
         }
 
         [Test]
+        public void ToSignedByte_works_for_numbers_below_80h()
+        {
+            Assert.AreEqual((SByte)0x12, 0x12.ToSignedByte());
+        }
+
+        [Test]
+        public void ToSignedByte_works_for_80h()
+        {
+            Assert.AreEqual((SByte)(-128), 0x80.ToSignedByte());
+        }
+
+        [Test]
+        public void ToSignedByte_works_for_numbers_above_80h()
+        {
+            Assert.AreEqual((SByte)(-1), 0xFF.ToSignedByte());
+        }
+
+        [Test]
         public void Inc_short_works_for_non_boundary_values()
         {
             Assert.AreEqual(2, ((short)1).Inc());

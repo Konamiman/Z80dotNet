@@ -185,6 +185,26 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
+        /// Converts a number to signed byte by substracting 256 when the number is 128 or higher.
+        /// </summary>
+        /// <param name="value">Number to convert</param>
+        /// <returns>Converted number</returns>
+        public static SByte ToSignedByte(this int value)
+        {
+            return (value >= 128 ? (SByte)(value - 256) : (SByte)value);
+        }
+
+        /// <summary>
+        /// Converts a number to signed byte by substracting 256 when the number is 128 or higher.
+        /// </summary>
+        /// <param name="value">Number to convert</param>
+        /// <returns>Converted number</returns>
+        public static SByte ToSignedByte(this byte value)
+        {
+            return (value >= 128 ? (SByte)((int)value - 256) : (SByte)value);
+        }
+
+        /// <summary>
         /// Increases a number and turns it into zero if it has its maximum value.
         /// </summary>
         /// <param name="value">Number to increase</param>
@@ -240,6 +260,16 @@ namespace Konamiman.Z80dotNet
         /// <param name="value">Number to increase</param>
         /// <returns>Increased number, or zero</returns>
         public static ushort Add(this ushort value, ushort amount)
+        {
+            return ((((int)value)+amount) & 0xFFFF).ToUShort();
+        }
+
+        /// <summary>
+        /// Adds a value to a number and overlaps it from zero if it passes its maximum value.
+        /// </summary>
+        /// <param name="value">Number to increase</param>
+        /// <returns>Increased number, or zero</returns>
+        public static ushort Add(this ushort value, SByte amount)
         {
             return ((((int)value)+amount) & 0xFFFF).ToUShort();
         }

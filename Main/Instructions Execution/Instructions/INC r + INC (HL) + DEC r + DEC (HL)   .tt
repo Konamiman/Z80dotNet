@@ -12,17 +12,19 @@ namespace Konamiman.Z80dotNet
 {
     public partial class Z80InstructionExecutor
     {
-<# foreach(var reg in new[] {"A","B","C","D","E","H","L","IXH","IXL","IYH","IYL","(HL)"}) {
+<# foreach(var reg in new[] {"A","B","C","D","E","H","L","IXH","IXL","IYH","IYL","(HL)","(IX+n)","(IY+n)"}) {
    foreach(var isInc in new[] {true, false}) {
         var isMemHL = (reg == "(HL)");
+        var isMemIndex = (reg.StartsWith("(I"));
 		var instrType = isInc ? "INC" : "DEC";
 		var instrName = String.Format("{0} {1}", instrType, reg);
-        var methodName = String.Format("{0}_{1}", instrType, (isMemHL ? "aHL" : reg)); #>
+        var methodName = String.Format("{0}_{1}", instrType, MethodRegPartName(reg)); #>
         /// <summary>
         /// The <#=instrName #> instruction.
         /// </summary>
         private byte <#=methodName #>()
         {
+<#ReadOffset(reg);#>
             FetchFinished();
 
 <# GetOldValueFromRegOrMem(reg); #>
@@ -36,7 +38,7 @@ namespace Konamiman.Z80dotNet
             Registers.NF = <#=isInc ? "0" : "1"#>;
 			SetFlags3and5From(newValue);
 
-            return <#=isMemHL ? 11 : (IsIndexRegister(reg) ? 8 : 4) #>;
+            return <#=isMemIndex ? 23 : isMemHL ? 11 : (IsIndexRegister(reg) ? 8 : 4) #>;
         }
 
 <# }} #>

@@ -479,7 +479,7 @@ namespace Konamiman.Z80dotNet
 
 			var address = Registers.HL.ToUShort();
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
-            var newValue = oldValue.Inc();
+	        var newValue = oldValue.Inc();
 			ProcessorAgent.WriteToMemory(address, newValue);
     
             Registers.SF = newValue.GetBit(7);
@@ -501,7 +501,7 @@ namespace Konamiman.Z80dotNet
 
 			var address = Registers.HL.ToUShort();
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
-            var newValue = oldValue.Dec();
+	        var newValue = oldValue.Dec();
 			ProcessorAgent.WriteToMemory(address, newValue);
     
             Registers.SF = newValue.GetBit(7);
@@ -512,6 +512,98 @@ namespace Konamiman.Z80dotNet
 			SetFlags3and5From(newValue);
 
             return 11;
+        }
+
+        /// <summary>
+        /// The INC (IX+n) instruction.
+        /// </summary>
+        private byte INC_aIX_plus_n()
+        {
+			var offset = ProcessorAgent.FetchNextOpcode();
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+            var newValue = oldValue.Inc();
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+            Registers.HF = ((newValue & 0x0F) == 0x00);
+            Registers.PF = (newValue == 0x80);
+            Registers.NF = 0;
+			SetFlags3and5From(newValue);
+
+            return 23;
+        }
+
+        /// <summary>
+        /// The DEC (IX+n) instruction.
+        /// </summary>
+        private byte DEC_aIX_plus_n()
+        {
+			var offset = ProcessorAgent.FetchNextOpcode();
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+            var newValue = oldValue.Dec();
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+            Registers.HF = ((newValue & 0x0F) == 0x0F);
+            Registers.PF = (newValue == 0x7F);
+            Registers.NF = 1;
+			SetFlags3and5From(newValue);
+
+            return 23;
+        }
+
+        /// <summary>
+        /// The INC (IY+n) instruction.
+        /// </summary>
+        private byte INC_aIY_plus_n()
+        {
+			var offset = ProcessorAgent.FetchNextOpcode();
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+            var newValue = oldValue.Inc();
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+            Registers.HF = ((newValue & 0x0F) == 0x00);
+            Registers.PF = (newValue == 0x80);
+            Registers.NF = 0;
+			SetFlags3and5From(newValue);
+
+            return 23;
+        }
+
+        /// <summary>
+        /// The DEC (IY+n) instruction.
+        /// </summary>
+        private byte DEC_aIY_plus_n()
+        {
+			var offset = ProcessorAgent.FetchNextOpcode();
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+            var newValue = oldValue.Dec();
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+            Registers.HF = ((newValue & 0x0F) == 0x0F);
+            Registers.PF = (newValue == 0x7F);
+            Registers.NF = 1;
+			SetFlags3and5From(newValue);
+
+            return 23;
         }
 
     }

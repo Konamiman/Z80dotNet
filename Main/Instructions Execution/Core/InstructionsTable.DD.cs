@@ -102,22 +102,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files when they are implemented.
 
         /// <summary>
-        /// The INC (IX+d) instruction.
-        /// </summary>
-        byte INC_aIX_plus_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The DEC (IX+d) instruction.
-        /// </summary>
-        byte DEC_aIX_plus_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The LD (IX+d),N instruction.
         /// </summary>
         byte LD_aIX_plus_n_N()
