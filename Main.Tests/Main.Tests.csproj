@@ -47,6 +47,7 @@
     <Compile Include="ClockSynchronizationHelperTests.cs" />
     <Compile Include="HelloWorld.cs" />
     <Compile Include="Instructions Execution\LD %28IX+d%29,n + LD %28IY+d%29,n     .Tests.cs" />
+    <Compile Include="Instructions Execution\LD r,%28IX+d%29 + LD r,%28IY+d%29       .Tests.cs" />
     <Compile Include="Instructions Execution\SET + RES        .Tests.cs" />
     <Compile Include="Instructions Execution\INI + IND + INIR + INDR + OUTI + OUTD + OTIR + OTDR     .Tests.cs" />
     <Compile Include="Instructions Execution\LDI + LDD + LDIR + LDDR   .Tets.cs" />

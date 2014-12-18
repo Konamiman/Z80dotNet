@@ -102,54 +102,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files when they are implemented.
 
         /// <summary>
-        /// The LD B,(IX+d) instruction.
-        /// </summary>
-        byte LD_B_aIX_plus_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD C,(IX+d) instruction.
-        /// </summary>
-        byte LD_C_aIX_plus_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD D,(IX+d) instruction.
-        /// </summary>
-        byte LD_D_aIX_plus_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD E,(IX+d) instruction.
-        /// </summary>
-        byte LD_E_aIX_plus_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD H,(IX+d) instruction.
-        /// </summary>
-        byte LD_H_aIX_plus_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD L,(IX+d) instruction.
-        /// </summary>
-        byte LD_L_aIX_plus_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The LD (IX+d),B instruction.
         /// </summary>
         byte LD_aIX_plus_n_B()
@@ -201,14 +153,6 @@ namespace Konamiman.Z80dotNet
         /// The LD (IX+d),A instruction.
         /// </summary>
         byte LD_aIX_plus_n_A()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD A,(IX+d) instruction.
-        /// </summary>
-        byte LD_A_aIX_plus_n()
         {
             throw new NotImplementedException();
         }

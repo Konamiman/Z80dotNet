@@ -60,6 +60,8 @@
     <None Include="Instructions Execution\Instructions\DEC %28IY+n%29     --see INC r" />
     <None Include="Instructions Execution\Instructions\LD %28IX+d%29,n    --see LD %28HL%29,n" />
     <None Include="Instructions Execution\Instructions\LD %28IY+d%29,n    --see LD %28HL%29,n" />
+    <None Include="Instructions Execution\Instructions\LD r,%28IX+d%29     --see LD r,%28rr%29" />
+    <None Include="Instructions Execution\Instructions\LD r,%28IY+d%29     --see LD r,%28rr%29" />
     <None Include="Instructions Execution\Instructions\RES b,r              --see SET B,r" />
     <None Include="Instructions Execution\Instructions\SET b,%28HL%29         --see SET B,r" />
     <None Include="Instructions Execution\Instructions\RES b,%28HL%29         --see SET B,r" />

@@ -18,9 +18,9 @@ object IfIndexRegister(string regName, object value, object @else)
 string MethodRegPartName(string reg)
 {
 	return
-		reg=="(HL)" ? "aHL" : 
 		reg=="(IX+n)" ? "aIX_plus_n" :
 		reg=="(IY+n)" ? "aIY_plus_n" :
+		reg.StartsWith("(") ? "a" + reg.Substring(1,2) :
 		reg;
 }
 
@@ -69,11 +69,11 @@ void GetAddressFromReg(string reg)
 
 void GetOldValueFromRegOrMem(string reg)
 { 
-    if(reg=="(HL)") { #>
-			var address = Registers.HL.ToUShort();
+	if (reg == "(IX+n)" || reg == "(IY+n)") { #>
+			var address = Registers.<#=reg.Substring(1, 2) #>.ToUShort().Add(offset.ToSignedByte());
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
-	<#+ } else if(reg=="(IX+n)" || reg=="(IY+n)") { #>
-			var address = Registers.<#=reg.Substring(1,2)#>.ToUShort().Add(offset.ToSignedByte());
+	<#+ } else if(reg.StartsWith("(")) { #>
+			var address = Registers.<#=reg.Substring(1,2)#>.ToUShort();
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
     <#+ } else { #>
             var oldValue = Registers.<#=reg#>;
