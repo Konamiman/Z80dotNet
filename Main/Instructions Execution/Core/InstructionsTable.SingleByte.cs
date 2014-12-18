@@ -64,7 +64,7 @@ namespace Konamiman.Z80dotNet
                 INC_SP,    //33
                 INC_aHL,    //34
                 DEC_aHL,    //35
-                LD_aHL_n,    //36
+                LD_aHL_N,    //36
                 SCF,    //37
                 JR_C_d,    //38
                 ADD_HL_SP,    //39

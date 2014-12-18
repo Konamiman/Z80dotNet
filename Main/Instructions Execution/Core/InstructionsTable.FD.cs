@@ -102,14 +102,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files when they are implemented.
 
         /// <summary>
-        /// The LD (IY+d),N instruction.
-        /// </summary>
-        byte LD_aIY_plus_n_N()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The LD B,(IY+d) instruction.
         /// </summary>
         byte LD_B_aIY_plus_n()

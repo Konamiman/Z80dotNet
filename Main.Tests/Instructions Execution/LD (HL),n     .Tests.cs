@@ -29,7 +29,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
 
         [Test]
-        public void LD_rr_r_returns_proper_T_states()
+        public void LD_aHL_n_returns_proper_T_states()
         {
             var states = Execute(LD_aHL_n_opcode);
             Assert.AreEqual(10, states);
