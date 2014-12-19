@@ -102,62 +102,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files when they are implemented.
 
         /// <summary>
-        /// The LD (IY+d),B instruction.
-        /// </summary>
-        byte LD_aIY_plus_n_B()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD (IY+d),C instruction.
-        /// </summary>
-        byte LD_aIY_plus_n_C()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD (IY+d),D instruction.
-        /// </summary>
-        byte LD_aIY_plus_n_D()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD (IY+d),E instruction.
-        /// </summary>
-        byte LD_aIY_plus_n_E()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD (IY+d),H instruction.
-        /// </summary>
-        byte LD_aIY_plus_n_H()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD (IY+d),L instruction.
-        /// </summary>
-        byte LD_aIY_plus_n_L()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The LD (IY+d),A instruction.
-        /// </summary>
-        byte LD_aIY_plus_n_A()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The ADD A,IYH instruction.
         /// </summary>
         byte ADD_A_IYH()

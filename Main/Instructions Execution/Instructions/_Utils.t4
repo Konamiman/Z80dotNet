@@ -57,12 +57,10 @@ void PushToStack(string reg, bool isUshort = false)
 
 void GetAddressFromReg(string reg)
 {
-    if(reg=="(HL)") { #>
-			var address = Registers.HL.ToUShort();
-	<#+ } else if(reg=="(IX+n)" || reg=="(IY+n)") { #>
-			var address = Registers.<#=reg.Substring(1,2)#>.ToUShort().Add(offset.ToSignedByte());
-    <#+ } else { #>
-            var oldValue = Registers.<#=reg#>;
+	if (reg == "(IX+n)" || reg == "(IY+n)") { #>
+			var address = Registers.<#=reg.Substring(1, 2) #>.ToUShort().Add(offset.ToSignedByte());
+	<#+ } else if(reg.StartsWith("(")) { #>
+			var address = Registers.<#=reg.Substring(1,2)#>.ToUShort();
 	<#+ } #>
 <#+
 }
@@ -83,7 +81,7 @@ void GetOldValueFromRegOrMem(string reg)
 
 void SetNewValueToRegOrMem(string reg)
 { 
-    if(reg=="(HL)" || reg=="(IX+n)" || reg=="(IY+n)") { #>
+    if(reg.StartsWith("(")) { #>
 			ProcessorAgent.WriteToMemory(address, newValue);
     <#+ } else { #>
             Registers.<#=reg#> = newValue;

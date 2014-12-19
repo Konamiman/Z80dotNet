@@ -59,8 +59,10 @@
     <None Include="Instructions Execution\Instructions\INC %28IY+n%29     --see INC r" />
     <None Include="Instructions Execution\Instructions\DEC %28IY+n%29     --see INC r" />
     <None Include="Instructions Execution\Instructions\LD %28IX+d%29,n    --see LD %28HL%29,n" />
+    <None Include="Instructions Execution\Instructions\LD %28IY+d%29,r     --see LD r,%28rr%29" />
     <None Include="Instructions Execution\Instructions\LD %28IY+d%29,n    --see LD %28HL%29,n" />
     <None Include="Instructions Execution\Instructions\LD r,%28IX+d%29     --see LD r,%28rr%29" />
+    <None Include="Instructions Execution\Instructions\LD %28IX+d%29,r     --see LD r,%28rr%29" />
     <None Include="Instructions Execution\Instructions\LD r,%28IY+d%29     --see LD r,%28rr%29" />
     <None Include="Instructions Execution\Instructions\RES b,r              --see SET B,r" />
     <None Include="Instructions Execution\Instructions\SET b,%28HL%29         --see SET B,r" />
@@ -350,15 +352,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>INC rr + DEC rr  .tt</DependentUpon>
     </Compile>
-    <Compile Include="Instructions Execution\Instructions\LD r,%28rr%29    .cs">
-      <DependentUpon>LD r,%28rr%29    .tt</DependentUpon>
+    <Compile Include="Instructions Execution\Instructions\LD r,%28rr%29 + LD %28rr%29,r    .cs">
+      <DependentUpon>LD r,%28rr%29 + LD %28rr%29,r    .tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Instructions Execution\Instructions\LD %28rr%29,r    .cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LD %28rr%29,r    .tt</DependentUpon>
     </Compile>
     <Compile Include="Instructions Execution\Instructions\LD r,n       .cs">
       <AutoGen>True</AutoGen>
@@ -432,13 +429,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LD %28aa%29,rr   .cs</LastGenOutput>
     </None>
-    <None Include="Instructions Execution\Instructions\LD r,%28rr%29    .tt">
+    <None Include="Instructions Execution\Instructions\LD r,%28rr%29 + LD %28rr%29,r    .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>LD r,%28rr%29    .cs</LastGenOutput>
-    </None>
-    <None Include="Instructions Execution\Instructions\LD %28rr%29,r    .tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>LD %28rr%29,r    .cs</LastGenOutput>
+      <LastGenOutput>LD r,%28rr%29 + LD %28rr%29,r    .cs</LastGenOutput>
     </None>
     <None Include="Instructions Execution\Instructions\LD r,n       .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
