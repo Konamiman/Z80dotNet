@@ -58,6 +58,8 @@
     <None Include="Instructions Execution\Instructions\ADD A,%28IY+d%29   --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\ADC A,%28IY+d%29   --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\AND %28IX+d%29       --see AND r" />
+    <None Include="Instructions Execution\Instructions\EX %28SP%29,IX   --see EX %28SP%29,HL" />
+    <None Include="Instructions Execution\Instructions\EX %28SP%29,IY   --see EX %28SP%29,HL" />
     <None Include="Instructions Execution\Instructions\OR %28IX+d%29       --see AND r" />
     <None Include="Instructions Execution\Instructions\AND %28IY+d%29       --see AND r" />
     <None Include="Instructions Execution\Instructions\CP %28IX+d%29           --see ADD A,r" />
@@ -210,6 +212,15 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>LD %28HL%29,n + LD %28IX+d%29,n + LD %28IY+d%29,n    1.cs</LastGenOutput>
     </None>
+    <None Include="Instructions Execution\Instructions\EX %28SP%29,HL + IX + IY    .tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EX %28SP%29,HL + IX + IY    1.cs</LastGenOutput>
+    </None>
+    <Compile Include="Instructions Execution\Instructions\EX %28SP%29,HL + IX + IY    1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EX %28SP%29,HL + IX + IY    .tt</DependentUpon>
+    </Compile>
     <Compile Include="Instructions Execution\Instructions\LD %28HL%29,n + LD %28IX+d%29,n + LD %28IY+d%29,n    1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -294,7 +305,6 @@
     <Compile Include="Instructions Execution\Instructions\DI               .cs" />
     <Compile Include="Instructions Execution\Instructions\LD SP,HL   .cs" />
     <Compile Include="Instructions Execution\Instructions\JP %28HL%29      .cs" />
-    <Compile Include="Instructions Execution\Instructions\EX %28SP%29,HL   .cs" />
     <Compile Include="Instructions Execution\Instructions\IN A,%28n%29     .cs" />
     <Compile Include="Instructions Execution\Instructions\PUSH rr + POP rr               .cs">
       <DependentUpon>PUSH rr + POP rr               .tt</DependentUpon>

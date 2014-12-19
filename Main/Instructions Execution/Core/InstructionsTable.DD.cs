@@ -102,14 +102,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files when they are implemented.
 
         /// <summary>
-        /// The EX (SP),IX instruction.
-        /// </summary>
-        byte EX_aSP_IX()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The JP (IX) instruction.
         /// </summary>
         byte JP_aIX()

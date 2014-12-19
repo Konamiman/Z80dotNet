@@ -64,7 +64,7 @@
     <Compile Include="Instructions Execution\RRD + RLD         .Tests.cs" />
     <Compile Include="Instructions Execution\LD A,I  + LD A,R        .Tests.cs" />
     <Compile Include="Instructions Execution\LD I,A + LD I,R           .Tests.cs" />
-    <Compile Include="Instructions Execution\EX %28SP%29,HL     .Tests.cs" />
+    <Compile Include="Instructions Execution\EX %28SP%29,HL + IX + IY    .Tests.cs" />
     <Compile Include="Instructions Execution\IM 0 + IM 1 + IM 2      .Tests.cs" />
     <Compile Include="Instructions Execution\OUT %28C%29,r.        .Tests.cs" />
     <Compile Include="Instructions Execution\IN r,%28C%29.          .Tests.cs" />
