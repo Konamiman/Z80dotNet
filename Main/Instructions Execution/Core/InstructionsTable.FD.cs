@@ -102,102 +102,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files when they are implemented.
 
         /// <summary>
-        /// The ADD A,IYH instruction.
-        /// </summary>
-        byte ADD_A_IYH()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The ADD A,IYL instruction.
-        /// </summary>
-        byte ADD_A_IYL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The ADD A,(IY+d) instruction.
-        /// </summary>
-        byte ADD_A_aIY_plus_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The ADC A,IYH instruction.
-        /// </summary>
-        byte ADC_A_IYH()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The ADC A,IYL instruction.
-        /// </summary>
-        byte ADC_A_IYL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The ADC A,(IY+d) instruction.
-        /// </summary>
-        byte ADC_A_aIY_plus_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The SUB IYH instruction.
-        /// </summary>
-        byte SUB_IYH()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The SUB IYL instruction.
-        /// </summary>
-        byte SUB_IYL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The SUB (IY+d) instruction.
-        /// </summary>
-        byte SUB_aIY_plus_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The SBC A,IYH instruction.
-        /// </summary>
-        byte SBC_A_IYH()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The SBC A,IYL instruction.
-        /// </summary>
-        byte SBC_A_IYL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The SBC A,(IY+d) instruction.
-        /// </summary>
-        byte SBC_A_aIY_plus_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The AND IYH instruction.
         /// </summary>
         byte AND_IYH()
@@ -265,30 +169,6 @@ namespace Konamiman.Z80dotNet
         /// The OR (IY+d) instruction.
         /// </summary>
         byte OR_aIY_plus_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The CP IYH instruction.
-        /// </summary>
-        byte CP_IYH()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The CP IYL instruction.
-        /// </summary>
-        byte CP_IYL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The CP (IY+d) instruction.
-        /// </summary>
-        byte CP_aIY_plus_n()
         {
             throw new NotImplementedException();
         }

@@ -53,6 +53,12 @@
     <Compile Include="Instructions Execution\Core\InstructionsTable.ED.cs" />
     <Compile Include="Instructions Execution\Core\InstructionsTable.SingleByte.cs" />
     <None Include="Instructions Execution\Instructions\ADC A,%28HL%29   --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\ADC A,%28IX+d%29   --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\ADD A,%28IX+d%29   --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\ADD A,%28IY+d%29   --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\ADC A,%28IY+d%29   --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\CP %28IX+d%29           --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\CP %28IY+d%29           --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\DEC %28IX+n%29     --see INC r" />
     <None Include="Instructions Execution\Instructions\INC %28IX+n%29     --see INC r" />
     <None Include="Instructions Execution\Instructions\BIT b,%28HL%29         --see BIT B,r" />
@@ -65,6 +71,7 @@
     <None Include="Instructions Execution\Instructions\LD %28IX+d%29,r     --see LD r,%28rr%29" />
     <None Include="Instructions Execution\Instructions\LD r,%28IY+d%29     --see LD r,%28rr%29" />
     <None Include="Instructions Execution\Instructions\RES b,r              --see SET B,r" />
+    <None Include="Instructions Execution\Instructions\SBC A,%28IY+d%29     --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\SET b,%28HL%29         --see SET B,r" />
     <None Include="Instructions Execution\Instructions\RES b,%28HL%29         --see SET B,r" />
     <None Include="Instructions Execution\Instructions\SET b,r + SET b,%28HL%29 + RES b,r + RES b,%28HL%29   .tt">
@@ -146,6 +153,9 @@
     </None>
     <None Include="Instructions Execution\Instructions\SLA %28HL%29           --see RLCA" />
     <None Include="Instructions Execution\Instructions\SRA r                 --see RLCA" />
+    <None Include="Instructions Execution\Instructions\SUB A,%28IX+d%29     --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\SBC A,%28IX+d%29     --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\SUB A,%28IY+d%29     --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\XOR %28HL%29       --see AND r" />
     <None Include="Instructions Execution\Instructions\AND n            --see AND r" />
     <None Include="Instructions Execution\Instructions\AND + XOR + OR r + n + %28HL%29         .tt">

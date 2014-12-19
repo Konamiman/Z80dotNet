@@ -102,102 +102,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files when they are implemented.
 
         /// <summary>
-        /// The ADD A,IXH instruction.
-        /// </summary>
-        byte ADD_A_IXH()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The ADD A,IXL instruction.
-        /// </summary>
-        byte ADD_A_IXL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The ADD A,(IX+d) instruction.
-        /// </summary>
-        byte ADD_A_aIX_plus_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The ADC A,IXH instruction.
-        /// </summary>
-        byte ADC_A_IXH()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The ADC A,IXL instruction.
-        /// </summary>
-        byte ADC_A_IXL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The ADC A,(IX+d) instruction.
-        /// </summary>
-        byte ADC_A_aIX_plus_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The SUB IXH instruction.
-        /// </summary>
-        byte SUB_IXH()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The SUB IXL instruction.
-        /// </summary>
-        byte SUB_IXL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The SUB (IX+d) instruction.
-        /// </summary>
-        byte SUB_aIX_plus_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The SBC A,IXH instruction.
-        /// </summary>
-        byte SBC_A_IXH()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The SBC A,IXL instruction.
-        /// </summary>
-        byte SBC_A_IXL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The SBC A,(IX+d) instruction.
-        /// </summary>
-        byte SBC_A_aIX_plus_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The AND IXH instruction.
         /// </summary>
         byte AND_IXH()
@@ -265,30 +169,6 @@ namespace Konamiman.Z80dotNet
         /// The OR (IX+d) instruction.
         /// </summary>
         byte OR_aIX_plus_n()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The CP IXH instruction.
-        /// </summary>
-        byte CP_IXH()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The CP IXL instruction.
-        /// </summary>
-        byte CP_IXL()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The CP (IX+d) instruction.
-        /// </summary>
-        byte CP_aIX_plus_n()
         {
             throw new NotImplementedException();
         }
