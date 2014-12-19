@@ -22,32 +22,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 var i = src;
                 byte? prefix = null;
 
-                switch(reg) {
-                    case "IXH":
-                        i = 4;
-                        prefix = 0xDD;
-                        break;
-                    case "IXL":
-                        i = 5;
-                        prefix = 0xDD;
-                        break;
-                    case "IYH":
-                        i = 4;
-                        prefix = 0xFD;
-                        break;
-                    case "IYL":
-                        i = 5;
-                        prefix = 0xFD;
-                        break;
-                    case "(IX+n)":
-                        i = 6;
-                        prefix = 0xDD;
-                        break;
-                    case "(IY+n)":
-                        i = 6;
-                        prefix = 0xFD;
-                        break;
-                }
+                ModifyTestCaseCreationForIndexRegs(reg, ref i, out prefix);
 
                 var SUB_opcode = (byte)(i==7 ? 0xD6 : (i | 0x90));
                 var SBC_opcode = (byte)(i==7 ? 0xDE : (i | 0x98));

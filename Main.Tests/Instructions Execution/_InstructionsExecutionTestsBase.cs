@@ -248,6 +248,38 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             return sources.ToArray();
         }
 
+        public static void ModifyTestCaseCreationForIndexRegs(string regName, ref int regNamesArrayIndex, out byte? prefix)
+        {
+            prefix = null;
+
+            switch(regName) {
+                case "IXH":
+                    regNamesArrayIndex = 4;
+                    prefix = 0xDD;
+                    break;
+                case "IXL":
+                    regNamesArrayIndex = 5;
+                    prefix = 0xDD;
+                    break;
+                case "IYH":
+                    regNamesArrayIndex = 4;
+                    prefix = 0xFD;
+                    break;
+                case "IYL":
+                    regNamesArrayIndex = 5;
+                    prefix = 0xFD;
+                    break;
+                case "(IX+n)":
+                    regNamesArrayIndex = 6;
+                    prefix = 0xDD;
+                    break;
+                case "(IY+n)":
+                    regNamesArrayIndex = 6;
+                    prefix = 0xFD;
+                    break;
+                }
+        }
+
         #endregion
 
         #region ParityTable

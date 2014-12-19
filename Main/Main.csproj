@@ -57,6 +57,9 @@
     <None Include="Instructions Execution\Instructions\ADD A,%28IX+d%29   --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\ADD A,%28IY+d%29   --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\ADC A,%28IY+d%29   --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\AND %28IX+d%29       --see AND r" />
+    <None Include="Instructions Execution\Instructions\OR %28IX+d%29       --see AND r" />
+    <None Include="Instructions Execution\Instructions\AND %28IY+d%29       --see AND r" />
     <None Include="Instructions Execution\Instructions\CP %28IX+d%29           --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\CP %28IY+d%29           --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\DEC %28IX+n%29     --see INC r" />
@@ -70,6 +73,8 @@
     <None Include="Instructions Execution\Instructions\LD r,%28IX+d%29     --see LD r,%28rr%29" />
     <None Include="Instructions Execution\Instructions\LD %28IX+d%29,r     --see LD r,%28rr%29" />
     <None Include="Instructions Execution\Instructions\LD r,%28IY+d%29     --see LD r,%28rr%29" />
+    <None Include="Instructions Execution\Instructions\XOR %28IX+d%29       --see AND r" />
+    <None Include="Instructions Execution\Instructions\OR %28IY+d%29       --see AND r" />
     <None Include="Instructions Execution\Instructions\RES b,r              --see SET B,r" />
     <None Include="Instructions Execution\Instructions\SBC A,%28IY+d%29     --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\SET b,%28HL%29         --see SET B,r" />
@@ -412,6 +417,7 @@
     <None Include="Instructions Execution\Instructions\SUB A,r           --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\SBC A,r           --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\SUB A,n           --see ADD A,r" />
+    <None Include="Instructions Execution\Instructions\XOR %28IY +d%29       --see AND r" />
     <None Include="Instructions Execution\Instructions\XOR n            --see AND r" />
     <None Include="Instructions Execution\Instructions\OR n               --see AND r" />
     <None Include="Instructions Execution\Instructions\XOR r             --see AND r" />
