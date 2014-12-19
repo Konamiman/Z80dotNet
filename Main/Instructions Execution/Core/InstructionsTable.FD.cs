@@ -102,25 +102,9 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files when they are implemented.
 
         /// <summary>
-        /// The POP IY instruction.
-        /// </summary>
-        byte POP_IY()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The EX (SP),IY instruction.
         /// </summary>
         byte EX_aSP_IY()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The PUSH IY instruction.
-        /// </summary>
-        byte PUSH_IY()
         {
             throw new NotImplementedException();
         }

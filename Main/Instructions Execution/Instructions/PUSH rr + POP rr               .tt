@@ -13,7 +13,7 @@ namespace Konamiman.Z80dotNet
 {
     public partial class Z80InstructionExecutor
     {
-<#  foreach(var reg in new[] {"AF","BC","DE","HL"}) { 
+<#  foreach(var reg in new[] {"AF","BC","DE","HL","IX","IY"}) { 
     foreach(var isPush in new[] {true, false}) { #>
         /// <summary>
         /// The <#=isPush ? "PUSH" : "POP"#> <#=reg#> instruction.
@@ -27,7 +27,7 @@ namespace Konamiman.Z80dotNet
    else
 	   PopFromStack(reg); #>
 
-            return <#=isPush ? 11 :10#>;
+            return <#=(isPush ? 11 :10) + (reg.StartsWith("I") ? 4 : 0)#>;
         }
 
 <# }} #>

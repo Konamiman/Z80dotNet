@@ -102,25 +102,9 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files when they are implemented.
 
         /// <summary>
-        /// The POP IX instruction.
-        /// </summary>
-        byte POP_IX()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The EX (SP),IX instruction.
         /// </summary>
         byte EX_aSP_IX()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// The PUSH IX instruction.
-        /// </summary>
-        byte PUSH_IX()
         {
             throw new NotImplementedException();
         }
