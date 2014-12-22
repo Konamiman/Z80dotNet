@@ -3,7 +3,7 @@ using Ploeh.AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
-    public class JP_aHL_tests : InstructionsExecutionTestsBase
+    public class JP_aHL_IX_IY_tests : InstructionsExecutionTestsBase
     {
         public static object[] JP_Source =
         {
@@ -12,11 +12,9 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             new object[] { "IY", (byte)0xE9, (byte?)0xFD }
         };
 
-        private const byte JP_aHL_opcode = 0xE9;
-
         [Test]
         [TestCaseSource("JP_Source")]
-        public void JP_aHL_jumps_to_address_contained_in_HL(string reg, byte opcode, byte? prefix)
+        public void JP_aHL_IX_IY_jump_to_address_contained_in_HL(string reg, byte opcode, byte? prefix)
         {
             var instructionAddress = Fixture.Create<ushort>();
             var jumpAddress = Fixture.Create<short>();
@@ -29,14 +27,14 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
         [Test]
         [TestCaseSource("JP_Source")]
-        public void JP_aHL_does_not_change_flags(string reg, byte opcode, byte? prefix)
+        public void JP_aHL_IX_IY_do_not_change_flags(string reg, byte opcode, byte? prefix)
         {
             AssertNoFlagsAreModified(opcode, prefix);
         }
 
         [Test]
         [TestCaseSource("JP_Source")]
-        public void JP_aHL_returns_proper_T_states(string reg, byte opcode, byte? prefix)
+        public void JP_aHL_IX_IY_return_proper_T_states(string reg, byte opcode, byte? prefix)
         {
             var states = Execute(opcode, prefix);
             Assert.AreEqual(reg=="HL" ? 4 : 8, states);

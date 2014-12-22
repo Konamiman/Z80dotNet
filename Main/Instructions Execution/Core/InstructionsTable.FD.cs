@@ -98,15 +98,5 @@ namespace Konamiman.Z80dotNet
                 { 0xF9, LD_SP_IY },
             };
         }
-
-        //TODO: Move instructions to their own files when they are implemented.
-
-        /// <summary>
-        /// The LD SP,IY instruction.
-        /// </summary>
-        byte LD_SP_IY()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

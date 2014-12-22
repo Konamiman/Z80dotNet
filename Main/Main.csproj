@@ -60,6 +60,9 @@
     <None Include="Instructions Execution\Instructions\AND %28IX+d%29       --see AND r" />
     <None Include="Instructions Execution\Instructions\EX %28SP%29,IX   --see EX %28SP%29,HL" />
     <None Include="Instructions Execution\Instructions\EX %28SP%29,IY   --see EX %28SP%29,HL" />
+    <None Include="Instructions Execution\Instructions\LD SP,IX           --see LD SP,HL" />
+    <None Include="Instructions Execution\Instructions\JP %28IY%29              --see JP %28HL%29" />
+    <None Include="Instructions Execution\Instructions\LD SP,IY           --see LD SP,HL" />
     <None Include="Instructions Execution\Instructions\OR %28IX+d%29       --see AND r" />
     <None Include="Instructions Execution\Instructions\AND %28IY+d%29       --see AND r" />
     <None Include="Instructions Execution\Instructions\CP %28IX+d%29           --see ADD A,r" />
@@ -75,6 +78,7 @@
     <None Include="Instructions Execution\Instructions\LD r,%28IX+d%29     --see LD r,%28rr%29" />
     <None Include="Instructions Execution\Instructions\LD %28IX+d%29,r     --see LD r,%28rr%29" />
     <None Include="Instructions Execution\Instructions\LD r,%28IY+d%29     --see LD r,%28rr%29" />
+    <None Include="Instructions Execution\Instructions\JP %28IX%29              --see JP %28HL%29" />
     <None Include="Instructions Execution\Instructions\XOR %28IX+d%29       --see AND r" />
     <None Include="Instructions Execution\Instructions\OR %28IY+d%29       --see AND r" />
     <None Include="Instructions Execution\Instructions\RES b,r              --see SET B,r" />
@@ -231,6 +235,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LD %28HL%29,n + LD %28IX+d%29,n + LD %28IY+d%29,n    .tt</DependentUpon>
     </Compile>
+    <Compile Include="Instructions Execution\Instructions\LD SP,HL + LD SP,IX + LD SP,IY   1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LD SP,HL + LD SP,IX + LD SP,IY   .tt</DependentUpon>
+    </Compile>
     <Compile Include="Instructions Execution\Instructions\SET b,r + SET b,%28HL%29 + RES b,r + RES b,%28HL%29   .cs">
       <DependentUpon>SET b,r + SET b,%28HL%29 + RES b,r + RES b,%28HL%29   .tt</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -308,7 +317,10 @@
     </None>
     <Compile Include="Instructions Execution\Instructions\EXX          .cs" />
     <Compile Include="Instructions Execution\Instructions\DI               .cs" />
-    <Compile Include="Instructions Execution\Instructions\LD SP,HL   .cs" />
+    <None Include="Instructions Execution\Instructions\LD SP,HL + LD SP,IX + LD SP,IY   .tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LD SP,HL + LD SP,IX + LD SP,IY   1.cs</LastGenOutput>
+    </None>
     <None Include="Instructions Execution\Instructions\JP %28HL%29 + JP %28IX%29 + JP %28IY%29      .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>JP %28HL%29 + JP %28IX%29 + JP %28IY%29      1.cs</LastGenOutput>
