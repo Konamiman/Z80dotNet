@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.CodeDom.Compiler;
+using NUnit.Framework;
 using Ploeh.AutoFixture;
 using System;
 using System.Collections.Generic;
@@ -199,7 +200,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             for(var i = 0; i <= Fixture.Create<byte>(); i++)
             {
-                Execute(opcode, prefix);
+                executor();
 
                 foreach(var flag in flagNames)
                     Assert.AreEqual(randomFlags[flag], GetFlag(flag));

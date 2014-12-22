@@ -58,6 +58,8 @@
     <None Include="Instructions Execution\Instructions\ADD A,%28IY+d%29   --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\ADC A,%28IY+d%29   --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\AND %28IX+d%29       --see AND r" />
+    <None Include="Instructions Execution\Instructions\BIT b,%28IX+d%29         --see BIT B,r" />
+    <None Include="Instructions Execution\Instructions\BIT b,%28IY+d%29         --see BIT B,r" />
     <None Include="Instructions Execution\Instructions\EX %28SP%29,IX   --see EX %28SP%29,HL" />
     <None Include="Instructions Execution\Instructions\EX %28SP%29,IY   --see EX %28SP%29,HL" />
     <None Include="Instructions Execution\Instructions\LD SP,IX           --see LD SP,HL" />
@@ -79,6 +81,8 @@
     <None Include="Instructions Execution\Instructions\LD %28IX+d%29,r     --see LD r,%28rr%29" />
     <None Include="Instructions Execution\Instructions\LD r,%28IY+d%29     --see LD r,%28rr%29" />
     <None Include="Instructions Execution\Instructions\JP %28IX%29              --see JP %28HL%29" />
+    <None Include="Instructions Execution\Instructions\RES b,%28IX+d%29         --see SET B,r" />
+    <None Include="Instructions Execution\Instructions\RES b,%28IY+d%29         --see SET B,r" />
     <None Include="Instructions Execution\Instructions\RL %28IX+d%29 + ,r  --see RLCA" />
     <None Include="Instructions Execution\Instructions\RL %28IY+d%29 + ,r  --see RLCA" />
     <None Include="Instructions Execution\Instructions\RLC %28IY+d%29 + ,r  --see RLCA" />
@@ -87,6 +91,8 @@
     <None Include="Instructions Execution\Instructions\RRC %28IX+d%29 + ,r  --see RLCA" />
     <None Include="Instructions Execution\Instructions\RLC %28IX+d%29 + ,r  --see RLCA" />
     <None Include="Instructions Execution\Instructions\RRC %28IY+d%29 + ,r  --see RLCA" />
+    <None Include="Instructions Execution\Instructions\SET b,%28IX+d%29         --see SET B,r" />
+    <None Include="Instructions Execution\Instructions\SET b,%28IY+d%29         --see SET B,r" />
     <None Include="Instructions Execution\Instructions\SLA %28IX+d%29           --see RLCA" />
     <None Include="Instructions Execution\Instructions\SLA %28IY+d%29           --see RLCA" />
     <None Include="Instructions Execution\Instructions\SLL %28HL%29           --see RLCA" />

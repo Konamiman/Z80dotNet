@@ -1816,5 +1816,4069 @@ namespace Konamiman.Z80dotNet
 			return 15;
         }
 
+		/// <summary>
+        /// The SET 0,(IX+n),A instruction
+        /// </summary>
+        byte SET_0_aIX_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 1,(IX+n),A instruction
+        /// </summary>
+        byte SET_1_aIX_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 2,(IX+n),A instruction
+        /// </summary>
+        byte SET_2_aIX_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 3,(IX+n),A instruction
+        /// </summary>
+        byte SET_3_aIX_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 4,(IX+n),A instruction
+        /// </summary>
+        byte SET_4_aIX_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 5,(IX+n),A instruction
+        /// </summary>
+        byte SET_5_aIX_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 6,(IX+n),A instruction
+        /// </summary>
+        byte SET_6_aIX_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 7,(IX+n),A instruction
+        /// </summary>
+        byte SET_7_aIX_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 0,(IX+n),B instruction
+        /// </summary>
+        byte SET_0_aIX_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 1,(IX+n),B instruction
+        /// </summary>
+        byte SET_1_aIX_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 2,(IX+n),B instruction
+        /// </summary>
+        byte SET_2_aIX_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 3,(IX+n),B instruction
+        /// </summary>
+        byte SET_3_aIX_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 4,(IX+n),B instruction
+        /// </summary>
+        byte SET_4_aIX_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 5,(IX+n),B instruction
+        /// </summary>
+        byte SET_5_aIX_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 6,(IX+n),B instruction
+        /// </summary>
+        byte SET_6_aIX_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 7,(IX+n),B instruction
+        /// </summary>
+        byte SET_7_aIX_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 0,(IX+n),C instruction
+        /// </summary>
+        byte SET_0_aIX_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 1,(IX+n),C instruction
+        /// </summary>
+        byte SET_1_aIX_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 2,(IX+n),C instruction
+        /// </summary>
+        byte SET_2_aIX_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 3,(IX+n),C instruction
+        /// </summary>
+        byte SET_3_aIX_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 4,(IX+n),C instruction
+        /// </summary>
+        byte SET_4_aIX_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 5,(IX+n),C instruction
+        /// </summary>
+        byte SET_5_aIX_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 6,(IX+n),C instruction
+        /// </summary>
+        byte SET_6_aIX_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 7,(IX+n),C instruction
+        /// </summary>
+        byte SET_7_aIX_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 0,(IX+n),D instruction
+        /// </summary>
+        byte SET_0_aIX_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 1,(IX+n),D instruction
+        /// </summary>
+        byte SET_1_aIX_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 2,(IX+n),D instruction
+        /// </summary>
+        byte SET_2_aIX_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 3,(IX+n),D instruction
+        /// </summary>
+        byte SET_3_aIX_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 4,(IX+n),D instruction
+        /// </summary>
+        byte SET_4_aIX_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 5,(IX+n),D instruction
+        /// </summary>
+        byte SET_5_aIX_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 6,(IX+n),D instruction
+        /// </summary>
+        byte SET_6_aIX_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 7,(IX+n),D instruction
+        /// </summary>
+        byte SET_7_aIX_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 0,(IX+n),E instruction
+        /// </summary>
+        byte SET_0_aIX_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 1,(IX+n),E instruction
+        /// </summary>
+        byte SET_1_aIX_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 2,(IX+n),E instruction
+        /// </summary>
+        byte SET_2_aIX_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 3,(IX+n),E instruction
+        /// </summary>
+        byte SET_3_aIX_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 4,(IX+n),E instruction
+        /// </summary>
+        byte SET_4_aIX_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 5,(IX+n),E instruction
+        /// </summary>
+        byte SET_5_aIX_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 6,(IX+n),E instruction
+        /// </summary>
+        byte SET_6_aIX_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 7,(IX+n),E instruction
+        /// </summary>
+        byte SET_7_aIX_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 0,(IX+n),H instruction
+        /// </summary>
+        byte SET_0_aIX_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 1,(IX+n),H instruction
+        /// </summary>
+        byte SET_1_aIX_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 2,(IX+n),H instruction
+        /// </summary>
+        byte SET_2_aIX_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 3,(IX+n),H instruction
+        /// </summary>
+        byte SET_3_aIX_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 4,(IX+n),H instruction
+        /// </summary>
+        byte SET_4_aIX_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 5,(IX+n),H instruction
+        /// </summary>
+        byte SET_5_aIX_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 6,(IX+n),H instruction
+        /// </summary>
+        byte SET_6_aIX_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 7,(IX+n),H instruction
+        /// </summary>
+        byte SET_7_aIX_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 0,(IX+n),L instruction
+        /// </summary>
+        byte SET_0_aIX_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 1,(IX+n),L instruction
+        /// </summary>
+        byte SET_1_aIX_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 2,(IX+n),L instruction
+        /// </summary>
+        byte SET_2_aIX_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 3,(IX+n),L instruction
+        /// </summary>
+        byte SET_3_aIX_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 4,(IX+n),L instruction
+        /// </summary>
+        byte SET_4_aIX_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 5,(IX+n),L instruction
+        /// </summary>
+        byte SET_5_aIX_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 6,(IX+n),L instruction
+        /// </summary>
+        byte SET_6_aIX_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 7,(IX+n),L instruction
+        /// </summary>
+        byte SET_7_aIX_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 0,(IX+n) instruction
+        /// </summary>
+        byte SET_0_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 1,(IX+n) instruction
+        /// </summary>
+        byte SET_1_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 2,(IX+n) instruction
+        /// </summary>
+        byte SET_2_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 3,(IX+n) instruction
+        /// </summary>
+        byte SET_3_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 4,(IX+n) instruction
+        /// </summary>
+        byte SET_4_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 5,(IX+n) instruction
+        /// </summary>
+        byte SET_5_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 6,(IX+n) instruction
+        /// </summary>
+        byte SET_6_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 7,(IX+n) instruction
+        /// </summary>
+        byte SET_7_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 0,(IX+n),A instruction
+        /// </summary>
+        byte RES_0_aIX_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 1,(IX+n),A instruction
+        /// </summary>
+        byte RES_1_aIX_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 2,(IX+n),A instruction
+        /// </summary>
+        byte RES_2_aIX_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 3,(IX+n),A instruction
+        /// </summary>
+        byte RES_3_aIX_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 4,(IX+n),A instruction
+        /// </summary>
+        byte RES_4_aIX_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 5,(IX+n),A instruction
+        /// </summary>
+        byte RES_5_aIX_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 6,(IX+n),A instruction
+        /// </summary>
+        byte RES_6_aIX_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 7,(IX+n),A instruction
+        /// </summary>
+        byte RES_7_aIX_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 0,(IX+n),B instruction
+        /// </summary>
+        byte RES_0_aIX_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 1,(IX+n),B instruction
+        /// </summary>
+        byte RES_1_aIX_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 2,(IX+n),B instruction
+        /// </summary>
+        byte RES_2_aIX_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 3,(IX+n),B instruction
+        /// </summary>
+        byte RES_3_aIX_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 4,(IX+n),B instruction
+        /// </summary>
+        byte RES_4_aIX_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 5,(IX+n),B instruction
+        /// </summary>
+        byte RES_5_aIX_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 6,(IX+n),B instruction
+        /// </summary>
+        byte RES_6_aIX_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 7,(IX+n),B instruction
+        /// </summary>
+        byte RES_7_aIX_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 0,(IX+n),C instruction
+        /// </summary>
+        byte RES_0_aIX_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 1,(IX+n),C instruction
+        /// </summary>
+        byte RES_1_aIX_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 2,(IX+n),C instruction
+        /// </summary>
+        byte RES_2_aIX_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 3,(IX+n),C instruction
+        /// </summary>
+        byte RES_3_aIX_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 4,(IX+n),C instruction
+        /// </summary>
+        byte RES_4_aIX_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 5,(IX+n),C instruction
+        /// </summary>
+        byte RES_5_aIX_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 6,(IX+n),C instruction
+        /// </summary>
+        byte RES_6_aIX_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 7,(IX+n),C instruction
+        /// </summary>
+        byte RES_7_aIX_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 0,(IX+n),D instruction
+        /// </summary>
+        byte RES_0_aIX_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 1,(IX+n),D instruction
+        /// </summary>
+        byte RES_1_aIX_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 2,(IX+n),D instruction
+        /// </summary>
+        byte RES_2_aIX_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 3,(IX+n),D instruction
+        /// </summary>
+        byte RES_3_aIX_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 4,(IX+n),D instruction
+        /// </summary>
+        byte RES_4_aIX_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 5,(IX+n),D instruction
+        /// </summary>
+        byte RES_5_aIX_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 6,(IX+n),D instruction
+        /// </summary>
+        byte RES_6_aIX_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 7,(IX+n),D instruction
+        /// </summary>
+        byte RES_7_aIX_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 0,(IX+n),E instruction
+        /// </summary>
+        byte RES_0_aIX_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 1,(IX+n),E instruction
+        /// </summary>
+        byte RES_1_aIX_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 2,(IX+n),E instruction
+        /// </summary>
+        byte RES_2_aIX_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 3,(IX+n),E instruction
+        /// </summary>
+        byte RES_3_aIX_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 4,(IX+n),E instruction
+        /// </summary>
+        byte RES_4_aIX_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 5,(IX+n),E instruction
+        /// </summary>
+        byte RES_5_aIX_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 6,(IX+n),E instruction
+        /// </summary>
+        byte RES_6_aIX_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 7,(IX+n),E instruction
+        /// </summary>
+        byte RES_7_aIX_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 0,(IX+n),H instruction
+        /// </summary>
+        byte RES_0_aIX_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 1,(IX+n),H instruction
+        /// </summary>
+        byte RES_1_aIX_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 2,(IX+n),H instruction
+        /// </summary>
+        byte RES_2_aIX_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 3,(IX+n),H instruction
+        /// </summary>
+        byte RES_3_aIX_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 4,(IX+n),H instruction
+        /// </summary>
+        byte RES_4_aIX_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 5,(IX+n),H instruction
+        /// </summary>
+        byte RES_5_aIX_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 6,(IX+n),H instruction
+        /// </summary>
+        byte RES_6_aIX_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 7,(IX+n),H instruction
+        /// </summary>
+        byte RES_7_aIX_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 0,(IX+n),L instruction
+        /// </summary>
+        byte RES_0_aIX_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 1,(IX+n),L instruction
+        /// </summary>
+        byte RES_1_aIX_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 2,(IX+n),L instruction
+        /// </summary>
+        byte RES_2_aIX_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 3,(IX+n),L instruction
+        /// </summary>
+        byte RES_3_aIX_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 4,(IX+n),L instruction
+        /// </summary>
+        byte RES_4_aIX_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 5,(IX+n),L instruction
+        /// </summary>
+        byte RES_5_aIX_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 6,(IX+n),L instruction
+        /// </summary>
+        byte RES_6_aIX_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 7,(IX+n),L instruction
+        /// </summary>
+        byte RES_7_aIX_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 0,(IX+n) instruction
+        /// </summary>
+        byte RES_0_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 1,(IX+n) instruction
+        /// </summary>
+        byte RES_1_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 2,(IX+n) instruction
+        /// </summary>
+        byte RES_2_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 3,(IX+n) instruction
+        /// </summary>
+        byte RES_3_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 4,(IX+n) instruction
+        /// </summary>
+        byte RES_4_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 5,(IX+n) instruction
+        /// </summary>
+        byte RES_5_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 6,(IX+n) instruction
+        /// </summary>
+        byte RES_6_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 7,(IX+n) instruction
+        /// </summary>
+        byte RES_7_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 0,(IY+n),A instruction
+        /// </summary>
+        byte SET_0_aIY_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 1,(IY+n),A instruction
+        /// </summary>
+        byte SET_1_aIY_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 2,(IY+n),A instruction
+        /// </summary>
+        byte SET_2_aIY_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 3,(IY+n),A instruction
+        /// </summary>
+        byte SET_3_aIY_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 4,(IY+n),A instruction
+        /// </summary>
+        byte SET_4_aIY_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 5,(IY+n),A instruction
+        /// </summary>
+        byte SET_5_aIY_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 6,(IY+n),A instruction
+        /// </summary>
+        byte SET_6_aIY_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 7,(IY+n),A instruction
+        /// </summary>
+        byte SET_7_aIY_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 0,(IY+n),B instruction
+        /// </summary>
+        byte SET_0_aIY_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 1,(IY+n),B instruction
+        /// </summary>
+        byte SET_1_aIY_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 2,(IY+n),B instruction
+        /// </summary>
+        byte SET_2_aIY_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 3,(IY+n),B instruction
+        /// </summary>
+        byte SET_3_aIY_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 4,(IY+n),B instruction
+        /// </summary>
+        byte SET_4_aIY_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 5,(IY+n),B instruction
+        /// </summary>
+        byte SET_5_aIY_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 6,(IY+n),B instruction
+        /// </summary>
+        byte SET_6_aIY_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 7,(IY+n),B instruction
+        /// </summary>
+        byte SET_7_aIY_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 0,(IY+n),C instruction
+        /// </summary>
+        byte SET_0_aIY_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 1,(IY+n),C instruction
+        /// </summary>
+        byte SET_1_aIY_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 2,(IY+n),C instruction
+        /// </summary>
+        byte SET_2_aIY_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 3,(IY+n),C instruction
+        /// </summary>
+        byte SET_3_aIY_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 4,(IY+n),C instruction
+        /// </summary>
+        byte SET_4_aIY_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 5,(IY+n),C instruction
+        /// </summary>
+        byte SET_5_aIY_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 6,(IY+n),C instruction
+        /// </summary>
+        byte SET_6_aIY_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 7,(IY+n),C instruction
+        /// </summary>
+        byte SET_7_aIY_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 0,(IY+n),D instruction
+        /// </summary>
+        byte SET_0_aIY_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 1,(IY+n),D instruction
+        /// </summary>
+        byte SET_1_aIY_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 2,(IY+n),D instruction
+        /// </summary>
+        byte SET_2_aIY_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 3,(IY+n),D instruction
+        /// </summary>
+        byte SET_3_aIY_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 4,(IY+n),D instruction
+        /// </summary>
+        byte SET_4_aIY_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 5,(IY+n),D instruction
+        /// </summary>
+        byte SET_5_aIY_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 6,(IY+n),D instruction
+        /// </summary>
+        byte SET_6_aIY_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 7,(IY+n),D instruction
+        /// </summary>
+        byte SET_7_aIY_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 0,(IY+n),E instruction
+        /// </summary>
+        byte SET_0_aIY_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 1,(IY+n),E instruction
+        /// </summary>
+        byte SET_1_aIY_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 2,(IY+n),E instruction
+        /// </summary>
+        byte SET_2_aIY_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 3,(IY+n),E instruction
+        /// </summary>
+        byte SET_3_aIY_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 4,(IY+n),E instruction
+        /// </summary>
+        byte SET_4_aIY_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 5,(IY+n),E instruction
+        /// </summary>
+        byte SET_5_aIY_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 6,(IY+n),E instruction
+        /// </summary>
+        byte SET_6_aIY_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 7,(IY+n),E instruction
+        /// </summary>
+        byte SET_7_aIY_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 0,(IY+n),H instruction
+        /// </summary>
+        byte SET_0_aIY_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 1,(IY+n),H instruction
+        /// </summary>
+        byte SET_1_aIY_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 2,(IY+n),H instruction
+        /// </summary>
+        byte SET_2_aIY_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 3,(IY+n),H instruction
+        /// </summary>
+        byte SET_3_aIY_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 4,(IY+n),H instruction
+        /// </summary>
+        byte SET_4_aIY_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 5,(IY+n),H instruction
+        /// </summary>
+        byte SET_5_aIY_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 6,(IY+n),H instruction
+        /// </summary>
+        byte SET_6_aIY_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 7,(IY+n),H instruction
+        /// </summary>
+        byte SET_7_aIY_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 0,(IY+n),L instruction
+        /// </summary>
+        byte SET_0_aIY_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 1,(IY+n),L instruction
+        /// </summary>
+        byte SET_1_aIY_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 2,(IY+n),L instruction
+        /// </summary>
+        byte SET_2_aIY_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 3,(IY+n),L instruction
+        /// </summary>
+        byte SET_3_aIY_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 4,(IY+n),L instruction
+        /// </summary>
+        byte SET_4_aIY_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 5,(IY+n),L instruction
+        /// </summary>
+        byte SET_5_aIY_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 6,(IY+n),L instruction
+        /// </summary>
+        byte SET_6_aIY_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 7,(IY+n),L instruction
+        /// </summary>
+        byte SET_7_aIY_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 0,(IY+n) instruction
+        /// </summary>
+        byte SET_0_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 1,(IY+n) instruction
+        /// </summary>
+        byte SET_1_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 2,(IY+n) instruction
+        /// </summary>
+        byte SET_2_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 3,(IY+n) instruction
+        /// </summary>
+        byte SET_3_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 4,(IY+n) instruction
+        /// </summary>
+        byte SET_4_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 5,(IY+n) instruction
+        /// </summary>
+        byte SET_5_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 6,(IY+n) instruction
+        /// </summary>
+        byte SET_6_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The SET 7,(IY+n) instruction
+        /// </summary>
+        byte SET_7_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 0,(IY+n),A instruction
+        /// </summary>
+        byte RES_0_aIY_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 1,(IY+n),A instruction
+        /// </summary>
+        byte RES_1_aIY_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 2,(IY+n),A instruction
+        /// </summary>
+        byte RES_2_aIY_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 3,(IY+n),A instruction
+        /// </summary>
+        byte RES_3_aIY_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 4,(IY+n),A instruction
+        /// </summary>
+        byte RES_4_aIY_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 5,(IY+n),A instruction
+        /// </summary>
+        byte RES_5_aIY_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 6,(IY+n),A instruction
+        /// </summary>
+        byte RES_6_aIY_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 7,(IY+n),A instruction
+        /// </summary>
+        byte RES_7_aIY_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 0,(IY+n),B instruction
+        /// </summary>
+        byte RES_0_aIY_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 1,(IY+n),B instruction
+        /// </summary>
+        byte RES_1_aIY_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 2,(IY+n),B instruction
+        /// </summary>
+        byte RES_2_aIY_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 3,(IY+n),B instruction
+        /// </summary>
+        byte RES_3_aIY_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 4,(IY+n),B instruction
+        /// </summary>
+        byte RES_4_aIY_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 5,(IY+n),B instruction
+        /// </summary>
+        byte RES_5_aIY_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 6,(IY+n),B instruction
+        /// </summary>
+        byte RES_6_aIY_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 7,(IY+n),B instruction
+        /// </summary>
+        byte RES_7_aIY_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 0,(IY+n),C instruction
+        /// </summary>
+        byte RES_0_aIY_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 1,(IY+n),C instruction
+        /// </summary>
+        byte RES_1_aIY_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 2,(IY+n),C instruction
+        /// </summary>
+        byte RES_2_aIY_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 3,(IY+n),C instruction
+        /// </summary>
+        byte RES_3_aIY_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 4,(IY+n),C instruction
+        /// </summary>
+        byte RES_4_aIY_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 5,(IY+n),C instruction
+        /// </summary>
+        byte RES_5_aIY_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 6,(IY+n),C instruction
+        /// </summary>
+        byte RES_6_aIY_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 7,(IY+n),C instruction
+        /// </summary>
+        byte RES_7_aIY_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 0,(IY+n),D instruction
+        /// </summary>
+        byte RES_0_aIY_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 1,(IY+n),D instruction
+        /// </summary>
+        byte RES_1_aIY_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 2,(IY+n),D instruction
+        /// </summary>
+        byte RES_2_aIY_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 3,(IY+n),D instruction
+        /// </summary>
+        byte RES_3_aIY_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 4,(IY+n),D instruction
+        /// </summary>
+        byte RES_4_aIY_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 5,(IY+n),D instruction
+        /// </summary>
+        byte RES_5_aIY_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 6,(IY+n),D instruction
+        /// </summary>
+        byte RES_6_aIY_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 7,(IY+n),D instruction
+        /// </summary>
+        byte RES_7_aIY_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 0,(IY+n),E instruction
+        /// </summary>
+        byte RES_0_aIY_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 1,(IY+n),E instruction
+        /// </summary>
+        byte RES_1_aIY_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 2,(IY+n),E instruction
+        /// </summary>
+        byte RES_2_aIY_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 3,(IY+n),E instruction
+        /// </summary>
+        byte RES_3_aIY_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 4,(IY+n),E instruction
+        /// </summary>
+        byte RES_4_aIY_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 5,(IY+n),E instruction
+        /// </summary>
+        byte RES_5_aIY_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 6,(IY+n),E instruction
+        /// </summary>
+        byte RES_6_aIY_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 7,(IY+n),E instruction
+        /// </summary>
+        byte RES_7_aIY_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 0,(IY+n),H instruction
+        /// </summary>
+        byte RES_0_aIY_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 1,(IY+n),H instruction
+        /// </summary>
+        byte RES_1_aIY_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 2,(IY+n),H instruction
+        /// </summary>
+        byte RES_2_aIY_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 3,(IY+n),H instruction
+        /// </summary>
+        byte RES_3_aIY_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 4,(IY+n),H instruction
+        /// </summary>
+        byte RES_4_aIY_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 5,(IY+n),H instruction
+        /// </summary>
+        byte RES_5_aIY_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 6,(IY+n),H instruction
+        /// </summary>
+        byte RES_6_aIY_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 7,(IY+n),H instruction
+        /// </summary>
+        byte RES_7_aIY_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 0,(IY+n),L instruction
+        /// </summary>
+        byte RES_0_aIY_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 1,(IY+n),L instruction
+        /// </summary>
+        byte RES_1_aIY_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 2,(IY+n),L instruction
+        /// </summary>
+        byte RES_2_aIY_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 3,(IY+n),L instruction
+        /// </summary>
+        byte RES_3_aIY_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 4,(IY+n),L instruction
+        /// </summary>
+        byte RES_4_aIY_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 5,(IY+n),L instruction
+        /// </summary>
+        byte RES_5_aIY_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 6,(IY+n),L instruction
+        /// </summary>
+        byte RES_6_aIY_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 7,(IY+n),L instruction
+        /// </summary>
+        byte RES_7_aIY_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 0,(IY+n) instruction
+        /// </summary>
+        byte RES_0_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(0, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 1,(IY+n) instruction
+        /// </summary>
+        byte RES_1_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(1, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 2,(IY+n) instruction
+        /// </summary>
+        byte RES_2_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(2, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 3,(IY+n) instruction
+        /// </summary>
+        byte RES_3_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(3, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 4,(IY+n) instruction
+        /// </summary>
+        byte RES_4_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(4, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 5,(IY+n) instruction
+        /// </summary>
+        byte RES_5_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(5, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 6,(IY+n) instruction
+        /// </summary>
+        byte RES_6_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(6, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
+		/// <summary>
+        /// The RES 7,(IY+n) instruction
+        /// </summary>
+        byte RES_7_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = oldValue.WithBit(7, 0);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			return 23;
+        }
+
 	}
 }

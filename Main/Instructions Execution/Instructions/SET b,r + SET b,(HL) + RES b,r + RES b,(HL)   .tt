@@ -12,27 +12,34 @@ namespace Konamiman.Z80dotNet
 {
     public partial class Z80InstructionExecutor
     {
-<#  foreach(var reg in new[] {"A", "B", "C", "D", "E", "H", "L", "(HL)"}) {
+<#  foreach(var reg in new[] {"A", "B", "C", "D", "E", "H", "L", "(HL)", "(IX+n)", "(IY+n)"}) {
     foreach(var isSet in new[] {true, false}) {
+	foreach (var destRegName in new[] {"A", "B", "C", "D", "E", "H", "L", ""}) {
     for(var bit = 0; bit <= 7; bit++) {
             var isMemHL = (reg == "(HL)");
+			var isMemIndex = (reg.StartsWith("(I"));
+			if(destRegName != "" && !isMemIndex) continue;
             var setRes = isSet ? "SET" : "RES";
             var instrName = String.Format("{0} {1},{2}", setRes, bit, reg);
-            var methodName = String.Format("{0}_{1}_{2}", setRes, bit, (isMemHL ? "aHL" : reg)); #>
+			if(destRegName != "") instrName += "," + destRegName;
+            var methodName = String.Format("{0}_{1}_{2}", setRes, bit, MethodRegPartName(reg, destRegName)); #>
 		/// <summary>
         /// The <#=instrName #> instruction
         /// </summary>
-        byte <#=methodName #>()
+        byte <#=methodName #>(<#=isMemIndex ? "byte offset" : "" #>)
         {
             FetchFinished();
 
 <# GetOldValueFromRegOrMem(reg); #>
         var newValue = oldValue.WithBit(<#=bit #>, <#=isSet ? 1 : 0#>);
 <# SetNewValueToRegOrMem(reg); #>
+<# if(destRegName != "") { #>
+		Registers.<#=destRegName#> = newValue;
+<# } #>
 
-			return <#=isMemHL ? 15 : 8 #>;
+			return <#=isMemHL ? 15 : isMemIndex ? 23 : 8 #>;
         }
 
-<# }}} #>
+<# }}}} #>
 	}
 }
