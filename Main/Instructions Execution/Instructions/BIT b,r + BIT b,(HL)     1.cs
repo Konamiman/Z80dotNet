@@ -1104,5 +1104,293 @@ namespace Konamiman.Z80dotNet
 			return 12;
         }
 
+		/// <summary>
+        /// The BIT 0,(IX+n) instruction
+        /// </summary>
+        byte BIT_0_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var bitValue = oldValue.GetBit(0);
+            Registers.ZF = Registers.PF = ~bitValue;
+            Registers.SF = 0;
+            Registers.HF = 1;
+            Registers.NF = 0;
+
+			return 20;
+        }
+
+		/// <summary>
+        /// The BIT 1,(IX+n) instruction
+        /// </summary>
+        byte BIT_1_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var bitValue = oldValue.GetBit(1);
+            Registers.ZF = Registers.PF = ~bitValue;
+            Registers.SF = 0;
+            Registers.HF = 1;
+            Registers.NF = 0;
+
+			return 20;
+        }
+
+		/// <summary>
+        /// The BIT 2,(IX+n) instruction
+        /// </summary>
+        byte BIT_2_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var bitValue = oldValue.GetBit(2);
+            Registers.ZF = Registers.PF = ~bitValue;
+            Registers.SF = 0;
+            Registers.HF = 1;
+            Registers.NF = 0;
+
+			return 20;
+        }
+
+		/// <summary>
+        /// The BIT 3,(IX+n) instruction
+        /// </summary>
+        byte BIT_3_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var bitValue = oldValue.GetBit(3);
+            Registers.ZF = Registers.PF = ~bitValue;
+            Registers.SF = 0;
+            Registers.HF = 1;
+            Registers.NF = 0;
+
+			return 20;
+        }
+
+		/// <summary>
+        /// The BIT 4,(IX+n) instruction
+        /// </summary>
+        byte BIT_4_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var bitValue = oldValue.GetBit(4);
+            Registers.ZF = Registers.PF = ~bitValue;
+            Registers.SF = 0;
+            Registers.HF = 1;
+            Registers.NF = 0;
+
+			return 20;
+        }
+
+		/// <summary>
+        /// The BIT 5,(IX+n) instruction
+        /// </summary>
+        byte BIT_5_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var bitValue = oldValue.GetBit(5);
+            Registers.ZF = Registers.PF = ~bitValue;
+            Registers.SF = 0;
+            Registers.HF = 1;
+            Registers.NF = 0;
+
+			return 20;
+        }
+
+		/// <summary>
+        /// The BIT 6,(IX+n) instruction
+        /// </summary>
+        byte BIT_6_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var bitValue = oldValue.GetBit(6);
+            Registers.ZF = Registers.PF = ~bitValue;
+            Registers.SF = 0;
+            Registers.HF = 1;
+            Registers.NF = 0;
+
+			return 20;
+        }
+
+		/// <summary>
+        /// The BIT 7,(IX+n) instruction
+        /// </summary>
+        byte BIT_7_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var bitValue = oldValue.GetBit(7);
+            Registers.ZF = Registers.PF = ~bitValue;
+            Registers.SF = bitValue;
+            Registers.HF = 1;
+            Registers.NF = 0;
+
+			return 20;
+        }
+
+		/// <summary>
+        /// The BIT 0,(IY+n) instruction
+        /// </summary>
+        byte BIT_0_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var bitValue = oldValue.GetBit(0);
+            Registers.ZF = Registers.PF = ~bitValue;
+            Registers.SF = 0;
+            Registers.HF = 1;
+            Registers.NF = 0;
+
+			return 20;
+        }
+
+		/// <summary>
+        /// The BIT 1,(IY+n) instruction
+        /// </summary>
+        byte BIT_1_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var bitValue = oldValue.GetBit(1);
+            Registers.ZF = Registers.PF = ~bitValue;
+            Registers.SF = 0;
+            Registers.HF = 1;
+            Registers.NF = 0;
+
+			return 20;
+        }
+
+		/// <summary>
+        /// The BIT 2,(IY+n) instruction
+        /// </summary>
+        byte BIT_2_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var bitValue = oldValue.GetBit(2);
+            Registers.ZF = Registers.PF = ~bitValue;
+            Registers.SF = 0;
+            Registers.HF = 1;
+            Registers.NF = 0;
+
+			return 20;
+        }
+
+		/// <summary>
+        /// The BIT 3,(IY+n) instruction
+        /// </summary>
+        byte BIT_3_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var bitValue = oldValue.GetBit(3);
+            Registers.ZF = Registers.PF = ~bitValue;
+            Registers.SF = 0;
+            Registers.HF = 1;
+            Registers.NF = 0;
+
+			return 20;
+        }
+
+		/// <summary>
+        /// The BIT 4,(IY+n) instruction
+        /// </summary>
+        byte BIT_4_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var bitValue = oldValue.GetBit(4);
+            Registers.ZF = Registers.PF = ~bitValue;
+            Registers.SF = 0;
+            Registers.HF = 1;
+            Registers.NF = 0;
+
+			return 20;
+        }
+
+		/// <summary>
+        /// The BIT 5,(IY+n) instruction
+        /// </summary>
+        byte BIT_5_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var bitValue = oldValue.GetBit(5);
+            Registers.ZF = Registers.PF = ~bitValue;
+            Registers.SF = 0;
+            Registers.HF = 1;
+            Registers.NF = 0;
+
+			return 20;
+        }
+
+		/// <summary>
+        /// The BIT 6,(IY+n) instruction
+        /// </summary>
+        byte BIT_6_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var bitValue = oldValue.GetBit(6);
+            Registers.ZF = Registers.PF = ~bitValue;
+            Registers.SF = 0;
+            Registers.HF = 1;
+            Registers.NF = 0;
+
+			return 20;
+        }
+
+		/// <summary>
+        /// The BIT 7,(IY+n) instruction
+        /// </summary>
+        byte BIT_7_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var bitValue = oldValue.GetBit(7);
+            Registers.ZF = Registers.PF = ~bitValue;
+            Registers.SF = bitValue;
+            Registers.HF = 1;
+            Registers.NF = 0;
+
+			return 20;
+        }
+
 	}
 }

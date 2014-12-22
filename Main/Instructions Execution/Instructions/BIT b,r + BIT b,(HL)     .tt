@@ -12,15 +12,16 @@ namespace Konamiman.Z80dotNet
 {
     public partial class Z80InstructionExecutor
     {
-<#  foreach (var reg in new[] {"A", "B", "C", "D", "E", "H", "L", "(HL)"}) {
+<#  foreach (var reg in new[] {"A", "B", "C", "D", "E", "H", "L", "(HL)", "(IX+n)", "(IY+n)"}) {
     for(var bit=0; bit<=7; bit++) {
         var isMemHL = (reg == "(HL)");
+		var isMemIndex = (reg.StartsWith("(I"));
         var instrName = String.Format("BIT {0},{1}", bit, reg);
-        var methodName = String.Format("BIT_{0}_{1}", bit, (isMemHL ? "aHL" : reg)); #>
+        var methodName = String.Format("BIT_{0}_{1}", bit, MethodRegPartName(reg)); #>
 		/// <summary>
         /// The <#=instrName #> instruction
         /// </summary>
-        byte <#=methodName #>()
+        byte <#=methodName #>(<#=isMemIndex ? "byte offset" : "" #>)
         {
             FetchFinished();
 
@@ -31,7 +32,7 @@ namespace Konamiman.Z80dotNet
             Registers.HF = 1;
             Registers.NF = 0;
 
-			return <#=isMemHL ? 12 : 8 #>;
+			return <#=isMemHL ? 12 : isMemIndex ? 20 : 8 #>;
         }
 
 <# }} #>

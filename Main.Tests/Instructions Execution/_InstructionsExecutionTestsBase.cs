@@ -181,6 +181,14 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
         protected void AssertDoesNotChangeFlags(byte opcode, byte? prefix = null, params string[] flagNames)
         {
+            AssertDoesNotChangeFlags(null, opcode, prefix, flagNames);
+        }
+
+        protected void AssertDoesNotChangeFlags(Action executor, byte opcode, byte? prefix = null, params string[] flagNames)
+        {
+            if(executor == null)
+                executor = () => Execute(opcode, prefix);
+
             if(flagNames.Length == 0)
                 flagNames = new[] {"C", "H", "S", "Z", "P", "N", "Flag3", "Flag5"};
             
