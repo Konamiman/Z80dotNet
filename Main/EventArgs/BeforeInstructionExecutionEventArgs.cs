@@ -9,9 +9,10 @@ namespace Konamiman.Z80dotNet
         /// Initializes a new instance of the class.
         /// </summary>
         /// <param name="opcode">The full opcode bytes of the instruction that is about to be executed.</param>
-        public BeforeInstructionExecutionEventArgs(byte[] opcode)
+        public BeforeInstructionExecutionEventArgs(byte[] opcode, object localUserState)
         {
             this.Opcode = opcode;
+            this.LocalUserState = localUserState;
         }
 
         /// <summary>

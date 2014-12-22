@@ -65,7 +65,7 @@ namespace Konamiman.Z80dotNet
         {
             try
             {
-                return UnsafeInstructionExecutionLoop(isSingleInstruction);
+                return InstructionExecutionLoopCore(isSingleInstruction);
             }
             catch
             {
@@ -76,7 +76,7 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        private int UnsafeInstructionExecutionLoop(bool isSingleInstruction)
+        private int InstructionExecutionLoopCore(bool isSingleInstruction)
         {
             ClockSynchronizer.Start();
             executionContext = new InstructionExecutionContext();
@@ -87,6 +87,10 @@ namespace Konamiman.Z80dotNet
             while(!executionContext.MustStop)
             {
                 executionContext.StartNewInstruction();
+
+                FireBeforeInstructionFetchEvent();
+                if(executionContext.MustStop)
+                    break;
 
                 var executionTStates = InstructionExecutor.Execute(FetchNextOpcode());
                 
@@ -170,7 +174,7 @@ namespace Konamiman.Z80dotNet
                 AfterInstructionExecution(this, new AfterInstructionExecutionEventArgs(
                     executionContext.OpcodeBytes.ToArray(), 
                     stopper: this,
-                    localUserState: executionContext.LocalUserStateFromBeforeExecuteEvent,
+                    localUserState: executionContext.LocalUserStateFromPreviousEvent,
                     tStates: tStates));
         }
 
@@ -188,12 +192,25 @@ namespace Konamiman.Z80dotNet
             executionContext.SpAfterInstructionFetch = Registers.SP;
 
             var eventArgs = FireBeforeInstructionExecutionEvent();
-            executionContext.LocalUserStateFromBeforeExecuteEvent = eventArgs.LocalUserState;
+            executionContext.LocalUserStateFromPreviousEvent = eventArgs.LocalUserState;
+        }
+
+
+        void FireBeforeInstructionFetchEvent()
+        {
+            var eventArgs = new BeforeInstructionFetchEventArgs(stopper: this);
+
+            if(BeforeInstructionFetch != null)
+                BeforeInstructionFetch(this, eventArgs);
+
+            executionContext.LocalUserStateFromPreviousEvent = eventArgs.LocalUserState;
         }
 
         BeforeInstructionExecutionEventArgs FireBeforeInstructionExecutionEvent()
         {
-            var eventArgs = new BeforeInstructionExecutionEventArgs(executionContext.OpcodeBytes.ToArray());
+            var eventArgs = new BeforeInstructionExecutionEventArgs(
+                executionContext.OpcodeBytes.ToArray(),
+                executionContext.LocalUserStateFromPreviousEvent);
 
             if(BeforeInstructionExecution != null)
                 BeforeInstructionExecution(this, eventArgs);
@@ -478,6 +495,8 @@ namespace Konamiman.Z80dotNet
         #region Events
 
         public event EventHandler<MemoryAccessEventArgs> MemoryAccess;
+
+        public event EventHandler<BeforeInstructionFetchEventArgs> BeforeInstructionFetch;
 
         public event EventHandler<BeforeInstructionExecutionEventArgs> BeforeInstructionExecution;
 

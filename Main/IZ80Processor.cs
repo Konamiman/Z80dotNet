@@ -363,6 +363,11 @@ namespace Konamiman.Z80dotNet
         event EventHandler<MemoryAccessEventArgs> MemoryAccess;
 
         /// <summary>
+        /// Pre-instruction fetch event. It is triggered before the next instruction is fetched.
+        /// </summary>
+        event EventHandler<BeforeInstructionFetchEventArgs> BeforeInstructionFetch;
+
+        /// <summary>
         /// Pre-instruction execution event. It is triggered before an instruction is executed.
         /// </summary>
         event EventHandler<BeforeInstructionExecutionEventArgs> BeforeInstructionExecution;

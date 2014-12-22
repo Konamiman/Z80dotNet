@@ -40,6 +40,7 @@
     <Compile Include="Dependencies Interfaces\IExecutionStopper.cs" />
     <Compile Include="Dependencies Interfaces\IClockSynchronizer.cs" />
     <Compile Include="Data Types and Utils\InstructionExecutionContext.cs" />
+    <Compile Include="EventArgs\BeforeInstructionFetchEventArgs.cs" />
     <Compile Include="Instructions Execution\Core\Execute_xD_Instruction.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

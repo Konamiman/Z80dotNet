@@ -363,7 +363,8 @@ namespace Konamiman.Z80dotNet.Tests
         public void Fires_before_and_after_instruction_execution_with_proper_opcodes_and_local_state()
         {
             var executeInvoked = false;
-            var beforeEventRaised = false;
+            var beforeFetchEventRaised = false;
+            var beforeExecutionEventRaised = false;
             var afterEventRaised = false;
             var localState = Fixture.Create<object>();
 
@@ -380,28 +381,43 @@ namespace Konamiman.Z80dotNet.Tests
                 Sut.FetchNextOpcode();
             });
 
-            Sut.BeforeInstructionExecution += (sender, e) =>
+            Sut.BeforeInstructionFetch += (sender, e) =>
             {
-                beforeEventRaised = true;
+                beforeFetchEventRaised = true;
                 Assert.IsFalse(executeInvoked);
-                executeInvoked = true;
-                Assert.AreEqual(instructionBytes, e.Opcode);
+                Assert.IsFalse(beforeExecutionEventRaised);
+                Assert.IsFalse(afterEventRaised);
+                executeInvoked = false;
                 Assert.IsNull(e.LocalUserState);
 
                 e.LocalUserState = localState;
+            };
+
+            Sut.BeforeInstructionExecution += (sender, e) =>
+            {
+                beforeExecutionEventRaised = true;
+                Assert.IsFalse(executeInvoked);
+                Assert.IsTrue(beforeExecutionEventRaised);
+                Assert.IsFalse(afterEventRaised);
+                executeInvoked = true;
+                Assert.AreEqual(instructionBytes, e.Opcode);
+                Assert.AreEqual(localState, e.LocalUserState);
             };
 
             Sut.AfterInstructionExecution += (sender, e) =>
             {
                 afterEventRaised = true;
                 Assert.IsTrue(executeInvoked);
+                Assert.IsTrue(beforeFetchEventRaised);
+                Assert.IsTrue(beforeExecutionEventRaised);
                 Assert.AreEqual(instructionBytes, e.Opcode);
                 Assert.AreEqual(localState, e.LocalUserState);
             };
 
             Sut.Start();
 
-            Assert.IsTrue(beforeEventRaised);
+            Assert.IsTrue(beforeFetchEventRaised);
+            Assert.IsTrue(beforeExecutionEventRaised);
             Assert.IsTrue(afterEventRaised);
         }
 
@@ -418,6 +434,33 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.AfterInstructionExecution += (sender, e) =>
             {
                 if(e.Opcode[0] == DI_opcode)
+                    e.ExecutionStopper.Stop(isPause);
+            };
+
+            Sut.Start();
+
+            AssertExecuted(NOP_opcode, 1);
+            AssertExecuted(DI_opcode, 1);
+            AssertExecuted(HALT_opcode, 0);
+            AssertExecuted(RET_opcode, 0);
+
+            Assert.AreEqual(isPause ? StopReason.PauseInvoked : StopReason.StopInvoked, Sut.StopReason);
+            Assert.AreEqual(isPause ? ProcessorState.Paused : ProcessorState.Stopped , Sut.State);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void Stops_execution_if_requested_from_BeforeInstructionFetchEvent(bool isPause)
+        {
+            Sut.Memory[0] = NOP_opcode;
+            Sut.Memory[1] = DI_opcode;
+            Sut.Memory[2] = HALT_opcode;
+            Sut.Memory[3] = RET_opcode;
+
+            Sut.BeforeInstructionFetch += (sender, e) =>
+            {
+                if(Sut.Registers.PC == 2)
                     e.ExecutionStopper.Stop(isPause);
             };
 
