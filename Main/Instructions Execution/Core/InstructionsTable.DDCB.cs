@@ -4,11 +4,11 @@ namespace Konamiman.Z80dotNet
 {
     public partial class Z80InstructionExecutor
     {
-        private Func<byte>[] DDCB_InstructionExecutors;
+        private Func<byte, byte>[] DDCB_InstructionExecutors;
 
         private void Initialize_DDCB_InstructionsTable()
         {
-            DDCB_InstructionExecutors = new Func<byte>[]
+            DDCB_InstructionExecutors = new Func<byte, byte>[]
             {
                 RLC_aIX_plus_n_and_load_B,    //00
                 RLC_aIX_plus_n_and_load_C,    //01
@@ -274,7 +274,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RLC (IX+d)->B instruction.
         /// </summary>
-        byte RLC_aIX_plus_n_and_load_B()
+        byte RLC_aIX_plus_n_and_load_B(byte offset)
         {
             FetchFinished();
             return 23;
@@ -283,7 +283,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RLC (IX+d)->C instruction.
         /// </summary>
-        byte RLC_aIX_plus_n_and_load_C()
+        byte RLC_aIX_plus_n_and_load_C(byte offset)
         {
             FetchFinished();
             return 23;
@@ -292,7 +292,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RLC (IX+d)->D instruction.
         /// </summary>
-        byte RLC_aIX_plus_n_and_load_D()
+        byte RLC_aIX_plus_n_and_load_D(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -300,7 +300,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RLC (IX+d)->E instruction.
         /// </summary>
-        byte RLC_aIX_plus_n_and_load_E()
+        byte RLC_aIX_plus_n_and_load_E(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -308,7 +308,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RLC (IX+d)->H instruction.
         /// </summary>
-        byte RLC_aIX_plus_n_and_load_H()
+        byte RLC_aIX_plus_n_and_load_H(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -316,7 +316,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RLC (IX+d)->L instruction.
         /// </summary>
-        byte RLC_aIX_plus_n_and_load_L()
+        byte RLC_aIX_plus_n_and_load_L(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -324,7 +324,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RLC (IX+d) instruction.
         /// </summary>
-        byte RLC_aIX_plus_n()
+        byte RLC_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -332,7 +332,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RLC (IX+d)->A instruction.
         /// </summary>
-        byte RLC_aIX_plus_n_and_load_A()
+        byte RLC_aIX_plus_n_and_load_A(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -340,7 +340,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RRC (IX+d)->B instruction.
         /// </summary>
-        byte RRC_aIX_plus_n_and_load_B()
+        byte RRC_aIX_plus_n_and_load_B(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -348,7 +348,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RRC (IX+d)->C instruction.
         /// </summary>
-        byte RRC_aIX_plus_n_and_load_C()
+        byte RRC_aIX_plus_n_and_load_C(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -356,7 +356,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RRC (IX+d)->D instruction.
         /// </summary>
-        byte RRC_aIX_plus_n_and_load_D()
+        byte RRC_aIX_plus_n_and_load_D(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -364,7 +364,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RRC (IX+d)->E instruction.
         /// </summary>
-        byte RRC_aIX_plus_n_and_load_E()
+        byte RRC_aIX_plus_n_and_load_E(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -372,7 +372,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RRC (IX+d)->H instruction.
         /// </summary>
-        byte RRC_aIX_plus_n_and_load_H()
+        byte RRC_aIX_plus_n_and_load_H(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -380,7 +380,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RRC (IX+d)->L instruction.
         /// </summary>
-        byte RRC_aIX_plus_n_and_load_L()
+        byte RRC_aIX_plus_n_and_load_L(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -388,7 +388,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RRC (IX+d) instruction.
         /// </summary>
-        byte RRC_aIX_plus_n()
+        byte RRC_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -396,7 +396,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RRC (IX+d)->A instruction.
         /// </summary>
-        byte RRC_aIX_plus_n_and_load_A()
+        byte RRC_aIX_plus_n_and_load_A(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -404,7 +404,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RL (IX+d)->B instruction.
         /// </summary>
-        byte RL_aIX_plus_n_and_load_B()
+        byte RL_aIX_plus_n_and_load_B(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -412,7 +412,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RL (IX+d)->C instruction.
         /// </summary>
-        byte RL_aIX_plus_n_and_load_C()
+        byte RL_aIX_plus_n_and_load_C(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -420,7 +420,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RL (IX+d)->D instruction.
         /// </summary>
-        byte RL_aIX_plus_n_and_load_D()
+        byte RL_aIX_plus_n_and_load_D(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -428,7 +428,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RL (IX+d)->E instruction.
         /// </summary>
-        byte RL_aIX_plus_n_and_load_E()
+        byte RL_aIX_plus_n_and_load_E(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -436,7 +436,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RL (IX+d)->H instruction.
         /// </summary>
-        byte RL_aIX_plus_n_and_load_H()
+        byte RL_aIX_plus_n_and_load_H(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -444,7 +444,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RL (IX+d)->L instruction.
         /// </summary>
-        byte RL_aIX_plus_n_and_load_L()
+        byte RL_aIX_plus_n_and_load_L(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -452,7 +452,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RL (IX+d) instruction.
         /// </summary>
-        byte RL_aIX_plus_n()
+        byte RL_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -460,7 +460,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RL (IX+d)->A instruction.
         /// </summary>
-        byte RL_aIX_plus_n_and_load_A()
+        byte RL_aIX_plus_n_and_load_A(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -468,7 +468,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RR (IX+d)->B instruction.
         /// </summary>
-        byte RR_aIX_plus_n_and_load_B()
+        byte RR_aIX_plus_n_and_load_B(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -476,7 +476,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RR (IX+d)->C instruction.
         /// </summary>
-        byte RR_aIX_plus_n_and_load_C()
+        byte RR_aIX_plus_n_and_load_C(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -484,7 +484,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RR (IX+d)->D instruction.
         /// </summary>
-        byte RR_aIX_plus_n_and_load_D()
+        byte RR_aIX_plus_n_and_load_D(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -492,7 +492,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RR (IX+d)->E instruction.
         /// </summary>
-        byte RR_aIX_plus_n_and_load_E()
+        byte RR_aIX_plus_n_and_load_E(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -500,7 +500,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RR (IX+d)->H instruction.
         /// </summary>
-        byte RR_aIX_plus_n_and_load_H()
+        byte RR_aIX_plus_n_and_load_H(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -508,7 +508,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RR (IX+d)->L instruction.
         /// </summary>
-        byte RR_aIX_plus_n_and_load_L()
+        byte RR_aIX_plus_n_and_load_L(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -516,7 +516,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RR (IX+d) instruction.
         /// </summary>
-        byte RR_aIX_plus_n()
+        byte RR_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -524,7 +524,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RR (IX+d)->A instruction.
         /// </summary>
-        byte RR_aIX_plus_n_and_load_A()
+        byte RR_aIX_plus_n_and_load_A(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -532,7 +532,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SLA (IX+d)->B instruction.
         /// </summary>
-        byte SLA_aIX_plus_n_and_load_B()
+        byte SLA_aIX_plus_n_and_load_B(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -540,7 +540,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SLA (IX+d)->C instruction.
         /// </summary>
-        byte SLA_aIX_plus_n_and_load_C()
+        byte SLA_aIX_plus_n_and_load_C(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -548,7 +548,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SLA (IX+d)->D instruction.
         /// </summary>
-        byte SLA_aIX_plus_n_and_load_D()
+        byte SLA_aIX_plus_n_and_load_D(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -556,7 +556,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SLA (IX+d)->E instruction.
         /// </summary>
-        byte SLA_aIX_plus_n_and_load_E()
+        byte SLA_aIX_plus_n_and_load_E(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -564,7 +564,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SLA (IX+d)->H instruction.
         /// </summary>
-        byte SLA_aIX_plus_n_and_load_H()
+        byte SLA_aIX_plus_n_and_load_H(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -572,7 +572,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SLA (IX+d)->L instruction.
         /// </summary>
-        byte SLA_aIX_plus_n_and_load_L()
+        byte SLA_aIX_plus_n_and_load_L(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -580,7 +580,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SLA (IX+d) instruction.
         /// </summary>
-        byte SLA_aIX_plus_n()
+        byte SLA_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -588,7 +588,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SLA (IX+d)->A instruction.
         /// </summary>
-        byte SLA_aIX_plus_n_and_load_A()
+        byte SLA_aIX_plus_n_and_load_A(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -596,7 +596,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SRA (IX+d)->B instruction.
         /// </summary>
-        byte SRA_aIX_plus_n_and_load_B()
+        byte SRA_aIX_plus_n_and_load_B(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -604,7 +604,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SRA (IX+d)->C instruction.
         /// </summary>
-        byte SRA_aIX_plus_n_and_load_C()
+        byte SRA_aIX_plus_n_and_load_C(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -612,7 +612,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SRA (IX+d)->D instruction.
         /// </summary>
-        byte SRA_aIX_plus_n_and_load_D()
+        byte SRA_aIX_plus_n_and_load_D(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -620,7 +620,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SRA (IX+d)->E instruction.
         /// </summary>
-        byte SRA_aIX_plus_n_and_load_E()
+        byte SRA_aIX_plus_n_and_load_E(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -628,7 +628,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SRA (IX+d)->H instruction.
         /// </summary>
-        byte SRA_aIX_plus_n_and_load_H()
+        byte SRA_aIX_plus_n_and_load_H(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -636,7 +636,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SRA (IX+d)->L instruction.
         /// </summary>
-        byte SRA_aIX_plus_n_and_load_L()
+        byte SRA_aIX_plus_n_and_load_L(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -644,7 +644,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SRA (IX+d) instruction.
         /// </summary>
-        byte SRA_aIX_plus_n()
+        byte SRA_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -652,7 +652,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SRA (IX+d)->A instruction.
         /// </summary>
-        byte SRA_aIX_plus_n_and_load_A()
+        byte SRA_aIX_plus_n_and_load_A(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -660,7 +660,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SLL (IX+d)->B instruction.
         /// </summary>
-        byte SLL_aIX_plus_n_and_load_B()
+        byte SLL_aIX_plus_n_and_load_B(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -668,7 +668,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SLL (IX+d)->C instruction.
         /// </summary>
-        byte SLL_aIX_plus_n_and_load_C()
+        byte SLL_aIX_plus_n_and_load_C(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -676,7 +676,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SLL (IX+d)->D instruction.
         /// </summary>
-        byte SLL_aIX_plus_n_and_load_D()
+        byte SLL_aIX_plus_n_and_load_D(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -684,7 +684,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SLL (IX+d)->E instruction.
         /// </summary>
-        byte SLL_aIX_plus_n_and_load_E()
+        byte SLL_aIX_plus_n_and_load_E(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -692,7 +692,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SLL (IX+d)->H instruction.
         /// </summary>
-        byte SLL_aIX_plus_n_and_load_H()
+        byte SLL_aIX_plus_n_and_load_H(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -700,7 +700,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SLL (IX+d)->L instruction.
         /// </summary>
-        byte SLL_aIX_plus_n_and_load_L()
+        byte SLL_aIX_plus_n_and_load_L(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -708,7 +708,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SLL (IX+d) instruction.
         /// </summary>
-        byte SLL_aIX_plus_n()
+        byte SLL_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -716,7 +716,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SLL (IX+d)->A instruction.
         /// </summary>
-        byte SLL_aIX_plus_n_and_load_A()
+        byte SLL_aIX_plus_n_and_load_A(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -724,7 +724,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SRL (IX+d)->B instruction.
         /// </summary>
-        byte SRL_aIX_plus_n_and_load_B()
+        byte SRL_aIX_plus_n_and_load_B(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -732,7 +732,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SRL (IX+d)->C instruction.
         /// </summary>
-        byte SRL_aIX_plus_n_and_load_C()
+        byte SRL_aIX_plus_n_and_load_C(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -740,7 +740,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SRL (IX+d)->D instruction.
         /// </summary>
-        byte SRL_aIX_plus_n_and_load_D()
+        byte SRL_aIX_plus_n_and_load_D(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -748,7 +748,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SRL (IX+d)->E instruction.
         /// </summary>
-        byte SRL_aIX_plus_n_and_load_E()
+        byte SRL_aIX_plus_n_and_load_E(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -756,7 +756,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SRL (IX+d)->H instruction.
         /// </summary>
-        byte SRL_aIX_plus_n_and_load_H()
+        byte SRL_aIX_plus_n_and_load_H(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -764,7 +764,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SRL (IX+d)->L instruction.
         /// </summary>
-        byte SRL_aIX_plus_n_and_load_L()
+        byte SRL_aIX_plus_n_and_load_L(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -772,7 +772,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SRL (IX+d) instruction.
         /// </summary>
-        byte SRL_aIX_plus_n()
+        byte SRL_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -780,7 +780,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SRL (IX+d)->A instruction.
         /// </summary>
-        byte SRL_aIX_plus_n_and_load_A()
+        byte SRL_aIX_plus_n_and_load_A(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -788,7 +788,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The BIT 0,(IX+d) instruction.
         /// </summary>
-        byte BIT_0_aIX_plus_n()
+        byte BIT_0_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -796,7 +796,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The BIT 1,(IX+d) instruction.
         /// </summary>
-        byte BIT_1_aIX_plus_n()
+        byte BIT_1_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -804,7 +804,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The BIT 2,(IX+d) instruction.
         /// </summary>
-        byte BIT_2_aIX_plus_n()
+        byte BIT_2_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -812,7 +812,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The BIT 3,(IX+d) instruction.
         /// </summary>
-        byte BIT_3_aIX_plus_n()
+        byte BIT_3_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -820,7 +820,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The BIT 4,(IX+d) instruction.
         /// </summary>
-        byte BIT_4_aIX_plus_n()
+        byte BIT_4_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -828,7 +828,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The BIT 5,(IX+d) instruction.
         /// </summary>
-        byte BIT_5_aIX_plus_n()
+        byte BIT_5_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -836,7 +836,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The BIT 6,(IX+d) instruction.
         /// </summary>
-        byte BIT_6_aIX_plus_n()
+        byte BIT_6_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -844,7 +844,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The BIT 7,(IX+d) instruction.
         /// </summary>
-        byte BIT_7_aIX_plus_n()
+        byte BIT_7_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -852,7 +852,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 0,(IX+d)->B instruction.
         /// </summary>
-        byte RES_0_aIX_plus_n_and_load_B()
+        byte RES_0_aIX_plus_n_and_load_B(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -860,7 +860,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 0,(IX+d)->C instruction.
         /// </summary>
-        byte RES_0_aIX_plus_n_and_load_C()
+        byte RES_0_aIX_plus_n_and_load_C(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -868,7 +868,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 0,(IX+d)->D instruction.
         /// </summary>
-        byte RES_0_aIX_plus_n_and_load_D()
+        byte RES_0_aIX_plus_n_and_load_D(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -876,7 +876,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 0,(IX+d)->E instruction.
         /// </summary>
-        byte RES_0_aIX_plus_n_and_load_E()
+        byte RES_0_aIX_plus_n_and_load_E(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -884,7 +884,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 0,(IX+d)->H instruction.
         /// </summary>
-        byte RES_0_aIX_plus_n_and_load_H()
+        byte RES_0_aIX_plus_n_and_load_H(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -892,7 +892,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 0,(IX+d)->L instruction.
         /// </summary>
-        byte RES_0_aIX_plus_n_and_load_L()
+        byte RES_0_aIX_plus_n_and_load_L(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -900,7 +900,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 0,(IX+d) instruction.
         /// </summary>
-        byte RES_0_aIX_plus_n()
+        byte RES_0_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -908,7 +908,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 0,(IX+d)->A instruction.
         /// </summary>
-        byte RES_0_aIX_plus_n_and_load_A()
+        byte RES_0_aIX_plus_n_and_load_A(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -916,7 +916,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 1,(IX+d)->B instruction.
         /// </summary>
-        byte RES_1_aIX_plus_n_and_load_B()
+        byte RES_1_aIX_plus_n_and_load_B(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -924,7 +924,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 1,(IX+d)->C instruction.
         /// </summary>
-        byte RES_1_aIX_plus_n_and_load_C()
+        byte RES_1_aIX_plus_n_and_load_C(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -932,7 +932,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 1,(IX+d)->D instruction.
         /// </summary>
-        byte RES_1_aIX_plus_n_and_load_D()
+        byte RES_1_aIX_plus_n_and_load_D(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -940,7 +940,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 1,(IX+d)->E instruction.
         /// </summary>
-        byte RES_1_aIX_plus_n_and_load_E()
+        byte RES_1_aIX_plus_n_and_load_E(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -948,7 +948,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 1,(IX+d)->H instruction.
         /// </summary>
-        byte RES_1_aIX_plus_n_and_load_H()
+        byte RES_1_aIX_plus_n_and_load_H(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -956,7 +956,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 1,(IX+d)->L instruction.
         /// </summary>
-        byte RES_1_aIX_plus_n_and_load_L()
+        byte RES_1_aIX_plus_n_and_load_L(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -964,7 +964,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 1,(IX+d) instruction.
         /// </summary>
-        byte RES_1_aIX_plus_n()
+        byte RES_1_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -972,7 +972,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 1,(IX+d)->A instruction.
         /// </summary>
-        byte RES_1_aIX_plus_n_and_load_A()
+        byte RES_1_aIX_plus_n_and_load_A(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -980,7 +980,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 2,(IX+d)->B instruction.
         /// </summary>
-        byte RES_2_aIX_plus_n_and_load_B()
+        byte RES_2_aIX_plus_n_and_load_B(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -988,7 +988,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 2,(IX+d)->C instruction.
         /// </summary>
-        byte RES_2_aIX_plus_n_and_load_C()
+        byte RES_2_aIX_plus_n_and_load_C(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -996,7 +996,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 2,(IX+d)->D instruction.
         /// </summary>
-        byte RES_2_aIX_plus_n_and_load_D()
+        byte RES_2_aIX_plus_n_and_load_D(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1004,7 +1004,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 2,(IX+d)->E instruction.
         /// </summary>
-        byte RES_2_aIX_plus_n_and_load_E()
+        byte RES_2_aIX_plus_n_and_load_E(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1012,7 +1012,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 2,(IX+d)->H instruction.
         /// </summary>
-        byte RES_2_aIX_plus_n_and_load_H()
+        byte RES_2_aIX_plus_n_and_load_H(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1020,7 +1020,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 2,(IX+d)->L instruction.
         /// </summary>
-        byte RES_2_aIX_plus_n_and_load_L()
+        byte RES_2_aIX_plus_n_and_load_L(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1028,7 +1028,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 2,(IX+d) instruction.
         /// </summary>
-        byte RES_2_aIX_plus_n()
+        byte RES_2_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1036,7 +1036,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 2,(IX+d)->A instruction.
         /// </summary>
-        byte RES_2_aIX_plus_n_and_load_A()
+        byte RES_2_aIX_plus_n_and_load_A(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1044,7 +1044,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 3,(IX+d)->B instruction.
         /// </summary>
-        byte RES_3_aIX_plus_n_and_load_B()
+        byte RES_3_aIX_plus_n_and_load_B(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1052,7 +1052,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 3,(IX+d)->C instruction.
         /// </summary>
-        byte RES_3_aIX_plus_n_and_load_C()
+        byte RES_3_aIX_plus_n_and_load_C(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1060,7 +1060,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 3,(IX+d)->D instruction.
         /// </summary>
-        byte RES_3_aIX_plus_n_and_load_D()
+        byte RES_3_aIX_plus_n_and_load_D(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1068,7 +1068,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 3,(IX+d)->E instruction.
         /// </summary>
-        byte RES_3_aIX_plus_n_and_load_E()
+        byte RES_3_aIX_plus_n_and_load_E(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1076,7 +1076,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 3,(IX+d)->H instruction.
         /// </summary>
-        byte RES_3_aIX_plus_n_and_load_H()
+        byte RES_3_aIX_plus_n_and_load_H(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1084,7 +1084,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 3,(IX+d)->L instruction.
         /// </summary>
-        byte RES_3_aIX_plus_n_and_load_L()
+        byte RES_3_aIX_plus_n_and_load_L(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1092,7 +1092,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 3,(IX+d) instruction.
         /// </summary>
-        byte RES_3_aIX_plus_n()
+        byte RES_3_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1100,7 +1100,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 3,(IX+d)->A instruction.
         /// </summary>
-        byte RES_3_aIX_plus_n_and_load_A()
+        byte RES_3_aIX_plus_n_and_load_A(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1108,7 +1108,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 4,(IX+d)->B instruction.
         /// </summary>
-        byte RES_4_aIX_plus_n_and_load_B()
+        byte RES_4_aIX_plus_n_and_load_B(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1116,7 +1116,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 4,(IX+d)->C instruction.
         /// </summary>
-        byte RES_4_aIX_plus_n_and_load_C()
+        byte RES_4_aIX_plus_n_and_load_C(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1124,7 +1124,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 4,(IX+d)->D instruction.
         /// </summary>
-        byte RES_4_aIX_plus_n_and_load_D()
+        byte RES_4_aIX_plus_n_and_load_D(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1132,7 +1132,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 4,(IX+d)->E instruction.
         /// </summary>
-        byte RES_4_aIX_plus_n_and_load_E()
+        byte RES_4_aIX_plus_n_and_load_E(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1140,7 +1140,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 4,(IX+d)->H instruction.
         /// </summary>
-        byte RES_4_aIX_plus_n_and_load_H()
+        byte RES_4_aIX_plus_n_and_load_H(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1148,7 +1148,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 4,(IX+d)->L instruction.
         /// </summary>
-        byte RES_4_aIX_plus_n_and_load_L()
+        byte RES_4_aIX_plus_n_and_load_L(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1156,7 +1156,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 4,(IX+d) instruction.
         /// </summary>
-        byte RES_4_aIX_plus_n()
+        byte RES_4_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1164,7 +1164,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 4,(IX+d)->A instruction.
         /// </summary>
-        byte RES_4_aIX_plus_n_and_load_A()
+        byte RES_4_aIX_plus_n_and_load_A(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1172,7 +1172,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 5,(IX+d)->B instruction.
         /// </summary>
-        byte RES_5_aIX_plus_n_and_load_B()
+        byte RES_5_aIX_plus_n_and_load_B(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1180,7 +1180,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 5,(IX+d)->C instruction.
         /// </summary>
-        byte RES_5_aIX_plus_n_and_load_C()
+        byte RES_5_aIX_plus_n_and_load_C(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1188,7 +1188,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 5,(IX+d)->D instruction.
         /// </summary>
-        byte RES_5_aIX_plus_n_and_load_D()
+        byte RES_5_aIX_plus_n_and_load_D(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1196,7 +1196,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 5,(IX+d)->E instruction.
         /// </summary>
-        byte RES_5_aIX_plus_n_and_load_E()
+        byte RES_5_aIX_plus_n_and_load_E(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1204,7 +1204,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 5,(IX+d)->H instruction.
         /// </summary>
-        byte RES_5_aIX_plus_n_and_load_H()
+        byte RES_5_aIX_plus_n_and_load_H(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1212,7 +1212,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 5,(IX+d)->L instruction.
         /// </summary>
-        byte RES_5_aIX_plus_n_and_load_L()
+        byte RES_5_aIX_plus_n_and_load_L(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1220,7 +1220,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 5,(IX+d) instruction.
         /// </summary>
-        byte RES_5_aIX_plus_n()
+        byte RES_5_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1228,7 +1228,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 5,(IX+d)->A instruction.
         /// </summary>
-        byte RES_5_aIX_plus_n_and_load_A()
+        byte RES_5_aIX_plus_n_and_load_A(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1236,7 +1236,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 6,(IX+d)->B instruction.
         /// </summary>
-        byte RES_6_aIX_plus_n_and_load_B()
+        byte RES_6_aIX_plus_n_and_load_B(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1244,7 +1244,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 6,(IX+d)->C instruction.
         /// </summary>
-        byte RES_6_aIX_plus_n_and_load_C()
+        byte RES_6_aIX_plus_n_and_load_C(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1252,7 +1252,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 6,(IX+d)->D instruction.
         /// </summary>
-        byte RES_6_aIX_plus_n_and_load_D()
+        byte RES_6_aIX_plus_n_and_load_D(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1260,7 +1260,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 6,(IX+d)->E instruction.
         /// </summary>
-        byte RES_6_aIX_plus_n_and_load_E()
+        byte RES_6_aIX_plus_n_and_load_E(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1268,7 +1268,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 6,(IX+d)->H instruction.
         /// </summary>
-        byte RES_6_aIX_plus_n_and_load_H()
+        byte RES_6_aIX_plus_n_and_load_H(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1276,7 +1276,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 6,(IX+d)->L instruction.
         /// </summary>
-        byte RES_6_aIX_plus_n_and_load_L()
+        byte RES_6_aIX_plus_n_and_load_L(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1284,7 +1284,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 6,(IX+d) instruction.
         /// </summary>
-        byte RES_6_aIX_plus_n()
+        byte RES_6_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1292,7 +1292,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 6,(IX+d)->A instruction.
         /// </summary>
-        byte RES_6_aIX_plus_n_and_load_A()
+        byte RES_6_aIX_plus_n_and_load_A(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1300,7 +1300,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 7,(IX+d)->B instruction.
         /// </summary>
-        byte RES_7_aIX_plus_n_and_load_B()
+        byte RES_7_aIX_plus_n_and_load_B(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1308,7 +1308,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 7,(IX+d)->C instruction.
         /// </summary>
-        byte RES_7_aIX_plus_n_and_load_C()
+        byte RES_7_aIX_plus_n_and_load_C(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1316,7 +1316,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 7,(IX+d)->D instruction.
         /// </summary>
-        byte RES_7_aIX_plus_n_and_load_D()
+        byte RES_7_aIX_plus_n_and_load_D(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1324,7 +1324,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 7,(IX+d)->E instruction.
         /// </summary>
-        byte RES_7_aIX_plus_n_and_load_E()
+        byte RES_7_aIX_plus_n_and_load_E(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1332,7 +1332,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 7,(IX+d)->H instruction.
         /// </summary>
-        byte RES_7_aIX_plus_n_and_load_H()
+        byte RES_7_aIX_plus_n_and_load_H(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1340,7 +1340,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 7,(IX+d)->L instruction.
         /// </summary>
-        byte RES_7_aIX_plus_n_and_load_L()
+        byte RES_7_aIX_plus_n_and_load_L(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1348,7 +1348,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 7,(IX+d) instruction.
         /// </summary>
-        byte RES_7_aIX_plus_n()
+        byte RES_7_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1356,7 +1356,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The RES 7,(IX+d)->A instruction.
         /// </summary>
-        byte RES_7_aIX_plus_n_and_load_A()
+        byte RES_7_aIX_plus_n_and_load_A(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1364,7 +1364,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 0,(IX+d)->B instruction.
         /// </summary>
-        byte SET_0_aIX_plus_n_and_load_B()
+        byte SET_0_aIX_plus_n_and_load_B(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1372,7 +1372,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 0,(IX+d)->C instruction.
         /// </summary>
-        byte SET_0_aIX_plus_n_and_load_C()
+        byte SET_0_aIX_plus_n_and_load_C(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1380,7 +1380,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 0,(IX+d)->D instruction.
         /// </summary>
-        byte SET_0_aIX_plus_n_and_load_D()
+        byte SET_0_aIX_plus_n_and_load_D(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1388,7 +1388,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 0,(IX+d)->E instruction.
         /// </summary>
-        byte SET_0_aIX_plus_n_and_load_E()
+        byte SET_0_aIX_plus_n_and_load_E(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1396,7 +1396,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 0,(IX+d)->H instruction.
         /// </summary>
-        byte SET_0_aIX_plus_n_and_load_H()
+        byte SET_0_aIX_plus_n_and_load_H(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1404,7 +1404,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 0,(IX+d)->L instruction.
         /// </summary>
-        byte SET_0_aIX_plus_n_and_load_L()
+        byte SET_0_aIX_plus_n_and_load_L(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1412,7 +1412,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 0,(IX+d) instruction.
         /// </summary>
-        byte SET_0_aIX_plus_n()
+        byte SET_0_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1420,7 +1420,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 0,(IX+d)->A instruction.
         /// </summary>
-        byte SET_0_aIX_plus_n_and_load_A()
+        byte SET_0_aIX_plus_n_and_load_A(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1428,7 +1428,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 1,(IX+d)->B instruction.
         /// </summary>
-        byte SET_1_aIX_plus_n_and_load_B()
+        byte SET_1_aIX_plus_n_and_load_B(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1436,7 +1436,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 1,(IX+d)->C instruction.
         /// </summary>
-        byte SET_1_aIX_plus_n_and_load_C()
+        byte SET_1_aIX_plus_n_and_load_C(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1444,7 +1444,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 1,(IX+d)->D instruction.
         /// </summary>
-        byte SET_1_aIX_plus_n_and_load_D()
+        byte SET_1_aIX_plus_n_and_load_D(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1452,7 +1452,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 1,(IX+d)->E instruction.
         /// </summary>
-        byte SET_1_aIX_plus_n_and_load_E()
+        byte SET_1_aIX_plus_n_and_load_E(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1460,7 +1460,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 1,(IX+d)->H instruction.
         /// </summary>
-        byte SET_1_aIX_plus_n_and_load_H()
+        byte SET_1_aIX_plus_n_and_load_H(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1468,7 +1468,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 1,(IX+d)->L instruction.
         /// </summary>
-        byte SET_1_aIX_plus_n_and_load_L()
+        byte SET_1_aIX_plus_n_and_load_L(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1476,7 +1476,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 1,(IX+d) instruction.
         /// </summary>
-        byte SET_1_aIX_plus_n()
+        byte SET_1_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1484,7 +1484,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 1,(IX+d)->A instruction.
         /// </summary>
-        byte SET_1_aIX_plus_n_and_load_A()
+        byte SET_1_aIX_plus_n_and_load_A(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1492,7 +1492,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 2,(IX+d)->B instruction.
         /// </summary>
-        byte SET_2_aIX_plus_n_and_load_B()
+        byte SET_2_aIX_plus_n_and_load_B(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1500,7 +1500,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 2,(IX+d)->C instruction.
         /// </summary>
-        byte SET_2_aIX_plus_n_and_load_C()
+        byte SET_2_aIX_plus_n_and_load_C(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1508,7 +1508,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 2,(IX+d)->D instruction.
         /// </summary>
-        byte SET_2_aIX_plus_n_and_load_D()
+        byte SET_2_aIX_plus_n_and_load_D(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1516,7 +1516,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 2,(IX+d)->E instruction.
         /// </summary>
-        byte SET_2_aIX_plus_n_and_load_E()
+        byte SET_2_aIX_plus_n_and_load_E(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1524,7 +1524,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 2,(IX+d)->H instruction.
         /// </summary>
-        byte SET_2_aIX_plus_n_and_load_H()
+        byte SET_2_aIX_plus_n_and_load_H(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1532,7 +1532,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 2,(IX+d)->L instruction.
         /// </summary>
-        byte SET_2_aIX_plus_n_and_load_L()
+        byte SET_2_aIX_plus_n_and_load_L(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1540,7 +1540,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 2,(IX+d) instruction.
         /// </summary>
-        byte SET_2_aIX_plus_n()
+        byte SET_2_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1548,7 +1548,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 2,(IX+d)->A instruction.
         /// </summary>
-        byte SET_2_aIX_plus_n_and_load_A()
+        byte SET_2_aIX_plus_n_and_load_A(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1556,7 +1556,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 3,(IX+d)->B instruction.
         /// </summary>
-        byte SET_3_aIX_plus_n_and_load_B()
+        byte SET_3_aIX_plus_n_and_load_B(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1564,7 +1564,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 3,(IX+d)->C instruction.
         /// </summary>
-        byte SET_3_aIX_plus_n_and_load_C()
+        byte SET_3_aIX_plus_n_and_load_C(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1572,7 +1572,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 3,(IX+d)->D instruction.
         /// </summary>
-        byte SET_3_aIX_plus_n_and_load_D()
+        byte SET_3_aIX_plus_n_and_load_D(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1580,7 +1580,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 3,(IX+d)->E instruction.
         /// </summary>
-        byte SET_3_aIX_plus_n_and_load_E()
+        byte SET_3_aIX_plus_n_and_load_E(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1588,7 +1588,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 3,(IX+d)->H instruction.
         /// </summary>
-        byte SET_3_aIX_plus_n_and_load_H()
+        byte SET_3_aIX_plus_n_and_load_H(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1596,7 +1596,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 3,(IX+d)->L instruction.
         /// </summary>
-        byte SET_3_aIX_plus_n_and_load_L()
+        byte SET_3_aIX_plus_n_and_load_L(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1604,7 +1604,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 3,(IX+d) instruction.
         /// </summary>
-        byte SET_3_aIX_plus_n()
+        byte SET_3_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1612,7 +1612,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 3,(IX+d)->A instruction.
         /// </summary>
-        byte SET_3_aIX_plus_n_and_load_A()
+        byte SET_3_aIX_plus_n_and_load_A(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1620,7 +1620,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 4,(IX+d)->B instruction.
         /// </summary>
-        byte SET_4_aIX_plus_n_and_load_B()
+        byte SET_4_aIX_plus_n_and_load_B(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1628,7 +1628,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 4,(IX+d)->C instruction.
         /// </summary>
-        byte SET_4_aIX_plus_n_and_load_C()
+        byte SET_4_aIX_plus_n_and_load_C(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1636,7 +1636,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 4,(IX+d)->D instruction.
         /// </summary>
-        byte SET_4_aIX_plus_n_and_load_D()
+        byte SET_4_aIX_plus_n_and_load_D(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1644,7 +1644,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 4,(IX+d)->E instruction.
         /// </summary>
-        byte SET_4_aIX_plus_n_and_load_E()
+        byte SET_4_aIX_plus_n_and_load_E(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1652,7 +1652,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 4,(IX+d)->H instruction.
         /// </summary>
-        byte SET_4_aIX_plus_n_and_load_H()
+        byte SET_4_aIX_plus_n_and_load_H(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1660,7 +1660,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 4,(IX+d)->L instruction.
         /// </summary>
-        byte SET_4_aIX_plus_n_and_load_L()
+        byte SET_4_aIX_plus_n_and_load_L(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1668,7 +1668,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 4,(IX+d) instruction.
         /// </summary>
-        byte SET_4_aIX_plus_n()
+        byte SET_4_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1676,7 +1676,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 4,(IX+d)->A instruction.
         /// </summary>
-        byte SET_4_aIX_plus_n_and_load_A()
+        byte SET_4_aIX_plus_n_and_load_A(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1684,7 +1684,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 5,(IX+d)->B instruction.
         /// </summary>
-        byte SET_5_aIX_plus_n_and_load_B()
+        byte SET_5_aIX_plus_n_and_load_B(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1692,7 +1692,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 5,(IX+d)->C instruction.
         /// </summary>
-        byte SET_5_aIX_plus_n_and_load_C()
+        byte SET_5_aIX_plus_n_and_load_C(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1700,7 +1700,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 5,(IX+d)->D instruction.
         /// </summary>
-        byte SET_5_aIX_plus_n_and_load_D()
+        byte SET_5_aIX_plus_n_and_load_D(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1708,7 +1708,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 5,(IX+d)->E instruction.
         /// </summary>
-        byte SET_5_aIX_plus_n_and_load_E()
+        byte SET_5_aIX_plus_n_and_load_E(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1716,7 +1716,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 5,(IX+d)->H instruction.
         /// </summary>
-        byte SET_5_aIX_plus_n_and_load_H()
+        byte SET_5_aIX_plus_n_and_load_H(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1724,7 +1724,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 5,(IX+d)->L instruction.
         /// </summary>
-        byte SET_5_aIX_plus_n_and_load_L()
+        byte SET_5_aIX_plus_n_and_load_L(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1732,7 +1732,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 5,(IX+d) instruction.
         /// </summary>
-        byte SET_5_aIX_plus_n()
+        byte SET_5_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1740,7 +1740,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 5,(IX+d)->A instruction.
         /// </summary>
-        byte SET_5_aIX_plus_n_and_load_A()
+        byte SET_5_aIX_plus_n_and_load_A(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1748,7 +1748,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 6,(IX+d)->B instruction.
         /// </summary>
-        byte SET_6_aIX_plus_n_and_load_B()
+        byte SET_6_aIX_plus_n_and_load_B(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1756,7 +1756,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 6,(IX+d)->C instruction.
         /// </summary>
-        byte SET_6_aIX_plus_n_and_load_C()
+        byte SET_6_aIX_plus_n_and_load_C(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1764,7 +1764,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 6,(IX+d)->D instruction.
         /// </summary>
-        byte SET_6_aIX_plus_n_and_load_D()
+        byte SET_6_aIX_plus_n_and_load_D(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1772,7 +1772,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 6,(IX+d)->E instruction.
         /// </summary>
-        byte SET_6_aIX_plus_n_and_load_E()
+        byte SET_6_aIX_plus_n_and_load_E(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1780,7 +1780,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 6,(IX+d)->H instruction.
         /// </summary>
-        byte SET_6_aIX_plus_n_and_load_H()
+        byte SET_6_aIX_plus_n_and_load_H(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1788,7 +1788,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 6,(IX+d)->L instruction.
         /// </summary>
-        byte SET_6_aIX_plus_n_and_load_L()
+        byte SET_6_aIX_plus_n_and_load_L(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1796,7 +1796,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 6,(IX+d) instruction.
         /// </summary>
-        byte SET_6_aIX_plus_n()
+        byte SET_6_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1804,7 +1804,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 6,(IX+d)->A instruction.
         /// </summary>
-        byte SET_6_aIX_plus_n_and_load_A()
+        byte SET_6_aIX_plus_n_and_load_A(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1812,7 +1812,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 7,(IX+d)->B instruction.
         /// </summary>
-        byte SET_7_aIX_plus_n_and_load_B()
+        byte SET_7_aIX_plus_n_and_load_B(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1820,7 +1820,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 7,(IX+d)->C instruction.
         /// </summary>
-        byte SET_7_aIX_plus_n_and_load_C()
+        byte SET_7_aIX_plus_n_and_load_C(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1828,7 +1828,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 7,(IX+d)->D instruction.
         /// </summary>
-        byte SET_7_aIX_plus_n_and_load_D()
+        byte SET_7_aIX_plus_n_and_load_D(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1836,7 +1836,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 7,(IX+d)->E instruction.
         /// </summary>
-        byte SET_7_aIX_plus_n_and_load_E()
+        byte SET_7_aIX_plus_n_and_load_E(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1844,7 +1844,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 7,(IX+d)->H instruction.
         /// </summary>
-        byte SET_7_aIX_plus_n_and_load_H()
+        byte SET_7_aIX_plus_n_and_load_H(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1852,7 +1852,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 7,(IX+d)->L instruction.
         /// </summary>
-        byte SET_7_aIX_plus_n_and_load_L()
+        byte SET_7_aIX_plus_n_and_load_L(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1860,7 +1860,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 7,(IX+d) instruction.
         /// </summary>
-        byte SET_7_aIX_plus_n()
+        byte SET_7_aIX_plus_n(byte offset)
         {
             throw new NotImplementedException();
         }
@@ -1868,7 +1868,7 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// The SET 7,(IX+d)->A instruction.
         /// </summary>
-        byte SET_7_aIX_plus_n_and_load_A()
+        byte SET_7_aIX_plus_n_and_load_A(byte offset)
         {
             throw new NotImplementedException();
         }
