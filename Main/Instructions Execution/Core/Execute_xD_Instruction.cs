@@ -15,6 +15,7 @@ namespace Konamiman.Z80dotNet
             if(secondOpcodeByte == 0xCB)
             {
 				Inc_R();
+				ProcessorAgent.FetchNextOpcode();
                 var offset = ProcessorAgent.FetchNextOpcode();
                 return DDCB_InstructionExecutors[ProcessorAgent.FetchNextOpcode()](offset);
             }
@@ -37,6 +38,7 @@ namespace Konamiman.Z80dotNet
             if(secondOpcodeByte == 0xCB)
             {
 				Inc_R();
+				ProcessorAgent.FetchNextOpcode();
                 var offset = ProcessorAgent.FetchNextOpcode();
                 return FDCB_InstructionExecutors[ProcessorAgent.FetchNextOpcode()](offset);
             }

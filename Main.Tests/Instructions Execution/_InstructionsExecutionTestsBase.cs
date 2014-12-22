@@ -140,16 +140,29 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
         protected void AssertSetsFlags(byte opcode, byte? prefix = null, params string[] flagNames)
         {
-            AssertSetsOrResetsFlags(opcode, 1, prefix, flagNames);
+            AssertSetsFlags(null, opcode, prefix, flagNames);
+        }
+
+        protected void AssertSetsFlags(Action executor, byte opcode, byte? prefix = null, params string[] flagNames)
+        {
+            AssertSetsOrResetsFlags(opcode, 1, prefix, executor, flagNames);
         }
 
         protected void AssertResetsFlags(byte opcode, byte? prefix = null, params string[] flagNames)
         {
-            AssertSetsOrResetsFlags(opcode, 0, prefix, flagNames);
+            AssertResetsFlags(null, opcode, prefix, flagNames);
         }
 
-        protected void AssertSetsOrResetsFlags(byte opcode, Bit expected, byte? prefix = null, params string[] flagNames)
+        protected void AssertResetsFlags(Action executor, byte opcode, byte? prefix = null, params string[] flagNames)
         {
+            AssertSetsOrResetsFlags(opcode, 0, prefix, executor, flagNames);
+        }
+
+        protected void AssertSetsOrResetsFlags(byte opcode, Bit expected, byte? prefix = null, Action executor = null, params string[] flagNames)
+        {
+            if(executor == null)
+                executor = () => Execute(opcode, prefix);
+
             var randomValues = Fixture.Create<byte[]>();
 
             foreach (var value in randomValues)
@@ -159,7 +172,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
                 Registers.A = value;
 
-                Execute(opcode, prefix);
+                executor();
 
                 foreach (var flag in flagNames)
                     Assert.AreEqual(expected, GetFlag(flag));
@@ -196,7 +209,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             return NumberUtils.CreateShort(ProcessorAgent.Memory[address], ProcessorAgent.Memory[address + 1]);
         }
 
-        protected void SetupRegOrMem(string reg, byte value)
+        protected void SetupRegOrMem(string reg, byte value, byte offset = 0)
         {
             if(reg == "(HL)") {
                 var address = Fixture.Create<ushort>();
@@ -204,22 +217,36 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 ProcessorAgent.Memory[address] = value;
                 Registers.HL = address.ToShort();
             }
+            else if(reg.StartsWith(("(I"))) {
+                var regName = reg.Substring(1, 2);
+                var address = Fixture.Create<ushort>();
+                if(address < 1000) address += 1000;
+                var realAddress = address.Add(offset.ToSignedByte());
+                ProcessorAgent.Memory[realAddress] = value;
+                SetReg(regName, address.ToShort());
+            }
             else {
                 SetReg(reg, value);
             }
         }
 
-        protected byte ValueOfRegOrMem(string reg)
+        protected byte ValueOfRegOrMem(string reg, byte offset = 0)
         {
             if(reg == "(HL)") {
                 return ProcessorAgent.Memory[Registers.HL];
             }
-            else {
+            else if (reg.StartsWith(("(I"))) {
+                var regName = reg.Substring(1, 2);
+                var address = GetReg<short>(regName).Add(offset.ToSignedByte());
+                return ProcessorAgent.Memory[address];
+            }
+            else
+            {
                 return GetReg<byte>(reg);
             }
         }
         
-        protected static object[] GetBitInstructionsSource(byte baseOpcode)
+        protected static object[] GetBitInstructionsSource(byte baseOpcode, bool includeLoadReg = true, bool loopSevenBits = false)
         {
             var bases = new[]
             {
@@ -234,14 +261,29 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             };
 
             var sources = new List<object[]>();
-            for (var bit = 0; bit <= 7; bit++)
+            var bitsCount = loopSevenBits ? 7 : 0;
+            for (var bit = 0; bit <= bitsCount; bit++)
             {
                 foreach (var instr in bases)
                 {
-                    var reg = (string) instr[0];
-                    var regCode = (int) instr[1];
+                    var reg = (string)instr[0];
+                    var regCode = (int)instr[1];
                     var opcode = baseOpcode | (bit << 3) | regCode;
-                    sources.Add(new object[] {reg, bit, (byte) opcode});
+                    //srcReg, dest, opcode, prefix, bit
+                    sources.Add(new object[] {reg, (string)null, (byte)opcode, (byte?)null, bit});
+                }
+
+                foreach (var instr in bases)
+                {
+                    var destReg = (string)instr[0];
+                    if(destReg == "(HL)") destReg = "";
+                    if(destReg != "" && !includeLoadReg) continue;
+                    var regCode = baseOpcode | (bit << 3) | (int)instr[1];
+                    foreach(var reg in new[] { "(IX+n)", "(IY+n)" }) 
+                    {
+                        //srcReg, dest, opcode, prefix, bit
+                        sources.Add(new object[] {reg, destReg, (byte?)regCode, reg[2]=='X' ? (byte?)0xDD : (byte?)0xFD, bit});
+                    }
                 }
             }
 
@@ -278,6 +320,14 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                     prefix = 0xFD;
                     break;
                 }
+        }
+        
+        protected int ExecuteBit(byte opcode, byte? prefix = null, byte? offset = null)
+        {
+            if (prefix == null)
+                return Execute(opcode, 0xCB);
+            else
+                return Execute(0xCB, prefix, offset.Value, opcode);
         }
 
         #endregion

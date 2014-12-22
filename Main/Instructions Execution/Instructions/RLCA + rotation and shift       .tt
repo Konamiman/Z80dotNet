@@ -13,19 +13,23 @@ namespace Konamiman.Z80dotNet
     public partial class Z80InstructionExecutor
     {
 <#  foreach (var instrType in new[] {"RLC", "RRC", "RL", "RR", "SLA", "SRA", "SLL", "SRL"}) {
-    foreach (var regName in new[] {"A", "B", "C", "D", "E", "H", "L", "(HL)", ""}) {
+    foreach (var regName in new[] {"A", "B", "C", "D", "E", "H", "L", "(HL)", "", "(IX+n)", "(IY+n)"}) {
+	foreach (var destRegName in new[] {"A", "B", "C", "D", "E", "H", "L", ""}) {
         var isLeft = (instrType[1] == 'L');
+	    var isMemIndex = (regName.StartsWith("(I"));
         var isOldInstr = (regName == "");
         if(isOldInstr && instrType.StartsWith("S")) continue;
+	    if(destRegName != "" && !isMemIndex) continue;
         var oldInstrName = instrType + "A";
         var reg = isOldInstr ? "A" : regName;
         var isMemHL = (reg == "(HL)");
         var instrName = isOldInstr ? oldInstrName : instrType + " " + reg;
-        var methodName = isOldInstr ? oldInstrName : instrType + "_" + (isMemHL ? "aHL" : reg); #>
+	    if(destRegName != "") instrName += "," + destRegName;
+        var methodName = isOldInstr ? oldInstrName : instrType + "_" + MethodRegPartName(reg, destRegName); #>
 		/// <summary>
         /// The <#=instrName #> instruction
         /// </summary>
-        byte <#=methodName #>()
+        byte <#=methodName #>(<#=isMemIndex ? "byte offset" : "" #>)
         {
             FetchFinished();
 
@@ -48,6 +52,9 @@ namespace Konamiman.Z80dotNet
         var newValue = (byte)(oldValue >> 1);
 <# } #>
 <# SetNewValueToRegOrMem(reg); #>
+<# if(destRegName != "") { #>
+		Registers.<#=destRegName#> = newValue;
+<# } #>
 
 			Registers.CF = oldValue.GetBit(<#=isLeft ? 7 : 0#>);
             Registers.HF = 0;
@@ -58,12 +65,12 @@ namespace Konamiman.Z80dotNet
             Registers.ZF = (newValue == 0);
 			Registers.PF = Parity[newValue];
 
-			return <#=isMemHL ? 15 : 8 #>;
+			return <#=isMemHL ? 15 : isMemIndex ? 23 : 8 #>;
 <# } else { #>
             return 4;
 <# } #>
         }
 
-<# }} #>
+<# }}} #>
 	}
 }

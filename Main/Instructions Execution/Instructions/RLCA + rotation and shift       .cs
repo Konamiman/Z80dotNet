@@ -204,6 +204,388 @@ namespace Konamiman.Z80dotNet
         }
 
 		/// <summary>
+        /// The RLC (IX+n),A instruction
+        /// </summary>
+        byte RLC_aIX_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RLC (IX+n),B instruction
+        /// </summary>
+        byte RLC_aIX_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RLC (IX+n),C instruction
+        /// </summary>
+        byte RLC_aIX_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RLC (IX+n),D instruction
+        /// </summary>
+        byte RLC_aIX_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RLC (IX+n),E instruction
+        /// </summary>
+        byte RLC_aIX_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RLC (IX+n),H instruction
+        /// </summary>
+        byte RLC_aIX_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RLC (IX+n),L instruction
+        /// </summary>
+        byte RLC_aIX_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RLC (IX+n) instruction
+        /// </summary>
+        byte RLC_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RLC (IY+n),A instruction
+        /// </summary>
+        byte RLC_aIY_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RLC (IY+n),B instruction
+        /// </summary>
+        byte RLC_aIY_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RLC (IY+n),C instruction
+        /// </summary>
+        byte RLC_aIY_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RLC (IY+n),D instruction
+        /// </summary>
+        byte RLC_aIY_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RLC (IY+n),E instruction
+        /// </summary>
+        byte RLC_aIY_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RLC (IY+n),H instruction
+        /// </summary>
+        byte RLC_aIY_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RLC (IY+n),L instruction
+        /// </summary>
+        byte RLC_aIY_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RLC (IY+n) instruction
+        /// </summary>
+        byte RLC_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (oldValue >> 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
         /// The RRC A instruction
         /// </summary>
         byte RRC_A()
@@ -396,6 +778,388 @@ namespace Konamiman.Z80dotNet
             Registers.NF = 0;
             SetFlags3and5From(newValue);
             return 4;
+        }
+
+		/// <summary>
+        /// The RRC (IX+n),A instruction
+        /// </summary>
+        byte RRC_aIX_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue << 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RRC (IX+n),B instruction
+        /// </summary>
+        byte RRC_aIX_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue << 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RRC (IX+n),C instruction
+        /// </summary>
+        byte RRC_aIX_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue << 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RRC (IX+n),D instruction
+        /// </summary>
+        byte RRC_aIX_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue << 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RRC (IX+n),E instruction
+        /// </summary>
+        byte RRC_aIX_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue << 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RRC (IX+n),H instruction
+        /// </summary>
+        byte RRC_aIX_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue << 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RRC (IX+n),L instruction
+        /// </summary>
+        byte RRC_aIX_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue << 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RRC (IX+n) instruction
+        /// </summary>
+        byte RRC_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue << 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RRC (IY+n),A instruction
+        /// </summary>
+        byte RRC_aIY_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue << 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RRC (IY+n),B instruction
+        /// </summary>
+        byte RRC_aIY_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue << 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RRC (IY+n),C instruction
+        /// </summary>
+        byte RRC_aIY_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue << 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RRC (IY+n),D instruction
+        /// </summary>
+        byte RRC_aIY_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue << 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RRC (IY+n),E instruction
+        /// </summary>
+        byte RRC_aIY_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue << 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RRC (IY+n),H instruction
+        /// </summary>
+        byte RRC_aIY_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue << 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RRC (IY+n),L instruction
+        /// </summary>
+        byte RRC_aIY_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue << 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RRC (IY+n) instruction
+        /// </summary>
+        byte RRC_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue << 7));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
         }
 
 		/// <summary>
@@ -594,6 +1358,388 @@ namespace Konamiman.Z80dotNet
         }
 
 		/// <summary>
+        /// The RL (IX+n),A instruction
+        /// </summary>
+        byte RL_aIX_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RL (IX+n),B instruction
+        /// </summary>
+        byte RL_aIX_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RL (IX+n),C instruction
+        /// </summary>
+        byte RL_aIX_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RL (IX+n),D instruction
+        /// </summary>
+        byte RL_aIX_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RL (IX+n),E instruction
+        /// </summary>
+        byte RL_aIX_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RL (IX+n),H instruction
+        /// </summary>
+        byte RL_aIX_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RL (IX+n),L instruction
+        /// </summary>
+        byte RL_aIX_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RL (IX+n) instruction
+        /// </summary>
+        byte RL_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RL (IY+n),A instruction
+        /// </summary>
+        byte RL_aIY_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RL (IY+n),B instruction
+        /// </summary>
+        byte RL_aIY_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RL (IY+n),C instruction
+        /// </summary>
+        byte RL_aIY_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RL (IY+n),D instruction
+        /// </summary>
+        byte RL_aIY_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RL (IY+n),E instruction
+        /// </summary>
+        byte RL_aIY_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RL (IY+n),H instruction
+        /// </summary>
+        byte RL_aIY_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RL (IY+n),L instruction
+        /// </summary>
+        byte RL_aIY_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RL (IY+n) instruction
+        /// </summary>
+        byte RL_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | (byte)Registers.CF);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
         /// The RR A instruction
         /// </summary>
         byte RR_A()
@@ -789,6 +1935,388 @@ namespace Konamiman.Z80dotNet
         }
 
 		/// <summary>
+        /// The RR (IX+n),A instruction
+        /// </summary>
+        byte RR_aIX_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (Registers.CF ? 0x80 : 0));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RR (IX+n),B instruction
+        /// </summary>
+        byte RR_aIX_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (Registers.CF ? 0x80 : 0));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RR (IX+n),C instruction
+        /// </summary>
+        byte RR_aIX_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (Registers.CF ? 0x80 : 0));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RR (IX+n),D instruction
+        /// </summary>
+        byte RR_aIX_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (Registers.CF ? 0x80 : 0));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RR (IX+n),E instruction
+        /// </summary>
+        byte RR_aIX_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (Registers.CF ? 0x80 : 0));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RR (IX+n),H instruction
+        /// </summary>
+        byte RR_aIX_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (Registers.CF ? 0x80 : 0));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RR (IX+n),L instruction
+        /// </summary>
+        byte RR_aIX_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (Registers.CF ? 0x80 : 0));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RR (IX+n) instruction
+        /// </summary>
+        byte RR_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (Registers.CF ? 0x80 : 0));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RR (IY+n),A instruction
+        /// </summary>
+        byte RR_aIY_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (Registers.CF ? 0x80 : 0));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RR (IY+n),B instruction
+        /// </summary>
+        byte RR_aIY_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (Registers.CF ? 0x80 : 0));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RR (IY+n),C instruction
+        /// </summary>
+        byte RR_aIY_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (Registers.CF ? 0x80 : 0));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RR (IY+n),D instruction
+        /// </summary>
+        byte RR_aIY_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (Registers.CF ? 0x80 : 0));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RR (IY+n),E instruction
+        /// </summary>
+        byte RR_aIY_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (Registers.CF ? 0x80 : 0));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RR (IY+n),H instruction
+        /// </summary>
+        byte RR_aIY_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (Registers.CF ? 0x80 : 0));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RR (IY+n),L instruction
+        /// </summary>
+        byte RR_aIY_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (Registers.CF ? 0x80 : 0));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The RR (IY+n) instruction
+        /// </summary>
+        byte RR_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (Registers.CF ? 0x80 : 0));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
         /// The SLA A instruction
         /// </summary>
         byte SLA_A()
@@ -963,6 +2491,388 @@ namespace Konamiman.Z80dotNet
 			Registers.PF = Parity[newValue];
 
 			return 15;
+        }
+
+		/// <summary>
+        /// The SLA (IX+n),A instruction
+        /// </summary>
+        byte SLA_aIX_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue << 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLA (IX+n),B instruction
+        /// </summary>
+        byte SLA_aIX_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue << 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLA (IX+n),C instruction
+        /// </summary>
+        byte SLA_aIX_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue << 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLA (IX+n),D instruction
+        /// </summary>
+        byte SLA_aIX_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue << 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLA (IX+n),E instruction
+        /// </summary>
+        byte SLA_aIX_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue << 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLA (IX+n),H instruction
+        /// </summary>
+        byte SLA_aIX_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue << 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLA (IX+n),L instruction
+        /// </summary>
+        byte SLA_aIX_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue << 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLA (IX+n) instruction
+        /// </summary>
+        byte SLA_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue << 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLA (IY+n),A instruction
+        /// </summary>
+        byte SLA_aIY_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue << 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLA (IY+n),B instruction
+        /// </summary>
+        byte SLA_aIY_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue << 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLA (IY+n),C instruction
+        /// </summary>
+        byte SLA_aIY_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue << 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLA (IY+n),D instruction
+        /// </summary>
+        byte SLA_aIY_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue << 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLA (IY+n),E instruction
+        /// </summary>
+        byte SLA_aIY_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue << 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLA (IY+n),H instruction
+        /// </summary>
+        byte SLA_aIY_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue << 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLA (IY+n),L instruction
+        /// </summary>
+        byte SLA_aIY_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue << 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLA (IY+n) instruction
+        /// </summary>
+        byte SLA_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue << 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
         }
 
 		/// <summary>
@@ -1143,6 +3053,388 @@ namespace Konamiman.Z80dotNet
         }
 
 		/// <summary>
+        /// The SRA (IX+n),A instruction
+        /// </summary>
+        byte SRA_aIX_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue & 0x80));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRA (IX+n),B instruction
+        /// </summary>
+        byte SRA_aIX_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue & 0x80));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRA (IX+n),C instruction
+        /// </summary>
+        byte SRA_aIX_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue & 0x80));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRA (IX+n),D instruction
+        /// </summary>
+        byte SRA_aIX_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue & 0x80));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRA (IX+n),E instruction
+        /// </summary>
+        byte SRA_aIX_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue & 0x80));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRA (IX+n),H instruction
+        /// </summary>
+        byte SRA_aIX_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue & 0x80));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRA (IX+n),L instruction
+        /// </summary>
+        byte SRA_aIX_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue & 0x80));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRA (IX+n) instruction
+        /// </summary>
+        byte SRA_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue & 0x80));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRA (IY+n),A instruction
+        /// </summary>
+        byte SRA_aIY_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue & 0x80));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRA (IY+n),B instruction
+        /// </summary>
+        byte SRA_aIY_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue & 0x80));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRA (IY+n),C instruction
+        /// </summary>
+        byte SRA_aIY_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue & 0x80));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRA (IY+n),D instruction
+        /// </summary>
+        byte SRA_aIY_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue & 0x80));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRA (IY+n),E instruction
+        /// </summary>
+        byte SRA_aIY_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue & 0x80));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRA (IY+n),H instruction
+        /// </summary>
+        byte SRA_aIY_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue & 0x80));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRA (IY+n),L instruction
+        /// </summary>
+        byte SRA_aIY_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue & 0x80));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRA (IY+n) instruction
+        /// </summary>
+        byte SRA_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue >> 1) | (oldValue & 0x80));
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
         /// The SLL A instruction
         /// </summary>
         byte SLL_A()
@@ -1320,6 +3612,388 @@ namespace Konamiman.Z80dotNet
         }
 
 		/// <summary>
+        /// The SLL (IX+n),A instruction
+        /// </summary>
+        byte SLL_aIX_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLL (IX+n),B instruction
+        /// </summary>
+        byte SLL_aIX_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLL (IX+n),C instruction
+        /// </summary>
+        byte SLL_aIX_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLL (IX+n),D instruction
+        /// </summary>
+        byte SLL_aIX_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLL (IX+n),E instruction
+        /// </summary>
+        byte SLL_aIX_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLL (IX+n),H instruction
+        /// </summary>
+        byte SLL_aIX_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLL (IX+n),L instruction
+        /// </summary>
+        byte SLL_aIX_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLL (IX+n) instruction
+        /// </summary>
+        byte SLL_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLL (IY+n),A instruction
+        /// </summary>
+        byte SLL_aIY_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLL (IY+n),B instruction
+        /// </summary>
+        byte SLL_aIY_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLL (IY+n),C instruction
+        /// </summary>
+        byte SLL_aIY_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLL (IY+n),D instruction
+        /// </summary>
+        byte SLL_aIY_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLL (IY+n),E instruction
+        /// </summary>
+        byte SLL_aIY_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLL (IY+n),H instruction
+        /// </summary>
+        byte SLL_aIY_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLL (IY+n),L instruction
+        /// </summary>
+        byte SLL_aIY_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SLL (IY+n) instruction
+        /// </summary>
+        byte SLL_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)((oldValue << 1) | 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			Registers.CF = oldValue.GetBit(7);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
         /// The SRL A instruction
         /// </summary>
         byte SRL_A()
@@ -1494,6 +4168,388 @@ namespace Konamiman.Z80dotNet
 			Registers.PF = Parity[newValue];
 
 			return 15;
+        }
+
+		/// <summary>
+        /// The SRL (IX+n),A instruction
+        /// </summary>
+        byte SRL_aIX_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue >> 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRL (IX+n),B instruction
+        /// </summary>
+        byte SRL_aIX_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue >> 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRL (IX+n),C instruction
+        /// </summary>
+        byte SRL_aIX_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue >> 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRL (IX+n),D instruction
+        /// </summary>
+        byte SRL_aIX_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue >> 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRL (IX+n),E instruction
+        /// </summary>
+        byte SRL_aIX_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue >> 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRL (IX+n),H instruction
+        /// </summary>
+        byte SRL_aIX_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue >> 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRL (IX+n),L instruction
+        /// </summary>
+        byte SRL_aIX_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue >> 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRL (IX+n) instruction
+        /// </summary>
+        byte SRL_aIX_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue >> 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRL (IY+n),A instruction
+        /// </summary>
+        byte SRL_aIY_plus_n_and_load_A(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue >> 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.A = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRL (IY+n),B instruction
+        /// </summary>
+        byte SRL_aIY_plus_n_and_load_B(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue >> 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.B = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRL (IY+n),C instruction
+        /// </summary>
+        byte SRL_aIY_plus_n_and_load_C(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue >> 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.C = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRL (IY+n),D instruction
+        /// </summary>
+        byte SRL_aIY_plus_n_and_load_D(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue >> 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.D = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRL (IY+n),E instruction
+        /// </summary>
+        byte SRL_aIY_plus_n_and_load_E(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue >> 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.E = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRL (IY+n),H instruction
+        /// </summary>
+        byte SRL_aIY_plus_n_and_load_H(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue >> 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.H = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRL (IY+n),L instruction
+        /// </summary>
+        byte SRL_aIY_plus_n_and_load_L(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue >> 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    		Registers.L = newValue;
+
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
+        }
+
+		/// <summary>
+        /// The SRL (IY+n) instruction
+        /// </summary>
+        byte SRL_aIY_plus_n(byte offset)
+        {
+            FetchFinished();
+
+			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var oldValue = ProcessorAgent.ReadFromMemory(address);
+	        var newValue = (byte)(oldValue >> 1);
+			ProcessorAgent.WriteToMemory(address, newValue);
+    
+			Registers.CF = oldValue.GetBit(0);
+            Registers.HF = 0;
+            Registers.NF = 0;
+            SetFlags3and5From(newValue);
+            Registers.SF = newValue.GetBit(7);
+            Registers.ZF = (newValue == 0);
+			Registers.PF = Parity[newValue];
+
+			return 23;
         }
 
 	}
