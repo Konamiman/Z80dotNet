@@ -41,17 +41,23 @@ Execution is completely synchronous: one single thread is used for everything, i
 
 Interaction of the processor with the hosting code and the outside world (memory and ports) can be achieved by handling the class events, by plugging custom implementations of the dependencies, or both at the same time.
 
+## Undocumented behavior implemented
+
+All the undocumented Z80 opcodes are implemented. As for the undocumented flag effects, all of them are implemented as per the [Undocumented Z80 documented](http://www.myquest.nl/z80undocumented/) document, except for the following:
+
+* The bit 3 and 5 flags for the BIT instruction
+* The H, C and P/V flags for the INI, INIR, IND, INDR, OUTI, OTIR, OUTD and OTDR instructions
+
 ## Done & to do
 
 This is a work in progress project. So far that's what is done:
 
 * [The Z80Processor class](Main/Z80Processor.cs) and all of its [dependencies](Docs/Dependencies.md).
-* [The infrastructure for executing instructions](Main/Instructions%20Execution/Core) and part of [the instructions themselves](Main/Instructions%20Execution/Instructions). All the single byte instructions and those prefixed with 0xED and 0xCB are implemented by now.
+* [The infrastructure for executing instructions](Main/Instructions%20Execution/Core) and all of [the instructions themselves](Main/Instructions%20Execution/Instructions).
 * [A good bunch of unit tests](Main.Tests).
 
 ...and that's what's left to do:
 
-* The rest of the instructions
 * The interrupts mechanism
 * The code could probably benefit from some optimizations for speed
 
