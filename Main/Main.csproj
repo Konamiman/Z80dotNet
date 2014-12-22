@@ -221,6 +221,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EX %28SP%29,HL + IX + IY    .tt</DependentUpon>
     </Compile>
+    <Compile Include="Instructions Execution\Instructions\JP %28HL%29 + JP %28IX%29 + JP %28IY%29      1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JP %28HL%29 + JP %28IX%29 + JP %28IY%29      .tt</DependentUpon>
+    </Compile>
     <Compile Include="Instructions Execution\Instructions\LD %28HL%29,n + LD %28IX+d%29,n + LD %28IY+d%29,n    1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -304,7 +309,10 @@
     <Compile Include="Instructions Execution\Instructions\EXX          .cs" />
     <Compile Include="Instructions Execution\Instructions\DI               .cs" />
     <Compile Include="Instructions Execution\Instructions\LD SP,HL   .cs" />
-    <Compile Include="Instructions Execution\Instructions\JP %28HL%29      .cs" />
+    <None Include="Instructions Execution\Instructions\JP %28HL%29 + JP %28IX%29 + JP %28IY%29      .tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>JP %28HL%29 + JP %28IX%29 + JP %28IY%29      1.cs</LastGenOutput>
+    </None>
     <Compile Include="Instructions Execution\Instructions\IN A,%28n%29     .cs" />
     <Compile Include="Instructions Execution\Instructions\PUSH rr + POP rr               .cs">
       <DependentUpon>PUSH rr + POP rr               .tt</DependentUpon>

@@ -102,14 +102,6 @@ namespace Konamiman.Z80dotNet
         //TODO: Move instructions to their own files when they are implemented.
 
         /// <summary>
-        /// The JP (IY) instruction.
-        /// </summary>
-        byte JP_aIY()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// The LD SP,IY instruction.
         /// </summary>
         byte LD_SP_IY()
