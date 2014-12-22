@@ -10,7 +10,10 @@ There is a [IExecutionStopper interface](../Main/Dependencies%20Interfaces/IExec
 
 * The `Execute` method of [IZ80InstructionsExecutor](../Main/Dependencies%20Interfaces/IZ80InstructionExecutor.cs) can invoke `Stop` through its `ProcessorAgent` property ([IZ80ProcessorAgent](../Main/Dependencies%20Interfaces/IZ80ProcessorAgent.cs) derives from [IExecutionStopper](../Main/Dependencies%20Interfaces/IExecutionStopper.cs)). Note however that the default implementation of  [IZ80InstructionsExecutor](../Main/Dependencies%20Interfaces/IZ80InstructionExecutor.cs) does never call `Stop`, however you can [implement your own version](Dependencies.md) that stops the execution under whatever circumstances you deem appropriate.
 
+* When handling [the before instruction fetch event](InstructionExecutionFlow.md) you can invoke `Stop` through the `ExecutionStopper` property of [BeforeInstructionFetchEventArgs](../Main/EventArgs/BeforeInstructionFetchEventArgs.cs). 
+
 * When handling [the after instruction execution event](InstructionExecutionFlow.md) you can invoke `Stop` through the `ExecutionStopper` property of [AfterInstructionExecutionEventArgs](../Main/EventArgs/AfterInstructionExecutionEventArgs.cs). 
+
 
 ### Auto stop on RET with stack empty
 
