@@ -147,6 +147,24 @@ namespace Konamiman.Z80dotNet
                 return 11;
             }
 
+            if(!InterruptsEnabled)
+                return 0;
+
+            var activeIntSource = InterruptSources.FirstOrDefault(s => s.IntLineIsActive);
+            if(activeIntSource == null)
+                return 0;
+
+            Registers.IFF1 = 0;
+            Registers.IFF2 = 0;
+
+            switch(InterruptMode) {
+                case 0:
+                    var opcode = activeIntSource.ValueOnDataBus.GetValueOrDefault(0xFF);
+                    InstructionExecutor.Execute(opcode);
+                    return 13;
+                    break;
+            }
+
             return 0;
         }
 

@@ -11,6 +11,7 @@ namespace Konamiman.Z80dotNet.Tests
         private const byte EI_opcode = 0xFB;
         private const byte HALT_opcode = 0x76;
         private const byte NOP_opcode = 0x00;
+        private const byte RST20h_opcode = 0xE7;
 
         Z80ProcessorForTests Sut { get; set; }
         Fixture Fixture { get; set; }
@@ -176,6 +177,106 @@ namespace Konamiman.Z80dotNet.Tests
 
             Assert.True(nmiFired);
             Assert.False(serviceRoutineInvoked);
+        }
+
+        #endregion
+
+        #region Accepting INT interrupts
+
+        [Test]
+        public void Int_acceptance_clears_IFF1_and_IFF2()
+        {
+            Sut.RegisterInterruptSource(InterruptSource1);
+
+            InterruptSource1.IntLineIsActive = true;
+            InterruptSource1.ValueOnDataBus = RST20h_opcode;
+
+            Sut.Memory[0] = NOP_opcode;
+            Sut.Memory[1] = RET_opcode;
+
+            Sut.Reset();
+            Sut.Registers.IFF1 = 1;
+            Sut.Registers.IFF1 = 1;
+            Sut.AutoStopOnRetWithStackEmpty = true;
+
+            Sut.BeforeInstructionFetch +=
+                (sender, args) =>
+                {
+                    if(Sut.Registers.PC == 1)
+                        args.ExecutionStopper.Stop();
+                };
+
+            Sut.Continue();
+
+            Assert.AreEqual(0, Sut.Registers.IFF1);
+            Assert.AreEqual(0, Sut.Registers.IFF2);
+        }
+
+        [Test]
+        public void Int_is_not_accepted_with_ints_disabled()
+        {
+            Sut.RegisterInterruptSource(InterruptSource1);
+
+            InterruptSource1.IntLineIsActive = true;
+            InterruptSource1.ValueOnDataBus = RST20h_opcode;
+
+            Sut.Memory[0] = NOP_opcode;
+            Sut.Memory[1] = RET_opcode;
+            Sut.Memory[0x20] = RET_opcode;
+            bool serviceRoutineInvoked = false;
+
+            Sut.Reset();
+            Sut.Registers.IFF1 = 0;
+            Sut.Registers.IFF2 = 0;
+            Sut.InterruptMode = 0;
+            Sut.AutoStopOnRetWithStackEmpty = true;
+
+            Sut.BeforeInstructionFetch +=
+                (sender, args) =>
+                {
+                    if(Sut.Registers.PC == 0x20)
+                        serviceRoutineInvoked = true;
+
+                    if(Sut.Registers.PC == 1)
+                        args.ExecutionStopper.Stop();
+                };
+
+            Sut.Continue();
+
+            Assert.False(serviceRoutineInvoked);
+        }
+
+        [Test]
+        public void Int_executes_opcode_from_data_bus_in_IM0_mode()
+        {
+            Sut.RegisterInterruptSource(InterruptSource1);
+
+            InterruptSource1.IntLineIsActive = true;
+            InterruptSource1.ValueOnDataBus = RST20h_opcode;
+
+            Sut.Memory[0] = NOP_opcode;
+            Sut.Memory[1] = RET_opcode;
+            Sut.Memory[0x20] = RET_opcode;
+            bool serviceRoutineInvoked = false;
+
+            Sut.Reset();
+            Sut.Registers.IFF1 = 1;
+            Sut.InterruptMode = 0;
+            Sut.AutoStopOnRetWithStackEmpty = true;
+
+            Sut.BeforeInstructionFetch +=
+                (sender, args) =>
+                {
+                    if(Sut.Registers.PC == 0x20)
+                        serviceRoutineInvoked = true;
+
+                    if(Sut.Registers.PC == 1)
+                        args.ExecutionStopper.Stop();
+                };
+
+            Sut.Continue();
+
+            Assert.True(serviceRoutineInvoked);
         }
 
         #endregion
