@@ -15,6 +15,9 @@ namespace Konamiman.Z80dotNet
         private const decimal MaxEffectiveClockSpeed = 100M;
         private const decimal MinEffectiveClockSpeed = 0.001M;
 
+        private const ushort NmiServiceRoutine = 0x66;
+        private const ushort Int1ServiceRoutine = 0x38;
+
         public Z80Processor()
         {
             ClockSynchronizer = new ClockSynchronizer();
@@ -111,6 +114,10 @@ namespace Konamiman.Z80dotNet
 
                 FireAfterInstructionExecutionEvent(totalTStates);
 
+                var interruptTStates = AcceptPendingInterrupt();
+                TStatesElapsedSinceStart += (ulong)interruptTStates;
+                TStatesElapsedSinceReset += (ulong)interruptTStates;
+
                 if(isSingleInstruction)
                     executionContext.StopReason = StopReason.ExecuteNextInstructionInvoked;
                 else
@@ -127,6 +134,20 @@ namespace Konamiman.Z80dotNet
             executionContext = null;
 
             return totalTStates;
+        }
+
+        private int AcceptPendingInterrupt()
+        {
+            if(executionContext.IsEiOrDiInstruction)
+                return 0;
+
+            if(NmiInterruptPending) {
+                Registers.IFF1 = 0;
+                this.ExecuteCall(NmiServiceRoutine);
+                return 11;
+            }
+
+            return 0;
         }
 
         private void ThrowIfNoFetchFinishedEventFired()
@@ -239,16 +260,6 @@ namespace Konamiman.Z80dotNet
         public int ExecuteNextInstruction()
         {
             return InstructionExecutionLoop(isSingleInstruction: true);
-        }
-
-        public void FireNonMaskableInterrupt()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void FireMaskableInterrupt(byte dataBusValue = 0xFF)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion

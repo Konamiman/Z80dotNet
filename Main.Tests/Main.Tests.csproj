@@ -120,6 +120,7 @@
     <Compile Include="Instructions Execution\RRA             .Tests.cs" />
     <Compile Include="Instructions Execution\RRCA           .Tests.cs" />
     <Compile Include="Instructions Execution\_InstructionsExecutionTestsBase.cs" />
+    <Compile Include="InterruptSourceForTests.cs" />
     <Compile Include="MainZ80RegistersTests.cs">
       <SubType>Code</SubType>
     </Compile>
