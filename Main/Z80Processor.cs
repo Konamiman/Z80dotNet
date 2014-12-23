@@ -165,6 +165,15 @@ namespace Konamiman.Z80dotNet
                 case 1:
                     InstructionExecutor.Execute(RST38h_opcode);
                     return 13;
+                case 2:
+                    var pointerAddress = NumberUtils.CreateShort(
+                        lowByte: activeIntSource.ValueOnDataBus.GetValueOrDefault(0xFF),
+                        highByte: Registers.I);
+                    var callAddress = NumberUtils.CreateShort(
+                        lowByte: Memory[pointerAddress],
+                        highByte: Memory[pointerAddress.Inc()]);
+                    this.ExecuteCall(callAddress.ToUShort());
+                    return 19;
             }
 
             return 0;
