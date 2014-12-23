@@ -108,19 +108,6 @@ namespace Konamiman.Z80dotNet
         /// <exception cref="InvalidOperationException">The method is invoked from within an event handler.</exception>
         int ExecuteNextInstruction();
 
-        /// <summary>
-        /// Simulates the arrival of a non-maskable interrupt request.
-        /// </summary>
-        void FireNonMaskableInterrupt();
-
-        /// <summary>
-        /// Simulates the arrival of a maskable interrupt request.
-        /// </summary>
-        /// <param name="dataBusValue">The value that the processor will read from the data bus,
-        /// relevant for the interrupt modes 0 and 2.</param>
-        /// <remarks>This method will have no effect if the IIF1 flag is set to zero.</remarks>
-        void FireMaskableInterrupt(byte dataBusValue = 0xFF);
-
         #endregion
 
         #region Information and state
