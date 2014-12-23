@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Konamiman.Z80dotNet
@@ -36,6 +37,7 @@ namespace Konamiman.Z80dotNet
             SetPortsSpaceAccessMode(0, PortSpaceSize, MemoryAccessMode.ReadAndWrite);
 
             Registers = new Z80Registers();
+            InterruptSources = new List<IZ80InterruptSource>();
 
             InstructionExecutor = new Z80InstructionExecutor();
 
@@ -365,6 +367,51 @@ namespace Konamiman.Z80dotNet
         public MemoryAccessMode GetPortAccessMode(byte portNumber)
         {
             return portsAccessModes[portNumber];
+        }
+
+        private IList<IZ80InterruptSource> InterruptSources { get; set; }
+
+        public void RegisterInterruptSource(IZ80InterruptSource source)
+        {
+            if(InterruptSources.Contains(source))
+                return;
+
+            InterruptSources.Add(source);
+            source.NmiInterruptPulse += (sender, args) => NmiInterruptPending = true;
+        }
+
+        private readonly object nmiInterruptPendingSync = new object();
+        private bool _nmiInterruptPending;
+        private bool NmiInterruptPending
+        {
+            get
+            {
+                lock(nmiInterruptPendingSync) {
+                    var value = _nmiInterruptPending;
+                    _nmiInterruptPending = false;
+                    return value;
+                }
+            }
+            set
+            {
+                lock(nmiInterruptPendingSync) {
+                    _nmiInterruptPending = value;
+                }
+            }
+        }
+
+        public IEnumerable<IZ80InterruptSource> GetRegisteredInterruptSources()
+        {
+            return InterruptSources.ToArray();
+        }
+
+        public void UnregisterAllInterruptSources()
+        {
+            foreach(var source in InterruptSources) {
+                source.NmiInterruptPulse -= (sender, args) => NmiInterruptPending = true;
+            }
+
+            InterruptSources.Clear();
         }
 
         #endregion

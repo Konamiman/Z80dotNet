@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Konamiman.Z80dotNet
 {
@@ -246,6 +247,32 @@ namespace Konamiman.Z80dotNet
         /// <returns>The current memory access mode for the port</returns>
         /// <exception cref="System.ArgumentException"><c>portNumber</c> is greater than 255.</exception>
         MemoryAccessMode GetPortAccessMode(byte portNumber);
+
+        /// <summary>
+        /// Registers a new interrupt source.
+        /// </summary>
+        /// <param name="source">Interrupt source to register</param>
+        /// <remarks>
+        /// After each instruction execution the processor will check if there is a non-maskable interrupt
+        /// or a maskable interrupt (in that order) pending  from any of the registered sources,
+        /// and process it as appropriate.
+        /// </remarks>
+        void RegisterInterruptSource(IZ80InterruptSource source);
+
+        /// <summary>
+        /// Retrieves a read-only collection of all the registered interrupt sources.
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<IZ80InterruptSource> GetRegisteredInterruptSources();
+
+        /// <summary>
+        /// Unregisters all the interrupt sources.
+        /// </summary>
+        /// <remarks>
+        /// After this method is executed there is no way for the processor to receive an interrupt request,
+        /// unless the <see cref="IZ80Processor.RegisterInterruptSource"/> method is invoked again.
+        /// </remarks>
+        void UnregisterAllInterruptSources();
 
         #endregion
 

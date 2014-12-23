@@ -131,6 +131,7 @@
     <Compile Include="Z80ProcessorForTests.cs" />
     <Compile Include="Z80ProcessorTests_Configuration.cs" />
     <Compile Include="Z80ProcessorTests_InstructionExecution.cs" />
+    <Compile Include="Z80ProcessorTests_Interrupts.cs" />
     <Compile Include="Z80ProcessorTests_MemoryAccess.cs" />
     <Compile Include="Z80RegistersTests.cs" />
   </ItemGroup>
