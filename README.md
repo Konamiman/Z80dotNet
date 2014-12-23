@@ -33,13 +33,14 @@ Debug.Assert(z80.TStatesElapsedSinceStart == 28);
 1. Create an instance of [the Z80Processor class](Main/Z80Processor.cs).
 2. Optionally, plug your own implementations of one or more of the [dependencies](Docs/Dependencies.md).
 3. [Configure your instance](Docs/Configuration.md) as appropriate.
-4. Optionally, capture [the memory access events](Docs/MemoryAccessFlow.md) and/or [the instruction execution events](Docs/InstructionExecutionFlow.md).
-5. [Start the simulated processor execution](Docs/HowExecutionWorks.md) by using one of the execution control methods.
-6. Execution will stop (and the execution method invoked will then return) when one of [the execution stop conditions is met](Docs/StopConditions.md). You can then check [the processor state](Docs/State.md) and, if desired, resume execution.   
+4. Optionally, register one or more [interrupt sources](Docs/interrupts.md).
+5. Optionally, capture [the memory access events](Docs/MemoryAccessFlow.md) and/or [the instruction execution events](Docs/InstructionExecutionFlow.md).
+6. [Start the simulated processor execution](Docs/HowExecutionWorks.md) by using one of the execution control methods.
+7. Execution will stop (and the execution method invoked will then return) when one of [the execution stop conditions is met](Docs/StopConditions.md). You can then check [the processor state](Docs/State.md) and, if desired, resume execution.   
 
 Execution is completely synchronous: one single thread is used for everything, including firing events. As seen in the Hello World example, you just invoke one of the starting methods and wait until it returns (there are means to force this to happen, see [the execution stop conditions](Docs/StopConditions.md)). If you want some kind of multithreading, you'll have to implement it by yourself, I just tried to keep things simple. :-)
 
-Interaction of the processor with the hosting code and the outside world (memory and ports) can be achieved by handling the class events, by plugging custom implementations of the dependencies, or both at the same time.
+Interaction of the processor with the hosting code and the outside world (memory and ports) can be achieved by handling the class events, by plugging custom implementations of the dependencies, or both at the same time. Interrupts can be genrated by using [interrupt sources](Docs/interrupts.md).
 
 ## Undocumented behavior implemented
 
@@ -47,19 +48,6 @@ All the undocumented Z80 opcodes are implemented. As for the undocumented flag e
 
 * The bit 3 and 5 flags for the BIT instruction
 * The H, C and P/V flags for the INI, INIR, IND, INDR, OUTI, OTIR, OUTD and OTDR instructions
-
-## Done & to do
-
-This is a work in progress project. So far that's what is done:
-
-* [The Z80Processor class](Main/Z80Processor.cs) and all of its [dependencies](Docs/Dependencies.md).
-* [The infrastructure for executing instructions](Main/Instructions%20Execution/Core) and all of [the instructions themselves](Main/Instructions%20Execution/Instructions).
-* [A good bunch of unit tests](Main.Tests).
-
-...and that's what's left to do:
-
-* The interrupts mechanism
-* The code could probably benefit from some optimizations for speed
 
 ## Resources
 

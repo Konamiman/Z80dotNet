@@ -33,7 +33,7 @@ This feature allows to use the processor class to exercise small pieces of Z80 c
 
 If the `AutoStopOnDiPlusHalt` property is [configured](Configuration.md) with a value of _true_, execution will stop after a `HALT` instruction is executed if interrupts were disabled prior to its execution.
 
-This property is _true_ by default and it is usually not a good idea to set it to _false_. Note that if this property is _false_ and a `HALT` instruction is executed with the interrupts disabled, the only way to stop execution is to manually invoke the `Stop` method as explained above.
+This property is _true_ by default and it is usually not a good idea to set it to _false_. Note that if this property is _false_ on a system that has no non-maskable [interrupt sources](Docs/interrupts.md) registered and a `HALT` instruction is executed with the interrupts disabled, the only way to stop execution is to manually invoke the `Stop` method as explained above.
 
 ### Unhandled exception
 
