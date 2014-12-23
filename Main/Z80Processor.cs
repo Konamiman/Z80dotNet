@@ -16,7 +16,7 @@ namespace Konamiman.Z80dotNet
         private const decimal MinEffectiveClockSpeed = 0.001M;
 
         private const ushort NmiServiceRoutine = 0x66;
-        private const ushort Int1ServiceRoutine = 0x38;
+        private const byte RST38h_opcode = 0xFF;
 
         public Z80Processor()
         {
@@ -162,7 +162,9 @@ namespace Konamiman.Z80dotNet
                     var opcode = activeIntSource.ValueOnDataBus.GetValueOrDefault(0xFF);
                     InstructionExecutor.Execute(opcode);
                     return 13;
-                    break;
+                case 1:
+                    InstructionExecutor.Execute(RST38h_opcode);
+                    return 13;
             }
 
             return 0;

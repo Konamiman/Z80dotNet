@@ -279,6 +279,39 @@ namespace Konamiman.Z80dotNet.Tests
             Assert.True(serviceRoutineInvoked);
         }
 
+        [Test]
+        public void Int1_executes_RST38h()
+        {
+            Sut.RegisterInterruptSource(InterruptSource1);
+
+            InterruptSource1.IntLineIsActive = true;
+            InterruptSource1.ValueOnDataBus = RST20h_opcode;
+
+            Sut.Memory[0] = NOP_opcode;
+            Sut.Memory[1] = RET_opcode;
+            Sut.Memory[0x38] = RET_opcode;
+            bool serviceRoutineInvoked = false;
+
+            Sut.Reset();
+            Sut.Registers.IFF1 = 1;
+            Sut.InterruptMode = 1;
+            Sut.AutoStopOnRetWithStackEmpty = true;
+
+            Sut.BeforeInstructionFetch +=
+                (sender, args) =>
+                {
+                    if(Sut.Registers.PC == 0x38)
+                        serviceRoutineInvoked = true;
+
+                    if(Sut.Registers.PC == 1)
+                        args.ExecutionStopper.Stop();
+                };
+
+            Sut.Continue();
+
+            Assert.True(serviceRoutineInvoked);
+        }
+
         #endregion
     }
 }
