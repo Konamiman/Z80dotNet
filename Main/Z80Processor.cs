@@ -190,6 +190,7 @@ namespace Konamiman.Z80dotNet
             executionContext.IsRetInstruction = e.IsRetInstruction;
             executionContext.IsLdSpInstruction = e.IsLdSpInstruction;
             executionContext.IsHaltInstruction = e.IsHaltInstruction;
+            executionContext.IsEiOrDiInstruction = e.IsEiOrDiInstruction;
 
             executionContext.SpAfterInstructionFetch = Registers.SP;
 
@@ -228,6 +229,8 @@ namespace Konamiman.Z80dotNet
             Registers.AF = 0xFFFF.ToShort();
             Registers.SP = 0xFFFF.ToShort();
             InterruptMode = 0;
+
+            NmiInterruptPending = false;
 
             TStatesElapsedSinceReset = 0;
             StartOfStack = Registers.SP;

@@ -24,5 +24,11 @@ namespace Konamiman.Z80dotNet
         /// a HALT instruction
         /// </summary>
         public bool IsHaltInstruction { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value that indicates if the instruction that has been executed was
+        /// an EI instruction or a DI instruction
+        /// </summary>
+        public bool IsEiOrDiInstruction { get; set; }
     }
 }

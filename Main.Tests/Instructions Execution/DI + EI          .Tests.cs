@@ -32,6 +32,24 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
 
         [Test]
+        [TestCase(EI_opcode)]
+        [TestCase(DI_opcode)]
+        public void EI_fires_FetchFinished_with_isEiOrDi_true(byte opcode)
+        {
+            var eventFired = false;
+
+            Sut.InstructionFetchFinished += (sender, e) =>
+            {
+                eventFired = true;
+                Assert.True(e.IsEiOrDiInstruction);
+            };
+
+            Execute(opcode);
+
+            Assert.IsTrue(eventFired);
+        }
+
+        [Test]
         [TestCase(DI_opcode)]
         [TestCase(EI_opcode)]
         public void DI_EI_do_not_change_flags(byte opcode)

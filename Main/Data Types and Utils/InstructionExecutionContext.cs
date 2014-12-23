@@ -66,6 +66,12 @@ namespace Konamiman.Z80dotNet
             set;
         }
 
+        public bool IsEiOrDiInstruction
+        {
+            get;
+            set;
+        }
+
         public short SpAfterInstructionFetch
         {
             get;

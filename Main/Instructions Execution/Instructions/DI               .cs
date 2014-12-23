@@ -7,7 +7,7 @@
         /// </summary>
         byte DI()
         {
-            FetchFinished();
+            FetchFinished(isEiOrDi: true);
 
             Registers.IFF1 = 0;
             Registers.IFF2 = 0;

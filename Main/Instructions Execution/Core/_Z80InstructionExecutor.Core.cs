@@ -98,13 +98,14 @@ namespace Konamiman.Z80dotNet
 
         #region Auxiliary methods
 
-        private void FetchFinished(bool isRet = false, bool isHalt = false, bool isLdSp = false)
+        private void FetchFinished(bool isRet = false, bool isHalt = false, bool isLdSp = false, bool isEiOrDi = false)
         {
             InstructionFetchFinished(this, new InstructionFetchFinishedEventArgs()
             {
                 IsRetInstruction = isRet,
                 IsHaltInstruction = isHalt,
-                IsLdSpInstruction = isLdSp
+                IsLdSpInstruction = isLdSp,
+                IsEiOrDiInstruction = isEiOrDi
             });
         }
 
