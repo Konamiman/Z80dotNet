@@ -16,6 +16,7 @@ namespace Konamiman.Z80dotNet
         private const decimal MinEffectiveClockSpeed = 0.001M;
 
         private const ushort NmiServiceRoutine = 0x66;
+        private const byte NOP_opcode = 0x00;
         private const byte RST38h_opcode = 0xFF;
 
         public Z80Processor()
@@ -97,7 +98,7 @@ namespace Konamiman.Z80dotNet
                 if(executionContext.MustStop)
                     break;
 
-                var executionTStates = InstructionExecutor.Execute(FetchNextOpcode());
+                var executionTStates = ExecuteNextOpcode();
                 
                 totalTStates = executionTStates + executionContext.AccummulatedMemoryWaitStates;
                 TStatesElapsedSinceStart += (ulong)totalTStates;
@@ -113,6 +114,9 @@ namespace Konamiman.Z80dotNet
                 }
 
                 FireAfterInstructionExecutionEvent(totalTStates);
+
+                if(!IsHalted)
+                    IsHalted = executionContext.IsHaltInstruction;
 
                 var interruptTStates = AcceptPendingInterrupt();
                 TStatesElapsedSinceStart += (ulong)interruptTStates;
@@ -136,12 +140,23 @@ namespace Konamiman.Z80dotNet
             return totalTStates;
         }
 
+        private int ExecuteNextOpcode()
+        {
+            if(IsHalted) {
+                executionContext.OpcodeBytes.Add(NOP_opcode);
+                return InstructionExecutor.Execute(NOP_opcode);
+            }
+
+            return InstructionExecutor.Execute(FetchNextOpcode());
+        }
+
         private int AcceptPendingInterrupt()
         {
             if(executionContext.IsEiOrDiInstruction)
                 return 0;
 
             if(NmiInterruptPending) {
+                IsHalted = false;
                 Registers.IFF1 = 0;
                 this.ExecuteCall(NmiServiceRoutine);
                 return 11;
@@ -156,6 +171,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.IFF1 = 0;
             Registers.IFF2 = 0;
+            IsHalted = false;
 
             switch(InterruptMode) {
                 case 0:
@@ -281,6 +297,7 @@ namespace Konamiman.Z80dotNet
             InterruptMode = 0;
 
             NmiInterruptPending = false;
+            IsHalted = false;
 
             TStatesElapsedSinceReset = 0;
             StartOfStack = Registers.SP;

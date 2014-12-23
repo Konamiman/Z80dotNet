@@ -239,7 +239,7 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.AutoStopOnRetWithStackEmpty = !autoStopOnDiPlusHalt;
 
             Sut.Memory[0] = DI_opcode;
-            Sut.Memory[1] = HALT_opcode;
+            Sut.Memory[1] = autoStopOnDiPlusHalt ? HALT_opcode : NOP_opcode;
             Sut.Memory[2] = RET_opcode;
 
             DoBeforeFetch(b => Sut.Registers.IFF1 = 0);
@@ -247,7 +247,7 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.Start();
 
             AssertExecuted(DI_opcode, 1);
-            AssertExecuted(HALT_opcode, 1);
+            AssertExecuted(HALT_opcode, autoStopOnDiPlusHalt ? 1 : 0);
             AssertExecuted(RET_opcode, autoStopOnDiPlusHalt ? 0 : 1);
 
             Assert.AreEqual(autoStopOnDiPlusHalt ? StopReason.DiPlusHalt : StopReason.RetWithStackEmpty, Sut.StopReason);
@@ -266,13 +266,25 @@ namespace Konamiman.Z80dotNet.Tests
 
             DoBeforeFetch(b => Sut.Registers.IFF1 = 1);
 
+            var instructionsExecutedCount = 0;
+
+            Sut.AfterInstructionExecution +=
+                (sender, args) =>
+                {
+                    if(instructionsExecutedCount == 5)
+                        args.ExecutionStopper.Stop();
+                    else
+                        instructionsExecutedCount++;
+                };
+
             Sut.Start();
 
             AssertExecuted(DI_opcode, 1);
             AssertExecuted(HALT_opcode, 1);
-            AssertExecuted(RET_opcode, 1);
+            AssertExecuted(RET_opcode, 0);
 
-            Assert.AreEqual(StopReason.RetWithStackEmpty, Sut.StopReason);
+            Assert.AreEqual(5, instructionsExecutedCount);
+            Assert.AreEqual(StopReason.StopInvoked, Sut.StopReason);
             Assert.AreEqual(ProcessorState.Stopped , Sut.State);
         }
 

@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using System;
+using Moq;
 using NUnit.Framework;
 using Ploeh.AutoFixture;
 
@@ -351,6 +352,93 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.Continue();
 
             Assert.True(serviceRoutineInvoked);
+        }
+
+        #endregion
+
+        #region Halt behavior
+
+        [Test]
+        public void Halt_causes_the_processor_to_execute_NOPs_without_increasing_SP()
+        {
+            Sut.Memory[0] = NOP_opcode;
+            Sut.Memory[1] = HALT_opcode;
+            Sut.Memory[2] = RET_opcode;
+            Sut.Memory[3] = RET_opcode;
+
+            Sut.AutoStopOnDiPlusHalt = false;
+
+            var maxPCreached = 0;
+            var instructionsExecutedCount = 0;
+            var nopsExecutedcount = 0;
+
+            Sut.BeforeInstructionFetch +=
+                (sender, args) =>
+                {
+                    maxPCreached = Math.Max(Sut.Registers.PC, maxPCreached);
+
+                    if(instructionsExecutedCount == 5)
+                        args.ExecutionStopper.Stop();
+
+                    instructionsExecutedCount++;
+                };
+
+            Sut.BeforeInstructionExecution +=
+                (sender, args) =>
+                {
+                    if(args.Opcode[0] == 0)
+                        nopsExecutedcount++;
+                };
+
+            Sut.Start();
+
+            Assert.True(Sut.IsHalted);
+            Assert.AreEqual(2, maxPCreached);
+            Assert.AreEqual(4, nopsExecutedcount);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void Halted_processor_awakes_on_interrupt(bool isNmi)
+        {
+            Sut.RegisterInterruptSource(InterruptSource1);
+
+            Sut.Memory[0] = NOP_opcode;
+            Sut.Memory[1] = HALT_opcode;
+            Sut.Memory[2] = RET_opcode;
+            Sut.Memory[3] = RET_opcode;
+            Sut.Memory[0x66] = RET_opcode;
+            Sut.Memory[0x38] = RET_opcode;
+
+            Sut.AutoStopOnDiPlusHalt = false;
+            Sut.AutoStopOnRetWithStackEmpty = true;
+            Sut.Reset();
+            Sut.Registers.IFF1 = 1;
+            Sut.InterruptMode = 1;
+
+            var instructionsExecutedCount = 0;
+
+            Sut.BeforeInstructionFetch +=
+                (sender, args) =>
+                {
+                    if(instructionsExecutedCount == 10)
+                        if(isNmi)
+                            InterruptSource1.FireNmi();
+                        else
+                            InterruptSource1.IntLineIsActive = true;
+
+                    if(instructionsExecutedCount == 15)
+                        args.ExecutionStopper.Stop();
+                    else
+                        instructionsExecutedCount++;
+                };
+
+            Sut.Continue();
+
+            Assert.False(Sut.IsHalted);
+            Assert.AreEqual(13, instructionsExecutedCount); //10 + extra NOP + RET on 0x66 + RET on 2
+            Assert.AreEqual(StopReason.RetWithStackEmpty, Sut.StopReason);
         }
 
         #endregion
