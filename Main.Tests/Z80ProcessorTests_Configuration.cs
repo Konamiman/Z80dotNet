@@ -10,7 +10,7 @@ namespace Konamiman.Z80dotNet.Tests
         private const int MemorySpaceSize = 65536;
         private const int PortSpaceSize = 256;
 
-        Z80Processor Sut { get; set; }
+        Z80ProcessorForTests Sut { get; set; }
         Fixture Fixture { get; set; }
 
         [SetUp]
@@ -18,7 +18,7 @@ namespace Konamiman.Z80dotNet.Tests
         {
             Fixture = new Fixture();
 
-            Sut = new Z80Processor();
+            Sut = new Z80ProcessorForTests();
         }
 
         [Test]
@@ -73,7 +73,8 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.Registers.AF = 0;
             Sut.Registers.SP = 0;
             Sut.InterruptMode = 1;
-
+            Sut.SetIsHalted();
+            
             Sut.Reset();
 
             Assert.AreEqual(0xFFFF.ToShort(), Sut.Registers.AF);
@@ -84,6 +85,8 @@ namespace Konamiman.Z80dotNet.Tests
             Assert.AreEqual(0, Sut.InterruptMode);
 
             Assert.AreEqual(0, Sut.TStatesElapsedSinceReset);
+
+            Assert.False(Sut.IsHalted);
         }
 
         [Test]

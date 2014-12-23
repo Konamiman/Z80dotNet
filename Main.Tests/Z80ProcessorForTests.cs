@@ -24,5 +24,10 @@
         {
             StartOfStack = value;
         }
+
+        public void SetIsHalted()
+        {
+            IsHalted = true;
+        }
     }
 }

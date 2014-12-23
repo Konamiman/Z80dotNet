@@ -322,7 +322,7 @@ namespace Konamiman.Z80dotNet
 
         public object UserState { get; set; }
 
-        public bool IsHalted { get; private set; }
+        public bool IsHalted { get; protected set; }
 
         private byte _InterruptMode;
         public byte InterruptMode
