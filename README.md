@@ -30,6 +30,8 @@ Debug.Assert(z80.TStatesElapsedSinceStart == 28);
 
 ## How to use
 
+For your convenience, you can add Z80.NET to your project [as a NuGet package](https://www.nuget.org/packages/Z80dotNet) if you want.
+
 1. Create an instance of [the Z80Processor class](Main/Z80Processor.cs).
 2. Optionally, plug your own implementations of one or more of the [dependencies](Docs/Dependencies.md).
 3. [Configure your instance](Docs/Configuration.md) as appropriate.
