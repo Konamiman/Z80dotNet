@@ -1,16 +1,15 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Main")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Z80.NET")]
+[assembly: AssemblyDescription("A Z80 processor simulator written in C#.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Sunhotels")]
-[assembly: AssemblyProduct("Main")]
-[assembly: AssemblyCopyright("Copyright © Sunhotels 2014")]
+[assembly: AssemblyCompany("Konamiman")]
+[assembly: AssemblyProduct("Z80.NET")]
+[assembly: AssemblyCopyright("Copyright © Konamiman 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

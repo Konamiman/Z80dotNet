@@ -1,0 +1,23 @@
+﻿namespace Konamiman.Z80dotNet
+{
+    public partial class Z80InstructionExecutor
+    {
+        /// <summary>
+        /// The DJNZ d instruction.
+        /// </summary>
+        byte DJNZ_d()
+        {
+            var offset = ProcessorAgent.FetchNextOpcode();
+            FetchFinished();
+
+            var oldValue = Registers.B;
+            Registers.B = oldValue.Dec();
+
+            if(oldValue == 1)
+                return 8;
+
+            Registers.PC = Registers.PC.AddSignedByte(offset);
+            return 13;
+        }
+    }
+}
