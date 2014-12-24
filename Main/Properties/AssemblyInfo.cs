@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Z80dotNet.Main")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Z80.NET")]
+[assembly: AssemblyDescription("A Z80 processor simulator written in C#.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Konamiman")]
-[assembly: AssemblyProduct("Z80dotNet")]
+[assembly: AssemblyProduct("Z80.NET")]
 [assembly: AssemblyCopyright("Copyright © Konamiman 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
