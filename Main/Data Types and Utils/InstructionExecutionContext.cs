@@ -36,6 +36,12 @@ namespace Konamiman.Z80dotNet
             PeekedOpcode = null;
         }
 
+        public bool ExecutingBeforeInstructionEvent
+        {
+            get; 
+            set;
+        }
+
         public bool FetchComplete
         {
             get;

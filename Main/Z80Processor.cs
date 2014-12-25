@@ -264,13 +264,19 @@ namespace Konamiman.Z80dotNet
             executionContext.LocalUserStateFromPreviousEvent = eventArgs.LocalUserState;
         }
 
-
         void FireBeforeInstructionFetchEvent()
         {
             var eventArgs = new BeforeInstructionFetchEventArgs(stopper: this);
 
-            if(BeforeInstructionFetch != null)
-                BeforeInstructionFetch(this, eventArgs);
+            if(BeforeInstructionFetch != null) {
+                executionContext.ExecutingBeforeInstructionEvent = true;
+                try {
+                    BeforeInstructionFetch(this, eventArgs);
+                }
+                finally {
+                    executionContext.ExecutingBeforeInstructionEvent = false;
+                }
+            }
 
             executionContext.LocalUserStateFromPreviousEvent = eventArgs.LocalUserState;
         }
@@ -823,7 +829,9 @@ namespace Konamiman.Z80dotNet
         public void Stop(bool isPause = false)
         {
             FailIfNoExecutionContext();
-            FailIfNoInstructionFetchComplete();
+
+            if(!executionContext.ExecutingBeforeInstructionEvent)
+                FailIfNoInstructionFetchComplete();
 
             executionContext.StopReason = 
                 isPause ? 
