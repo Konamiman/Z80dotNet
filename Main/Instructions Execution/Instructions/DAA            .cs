@@ -12,7 +12,7 @@
             FetchFinished();
 
             //Algorithm borrowed from MAME:
-            //http://mamedev.org/source/src/emu/cpu/z80/z80.c.html
+            //https://github.com/mamedev/mame/blob/master/src/emu/cpu/z80/z80.c
 
             var temp = Registers.A;
 

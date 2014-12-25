@@ -15,13 +15,16 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            var previousHighByte = Registers.H;
-            Registers.HL = Registers.HL.Add(Registers.BC);
-            var newHighByte = Registers.H;
-            Registers.CF = (previousHighByte.GetBit(7) == 1) && (newHighByte.GetBit(7) == 0);
-            Registers.HF = (newHighByte & 0x0F) < (previousHighByte & 0x0F);
+			var oldValue = Registers.HL;
+			var valueToAdd = Registers.BC;
+			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort());
+            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			Registers.HL = newValue;
+
+			Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x1000;
+            Registers.CF = (newValueInt & 0x10000);
             Registers.NF = 0;
-            SetFlags3and5From(newHighByte);
+            SetFlags3and5From(newValue.GetHighByte());
 
             return 11;
         }
@@ -33,13 +36,16 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            var previousHighByte = Registers.H;
-            Registers.HL = Registers.HL.Add(Registers.DE);
-            var newHighByte = Registers.H;
-            Registers.CF = (previousHighByte.GetBit(7) == 1) && (newHighByte.GetBit(7) == 0);
-            Registers.HF = (newHighByte & 0x0F) < (previousHighByte & 0x0F);
+			var oldValue = Registers.HL;
+			var valueToAdd = Registers.DE;
+			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort());
+            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			Registers.HL = newValue;
+
+			Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x1000;
+            Registers.CF = (newValueInt & 0x10000);
             Registers.NF = 0;
-            SetFlags3and5From(newHighByte);
+            SetFlags3and5From(newValue.GetHighByte());
 
             return 11;
         }
@@ -51,13 +57,16 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            var previousHighByte = Registers.H;
-            Registers.HL = Registers.HL.Add(Registers.HL);
-            var newHighByte = Registers.H;
-            Registers.CF = (previousHighByte.GetBit(7) == 1) && (newHighByte.GetBit(7) == 0);
-            Registers.HF = (newHighByte & 0x0F) < (previousHighByte & 0x0F);
+			var oldValue = Registers.HL;
+			var valueToAdd = Registers.HL;
+			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort());
+            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			Registers.HL = newValue;
+
+			Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x1000;
+            Registers.CF = (newValueInt & 0x10000);
             Registers.NF = 0;
-            SetFlags3and5From(newHighByte);
+            SetFlags3and5From(newValue.GetHighByte());
 
             return 11;
         }
@@ -69,13 +78,16 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            var previousHighByte = Registers.H;
-            Registers.HL = Registers.HL.Add(Registers.SP);
-            var newHighByte = Registers.H;
-            Registers.CF = (previousHighByte.GetBit(7) == 1) && (newHighByte.GetBit(7) == 0);
-            Registers.HF = (newHighByte & 0x0F) < (previousHighByte & 0x0F);
+			var oldValue = Registers.HL;
+			var valueToAdd = Registers.SP;
+			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort());
+            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			Registers.HL = newValue;
+
+			Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x1000;
+            Registers.CF = (newValueInt & 0x10000);
             Registers.NF = 0;
-            SetFlags3and5From(newHighByte);
+            SetFlags3and5From(newValue.GetHighByte());
 
             return 11;
         }
@@ -87,13 +99,16 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            var previousHighByte = Registers.IXH;
-            Registers.IX = Registers.IX.Add(Registers.BC);
-            var newHighByte = Registers.IXH;
-            Registers.CF = (previousHighByte.GetBit(7) == 1) && (newHighByte.GetBit(7) == 0);
-            Registers.HF = (newHighByte & 0x0F) < (previousHighByte & 0x0F);
+			var oldValue = Registers.IX;
+			var valueToAdd = Registers.BC;
+			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort());
+            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			Registers.IX = newValue;
+
+			Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x1000;
+            Registers.CF = (newValueInt & 0x10000);
             Registers.NF = 0;
-            SetFlags3and5From(newHighByte);
+            SetFlags3and5From(newValue.GetHighByte());
 
             return 15;
         }
@@ -105,13 +120,16 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            var previousHighByte = Registers.IXH;
-            Registers.IX = Registers.IX.Add(Registers.DE);
-            var newHighByte = Registers.IXH;
-            Registers.CF = (previousHighByte.GetBit(7) == 1) && (newHighByte.GetBit(7) == 0);
-            Registers.HF = (newHighByte & 0x0F) < (previousHighByte & 0x0F);
+			var oldValue = Registers.IX;
+			var valueToAdd = Registers.DE;
+			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort());
+            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			Registers.IX = newValue;
+
+			Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x1000;
+            Registers.CF = (newValueInt & 0x10000);
             Registers.NF = 0;
-            SetFlags3and5From(newHighByte);
+            SetFlags3and5From(newValue.GetHighByte());
 
             return 15;
         }
@@ -123,13 +141,16 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            var previousHighByte = Registers.IXH;
-            Registers.IX = Registers.IX.Add(Registers.IX);
-            var newHighByte = Registers.IXH;
-            Registers.CF = (previousHighByte.GetBit(7) == 1) && (newHighByte.GetBit(7) == 0);
-            Registers.HF = (newHighByte & 0x0F) < (previousHighByte & 0x0F);
+			var oldValue = Registers.IX;
+			var valueToAdd = Registers.IX;
+			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort());
+            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			Registers.IX = newValue;
+
+			Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x1000;
+            Registers.CF = (newValueInt & 0x10000);
             Registers.NF = 0;
-            SetFlags3and5From(newHighByte);
+            SetFlags3and5From(newValue.GetHighByte());
 
             return 15;
         }
@@ -141,13 +162,16 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            var previousHighByte = Registers.IXH;
-            Registers.IX = Registers.IX.Add(Registers.SP);
-            var newHighByte = Registers.IXH;
-            Registers.CF = (previousHighByte.GetBit(7) == 1) && (newHighByte.GetBit(7) == 0);
-            Registers.HF = (newHighByte & 0x0F) < (previousHighByte & 0x0F);
+			var oldValue = Registers.IX;
+			var valueToAdd = Registers.SP;
+			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort());
+            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			Registers.IX = newValue;
+
+			Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x1000;
+            Registers.CF = (newValueInt & 0x10000);
             Registers.NF = 0;
-            SetFlags3and5From(newHighByte);
+            SetFlags3and5From(newValue.GetHighByte());
 
             return 15;
         }
@@ -159,13 +183,16 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            var previousHighByte = Registers.IYH;
-            Registers.IY = Registers.IY.Add(Registers.BC);
-            var newHighByte = Registers.IYH;
-            Registers.CF = (previousHighByte.GetBit(7) == 1) && (newHighByte.GetBit(7) == 0);
-            Registers.HF = (newHighByte & 0x0F) < (previousHighByte & 0x0F);
+			var oldValue = Registers.IY;
+			var valueToAdd = Registers.BC;
+			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort());
+            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			Registers.IY = newValue;
+
+			Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x1000;
+            Registers.CF = (newValueInt & 0x10000);
             Registers.NF = 0;
-            SetFlags3and5From(newHighByte);
+            SetFlags3and5From(newValue.GetHighByte());
 
             return 15;
         }
@@ -177,13 +204,16 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            var previousHighByte = Registers.IYH;
-            Registers.IY = Registers.IY.Add(Registers.DE);
-            var newHighByte = Registers.IYH;
-            Registers.CF = (previousHighByte.GetBit(7) == 1) && (newHighByte.GetBit(7) == 0);
-            Registers.HF = (newHighByte & 0x0F) < (previousHighByte & 0x0F);
+			var oldValue = Registers.IY;
+			var valueToAdd = Registers.DE;
+			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort());
+            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			Registers.IY = newValue;
+
+			Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x1000;
+            Registers.CF = (newValueInt & 0x10000);
             Registers.NF = 0;
-            SetFlags3and5From(newHighByte);
+            SetFlags3and5From(newValue.GetHighByte());
 
             return 15;
         }
@@ -195,13 +225,16 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            var previousHighByte = Registers.IYH;
-            Registers.IY = Registers.IY.Add(Registers.IY);
-            var newHighByte = Registers.IYH;
-            Registers.CF = (previousHighByte.GetBit(7) == 1) && (newHighByte.GetBit(7) == 0);
-            Registers.HF = (newHighByte & 0x0F) < (previousHighByte & 0x0F);
+			var oldValue = Registers.IY;
+			var valueToAdd = Registers.IY;
+			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort());
+            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			Registers.IY = newValue;
+
+			Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x1000;
+            Registers.CF = (newValueInt & 0x10000);
             Registers.NF = 0;
-            SetFlags3and5From(newHighByte);
+            SetFlags3and5From(newValue.GetHighByte());
 
             return 15;
         }
@@ -213,13 +246,16 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            var previousHighByte = Registers.IYH;
-            Registers.IY = Registers.IY.Add(Registers.SP);
-            var newHighByte = Registers.IYH;
-            Registers.CF = (previousHighByte.GetBit(7) == 1) && (newHighByte.GetBit(7) == 0);
-            Registers.HF = (newHighByte & 0x0F) < (previousHighByte & 0x0F);
+			var oldValue = Registers.IY;
+			var valueToAdd = Registers.SP;
+			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort());
+            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			Registers.IY = newValue;
+
+			Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x1000;
+            Registers.CF = (newValueInt & 0x10000);
             Registers.NF = 0;
-            SetFlags3and5From(newHighByte);
+            SetFlags3and5From(newValue.GetHighByte());
 
             return 15;
         }
