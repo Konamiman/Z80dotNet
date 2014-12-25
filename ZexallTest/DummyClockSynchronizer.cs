@@ -16,7 +16,6 @@ namespace Konamiman.Z80dotNet.ZexallTest
 
         public void TryWait(int periodLengthInCycles)
         {
-            Thread.Sleep(1);
         }
     }
 }

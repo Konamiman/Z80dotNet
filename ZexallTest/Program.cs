@@ -23,36 +23,25 @@ namespace Konamiman.Z80dotNet.ZexallTest
             var z80 = new Z80Processor();
             z80.ClockSynchronizer = new DummyClockSynchronizer();
             z80.AutoStopOnRetWithStackEmpty = true;
-            z80.ClockFrequencyInMHz = 100;
             
             var program = File.ReadAllBytes(fileName);
             z80.Memory.SetContents(0x100, program);
 
             z80.Memory[6] = 0xFF;
             z80.Memory[7] = 0xFF;
-            z80.Memory[0x80] = 0;
 
             z80.BeforeInstructionFetch += Z80OnBeforeInstructionFetch;
-            z80.AfterInstructionExecution += Z80OnAfterInstructionExecution;
 
             z80.Reset();
             z80.Registers.PC = 0x100;
             z80.Continue();
         }
 
-        private void Z80OnAfterInstructionExecution(object sender, AfterInstructionExecutionEventArgs args)
-        {
-            if(args.LocalUserState is bool)
-                args.ExecutionStopper.Stop();
-        }
-
         private void Z80OnBeforeInstructionFetch(object sender, BeforeInstructionFetchEventArgs args)
         {
             var z80 = (IZ80Processor)sender;
 
-            if(z80.Registers.PC == 0)
-                args.LocalUserState = true;
-            else if(z80.Registers.PC != 5)
+            if(z80.Registers.PC != 5)
                 return;
 
             var function = z80.Registers.C;
@@ -73,9 +62,6 @@ namespace Konamiman.Z80dotNet.ZexallTest
                 var byteToPrint = z80.Registers.E;
                 var charToPrint = Encoding.ASCII.GetString(new[] {byteToPrint})[0];
                 Console.Write(charToPrint);
-            }
-            else if(function == 0 || function == 0x62) {
-                args.LocalUserState = true;
             }
 
             z80.ExecuteRet();
