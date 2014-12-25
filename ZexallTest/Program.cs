@@ -39,9 +39,13 @@ namespace Konamiman.Z80dotNet.ZexallTest
 
         private void Z80OnBeforeInstructionFetch(object sender, BeforeInstructionFetchEventArgs args)
         {
+            //Absolutely minimum implementation of CP/M for ZEXALL and ZEXDOC to work
+
             var z80 = (IZ80Processor)sender;
 
-            if(z80.Registers.PC != 5)
+            if(z80.Registers.PC == 0)
+                args.ExecutionStopper.Stop();
+            else if(z80.Registers.PC != 5)
                 return;
 
             var function = z80.Registers.C;

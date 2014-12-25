@@ -1,0 +1,68 @@
+﻿<adc,sbc> hl,<bc,de,hl,sp>....  ERROR **** crc expected:d48ad519 found:bc419286
+add hl,<bc,de,hl,sp>..........  ERROR **** crc expected:d9a4ca05 found:f619e543
+add ix,<bc,de,ix,sp>..........  ERROR **** crc expected:b1df8ec0 found:7ff09bc2
+add iy,<bc,de,iy,sp>..........  ERROR **** crc expected:39c8589b found:50419805
+aluop a,nn....................  ERROR **** crc expected:51c19c2e found:ff09e96c
+aluop a,<b,c,d,e,h,l,(hl),a>..  ERROR **** crc expected:06c7aa8e found:9bd4175b
+aluop a,<ixh,ixl,iyh,iyl>.....  ERROR **** crc expected:a886cc44 found:821c9e94
+aluop a,(<ix,iy>+1)...........  ERROR **** crc expected:d3f2d74a found:3436c3ce
+bit n,(<ix,iy>+1).............  OK
+bit n,<b,c,d,e,h,l,(hl),a>....  ERROR **** crc expected:5e020e98 found:d1c30f4c
+cpd<r>........................  OK
+cpi<r>........................  OK
+<daa,cpl,scf,ccf>.............  ERROR **** crc expected:6d2dd213 found:153a873e
+<inc,dec> a...................  OK
+<inc,dec> b...................  OK
+<inc,dec> bc..................  OK
+<inc,dec> c...................  OK
+<inc,dec> d...................  OK
+<inc,dec> de..................  OK
+<inc,dec> e...................  OK
+<inc,dec> h...................  OK
+<inc,dec> hl..................  OK
+<inc,dec> ix..................  OK
+<inc,dec> iy..................  OK
+<inc,dec> l...................  OK
+<inc,dec> (hl)................  OK
+<inc,dec> sp..................  OK
+<inc,dec> (<ix,iy>+1).........  OK
+<inc,dec> ixh.................  OK
+<inc,dec> ixl.................  OK
+<inc,dec> iyh.................  OK
+<inc,dec> iyl.................  OK
+ld <bc,de>,(nnnn).............  OK
+ld hl,(nnnn)..................  OK
+ld sp,(nnnn)..................  OK
+ld <ix,iy>,(nnnn).............  OK
+ld (nnnn),<bc,de>.............  OK
+ld (nnnn),hl..................  OK
+ld (nnnn),sp..................  OK
+ld (nnnn),<ix,iy>.............  OK
+ld <bc,de,hl,sp>,nnnn.........  OK
+ld <ix,iy>,nnnn...............  OK
+ld a,<(bc),(de)>..............  OK
+ld <b,c,d,e,h,l,(hl),a>,nn....  OK
+ld (<ix,iy>+1),nn.............  OK
+ld <b,c,d,e>,(<ix,iy>+1)......  OK
+ld <h,l>,(<ix,iy>+1)..........  OK
+ld a,(<ix,iy>+1)..............  OK
+ld <ixh,ixl,iyh,iyl>,nn.......  OK
+ld <bcdehla>,<bcdehla>........  OK
+ld <bcdexya>,<bcdexya>........  OK
+ld a,(nnnn) / ld (nnnn),a.....  OK
+ldd<r> (1)....................  OK
+ldd<r> (2)....................  OK
+ldi<r> (1)....................  OK
+ldi<r> (2)....................  OK
+neg...........................  ERROR **** crc expected:d638dd6a found:cc364590
+<rrd,rld>.....................  OK
+<rlca,rrca,rla,rra>...........  OK
+shf/rot (<ix,iy>+1)...........  OK
+shf/rot <b,c,d,e,h,l,(hl),a>..  OK
+<set,res> n,<bcdehl(hl)a>.....  OK
+<set,res> n,(<ix,iy>+1).......  OK
+ld (<ix,iy>+1),<b,c,d,e>......  OK
+ld (<ix,iy>+1),<h,l>..........  OK
+ld (<ix,iy>+1),a..............  OK
+ld (<bc,de>),a................  OK
+Tests completeTests complete

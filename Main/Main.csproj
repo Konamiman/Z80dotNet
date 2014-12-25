@@ -480,6 +480,7 @@
     <None Include="Instructions Execution\Instructions\OR r                --see AND r" />
     <None Include="Instructions Execution\Instructions\_Utils.t4" />
     <None Include="Main.nuspec" />
+    <Content Include="_Release Notes.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Instructions Execution\Core\Execute_xD_Instruction.tt">
