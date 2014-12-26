@@ -68,7 +68,8 @@ namespace Konamiman.Z80dotNet
 <# } else if(reg!="n") { #>
             var valueToAdd = Registers.<#=reg#>;
 <# } #>
-			var newValue = (byte)oldValue.<#=isAdd ? "Add" : "Sub"#>(valueToAdd<# if(withCarry) { #> + Registers.CF<# } #>);
+			var newValueInt = (int)oldValue <#=isAdd ? "+" : "-"#> (valueToAdd<# if(withCarry) { #> + Registers.CF<# } #>);
+			var newValue = (byte)(newValueInt & 0xFF);
 <# if(!isCompare) { #>
             Registers.A = newValue;
 <# } #>
@@ -79,23 +80,17 @@ namespace Konamiman.Z80dotNet
 			Registers.BC = counter;
 <# } #>
 
-            Registers.SF = newValue.GetBit(7);
+            Registers.SF = newValue & 0x80;
             Registers.ZF = (newValue == 0);
-            Registers.HF = (newValue & 0x0F) <#=isAdd ? "<" : ">" #> (oldValue & 0x0F);
+            Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x10;
 <# if (!isCompareInc) { #>
-            var oldValueMSB = oldValue.GetBit(7);
-            var newValueMSB = newValue.GetBit(7);
-            Registers.CF = (oldValueMSB == <#=isAdd ? 1 : 0 #>) && (newValueMSB == <#=isAdd ? 0 : 1 #>);
+            Registers.CF = (newValueInt & 0x100);
 <# } #>
-<# if (isAdd) { #>
-            Registers.PF = (oldValueMSB == valueToAdd.GetBit(7)) && (oldValueMSB != newValueMSB);
-<# } else if(isCompareInc) { #>
+<# if(isCompareInc) { #>
 			Registers.PF = (Registers.BC != 0);
 <# } else { #>
-			var valueToAddMSB = valueToAdd.GetBit(7);
-			Registers.PF = (oldValueMSB != valueToAddMSB) && (valueToAddMSB == newValueMSB);
+			Registers.PF = (oldValue ^ valueToAdd<#= isAdd ? " ^ 0x80" : ""#>) & (<#= isAdd ? "valueToAdd" : "oldValue"#> ^ newValue) & 0x80;
 <# } #>
-
             Registers.NF = <#=isAdd ? 0 : 1#>;
 <# if (isCompareInc) { #>
 			var valueForFlags3And5 = newValue.Sub(Registers.HF).GetLowByte();

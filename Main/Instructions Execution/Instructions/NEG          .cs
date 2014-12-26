@@ -15,7 +15,7 @@
 
             Registers.SF = newValue.GetBit(7);
             Registers.ZF = (newValue == 0);
-            Registers.HF = (oldValue != 0);
+            Registers.HF = (oldValue ^ newValue) & 0x10;
             Registers.PF = (oldValue == 0x80);
             Registers.NF = 1;
             Registers.CF = (oldValue != 0);
