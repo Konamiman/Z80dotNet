@@ -17,6 +17,7 @@ namespace Konamiman.Z80dotNet.ZexallTest
         private void Run(string[] args)
         {
             var fileName = args.Length == 0 ? "zexall.com" : args[0];
+            var testsToSkip = args.Length >= 2 ? int.Parse(args[1]) : 0;
 
             DollarCode = Encoding.ASCII.GetBytes(new[] {'$'})[0];
 
@@ -32,9 +33,20 @@ namespace Konamiman.Z80dotNet.ZexallTest
 
             z80.BeforeInstructionFetch += Z80OnBeforeInstructionFetch;
 
+            SkipTests(z80, testsToSkip);
+
             z80.Reset();
             z80.Registers.PC = 0x100;
             z80.Continue();
+        }
+
+        private static void SkipTests(Z80Processor z80, int testsToSkipCount)
+        {
+            ushort loadTestsAddress = 0x120;
+            ushort originalAddress = 0x13A;
+            ushort newTestAddress = (ushort) (originalAddress + testsToSkipCount*2);
+            z80.Memory[loadTestsAddress] = newTestAddress.GetLowByte();
+            z80.Memory[loadTestsAddress + 1] = newTestAddress.GetHighByte();
         }
 
         private void Z80OnBeforeInstructionFetch(object sender, BeforeInstructionFetchEventArgs args)
@@ -43,9 +55,11 @@ namespace Konamiman.Z80dotNet.ZexallTest
 
             var z80 = (IZ80Processor)sender;
 
-            if(z80.Registers.PC == 0)
+            if (z80.Registers.PC == 0) {
                 args.ExecutionStopper.Stop();
-            else if(z80.Registers.PC != 5)
+                return;
+            }
+            else if (z80.Registers.PC != 5)
                 return;
 
             var function = z80.Registers.C;

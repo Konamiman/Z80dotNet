@@ -14,16 +14,20 @@
             //Algorithm borrowed from MAME:
             //https://github.com/mamedev/mame/blob/master/src/emu/cpu/z80/z80.c
 
-            var temp = Registers.A;
+            var oldValue = Registers.A;
+            var newValue = oldValue;
 
-            if(Registers.HF || (Registers.A & 0x0F) > 9) temp = (byte)temp.Add(Registers.NF ? 0xFA : 0x06);
-            if(Registers.CF || Registers.A > 0x99) temp = (byte)temp.Add(Registers.NF ? 0xA0 : 0x60);
+            if(Registers.HF || (oldValue & 0x0F) > 9) newValue = (byte)newValue.Add(Registers.NF ? -0x06 : 0x06); //FA
+            if(Registers.CF || oldValue > 0x99) newValue = (byte)newValue.Add(Registers.NF ? -0x60 : 0x60); //A0
 
-            Registers.F = (byte)((Registers.F & CF_NF) | (Registers.A > 0x99 ? 1 : 0) | ((Registers.A ^ temp) & 0x0F) | (temp & 0x80));
-            Registers.A = temp;
+            Registers.CF |= (oldValue > 0x99);
+            Registers.HF = ((oldValue ^ newValue) & 0x10);
+            Registers.SF = (newValue & 0x80);
+            Registers.ZF = (newValue == 0);
+            Registers.PF = Parity[newValue];
+            SetFlags3and5From(newValue);
 
-            SetFlags3and5From(temp);
-            Registers.PF = Parity[temp];
+            Registers.A = newValue;
 
             return 4;
         }

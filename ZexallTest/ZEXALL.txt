@@ -1,11 +1,12 @@
-﻿<adc,sbc> hl,<bc,de,hl,sp>....  ERROR **** crc expected:d48ad519 found:bc419286
-add hl,<bc,de,hl,sp>..........  ERROR **** crc expected:d9a4ca05 found:f619e543
-add ix,<bc,de,ix,sp>..........  ERROR **** crc expected:b1df8ec0 found:7ff09bc2
-add iy,<bc,de,iy,sp>..........  ERROR **** crc expected:39c8589b found:50419805
+﻿Z80 instruction exerciser
+<adc,sbc> hl,<bc,de,hl,sp>....  OK
+add hl,<bc,de,hl,sp>..........  OK
+add ix,<bc,de,ix,sp>..........  OK
+add iy,<bc,de,iy,sp>..........  OK
 aluop a,nn....................  ERROR **** crc expected:51c19c2e found:ff09e96c
-aluop a,<b,c,d,e,h,l,(hl),a>..  ERROR **** crc expected:06c7aa8e found:9bd4175b
-aluop a,<ixh,ixl,iyh,iyl>.....  ERROR **** crc expected:a886cc44 found:821c9e94
-aluop a,(<ix,iy>+1)...........  ERROR **** crc expected:d3f2d74a found:3436c3ce
+aluop a,<b,c,d,e,h,l,(hl),a>..  ERROR **** crc expected:06c7aa8e found:ae5ece1e
+aluop a,<ixh,ixl,iyh,iyl>.....  ERROR **** crc expected:a886cc44 found:c61652dc
+aluop a,(<ix,iy>+1)...........  ERROR **** crc expected:d3f2d74a found:8ea1fb41
 bit n,(<ix,iy>+1).............  OK
 bit n,<b,c,d,e,h,l,(hl),a>....  ERROR **** crc expected:5e020e98 found:d1c30f4c
 cpd<r>........................  OK
@@ -54,7 +55,7 @@ ldd<r> (1)....................  OK
 ldd<r> (2)....................  OK
 ldi<r> (1)....................  OK
 ldi<r> (2)....................  OK
-neg...........................  ERROR **** crc expected:d638dd6a found:cc364590
+neg...........................  OK
 <rrd,rld>.....................  OK
 <rlca,rrca,rla,rra>...........  OK
 shf/rot (<ix,iy>+1)...........  OK
@@ -65,4 +66,4 @@ ld (<ix,iy>+1),<b,c,d,e>......  OK
 ld (<ix,iy>+1),<h,l>..........  OK
 ld (<ix,iy>+1),a..............  OK
 ld (<bc,de>),a................  OK
-Tests completeTests complete
+Tests complete
