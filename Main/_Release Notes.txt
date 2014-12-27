@@ -1,7 +1,0 @@
-﻿Z80.NET Release Notes
----------------------
-
-
-* v1.0.1
-
-- FIX: Invoking ExecutionStopper.Stop from the BerforeInstructionFetch event throws InstructionFetchFinishedEventNotFiredException.

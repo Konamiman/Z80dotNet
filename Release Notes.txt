@@ -1,0 +1,9 @@
+﻿Z80.NET Release Notes
+---------------------
+
+
+* v1.0.1
+
+- FIX: Invoking ExecutionStopper.Stop from the BerforeInstructionFetch event was throwing InstructionFetchFinishedEventNotFiredException.
+
+- FIX: Flags calculation was wrong for ADD, ADC, SUB, SBC, CP, NEG and DAA instructions. With this fix the Z80Processor class passes the ZEXDOC test (https://github.com/KnightOS/z80e/blob/master/gpl/zexdoc.src).
