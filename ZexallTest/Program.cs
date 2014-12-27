@@ -1,10 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 
 namespace Konamiman.Z80dotNet.ZexallTest
 {
+    //ZEXALL and ZEXDOC tests executor
+    //Usage:
+    //ZexallTest - run all ZEXALL tests
+    //ZexallTest zexdoc.com - run all ZEXDOC tests
+    //ZexallTests zexall.com|zexdoc.com n - run all tests after skipping the first n
+
     class Program
     {
         private static byte DollarCode;
@@ -35,9 +42,15 @@ namespace Konamiman.Z80dotNet.ZexallTest
 
             SkipTests(z80, testsToSkip);
 
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
             z80.Reset();
             z80.Registers.PC = 0x100;
             z80.Continue();
+
+            sw.Stop();
+            Console.WriteLine("\r\nElapsed time: " + sw.Elapsed);
         }
 
         private static void SkipTests(Z80Processor z80, int testsToSkipCount)

@@ -97,7 +97,7 @@ namespace Konamiman.Z80dotNet
 			Registers.Flag3 = valueForFlags3And5.GetBit(3);
 			Registers.Flag5 = valueForFlags3And5.GetBit(1);
 <# } else { #>
-			SetFlags3and5From(newValue);
+			SetFlags3and5From(<#=isCP ? "valueToAdd" : "newValue"#>);
 <# } #>
 <# if(isCompareRepeat) { #>
 
