@@ -36,6 +36,6 @@ The [IClockSynchronizer](../Main/Dependencies%20Interfaces/IClockSynchronizer.cs
 
 The default implementation is [ClockSynchronizer](../Main/Dependencies%20Implementations/ClockSynchronizer.cs), a class that indeed uses a workaround: its `TryWait` method just increases an internal counter of T states, and the actual thread pausing is performed only when this counter reaches a certain suitable value.
 
-[IZ80Processor](../Main/IZ80Processor.cs) holds one instance of IZ80InstructionExecutor in the `ClockSynchronizer ` property.
+[IZ80Processor](../Main/IZ80Processor.cs) holds one instance of IZ80InstructionExecutor in the `ClockSynchronizer ` property. This property can be set to _null_, in this case no clock syncrhonization will be performed and the simulation will run at the maximum speed that the host system can provide. This is useful if you are not interested on simulating the exact speed of an existing system, but just run Z80 code as quickly as possible.
 
 _NOTE:_ Real time syncrhonization is not performed when the processor is running in single instruction execution mode. See the documentation about [the execution control methods](ExecutionControlMethods.md).

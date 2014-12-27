@@ -4,7 +4,7 @@ The [Z80Processor class](../Main/Z80Processor.cs) can be configured by using a s
 
 _NOTE:_ Remember that plugging [custom dependencies](Dependencies.md) is an alternative (or complementary) way to customize the behavior of the processor class.
 
-* **`AutoSopOnDiPlusHalt`**:  When this value is true, the processor execution will stop automatically if a HALT instruction is executed when interrupts are disabled. See the [execution stop conditions](StopConditions.md) documentation for details. The default value is _true_.
+* **`AutoStopOnDiPlusHalt`**:  When this value is true, the processor execution will stop automatically if a HALT instruction is executed when interrupts are disabled. See the [execution stop conditions](StopConditions.md) documentation for details. The default value is _true_.
 
 * **`AutoStopOnRetWithStackEmpty `**: When this value is true, the processor execution will stop automatically if a RET instruction is executed when the stack is empty. See the [execution stop conditions](StopConditions.md) documentation for details. The default value is _false_.
 
