@@ -29,7 +29,7 @@ namespace Konamiman.Z80dotNet.ZexallTest
             DollarCode = Encoding.ASCII.GetBytes(new[] {'$'})[0];
 
             var z80 = new Z80Processor();
-            z80.ClockSynchronizer = new DummyClockSynchronizer();
+            z80.ClockSynchronizer = null;
             z80.AutoStopOnRetWithStackEmpty = true;
             
             var program = File.ReadAllBytes(fileName);

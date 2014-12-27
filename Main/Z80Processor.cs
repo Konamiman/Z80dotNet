@@ -84,7 +84,7 @@ namespace Konamiman.Z80dotNet
 
         private int InstructionExecutionLoopCore(bool isSingleInstruction)
         {
-            ClockSynchronizer.Start();
+            if(clockSynchronizer != null) clockSynchronizer.Start();
             executionContext = new InstructionExecutionContext();
             StopReason = StopReason.NotApplicable;
             State = ProcessorState.Running;
@@ -119,16 +119,18 @@ namespace Konamiman.Z80dotNet
                     IsHalted = executionContext.IsHaltInstruction;
 
                 var interruptTStates = AcceptPendingInterrupt();
+                totalTStates += interruptTStates;
                 TStatesElapsedSinceStart += (ulong)interruptTStates;
                 TStatesElapsedSinceReset += (ulong)interruptTStates;
 
                 if(isSingleInstruction)
                     executionContext.StopReason = StopReason.ExecuteNextInstructionInvoked;
-                else
-                    ClockSynchronizer.TryWait(totalTStates);
+                else if(clockSynchronizer != null)
+                    clockSynchronizer.TryWait(totalTStates);
             }
 
-            ClockSynchronizer.Stop();
+            if(clockSynchronizer != null)
+                clockSynchronizer.Stop();
             this.StopReason = executionContext.StopReason;
             this.State =
                 StopReason == StopReason.PauseInvoked
@@ -508,7 +510,8 @@ namespace Konamiman.Z80dotNet
                 throw new ArgumentException(string.Format("Clock frequency multiplied by clock speed factor must be a number between {0} and {1}", MinEffectiveClockSpeed, MaxEffectiveClockSpeed));
 
             this.effectiveClockFrequency = effectiveClockFrequency;
-            ClockSynchronizer.EffectiveClockFrequencyInMHz = effectiveClockFrequency;
+            if(clockSynchronizer != null)
+                clockSynchronizer.EffectiveClockFrequencyInMHz = effectiveClockFrequency;
         }
 
         private decimal _ClockSpeedFactor = 1;
@@ -595,10 +598,10 @@ namespace Konamiman.Z80dotNet
             }
             set
             {
-                if(value == null)
-                    throw new ArgumentNullException("ClockSynchronizationHelper");
-
                 clockSynchronizer = value;
+                if (value == null)
+                    return;
+
                 clockSynchronizer.EffectiveClockFrequencyInMHz = effectiveClockFrequency;
             }
         }

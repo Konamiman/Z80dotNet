@@ -12,7 +12,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>$description$</summary>
 	<description>Z80.NET is a Z80 processor simulator complete with all instructions (documented and undocumented) and support for interrupts. Memory and port access can be controlled via events or by plugging custom memory space implementations, while interrupts are handled by plugging one or more custom interrupt sources. Use Z80.NET to exercise pieces of Z80 code or to create your dream 8 bit computer emulator!</description>
-    <releaseNotes>Fixed the flags calculation for the ADD, ADC, SUB, SBC, CP, NEG and DAA instructions. Now the Z80Processor class passes the ZEXDOC test.</releaseNotes>
+    <releaseNotes>Fixed the flags 3 and 5 calculation for the CP instructions. Now the Z80Processor class passes the ZEXALL test except for the BIT instruction. Also, Z80Processor.ClockSyncrhonizer can now be set to null in order to disable clock syncrhonization and run the simulation at the maximum possible speed.</releaseNotes>
     <copyright>Copyright (c) 2014 Konamiman</copyright>
     <tags></tags>
   </metadata>
