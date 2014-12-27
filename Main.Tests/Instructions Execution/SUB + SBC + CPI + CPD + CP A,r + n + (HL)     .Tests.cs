@@ -268,8 +268,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
         [Test]
         [TestCaseSource("SUB_SBC_A_r_Source")]
-        [TestCaseSource("CP_r_Source")]
-        public void SUB_SBC_CP_r_sets_bits_3_and_5_from_result(string src, byte opcode, int cf, byte? prefix)
+        public void SUB_SBC_r_sets_bits_3_and_5_from_result(string src, byte opcode, int cf, byte? prefix)
         {
             Setup(src, (byte)(((byte)0).WithBit(3, 1).WithBit(5, 0) + 1), 1);
             Execute(opcode, prefix);
