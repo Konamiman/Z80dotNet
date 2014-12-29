@@ -24,7 +24,7 @@ namespace Konamiman.NestorMSX.Tests
         {
             var address = (ushort)(page * 16384);
             var sut = Z80Page.FromAddress(address);
-            Assert.AreEqual(page, sut.PageNumber);
+            Assert.AreEqual(page, sut.Value);
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace Konamiman.NestorMSX.Tests
         public void Page_number_can_be_retrieved_via_PageNumber_property(int page)
         {
             var sut = new Z80Page(page);
-            Assert.AreEqual(page, sut.PageNumber);
+            Assert.AreEqual(page, sut.Value);
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace Konamiman.NestorMSX.Tests
         {
             var sut = new Z80Page(page);
             var pageNumber = (int)sut;
-            Assert.AreEqual(sut.PageNumber, pageNumber);
+            Assert.AreEqual(sut.Value, pageNumber);
         }
 
         [Test]
@@ -88,7 +88,7 @@ namespace Konamiman.NestorMSX.Tests
         public void Can_be_implicitly_cast_from_int(int page)
         {
             var sut = (Z80Page)page;
-            Assert.AreEqual(page, sut.PageNumber);
+            Assert.AreEqual(page, sut.Value);
         }
 
         [Test]

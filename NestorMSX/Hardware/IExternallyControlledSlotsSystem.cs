@@ -14,7 +14,7 @@ namespace Konamiman.NestorMSX.Hardware
         /// </summary>
         /// <param name="primarySlotNumber">The primary slot number to check</param>
         /// <returns>True if the slot is expanded, false otherwise</returns>
-        bool IsExpanded(int primarySlotNumber);
+        bool IsExpanded(TwinBit primarySlotNumber);
 
         /// <summary>
         /// Enables a given slot on a given page.

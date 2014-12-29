@@ -89,7 +89,7 @@ namespace Konamiman.NestorMSX.Hardware
 
         public event EventHandler<SlotSelectionRegisterWrittenEventArgs> SlotSelectionRegisterWritten;
 
-        public bool IsExpanded(int primarySlotNumber)
+        public bool IsExpanded(TwinBit primarySlotNumber)
         {
             return isExpanded[primarySlotNumber];
         }
