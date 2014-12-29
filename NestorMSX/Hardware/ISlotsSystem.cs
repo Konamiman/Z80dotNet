@@ -1,4 +1,5 @@
-﻿using Konamiman.Z80dotNet;
+﻿using System;
+using Konamiman.Z80dotNet;
 
 namespace Konamiman.NestorMSX.Hardware
 {
@@ -18,5 +19,10 @@ namespace Konamiman.NestorMSX.Hardware
         /// </summary>
         /// <returns>Current value of the slot selection register</returns>
         byte ReadSlotSelectionRegister();
+
+        /// <summary>
+        /// Event triggered whenever the slot selection register is written to.
+        /// </summary>
+        event EventHandler<SlotSelectionRegisterWrittenEventArgs> SlotSelectionRegisterWritten;
     }
 }

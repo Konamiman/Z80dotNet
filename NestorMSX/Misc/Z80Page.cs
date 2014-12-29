@@ -76,6 +76,11 @@ namespace Konamiman.NestorMSX.Misc
                 return base.Equals(obj);
         }
 
+        public override int GetHashCode()
+        {
+            return PageNumber;
+        }
+
         #endregion
     }
 }

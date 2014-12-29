@@ -52,6 +52,9 @@
     </Compile>
     <Compile Include="Hardware\IExternallyControlledSlotsSystem.cs" />
     <Compile Include="Hardware\ISlotsSystem.cs" />
+    <Compile Include="Hardware\NotConnectedMemory.cs" />
+    <Compile Include="Hardware\SlotSelectionRegisterWrittenEventArgs.cs" />
+    <Compile Include="Hardware\SlotsSystem.cs" />
     <Compile Include="Misc\SlotNumber.cs" />
     <Compile Include="Misc\Z80Page.cs" />
     <Compile Include="Program.cs" />

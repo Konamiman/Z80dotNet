@@ -101,6 +101,19 @@ namespace Konamiman.NestorMSX.Misc
                 return base.Equals(obj);
         }
 
+        public override int GetHashCode()
+        {
+            return EncodedByte;
+        }
+
         #endregion
+
+        public override string ToString()
+        {
+            if(IsExpandedSlot)
+                return string.Format("{0}-{1}", PrimarySlotNumber, SubSlotNumber);
+            else
+                return PrimarySlotNumber.ToString();
+        }
     }
 }

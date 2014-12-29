@@ -10,6 +10,13 @@ namespace Konamiman.NestorMSX.Hardware
     public interface IExternallyControlledSlotsSystem : ISlotsSystem
     {
         /// <summary>
+        /// Gets a value indicating whether a given slot number is expanded.
+        /// </summary>
+        /// <param name="primarySlotNumber">The primary slot number to check</param>
+        /// <returns>True if the slot is expanded, false otherwise</returns>
+        bool IsExpanded(int primarySlotNumber);
+
+        /// <summary>
         /// Enables a given slot on a given page.
         /// </summary>
         /// <param name="page">Page number to enable the slot in</param>

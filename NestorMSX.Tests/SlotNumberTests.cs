@@ -151,6 +151,5 @@ namespace Konamiman.NestorMSX.Tests
         {
             return (byte)(Fixture.Create<byte>() & 3);
         }
-
     }
 }
