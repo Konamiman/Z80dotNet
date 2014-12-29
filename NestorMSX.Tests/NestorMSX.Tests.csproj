@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SlotNumberTests.cs" />
     <Compile Include="Z80PageTests.cs" />
   </ItemGroup>
   <ItemGroup>
