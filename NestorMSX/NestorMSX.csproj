@@ -50,6 +50,8 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Hardware\IExternallyControlledSlotsSystem.cs" />
+    <Compile Include="Hardware\ISlotsSystem.cs" />
     <Compile Include="Misc\SlotNumber.cs" />
     <Compile Include="Misc\Z80Page.cs" />
     <Compile Include="Program.cs" />
@@ -77,7 +79,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Main\Main.csproj">
+      <Project>{BBA3EC3E-C8F8-421C-A450-5C206BACDC98}</Project>
+      <Name>Main</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
