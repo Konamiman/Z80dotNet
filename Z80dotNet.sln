@@ -29,6 +29,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{43991AEE-1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZexallTest", "ZexallTest\ZexallTest.csproj", "{8BBEA494-2013-481A-B38C-735F22B93D73}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NestorMSX", "NestorMSX\NestorMSX.csproj", "{68EDF6DD-384A-4264-A64D-E67A58DFC9BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NestorMSX.Tests", "NestorMSX.Tests\NestorMSX.Tests.csproj", "{6E291429-F27C-4BBE-BF0A-DB35C4A960BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +51,14 @@ Global
 		{8BBEA494-2013-481A-B38C-735F22B93D73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BBEA494-2013-481A-B38C-735F22B93D73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BBEA494-2013-481A-B38C-735F22B93D73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68EDF6DD-384A-4264-A64D-E67A58DFC9BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68EDF6DD-384A-4264-A64D-E67A58DFC9BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68EDF6DD-384A-4264-A64D-E67A58DFC9BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68EDF6DD-384A-4264-A64D-E67A58DFC9BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E291429-F27C-4BBE-BF0A-DB35C4A960BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E291429-F27C-4BBE-BF0A-DB35C4A960BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E291429-F27C-4BBE-BF0A-DB35C4A960BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E291429-F27C-4BBE-BF0A-DB35C4A960BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
