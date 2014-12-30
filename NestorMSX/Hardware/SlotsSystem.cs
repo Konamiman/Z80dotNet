@@ -20,6 +20,8 @@ namespace Konamiman.NestorMSX.Hardware
         private SlotNumber[] visibleSlotNumbers;
         private IDictionary<ushort, IMemory> visibleSlotContents;
         private byte slotSelectionRegisterValue;
+        private bool slotVisibleInPage3IsExpanded = false;
+        private Dictionary<TwinBit, TwinBit[]> secondarySlotsSelectedForEachPrimarySlot;
 
         public SlotsSystem(IDictionary<SlotNumber, IMemory> slotContents)
         {
@@ -35,7 +37,19 @@ namespace Konamiman.NestorMSX.Hardware
 
             this.slotContents = new Dictionary<SlotNumber, IMemory>(slotContents);
             FillMissingSlotContentsWithNotConnectedMemory();
+            FillSecondarySlotsSelectedForEachPrimarySlotTable();
             SetAllPagesToSlotZero();
+        }
+
+        private void FillSecondarySlotsSelectedForEachPrimarySlotTable()
+        {
+            secondarySlotsSelectedForEachPrimarySlot = new Dictionary<TwinBit, TwinBit[]>();
+            for(int primarySlot = 0; primarySlot < 4; primarySlot++) {
+                if(!IsExpanded(primarySlot))
+                    continue;
+
+                secondarySlotsSelectedForEachPrimarySlot[primarySlot] = new TwinBit[] {0, 0, 0, 0};
+            }
         }
 
         private void SetAllPagesToSlotZero()
@@ -48,7 +62,8 @@ namespace Konamiman.NestorMSX.Hardware
             for(int page = 0; page < 4; page++) {
                 visibleSlotContents[((Z80Page)page).AddressMask] = slotZeroContents;
             }
-            
+
+            slotVisibleInPage3IsExpanded = isExpanded[0];
             slotSelectionRegisterValue = 0;
         }
 
@@ -118,13 +133,25 @@ namespace Konamiman.NestorMSX.Hardware
                 Z80Page page = p;
                 var primarySlotNumber = value & 3;
                 var slotNumber = slotContents.Keys.First(s => s.PrimarySlotNumber == primarySlotNumber); //TODO: Handle subslots
-                visibleSlotNumbers[page] = slotNumber;
-                visibleSlotContents[page.AddressMask] = slotContents[slotNumber];
+                SetVisibleSlot(page, slotNumber);
                 value >>= 2;
             }
 
             if(SlotSelectionRegisterWritten != null)
                 SlotSelectionRegisterWritten(this, new SlotSelectionRegisterWrittenEventArgs(slotSelectionRegisterValue));
+        }
+
+        private void SetVisibleSlot(Z80Page page, SlotNumber slotNumber)
+        {
+            visibleSlotNumbers[page] = slotNumber;
+            visibleSlotContents[page.AddressMask] = slotContents[slotNumber];
+            UpdateSlotVisibleInPage3IsExpanded(page, slotNumber);
+        }
+
+        private void UpdateSlotVisibleInPage3IsExpanded(Z80Page page, SlotNumber slotNumber)
+        {
+            if(page == 3)
+                slotVisibleInPage3IsExpanded = isExpanded[slotNumber.PrimarySlotNumber];
         }
 
         public byte ReadSlotSelectionRegister()
@@ -143,8 +170,7 @@ namespace Konamiman.NestorMSX.Hardware
         {
             ThrowIfUndefinedSlot(slot);
 
-            visibleSlotNumbers[page] = slot;
-            visibleSlotContents[page.AddressMask] = slotContents[slot];
+            SetVisibleSlot(page, slot);
 
             byte newSlotSelectionRegisterValue = 0;
             for(var p = 0; p < 4; p++) {
@@ -156,7 +182,7 @@ namespace Konamiman.NestorMSX.Hardware
 
         private void ThrowIfUndefinedSlot(SlotNumber slot)
         {
-            if (!slotContents.ContainsKey(slot))
+            if(!slotContents.ContainsKey(slot))
                 throw new InvalidOperationException(string.Format("Slot {0} is not expanded", slot.PrimarySlotNumber));
         }
 
@@ -177,9 +203,13 @@ namespace Konamiman.NestorMSX.Hardware
             ThrowIfUndefinedSlot(slot);
 
             slotContents[slot] = contents ?? NotConnectedMemory.Value;
-            for (var p = 0; p < 4; p++) {
-                if(visibleSlotNumbers[p] == slot)
-                    visibleSlotContents[((Z80Page)p).AddressMask] = slotContents[slot];
+            UpdateVisibleSlots();
+        }
+
+        private void UpdateVisibleSlots()
+        {
+            for(var page = 0; page < 4; page++) {
+                SetVisibleSlot(page, visibleSlotNumbers[page]);
             }
         }
     }
