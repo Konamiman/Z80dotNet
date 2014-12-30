@@ -83,7 +83,7 @@ namespace Konamiman.NestorMSX.Misc
 
         public static bool operator ==(SlotNumber slotValue, byte byteValue)
         {
-            return slotValue.EncodedByte == (byte)(byteValue & 0x8F);
+            return (slotValue.EncodedByte & 0x0F) == (byteValue & 0x0F);
         }
 
         public static bool operator !=(SlotNumber slotValue, byte byteValue)
@@ -94,9 +94,10 @@ namespace Konamiman.NestorMSX.Misc
         public override bool Equals(object obj)
         {
             if(obj is byte)
-                return this.EncodedByte == (byte)(((byte)obj) & 0x8F);
+                return (this.EncodedByte & 0x0F) == (((byte)obj) & 0x0F);
             else if(obj is SlotNumber)
-                return this.EncodedByte == (byte)(((SlotNumber)obj).EncodedByte & 0x8F);
+                return this.PrimarySlotNumber == ((SlotNumber)obj).PrimarySlotNumber &&
+                       this.SubSlotNumber == ((SlotNumber)obj).SubSlotNumber;
             else
                 return base.Equals(obj);
         }

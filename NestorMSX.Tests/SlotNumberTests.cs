@@ -96,11 +96,21 @@ namespace Konamiman.NestorMSX.Tests
         }
 
         [Test]
-        public void Two_instances_are_equal_if_all_properties_are_equal()
+        public void Two_expanded_instances_are_equal_if_slot_and_subslot_are_equal()
         {
             var slotNumber = (byte)(Fixture.Create<byte>() | 0x80);
             var sut1 = new SlotNumber(slotNumber);
             var sut2 = new SlotNumber(slotNumber);
+            Assert.True(sut1 == sut2);
+            Assert.True(sut1.Equals(sut2));
+        }
+
+        [Test]
+        public void Primary_and_expanded_instances_are_equal_if_primary_slot_is_equal_and_subslot_is_zero()
+        {
+            var slotNumber = (byte)(Fixture.Create<byte>() & 0x03);
+            var sut1 = new SlotNumber(slotNumber);
+            var sut2 = new SlotNumber((byte)(slotNumber | 0x80));
             Assert.True(sut1 == sut2);
             Assert.True(sut1.Equals(sut2));
         }

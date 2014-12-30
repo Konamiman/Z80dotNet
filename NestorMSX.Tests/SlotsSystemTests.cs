@@ -115,6 +115,83 @@ namespace Konamiman.NestorMSX.Tests
 
         #endregion
 
+        #region Accessing the slot selection register
+
+        [Test]
+        public void Writing_slot_selection_register_changes_selected_primary_slots()
+        {
+            var sut = EmptySlotsSystem();
+
+            byte portValue = 0xE4;  //11 10 01 00
+            sut.WriteToSlotSelectionRegister(portValue);
+
+            Assert.AreEqual(0, sut.GetCurrentSlot(0).PrimarySlotNumber);
+            Assert.AreEqual(1, sut.GetCurrentSlot(1).PrimarySlotNumber);
+            Assert.AreEqual(2, sut.GetCurrentSlot(2).PrimarySlotNumber);
+            Assert.AreEqual(3, sut.GetCurrentSlot(3).PrimarySlotNumber);
+
+            portValue = 0x1B;  //00 01 10 11
+            sut.WriteToSlotSelectionRegister(portValue);
+
+            Assert.AreEqual(3, sut.GetCurrentSlot(0).PrimarySlotNumber);
+            Assert.AreEqual(2, sut.GetCurrentSlot(1).PrimarySlotNumber);
+            Assert.AreEqual(1, sut.GetCurrentSlot(2).PrimarySlotNumber);
+            Assert.AreEqual(0, sut.GetCurrentSlot(3).PrimarySlotNumber);
+        }
+
+        [Test]
+        public void Writing_slot_selection_register_fires_event()
+        {
+            var sut = EmptySlotsSystem();
+            var portValue = Fixture.Create<byte>();
+            var eventFired = false;
+            byte portValueInEvent = 0;
+
+            sut.SlotSelectionRegisterWritten += (sender, args) =>
+            {
+                eventFired = true;
+                portValueInEvent = args.Value;
+            };
+
+            sut.WriteToSlotSelectionRegister(portValue);
+
+            Assert.True(eventFired);
+            Assert.AreEqual(portValue, portValueInEvent);
+        }
+
+        [Test]
+        public void Reading_slot_selection_register_returns_value_that_depends_on_connected_slots()
+        {
+            var sut = EmptySlotsSystem();
+
+            sut.EnableSlot(0, 0);
+            sut.EnableSlot(1, 1);
+            sut.EnableSlot(2, 2);
+            sut.EnableSlot(3, 3);
+
+            var portValue = sut.ReadSlotSelectionRegister();
+            Assert.AreEqual(0xE4, portValue);
+
+            sut.EnableSlot(0, 3);
+            sut.EnableSlot(1, 2);
+            sut.EnableSlot(2, 1);
+            sut.EnableSlot(3, 0);
+
+            portValue = sut.ReadSlotSelectionRegister();
+            Assert.AreEqual(0x1B, portValue);
+        }
+
+        #endregion
+
+        private SlotsSystem EmptySlotsSystem()
+        {
+            return new SlotsSystem(
+                new Dictionary<SlotNumber, IMemory> 
+                {
+                    { new SlotNumber(3, 0),  null }
+                });
+        }
+
         private SlotNumber NotExpandedSlot()
         {
             return new SlotNumber(SlotNumberPart());

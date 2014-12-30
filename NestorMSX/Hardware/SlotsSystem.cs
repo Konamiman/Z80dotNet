@@ -13,8 +13,9 @@ namespace Konamiman.NestorMSX.Hardware
         private const int MaxSlotPartNumber = PrimarySlotsCount - 1;
         
         private bool[] isExpanded = new bool[PrimarySlotsCount];
-
         private IDictionary<SlotNumber, IMemory> slotContents;
+        private SlotNumber[] currentSlotNumbers;
+        private byte slotSelectionRegisterValue;
 
         public SlotsSystem(IDictionary<SlotNumber, IMemory> slotContents)
         {
@@ -30,6 +31,14 @@ namespace Konamiman.NestorMSX.Hardware
 
             this.slotContents = new Dictionary<SlotNumber, IMemory>(slotContents);
             FillMissingSlotContentsWithNotConnectedMemory();
+            SetAllPagesToSlotZero();
+        }
+
+        private void SetAllPagesToSlotZero()
+        {
+            var slotZero = slotContents.Keys.Single(s => s.PrimarySlotNumber == 0 && s.SubSlotNumber == 0);
+            currentSlotNumbers = new[] { slotZero, slotZero, slotZero, slotZero };
+            slotSelectionRegisterValue = 0;
         }
 
         private void FillMissingSlotContentsWithNotConnectedMemory()
@@ -79,12 +88,22 @@ namespace Konamiman.NestorMSX.Hardware
 
         public void WriteToSlotSelectionRegister(byte value)
         {
-            throw new NotImplementedException();
+            slotSelectionRegisterValue = value;
+
+            for(var page = 0; page < 4; page++) {
+                var primarySlotNumber = value & 3;
+                var slotNumber = slotContents.Keys.First(s => s.PrimarySlotNumber == primarySlotNumber);
+                currentSlotNumbers[page] = slotNumber;
+                value >>= 2;
+            }
+
+            if(SlotSelectionRegisterWritten != null)
+                SlotSelectionRegisterWritten(this, new SlotSelectionRegisterWrittenEventArgs(slotSelectionRegisterValue));
         }
 
         public byte ReadSlotSelectionRegister()
         {
-            throw new NotImplementedException();
+            return slotSelectionRegisterValue;
         }
 
         public event EventHandler<SlotSelectionRegisterWrittenEventArgs> SlotSelectionRegisterWritten;
@@ -96,12 +115,19 @@ namespace Konamiman.NestorMSX.Hardware
 
         public void EnableSlot(Z80Page page, SlotNumber slot)
         {
-            throw new NotImplementedException();
+            currentSlotNumbers[page] = slot;    //TODO: Check if slot actually exists, handle subslots
+
+            byte newSlotSelectionRegisterValue = 0;
+            for(var p = 0; p < 4; p++) {
+                newSlotSelectionRegisterValue |= (byte)(currentSlotNumbers[p].PrimarySlotNumber << 2*p);
+            }
+
+            slotSelectionRegisterValue = newSlotSelectionRegisterValue;
         }
 
         public SlotNumber GetCurrentSlot(Z80Page page)
         {
-            throw new NotImplementedException();
+            return currentSlotNumbers[page];
         }
 
         public IMemory GetSlotContents(SlotNumber slot)
