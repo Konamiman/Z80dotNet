@@ -6,6 +6,9 @@ using Konamiman.Z80dotNet;
 
 namespace Konamiman.NestorMSX.Hardware
 {
+    /// <summary>
+    /// Class that represents the MSX slots system. For now it supports primary slots only.
+    /// </summary>
     public class SlotsSystem : IExternallyControlledSlotsSystem
     {
         private const int PrimarySlotsCount = 4;
@@ -14,7 +17,8 @@ namespace Konamiman.NestorMSX.Hardware
         
         private bool[] isExpanded = new bool[PrimarySlotsCount];
         private IDictionary<SlotNumber, IMemory> slotContents;
-        private SlotNumber[] currentSlotNumbers;
+        private SlotNumber[] visibleSlotNumbers;
+        private IDictionary<ushort, IMemory> visibleSlotContents;
         private byte slotSelectionRegisterValue;
 
         public SlotsSystem(IDictionary<SlotNumber, IMemory> slotContents)
@@ -37,7 +41,14 @@ namespace Konamiman.NestorMSX.Hardware
         private void SetAllPagesToSlotZero()
         {
             var slotZero = slotContents.Keys.Single(s => s.PrimarySlotNumber == 0 && s.SubSlotNumber == 0);
-            currentSlotNumbers = new[] { slotZero, slotZero, slotZero, slotZero };
+            var slotZeroContents = slotContents[slotZero];
+            visibleSlotNumbers = new[] { slotZero, slotZero, slotZero, slotZero };
+
+            visibleSlotContents = new Dictionary<ushort, IMemory>();
+            for(int page = 0; page < 4; page++) {
+                visibleSlotContents[((Z80Page)page).AddressMask] = slotZeroContents;
+            }
+            
             slotSelectionRegisterValue = 0;
         }
 
@@ -72,28 +83,43 @@ namespace Konamiman.NestorMSX.Hardware
 
         public byte this[int address]
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get
+            {
+                return visibleSlotContents[(ushort)(address & 0xC000)][address];
+            }
+            set
+            {
+                visibleSlotContents[(ushort)(address & 0xC000)][address] = value;
+            }
         }
 
         public void SetContents(int startAddress, byte[] contents, int startIndex = 0, int? length = null)
         {
-            throw new NotImplementedException();
+            var actualLength = length.GetValueOrDefault(contents.Length);
+            for(int i = 0; i < actualLength; i++) {
+                this[startAddress + i] = contents[i];
+            }
         }
 
         public byte[] GetContents(int startAddress, int length)
         {
-            throw new NotImplementedException();
+            var items = new List<byte>();
+            for(int i = startAddress; i < length; i++)
+                items.Add(this[i]);
+
+            return items.ToArray();
         }
 
         public void WriteToSlotSelectionRegister(byte value)
         {
             slotSelectionRegisterValue = value;
 
-            for(var page = 0; page < 4; page++) {
+            for(int p = 0; p <4; p++) {
+                Z80Page page = p;
                 var primarySlotNumber = value & 3;
-                var slotNumber = slotContents.Keys.First(s => s.PrimarySlotNumber == primarySlotNumber);
-                currentSlotNumbers[page] = slotNumber;
+                var slotNumber = slotContents.Keys.First(s => s.PrimarySlotNumber == primarySlotNumber); //TODO: Handle subslots
+                visibleSlotNumbers[page] = slotNumber;
+                visibleSlotContents[page.AddressMask] = slotContents[slotNumber];
                 value >>= 2;
             }
 
@@ -115,29 +141,46 @@ namespace Konamiman.NestorMSX.Hardware
 
         public void EnableSlot(Z80Page page, SlotNumber slot)
         {
-            currentSlotNumbers[page] = slot;    //TODO: Check if slot actually exists, handle subslots
+            ThrowIfUndefinedSlot(slot);
+
+            visibleSlotNumbers[page] = slot;
+            visibleSlotContents[page.AddressMask] = slotContents[slot];
 
             byte newSlotSelectionRegisterValue = 0;
             for(var p = 0; p < 4; p++) {
-                newSlotSelectionRegisterValue |= (byte)(currentSlotNumbers[p].PrimarySlotNumber << 2*p);
+                newSlotSelectionRegisterValue |= (byte)(visibleSlotNumbers[p].PrimarySlotNumber << 2*p);
             }
 
             slotSelectionRegisterValue = newSlotSelectionRegisterValue;
         }
 
+        private void ThrowIfUndefinedSlot(SlotNumber slot)
+        {
+            if (!slotContents.ContainsKey(slot))
+                throw new InvalidOperationException(string.Format("Slot {0} is not expanded", slot.PrimarySlotNumber));
+        }
+
         public SlotNumber GetCurrentSlot(Z80Page page)
         {
-            return currentSlotNumbers[page];
+            return visibleSlotNumbers[page];
         }
 
         public IMemory GetSlotContents(SlotNumber slot)
         {
+            ThrowIfUndefinedSlot(slot);
+
             return slotContents[slot];
         }
 
         public void SetSlotContents(SlotNumber slot, IMemory contents)
         {
-            throw new NotImplementedException();
+            ThrowIfUndefinedSlot(slot);
+
+            slotContents[slot] = contents ?? NotConnectedMemory.Value;
+            for (var p = 0; p < 4; p++) {
+                if(visibleSlotNumbers[p] == slot)
+                    visibleSlotContents[((Z80Page)p).AddressMask] = slotContents[slot];
+            }
         }
     }
 }

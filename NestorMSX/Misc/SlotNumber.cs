@@ -104,7 +104,7 @@ namespace Konamiman.NestorMSX.Misc
 
         public override int GetHashCode()
         {
-            return EncodedByte;
+            return EncodedByte & 0x0F;
         }
 
         #endregion
