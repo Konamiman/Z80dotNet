@@ -16,12 +16,12 @@ namespace Konamiman.NestorMSX.Hardware
             memory = Enumerable.Repeat<byte>(0xFF, Size).ToArray();
         }
 
-        public PlainRom(byte[] contents) : base()
+        public PlainRom(byte[] contents) : this()
         {
             Array.Copy(contents, memory, contents.Length);
         }
 
-        public PlainRom(byte[] page0contents, byte[] page1contents, byte[] page2contents, byte[] page3contents) : base()
+        public PlainRom(byte[] page0contents, byte[] page1contents, byte[] page2contents, byte[] page3contents) : this()
         {
             if(page0contents != null)
                 Array.Copy(page0contents, memory, page0contents.Length);

@@ -26,6 +26,8 @@ namespace Konamiman.NestorMSX.Hardware
 
         public Tms9918(ITms9918DisplayRenderer displayRenderer)
         {
+            patternNameTableAddress = 0x1800;
+
             Vram = new PlainMemory(16384);
             modeBits = new Bit[] {0, 0, 0};
 

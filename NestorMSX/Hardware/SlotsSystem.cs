@@ -23,6 +23,10 @@ namespace Konamiman.NestorMSX.Hardware
         private bool slotVisibleInPage3IsExpanded = false;
         private Dictionary<TwinBit, TwinBit[]> secondarySlotsSelectedForEachPrimarySlot;
 
+        public SlotsSystem() : this(new Dictionary<SlotNumber, IMemory>())
+        {
+        }
+
         public SlotsSystem(IDictionary<SlotNumber, IMemory> slotContents)
         {
             if(slotContents == null)
