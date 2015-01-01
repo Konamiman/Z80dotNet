@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NestorMSX", "NestorMSX\Nest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NestorMSX.Tests", "NestorMSX.Tests\NestorMSX.Tests.csproj", "{6E291429-F27C-4BBE-BF0A-DB35C4A960BF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.csproj", "{6033619E-E9BC-4DB3-B077-9B732DF63653}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{6E291429-F27C-4BBE-BF0A-DB35C4A960BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E291429-F27C-4BBE-BF0A-DB35C4A960BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E291429-F27C-4BBE-BF0A-DB35C4A960BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6033619E-E9BC-4DB3-B077-9B732DF63653}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6033619E-E9BC-4DB3-B077-9B732DF63653}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6033619E-E9BC-4DB3-B077-9B732DF63653}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6033619E-E9BC-4DB3-B077-9B732DF63653}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

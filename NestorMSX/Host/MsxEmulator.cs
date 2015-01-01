@@ -15,21 +15,24 @@ namespace Konamiman.NestorMSX.Host
         private Z80Processor z80;
         private Tms9918 vdp;
         private SlotsSystem slots;
+        private IKeyboardController keyboard;
 
-        public MsxEmulator()
+        public MsxEmulator(IKeyboardController keyboard)
         {
+            this.keyboard = keyboard;
+
             z80 = new Z80Processor();
+            z80.ClockFrequencyInMHz = 100;
             z80.ClockSynchronizer = null;
 
             slots = new SlotsSystem();
             slots.SetSlotContents(0, new PlainRom(File.ReadAllBytes("v20bios.rom")));
             slots.SetSlotContents(3, new PlainMemory(65536));
-            //slots.SlotSelectionRegisterWritten += (sender, args) => Console.WriteLine("--- Slots: {0:X} " + args.Value);
             z80.Memory = slots;
 
             vdp = new Tms9918(new ConsoleDisplayRenderer());
             z80.RegisterInterruptSource(vdp);
-
+            
             z80.MemoryAccess += Z80OnMemoryAccess;
         }
 
@@ -49,14 +52,17 @@ namespace Konamiman.NestorMSX.Host
         private void HandlePortWrite(MemoryAccessEventArgs args)
         {
             switch(args.Address) {
-                case 0xA8:
-                    slots.WriteToSlotSelectionRegister(args.Value);
-                    break;
-                case 0x98:
+                    case 0x98:
                     vdp.WriteToPort(0, args.Value);
                     break;
                 case 0x99:
                     vdp.WriteToPort(1, args.Value);
+                    break;
+                case 0xA8:
+                    slots.WriteToSlotSelectionRegister(args.Value);
+                    break;
+                case 0xAA:
+                    keyboard.WriteToKeyboardMatrixRowSelectionRegister(args.Value);
                     break;
             }
         }
@@ -65,20 +71,22 @@ namespace Konamiman.NestorMSX.Host
         {
             args.CancelMemoryAccess = true;
             switch(args.Address) {
-                case 0xA8:
-                    args.Value = slots.ReadSlotSelectionRegister();
-                    break;
                 case 0x98:
                     args.Value = vdp.ReadFromPort(0);
                     break;
                 case 0x99:
                     args.Value = vdp.ReadFromPort(1);
                     break;
+                case 0xA8:
+                    args.Value = slots.ReadSlotSelectionRegister();
+                    break;
+                case 0xA9:
+                    args.Value = keyboard.ReadFromKeyboardMatrixRowInputRegister();
+                    break;
                 default:
                     args.Value = 0xFF;
                     break;
             }
-            
         }
     }
 }

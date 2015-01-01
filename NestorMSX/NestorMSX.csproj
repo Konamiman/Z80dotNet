@@ -53,11 +53,17 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Hardware\ConsoleKeyEventSource.cs" />
     <Compile Include="Hardware\IExternallyControlledSlotsSystem.cs" />
     <Compile Include="Hardware\IExternallyControlledTms9918.cs" />
+    <Compile Include="Hardware\IKeyboardController.cs" />
+    <Compile Include="Hardware\IKeyEventSource.cs" />
     <Compile Include="Hardware\ISlotsSystem.cs" />
     <Compile Include="Hardware\ITms9918.cs" />
     <Compile Include="Hardware\ITms9918DisplayRenderer.cs" />
+    <Compile Include="Hardware\KeyboardController.cs" />
+    <Compile Include="Hardware\KeyEventArgs.cs" />
+    <Compile Include="Hardware\KeyEventSource.cs" />
     <Compile Include="Hardware\NotConnectedMemory.cs" />
     <Compile Include="Hardware\PlainRom.cs" />
     <Compile Include="Hardware\SlotSelectionRegisterWrittenEventArgs.cs" />
@@ -89,6 +95,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="KeyMappings.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="v20bios.rom">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

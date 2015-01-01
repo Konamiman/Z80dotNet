@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using Konamiman.NestorMSX.Hardware;
 
@@ -13,11 +14,13 @@ namespace Konamiman.NestorMSX.Host
 
         public ConsoleDisplayRenderer()
         {
+            Console.Title = "NestorMSX";
+
             screenBuffer = new Dictionary<int, string>();
             Console.Clear();
            
-            Console.WindowHeight = 24;
-            Console.BufferHeight = 24;
+            Console.WindowHeight = 25;
+            Console.BufferHeight = 25;
         }
 
         void SetScreenWidth(int width)
@@ -29,29 +32,30 @@ namespace Konamiman.NestorMSX.Host
 
         public void ActivateScreen()
         {
+            Debug.WriteLine("*** Activate");
             screenIsActive = true;
             foreach(var position in screenBuffer.Keys)
                 PrintChar(position, screenBuffer[position]);
-
-            //Console.WriteLine("*** Activate screen");
         }
 
         public void BlankScreen()
         {
+            Debug.WriteLine("*** Blank");
             screenIsActive = false;
             Console.Clear();
-            //Console.WriteLine("*** Blank screen");
         }
 
         public void SetScreenMode(byte mode)
         {
+            Debug.WriteLine("*** Mode " + mode);
+            screenBuffer.Clear();
             SetScreenWidth(mode == 1 ? 40 : 32);
-            //Console.WriteLine("*** Set screen mode: " + mode);
         }
 
         public void WriteToNameTable(int position, byte value)
         {
-            var theChar = Encoding.ASCII.GetString(new[] {value});
+            var theChar = value==255 ? "" : Encoding.ASCII.GetString(new[] {value});
+            Debug.Write(theChar);
             screenBuffer[position] = theChar;
 
             if(screenIsActive)
@@ -63,7 +67,8 @@ namespace Konamiman.NestorMSX.Host
             int y = position/screenWidth;
             int x = position%screenWidth;
             Console.SetCursorPosition(x, y);
-            Console.Write(theChar);
+            if(theChar != "")
+                Console.Write(theChar);
         }
 
         public void WriteToPatternGeneratorTable(int position, byte value)

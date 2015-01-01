@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Konamiman.NestorMSX.Hardware;
 using Konamiman.NestorMSX.Host;
 
 namespace NestorMSX
@@ -12,10 +15,24 @@ namespace NestorMSX
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        //[STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
-            (new MsxEmulator()).Run();
+            if (args.Length > 0 && args[0].ToLower() == "keytest")
+            {
+                Console.WriteLine("*** Key test running. Press keys to see their name. Press CTRL-C to quit.");
+                var keyEventsource = new KeyEventSource();
+                keyEventsource.KeyPressed += (sender, keyArgs) => Console.WriteLine(keyArgs.Value.ToString());
+                Console.CancelKeyPress += (sender, eventArgs) => { while (Console.KeyAvailable) Console.ReadKey(true); };
+                Application.Run();
+                return;
+            }
+
+            var keyboardEventSource = new KeyEventSource();
+            var keyboard = new KeyboardController(keyboardEventSource, File.ReadAllText("KeyMappings.txt"));
+            var emulator = new MsxEmulator(keyboard);
+
+            Task.Run(() => emulator.Run());
+            Application.Run();
 
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);

@@ -35,7 +35,7 @@ namespace Konamiman.NestorMSX.Hardware
             displayRenderer.BlankScreen();
             SetScreenMode(0);
 
-            interruptTimer = new Timer(200);
+            interruptTimer = new Timer(((double)1)/50);
             interruptTimer.Elapsed += InterruptTimerOnElapsed;
             interruptTimer.Start();
         }
