@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Timers;
 using Konamiman.Z80dotNet;
 
@@ -12,7 +13,7 @@ namespace Konamiman.NestorMSX.Hardware
         private readonly ITms9918DisplayRenderer displayRenderer;
         private PlainMemory Vram;
         private bool generateInterrupts;
-        private int patternNameTableAddress;
+        
         private int patternGeneratorTableAddress;
         private byte? valueWrittenToPort1;
         private byte readAheadBuffer;
@@ -23,6 +24,21 @@ namespace Konamiman.NestorMSX.Hardware
         private int patternNameTableLength;
         private int[] patternNameTableLengths = { 768, 960 };
         private int patternGeneratorTableLength = 2048;
+
+        private int _patternNameTableAddress;
+        private int patternNameTableAddress
+        {
+            get
+            {
+                return _patternNameTableAddress;
+            }
+            set
+            {
+                _patternNameTableAddress = value;
+                Debug.WriteLine("*** New pattern name table: {0:X}", value);
+                ReprintAll();
+            }
+        }
 
         public Tms9918(ITms9918DisplayRenderer displayRenderer)
         {
@@ -44,6 +60,12 @@ namespace Konamiman.NestorMSX.Hardware
         {
             displayRenderer.SetScreenMode((byte)mode);
             patternNameTableLength = patternNameTableLengths[mode & 1];
+        }
+
+        void ReprintAll()
+        {
+            for(int i=0; i<patternNameTableLength; i++)
+                displayRenderer.WriteToNameTable(i, Vram[patternNameTableAddress + i]);
         }
 
         private void InterruptTimerOnElapsed(object sender, ElapsedEventArgs args)

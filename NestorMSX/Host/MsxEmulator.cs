@@ -22,7 +22,6 @@ namespace Konamiman.NestorMSX.Host
             this.keyboard = keyboard;
 
             z80 = new Z80Processor();
-            z80.ClockFrequencyInMHz = 100;
             z80.ClockSynchronizer = null;
 
             slots = new SlotsSystem();

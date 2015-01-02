@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
+using System.Linq;
 using System.Text;
 using Konamiman.NestorMSX.Hardware;
 
@@ -10,13 +12,14 @@ namespace Konamiman.NestorMSX.Host
     {
         private int screenWidth = 32;
         private bool screenIsActive = false;
-        private Dictionary<int, string> screenBuffer;
+        private Dictionary<Point, string> screenBuffer;
+        private int currentScreenMode = 0;
 
         public ConsoleDisplayRenderer()
         {
             Console.Title = "NestorMSX";
 
-            screenBuffer = new Dictionary<int, string>();
+            screenBuffer = new Dictionary<Point, string>();
             Console.Clear();
            
             Console.WindowHeight = 25;
@@ -28,6 +31,9 @@ namespace Konamiman.NestorMSX.Host
             screenWidth = width;
             Console.WindowWidth = width;
             Console.BufferWidth = width;
+            var itemsToRemove = screenBuffer.Keys.Where(x => x.X >= width).ToArray();
+            for(int i=0; i<itemsToRemove.Length; i++)
+                screenBuffer.Remove(itemsToRemove[i]);
         }
 
         public void ActivateScreen()
@@ -47,8 +53,11 @@ namespace Konamiman.NestorMSX.Host
 
         public void SetScreenMode(byte mode)
         {
+            if(mode > 1)
+                return;
+
             Debug.WriteLine("*** Mode " + mode);
-            screenBuffer.Clear();
+            currentScreenMode = mode;
             SetScreenWidth(mode == 1 ? 40 : 32);
         }
 
@@ -56,17 +65,19 @@ namespace Konamiman.NestorMSX.Host
         {
             var theChar = value==255 ? "" : Encoding.ASCII.GetString(new[] {value});
             Debug.Write(theChar);
-            screenBuffer[position] = theChar;
+            var coordinates = new Point(position%screenWidth, position/screenWidth);
+            if(coordinates.X >= screenWidth || coordinates.Y >= 24)
+                return;
+
+            screenBuffer[coordinates] = theChar;
 
             if(screenIsActive)
-                PrintChar(position, theChar);
+                PrintChar(coordinates, theChar);
         }
 
-        private void PrintChar(int position, string theChar)
+        private void PrintChar(Point coordinates, string theChar)
         {
-            int y = position/screenWidth;
-            int x = position%screenWidth;
-            Console.SetCursorPosition(x, y);
+            Console.SetCursorPosition(coordinates.X, coordinates.Y);
             if(theChar != "")
                 Console.Write(theChar);
         }
