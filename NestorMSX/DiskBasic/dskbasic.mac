@@ -46,6 +46,7 @@ PATHNAM equ 0F33Bh
 ;
 BLDCHK equ	0F2F1h
 BSVCHK equ	0F2F3h
+HIMEM equ 0FC4Ah
 ;
 BDOS	equ	0F37Dh		;BDOS function call entry
 
@@ -235,6 +236,11 @@ NAME:
 	defw	0
 
 START:
+	ld	hl,(HIMEM)
+	ld	bc,100
+	or	a
+	sbc	hl,bc
+	ld	(HIMEM),hl
 
 $$BASIC::
 ;
@@ -279,10 +285,10 @@ SDSKL:
 HOKTBL:
 	;defw	0FDEFh,DSKO$
 	;defw	0FE17h,DSKI$
-	defw	0FDF9h,NAME
-	defw	0FDFEh,KILL
-	defw	0FE08h,DKCOPY
-	defw	0FE12h,DSKF
+	;defw	0FDF9h,NAME
+	;defw	0FDFEh,KILL
+	;defw	0FE08h,DKCOPY
+	;defw	0FE12h,DSKF
 	defw	0FE21h,LSET
 	defw	0FE26h,RSET
 	defw	0FE2Bh,FIELD
@@ -323,24 +329,6 @@ POSDSK:
 
 	subttl	Utilities
 
-;	Search for the first occurrence of file specified by PATHNAM.
-;	If not found, generate an error.
-;	If found, FIB will be set up correctly.
-;
-SRCFST:
-	ld	b,0		; search for normal files only
-SRCFST_DO:
-	ld	c,_FFIRST##
-	jp	FIB_PATH_BDOSE
-
-;
-;	Search for the next occurrence of file/directory specified by FIB
-;	If found, return with carry flag reset.
-;	If not found, return with carry flag set.
-;
-SRCNXT:
-	ld	ix,FIB
-	ld	c,_FNEXT##
 BDOS_NOFIL:
 	call	BDOS
 	ret	z		; no error, return with carry reset
@@ -1718,66 +1706,6 @@ NOTEOF:	push	af
 	ld	(hl),a
 	ret
 
-	;FILES...
-
-	subttl	KILL command
-;
-;	KILL <file name>
-;
-$HOOK	KILL
-	call	REMHOK		; remove hook return
-	call	CALL_NAMSCN	; scan file name
-	call	CHRGOT		; end of statement?
-	ret	nz		; no, let NEWSTT generate 'syntax error'
-	push	hl		; save text pointer
-	call	SRCFST		; search for first occurence of file
-				; and set FIB
-	ld	c,_DELETE##
-	jr	NAME_LOOP
-
-	subttl	NAME command
-;
-;	NAME <old file> AS <new file>
-;
-$HOOK	NAME
-	call	REMHOK		; remove hook
-	call	CALL_NAMSCN	; parse file name
-	push	hl		; save text pointer
-	call	SRCFST		; set up FIB
-	pop	hl		; restore text pointer
-	SYNCHK	'A'
-	SYNCHK	'S'
-	call	CALL_NAMSCN	; scan new name
-	push	hl
-	ld	c,_RENAME##
-NAME_LOOP:
-	push	bc		; save function number
-	ld	de,FIB		; fib for the existing file
-	ld	hl,(PATHNAM)	; new name for _rename (ignored for _delete)
-	call	BDOSE
-	call	SRCNXT
-	pop	bc		; restore function number
-	jr	nc,NAME_LOOP	; more to rename or delete
-	call	DOS_FLUSH	; flush dirty buffers
-	pop	hl
-	ret
-;
-DOS_FLUSH:
-	ld	b,0FFH		; flush all drives
-	ld	d,0		; flush only
-	ld	c,_FLUSH##
-	jp	BDOSE
-;
-CHK_CALL_NAMSCN:
-	SYNCHK	'('
-CALL_NAMSCN:
-	ld	ix,NAMSCN	;parse file name
-	call	CALBAS
-	ld	a,d
-	cp	8+1		;disk?
-	ret	c		;yes
-	jp	JDERBDN
-
 	subttl	LOF and LOC function
 ;
 $HOOK	LOF
@@ -1921,191 +1849,6 @@ DO_PARTIAL:
 	ret
 endif
 
-subttl	DSKF function
-;
-;	returns the number of  free  clusters  on  the  specified  drive
-;
-$HOOK	DSKF
-
-	call	REMHOK		; remove hook
-	ret
-	ld	hl,0
-	ld	bc,0
-	jp	TO_FLOAT
-
-	endif
-
-	subttl	COPY command
-;
-;	COPY <source_filespec> [TO <destination_filespec>]
-;
-$HOOK	DKCOPY
-	call	REMHOK		; remove hook return
-	call	CALL_NAMSCN	; set up PATHNAM
-	push	hl		; save text pointer
-	call	SRCFST		; set up FIB
-	pop	hl		; restore text pointer
-	call	CHRGOT		; destination omitted?
-	ld	a,0		; assume so
-	push	hl
-	ld	hl,(PATHNAM)
-	ld	(hl),a
-	pop	hl
-	jr	z,DKCOP1	; good assumption
-	SYNCHK	$TO		; make sure 'TO' follows
-	call	CALL_NAMSCN	; set up PATHNAM
-	call	CHRGOT		; end of statement?
-	ret	nz		; no, will cause 'syntax error' at NEWSTT
-DKCOP1:
-	push	hl		; save text pointer
-DKCLOP:
-	call	CKCNTC		; check STOP and control-STOP
-;
-;	open source
-;
-	ld	de,FIB		; open source
-	xor	a
-	ld	c,_OPEN##
-	call	BDOSE
-	ld	a,b
-	ld	(SRC_HANDLE),a
-	xor	a		; get time/date of source
-	ld	c,_HFTIME##
-	call	BDOSE
-	ld	(SRC_DATE),de
-	ld	(SRC_DATE+2),hl
-	ld	a,0FFH		; say destination not open yet
-	ld	(DST_HANDLE),a
-if 1
-	;ld	hl,CPABORT
-	;ld	(BREAKVECT##),hl
-endif
-;
-;	Determine what should be used as a temporary buffer for
-;	copy process.
-;
-	call	GETBUF		; get memory for buffering
-	ld	e,c		; set buffer pointer
-	ld	d,b
-COPYBL:
-if 0
-	push	hl		; save buffer size
-	ld	a,(SRC_HANDLE)
-	ld	b,a
-	push	de		; save buffer pointer
-	ld	c,_READ##
-	call	BDOS
-	cp	.EOF##		; already at EOF?
-	jr	z,SRC_EOF	; yes
-	and	a		; any other errors?
-	jp	nz,ABORT_COPY	; yes, terminate copy
-SRC_EOF:
-else
-	push	hl		; save buffer size
-	push	de		; save buffer pointer
-COPYL:
-	ld	a,l		; 0 = buffer full
-	or	h
-	jr	z,READ_OK
-	push	hl
-	push	de
-	ld	a,(SRC_HANDLE)
-	ld	b,a
-	ld	c,_READ##
-	call	BDOS
-	jr	z,SRC_OK
-	cp	.EOF##		; EOF is OK
-SRC_OK:
-	jp	nz,ABORT_COPY	; any other error, terminate copy
-	ex	de,hl		; DE = bytes read
-	pop	hl
-	add	hl,de		; HL -> next free buffer (no carry)
-	ex	(sp),hl
-	sbc	hl,de		; HL = size left
-	ld	a,e
-	or	d		; 0 = EOF
-	pop	de		; DE -> buffer, HL = buffer size
-	jr	nz,COPYL
-READ_OK:
-	ex	de,hl		; HL -> next free byte
-	pop	de		; DE -> buffer pointer
-	push	de
-	sbc	hl,de		; HL = number of byte read so far
-endif
-;
-;	See if destination file handle created
-;
-	ld	a,(DST_HANDLE)	; did we open destination file?
-	inc	a
-	jr	nz,DST_OPEN	; yes
-;
-;	create destination using template
-;
-	push	hl		; save number of bytes actually read
-	ld	hl,FIB+1	; set template for destination
-	ld	de,FIB_DST+1
-	ld	bc,8+1+3+1
-	ldir
-	ld	de,(PATHNAM)
-	ld	b,0
-	ld	ix,FIB_DST
-	ld	c,_FNEW##
-	call	COPY_BDOS
-;
-;	open destination
-;
-	ld	de,FIB_DST	; create destination
-	xor	a
-	ld	c,_OPEN##
-	call	COPY_BDOS
-	ld	a,b
-	ld	(DST_HANDLE),a
-	pop	hl		; restore number of bytes actually read
-DST_OPEN:
-	pop	de		; restore pointer to buffer
-	ld	a,(DST_HANDLE)
-	ld	b,a
-	push	de
-	ld	c,_WRITE##
-	call	COPY_BDOS
-	pop	de
-	pop	bc		; restore buffer size
-	sbc	hl,bc		; fully read?
-				; carry is clear after a BDOS call
-	ld	l,c		; HL = size of buffer
-	ld	h,b
-	jr	nc,COPYBL	; yes, continue
-				; was a partial read, end of copy
-;
-;	copy date and time from source file to destination file
-;
-	ld	a,(DST_HANDLE)
-	ld	b,a
-	ld	a,1
-	ld	ix,(SRC_DATE)
-	ld	hl,(SRC_DATE+2)
-	ld	c,_HFTIME##
-	call	COPY_BDOS
-;
-;	close both files
-;
-	ld	a,(SRC_HANDLE)
-	ld	b,a
-	ld	c,_CLOSE##
-	call	COPY_BDOS
-	ld	a,(DST_HANDLE)
-	ld	b,a
-	ld	c,_CLOSE##
-	call	COPY_BDOS
-if 1
-	;ld	hl,DBABORT
-	;ld	(BREAKVECT##),hl
-endif
-	call	SRCNXT
-	jp	nc,DKCLOP
-	pop	hl		;restore text pointer
-	ret
-;
 GETBUF_0:
 	ld	(SAVENT),hl	;use SAVENT as the VRAM length
 	ld	(SAVEND),bc	;use SAVEND as the VRAM address
@@ -2131,30 +1874,6 @@ NOBUF:
 	ld	hl,256		;set record count to transfer ( 256 bytes )
 	ret
 
-CPABORT:
-	defw	CPABORT_ROUTINE
-
-COPY_BDOS:
-	call	BDOS
-	ret	z
-ABORT_COPY:
-	push	af		; save error code
-if 1
-	;ld	hl,DBABORT
-	;ld	(BREAKVECT##),hl
-endif
-	ld	a,(SRC_HANDLE)	; always close source
-	ld	b,a
-	ld	c,_CLOSE##
-	call	BDOS
-	ld	a,(DST_HANDLE)
-	ld	b,a
-	inc	a		; is destination open?
-	ld	c,_CLOSE##
-	call	nz,BDOS		; yes, close it
-	pop	af
-	jr	DOS_ERROR
-;
 FIB_PATH_BDOSE:
 	ld	ix,FIB
 PATH_BDOSE:
@@ -2164,39 +1883,6 @@ BDOSE::
 	ret	z		; no errors
 JDOS_ERROR:
 	jr	DOS_ERROR
-
-;
-;	Disk error handler for Disk BASIC.
-;	Always aborts disk errors.
-;
-	public	DBERR
-DBERR:
-	defw	DBERR_ROUTINE
-DBERR_ROUTINE:
-	ld	c,2
-	ret
-;
-;	Disk BASIC abort handler.
-;	Jumps to READYR if terminate with no error.
-;	Reports other errors to the caller of BDOS.
-;
-	public	DBABORT
-DBABORT:
-	defw	DBABORT_ROUTINE
-
-CPABORT_ROUTINE:
-	cp	.ABORT##
-	jr	nz,not_abort	;If we have an aborted disk error then
-	ld	a,b		; get the original error code in A.
-not_abort:
-	or	a
-	ret
-
-DBABORT_ROUTINE:
-	call	CPABORT_ROUTINE
-	jr	nz,DOS_ERROR
-	ld	ix,READYR
-	jp	CALBAS
 
 	subttl	error dispatcher
 ;
@@ -2309,10 +1995,6 @@ if QQQQ ne 256
 endif
 
 DOS_ERROR:
-	push	af		;Save error code
-	call	DOS_FLUSH	;Always flush in case of error
-	pop	af		;Restore error code
-;
 	cp	.STOP##		;Ctrl-STOP pressed
 	jr	z,was_break
 	cp	.CTRLC##	;Ctrl-C pressed
@@ -2321,24 +2003,6 @@ was_break:
 	jp	z,CALBAS	; (must be a better way).
 ;
 
-	;This entry point allows to convert a DOS error code
-	;into a BASIC error code in DOS 1 mode
-	;(needed for CALL MAPDRV et al)
-	;Input: A = DOS error, Output: E = BASIC error
-GETERR::
-	ld	e,a
-	cp	.FRSTER		;Errors known to us?
-	jr	c,DOS_UNKNOWN	; no way to translate, use DOS error code
-	ld	c,a
-	ld	b,0
-	ld	hl,DERR_TAB-.FRSTER
-	add	hl,bc
-	ld	a,(hl)
-	ld	e,a
-	cp	DERFST		;Error codes known to MSX BASIC?
-	jr	c,GO_ERROR	; yes, file #0 will be closed by MSX-BASIC.
-DOS_UNKNOWN:
-;
 DERMAK	macro	ERRNAM
 ERRNAM	equ	QQQQ
 	defb	1		;; 'LD BC' instruction (skip next 2 bytes)
