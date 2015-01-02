@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Konamiman.NestorMSX.Misc;
 using Konamiman.Z80dotNet;
 
 namespace Konamiman.NestorMSX.Hardware
@@ -16,24 +17,9 @@ namespace Konamiman.NestorMSX.Hardware
             memory = Enumerable.Repeat<byte>(0xFF, Size).ToArray();
         }
 
-        public PlainRom(byte[] contents) : this()
+        public PlainRom(byte[] contents, Z80Page page = null) : this()
         {
-            Array.Copy(contents, memory, contents.Length);
-        }
-
-        public PlainRom(byte[] page0contents, byte[] page1contents, byte[] page2contents, byte[] page3contents) : this()
-        {
-            if(page0contents != null)
-                Array.Copy(page0contents, memory, page0contents.Length);
-
-            if(page1contents != null)
-                Array.Copy(page1contents, 0, memory, 0x4000, page1contents.Length);
-
-            if(page2contents != null)
-                Array.Copy(page2contents, 0, memory, 0x8000, page2contents.Length);
-
-            if(page3contents != null)
-                Array.Copy(page3contents, 0, memory, 0xC000, page3contents.Length);
+            Array.Copy(contents, 0, memory, page == null ? 0 : page.AddressMask, contents.Length);
         }
 
         public int Size

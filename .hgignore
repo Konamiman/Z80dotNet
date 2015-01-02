@@ -7,6 +7,23 @@
 ############################################################
 syntax: glob
 
+*.sym
+*.SYM
+*.lst
+*.map
+*.noi
+*.rel
+*.REL
+*.hex
+*.HEX
+*.bin
+*.ihx
+*.IHX
+*.lk
+*.LK
+*.orig
+*.rej
+
 ## User-specific files
 
 *.suo

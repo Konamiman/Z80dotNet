@@ -27,7 +27,11 @@ namespace Konamiman.NestorMSX.Host
 
             slots = new SlotsSystem();
             slots.SetSlotContents(0, new PlainRom(File.ReadAllBytes("v20bios.rom")));
-            slots.SetSlotContents(3, new PlainMemory(65536));
+            slots.SetSlotContents(1, new PlainRom(File.ReadAllBytes("dskrom.rom"), 1));
+            var ram = new PlainMemory(65536);
+            ram[0xF37D] = 0xC9; //RET
+            ram[0xF37E] = 1;    //dskrom slot
+            slots.SetSlotContents(3, ram);
             z80.Memory = slots;
 
             vdp = new Tms9918(new ConsoleDisplayRenderer());
