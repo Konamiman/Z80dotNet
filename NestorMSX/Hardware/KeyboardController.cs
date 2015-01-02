@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using Konamiman.Z80dotNet;
 
@@ -8,8 +9,7 @@ namespace Konamiman.NestorMSX.Hardware
     public class KeyboardController : IKeyboardController
     {
         private readonly IKeyEventSource eventSource;
-        private Dictionary<int, KeyMapping> keyMappingsByKeyId;
-        private KeyMapping[] keyMappingsByPosition;
+        private Dictionary<Keys, KeyMapping> keyMappingsByKeyId;
         private int currentMatrixRow;
 
         public KeyboardController(IKeyEventSource eventSource, string keyMappingsMatrix)
@@ -22,15 +22,15 @@ namespace Konamiman.NestorMSX.Hardware
 
         private void EventSourceOnKeyReleased(object sender, KeyEventArgs eventArgs)
         {
-            SetKeyAsPressed((int)eventArgs.Value, false);
+            SetKeyAsPressed(eventArgs.Value, false);
         }
         
         private void EventSourceOnKeyPressed(object sender, KeyEventArgs eventArgs)
         {
-            SetKeyAsPressed((int)eventArgs.Value, true);
+            SetKeyAsPressed(eventArgs.Value, true);
         }
 
-        private void SetKeyAsPressed(int key, bool pressed)
+        private void SetKeyAsPressed(Keys key, bool pressed)
         {
             if (keyMappingsByKeyId.ContainsKey(key))
                 keyMappingsByKeyId[key].IsPressed = pressed;
@@ -38,7 +38,7 @@ namespace Konamiman.NestorMSX.Hardware
 
         private void InitializeKeyMappings(string keyMappingsMatrix)
         {
-            keyMappingsByKeyId = new Dictionary<int, KeyMapping>();
+            keyMappingsByKeyId = new Dictionary<Keys, KeyMapping>();
             var keyMappings = new List<KeyMapping>();
             var rows = keyMappingsMatrix.Split(new[] {"\r\n"}, StringSplitOptions.RemoveEmptyEntries);
             for(var rowIndex = 0; rowIndex < 11; rowIndex++)
@@ -46,20 +46,21 @@ namespace Konamiman.NestorMSX.Hardware
                 var rowItems = rows[rowIndex].Split(new[] {"\t", " "}, StringSplitOptions.RemoveEmptyEntries);
                 for(var columnIndex = 0; columnIndex <= 7; columnIndex++)
                 {
-                    var keyName = rowItems[7 - columnIndex];
-                    var undefinedKey = keyName == ".";
+                    var keyNames = rowItems[7 - columnIndex].Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (var keyName in keyNames)
+                    {
+                        var undefinedKey = keyName == ".";
 
-                    if(!undefinedKey && !Enum.IsDefined(typeof(Keys), keyName))
-                        throw new InvalidOperationException("Unknown key name: " + keyName);
+                        if (!undefinedKey && !Enum.IsDefined(typeof(Keys), keyName))
+                            throw new InvalidOperationException("Unknown key name: " + keyName);
 
-                    var key = undefinedKey ? 0 : (int)(Keys)Enum.Parse(typeof(Keys), keyName);
-                    var mapping = new KeyMapping(key, rowIndex, columnIndex);
-                    keyMappings.Add(mapping);
-                    keyMappingsByKeyId[key] = mapping;
+                        var key = undefinedKey ? 0 : (Keys) Enum.Parse(typeof(Keys), keyName);
+                        var mapping = new KeyMapping(key, rowIndex, columnIndex);
+                        keyMappings.Add(mapping);
+                        keyMappingsByKeyId[key] = mapping;
+                    }
                 }
             }
-
-            keyMappingsByPosition = keyMappings.ToArray();
         }
 
         public void WriteToKeyboardMatrixRowSelectionRegister(byte value)
@@ -69,15 +70,11 @@ namespace Konamiman.NestorMSX.Hardware
 
         public byte ReadFromKeyboardMatrixRowInputRegister()
         {
-            var firstPosition = currentMatrixRow * 8;
-            var lastPosition = firstPosition + 7;
             byte value = 0xFF;
+            var pressedKeysInRow = keyMappingsByKeyId.Values.Where(m => m.Row == currentMatrixRow && m.IsPressed);
 
-            for(int i = firstPosition; i <= lastPosition; i++)
-            {
-                var mapping = keyMappingsByPosition[i];
-                if(keyMappingsByPosition[i].IsPressed)
-                    value = value.WithBit(mapping.Column, 0);
+            foreach(var mapping in pressedKeysInRow) {
+                value = value.WithBit(mapping.Column, 0);
             }
 
             return value;
@@ -85,14 +82,14 @@ namespace Konamiman.NestorMSX.Hardware
 
         class KeyMapping
         {
-            public KeyMapping(int key, int row, int column)
+            public KeyMapping(Keys key, int row, int column)
             {
                 Key = key;
                 Row = row;
                 Column = column;
             }
 
-            public int Key { get; private set; }
+            public Keys Key { get; private set; }
 
             public int Row { get; private set; }
 

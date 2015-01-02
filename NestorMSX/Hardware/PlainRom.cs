@@ -5,7 +5,7 @@ using Konamiman.Z80dotNet;
 namespace Konamiman.NestorMSX.Hardware
 {
     /// <summary>
-    /// Represents a 64 ROM memory.
+    /// Represents a 64K ROM memory.
     /// </summary>
     public class PlainRom : IMemory
     {

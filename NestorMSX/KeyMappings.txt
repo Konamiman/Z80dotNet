@@ -4,7 +4,7 @@ B	A	OemMinus	Divide	OemPeriod	Oemcomma	OemQuestion	Oem7
 J	I	H	G	F	E	D	C
 R	Q	P	O	N	M	L	K
 Z	Y	X	W	V	U	T	S
-F3	F2	F1	PageUp	Capital	Next	LControlKey	LShiftKey
+F3	F2	F1	PageUp	Capital	Next	LControlKey,RControlKey	LShiftKey,RShiftKey
 Return	.	Back	End	Tab	Escape	F5	F4
 Right	Down	Up	Left	Delete	Insert	Home	Space
 .	.	.	.	.	.	.	.

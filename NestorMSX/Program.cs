@@ -27,16 +27,7 @@ namespace NestorMSX
                 return;
             }
 
-            var keyboardEventSource = new KeyEventSource();
-            var keyboard = new KeyboardController(keyboardEventSource, File.ReadAllText("KeyMappings.txt"));
-            var emulator = new MsxEmulator(keyboard);
-
-            Task.Run(() => emulator.Run());
-            Application.Run();
-
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Form1());
+            (new MsxEmulator()).Run();
         }
     }
 }

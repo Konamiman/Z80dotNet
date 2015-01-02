@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Konamiman.NestorMSX.Hardware
 {
-    public class KeyEventSource : IKeyEventSource, IDisposable
+    public class KeyEventSource : IKeyEventSource
     {
         public event EventHandler<KeyEventArgs> KeyPressed;
         public event EventHandler<KeyEventArgs> KeyReleased;
@@ -24,10 +24,15 @@ namespace Konamiman.NestorMSX.Hardware
 
         private readonly List<Keys> PressedKeys = new List<Keys>(); 
 
-        public KeyEventSource()
+        public void Start()
         {
             _proc = HookCallback;
             _hookID = SetHook(_proc);
+        }
+
+        public void Stop()
+        {
+            UnhookWindowsHookEx(_hookID);
         }
 
         private static IntPtr SetHook(LowLevelKeyboardProc proc)
@@ -82,10 +87,5 @@ namespace Konamiman.NestorMSX.Hardware
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr GetModuleHandle(string lpModuleName);
-
-        public void Dispose()
-        {
-            UnhookWindowsHookEx(_hookID);
-        }
     }
 }

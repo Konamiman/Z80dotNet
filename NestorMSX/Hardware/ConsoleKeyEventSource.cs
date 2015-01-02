@@ -11,12 +11,6 @@ namespace Konamiman.NestorMSX.Hardware
     {
         private Task task;
 
-        public ConsoleKeyEventSource()
-        {
-            task = new Task(Do);
-            task.Start();
-        }
-
         void Do()
         {
             while(true)
@@ -26,6 +20,16 @@ namespace Konamiman.NestorMSX.Hardware
                 if(KeyPressed!=null)
                     KeyPressed(this, new KeyEventArgs((Keys)key.Key));
             }
+        }
+
+        public void Start()
+        {
+            task = new Task(Do);
+            task.Start();
+        }
+
+        public void Stop()
+        {
         }
 
         public event EventHandler<KeyEventArgs> KeyPressed;
