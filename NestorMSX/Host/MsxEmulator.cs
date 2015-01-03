@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Mime;
-using System.Text;
+﻿using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Konamiman.NestorMSX.Hardware;
@@ -14,7 +8,7 @@ namespace Konamiman.NestorMSX.Host
 {
     public class MsxEmulator
     {
-        private const int BDOS = 0xFB03;
+        private const int BDOS = 0xFB03;    //as defined in dskbasic.mac
 
         private readonly Z80Processor z80;
         private readonly Tms9918 vdp;
@@ -32,7 +26,6 @@ namespace Konamiman.NestorMSX.Host
             slots.SetSlotContents(0, new PlainRom(File.ReadAllBytes("v20bios.rom")));
             slots.SetSlotContents(1, new PlainRom(File.ReadAllBytes("dskrom.rom"), 1));
             var ram = new PlainMemory(65536);
-            ram[0xF37E] = 1;    //dskrom slot
             slots.SetSlotContents(3, ram);
             z80.Memory = slots;
 

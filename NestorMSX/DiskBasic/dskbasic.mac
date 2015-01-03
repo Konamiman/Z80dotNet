@@ -1,14 +1,14 @@
-;Fake DiskBASIC ROM for NestorMSX
-;Instructions:
-;1. Put this ROM in any free slot
-;2. POKE 0xF37E,slot of previous step
-;3. Capture calls to 0xF37D with the BeforeInstructionFetch event.
-;   These are calls to MSX-DOS functions (see function code in register C).
-;   Handle the call and manually execute a RET statement (Z80ProcessorExtensions.ExecuteRet)
-;   To know what functions have to be implemented, search for "ld c,_xxxxx##" in this file.
-
-;Note that the following is not supported:
-;FILES, DSKF, DSKI, DSKO, FORMAT, all Disk BASIC CALLs, drive names in file paths
+;This is a stripped down version of MSX-DOS 2 Disk BASIC.
+;It supports file load and save (LOAD, SAVE, BLOAD, BSAVE)
+;as well as file I/O functions (OPEN, GET, PUT, MKI$ et al).
+;It does not support file management (FILES, KILL, NAME, COPY, DSKF, all CALLs)
+;nor low-level disk access (DSKI, DSKO, FORMAT).
+;
+;The host filesystem can be accessed directly, so you can do
+;SAVE"c:\some dir\some file name.bas" and the file will be there.
+;For this to work the emulator has to catch calls to the BDOS
+;entry point (see BDOS constant) and convert them to actual
+;file access in the host system.
 
 ;
 ;	Conditional assembly switches
@@ -232,26 +232,6 @@ NAME:
 	defw	0
 
 START:
-if 0
-	ld	hl,HSTKE2
-	ld	de,HSTKE
-	ld	bc,5
-	ldir
-	call	GSLOT1
-	ld	(HSTKE+1),a
-	ret
-
-HSTKE2:
-	rst	30h
-	db	0
-	dw	START2
-	ret
-
-START2:
-	ld	a,0c9h
-	ld	(HSTKE),a
-endif
-
 	ld	a,0C9h
 	ld	(BDOS),a
 
@@ -262,7 +242,7 @@ endif
 
 	ld	hl,BSAVE_CODE
 	ld	de,BSVCHK
-	ld	bc,10
+	ld	bc,5
 	ldir
 
 	call GSLOT1
@@ -1916,7 +1896,7 @@ JDOS_ERROR:
 ;
 ;	Analyze errors returned from BDOS call
 ;
-.FRSTER	equ	0B1h	;0BAh		; lowest MSXDOS2 error code supported
+.FRSTER	equ	0B0h	;0BAh		; lowest MSXDOS2 error code supported
 ;
 DERNUM	macro	ERRNAM
     ifidn   <ERRNAM>,<*>
@@ -1931,6 +1911,7 @@ QQQQ	defl	.FRSTER
 ;
 DERR_TAB:
 
+	DERNUM	ERRUNA	; Unauthorized access
 	DERNUM	ERRBFS	; File is mounted
 	DERNUM	ERRFIM	; Bad file size
 
@@ -2084,6 +2065,8 @@ QQQQ	defl	DERFST
 
 	DERMAK	ERRFIM	; File is mounted
 	DERMAK	ERRBFS	; Bad file size
+
+	DERMAK	ERRUNA	; Aunauthorized access
 ;
 DERLST	equ	QQQQ-1		;
 ;
@@ -2485,6 +2468,8 @@ DERMSG:	defb	0
 
 	defb	'File is mounted',         0
 	defb	'Bad file size',           0
+
+	defb	'Unauthorized access',		0
 
 ;		'----+----1----+----2----'
 ;
