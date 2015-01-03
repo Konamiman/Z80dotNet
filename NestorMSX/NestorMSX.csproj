@@ -70,6 +70,7 @@
     <Compile Include="Hardware\SlotsSystem.cs" />
     <Compile Include="Hardware\Tms9918.cs" />
     <Compile Include="Host\ConsoleDisplayRenderer.cs" />
+    <Compile Include="Host\DosFunctionCallExecutor.cs" />
     <Compile Include="Host\MsxEmulator.cs" />
     <Compile Include="Misc\SlotNumber.cs" />
     <Compile Include="Misc\TwinBit.cs" />

@@ -38,18 +38,15 @@ ATM_DIR	equ	00010000b
 ;
 ; External variables of disk system
 ;
-MASTER_SLOT	equ	0F37Eh	;slot number of the master (i.e., me)
-RECSIZE	equ	0F33Dh		;record size temp
-PATHNAM equ 0F33Bh
-;
-; External routines of disk system
-;
-BLDCHK equ	0F2F1h
-BSVCHK equ	0F2F3h
-HIMEM equ 0FC4Ah
-;
-BDOS	equ	0F37Dh		;BDOS function call entry
+HSTKE	equ	0FEDAh
 
+WORK equ	0FB03h
+BDOS	equ	WORK	;BDOS function call entry
+MASTER_SLOT	equ	WORK+1	;slot number of the master (i.e., me)
+RECSIZE	equ	MASTER_SLOT+1		;record size temp
+BSVCHK equ RECSIZE+2
+BLDCHK equ BSVCHK+5
+PATHNAM equ 0F975h
 ;
 ; MSX specific constants
 ;
@@ -225,7 +222,6 @@ $HOOK	macro	NAME
 NAME:
 	endm
 
-
 	defb	"AB"
 	defw	START
 	defw	0
@@ -236,11 +232,43 @@ NAME:
 	defw	0
 
 START:
-	ld	hl,(HIMEM)
-	ld	bc,100
-	or	a
-	sbc	hl,bc
-	ld	(HIMEM),hl
+if 0
+	ld	hl,HSTKE2
+	ld	de,HSTKE
+	ld	bc,5
+	ldir
+	call	GSLOT1
+	ld	(HSTKE+1),a
+	ret
+
+HSTKE2:
+	rst	30h
+	db	0
+	dw	START2
+	ret
+
+START2:
+	ld	a,0c9h
+	ld	(HSTKE),a
+endif
+
+	ld	a,0C9h
+	ld	(BDOS),a
+
+	ld	hl,BLOAD_CODE
+	ld	de,BLDCHK
+	ld	bc,10
+	ldir
+
+	ld	hl,BSAVE_CODE
+	ld	de,BSVCHK
+	ld	bc,10
+	ldir
+
+	call GSLOT1
+	ld	(MASTER_SLOT),a
+	ld	(BLDCHK+1),a
+	ld	(BSVCHK+1),a
 
 $$BASIC::
 ;
@@ -533,7 +561,7 @@ NOT_CREATE:
 	ld	a,(RECSIZE)	; recsize is 1..256
 	dec	a		; make it 0..255
 	ld	(hl),a
-	ld	de,(PATHNAM)	; see if file exists
+	ld	de,PATHNAM	; see if file exists
 	xor	a
 	ld	c,_OPEN##
 	call	BDOS_NOFIL
@@ -1877,7 +1905,7 @@ NOBUF:
 FIB_PATH_BDOSE:
 	ld	ix,FIB
 PATH_BDOSE:
-	ld	de,(PATHNAM)
+	ld	de,PATHNAM
 BDOSE::
 	call	BDOS
 	ret	z		; no errors
@@ -2002,6 +2030,23 @@ was_break:
 	ld	ix,READYR	;Go to READYR without any indication of error
 	jp	z,CALBAS	; (must be a better way).
 ;
+	;This entry point allows to convert a DOS error code
+	;into a BASIC error code in DOS 1 mode
+	;(needed for CALL MAPDRV et al)
+	;Input: A = DOS error, Output: E = BASIC error
+GETERR::
+	ld	e,a
+	cp	.FRSTER		;Errors known to us?
+	jr	c,DOS_UNKNOWN	; no way to translate, use DOS error code
+	ld	c,a
+	ld	b,0
+	ld	hl,DERR_TAB-.FRSTER
+	add	hl,bc
+	ld	a,(hl)
+	ld	e,a
+	cp	DERFST		;Error codes known to MSX BASIC?
+	jr	c,GO_ERROR	; yes, file #0 will be closed by MSX-BASIC.
+DOS_UNKNOWN:
 
 DERMAK	macro	ERRNAM
 ERRNAM	equ	QQQQ
@@ -2171,12 +2216,12 @@ $HOOK	PARDEV
 				; the ROM BASIC's bug
 	push	hl		;save pointer to file specifier
 	push	de
-	ld	a,e
-	cp	63+1		;too long?
-	jr	nc,JDERBFN	;yes
+	;ld	a,e
+	;cp	63+1		;too long?
+	;jr	nc,JDERBFN	;yes
 	ld	c,e		;set length
 	ld	b,0
-	ld	de,(PATHNAM)	;set destination
+	ld	de,PATHNAM	;set destination
 	push	bc
 	push	de
 	ldir			;store in PATHNAM
@@ -2188,9 +2233,16 @@ $HOOK	PARDEV
 	cpir
 	jr	z,JDERBFN
 ;
-	ld	c,_PARSE##
-	call	PATH_BDOSE
+	;ld	c,_PARSE##
+	;call	PATH_BDOSE
+	;ld	a,(de)
+	push	de
+	inc	de
+	inc	de
+	inc	de
 	ld	a,(de)
+	pop	de
+
 	cp	":"		;terminated with a colon?
 	jr	nz,IS_DISK_FILE
 	pop	de		;not a disk file name, let ROM handle it
@@ -2204,7 +2256,7 @@ IS_DISK_FILE:
 HAVE_DRIVE:
 	ld	a,b
 	and	11000010b	;are directory path, "." or ".." parsed?
-	jr	z,OLD_FORMAT	;none, an old file name format
+	;jr	z,OLD_FORMAT	;none, an old file name format
 ;
 	ld	a,(de)		;error if the file name is not nul terminated.
 	or	a
@@ -2225,7 +2277,7 @@ OLD_FORMAT:
 ;
 	pop	de
 	pop	hl
-	ld	ix,(PATHNAM)
+	ld	ix,PATHNAM
 	bit	2,b		;drive name specified?
 	jr	z,NO_DRIVE	;jump with A=0 if not
 	inc	hl		;skip drive name
@@ -2320,11 +2372,11 @@ PNOEXT:
 	push	hl		;save pointer to stack
 	ld	hl,RBSAVE+3
 	COMPAR			;called by BSAVE?
-	ld	bc,(BSVCHK)	;assume so
+	ld	bc,BSVCHK	;assume so
 	jr	z,BSVENT	;yes
 	ld	hl,RBLOAD+3
 	COMPAR			;called by BLOAD?
-	ld	bc,(BLDCHK)	;assume so
+	ld	bc,BLDCHK	;assume so
 	jr	z,BSVENT	;yes
 	ld	c,e
 	ld	b,d
@@ -2350,8 +2402,8 @@ IN_FIELD:
 	push	hl
 	push	bc
 	ld	e,(hl)
-	ld	c,_CHKCHR##	;check the character in anticipation
-	call	BDOSE
+	;ld	c,_CHKCHR##	;check the character in anticipation
+	ld	d,0	;call	BDOSE
 	pop	bc
 	pop	hl
 	ld	a,e
@@ -2492,5 +2544,58 @@ NOADD:
 	.radix	16
 	PRINTL	DSKBASIC,%($-$$BASIC)
 	.radix	10
+
+	;--- BLOAD and BSAVE callers in RAM
+
+BLOAD_CODE:
+	rst	30h
+	defb	0		;dummy
+	defw	BLOAD
+	push	hl		;save text pointer
+	jp	6EF4h		;run if "R" option specified
+
+BSAVE_CODE:
+	rst	30h
+	defb	0		;dummy
+	defw	BSAVE
+	ret
+
+	;--- Get slot at page 1
+
+GSLOT1:
+	push	hl
+	push	bc
+	in	a,(0A8h)	;Get primary slot register
+	rrca			;Isolate primary slot number
+	rrca			; for page-1.
+	call	GSLT_SLTTBL
+	jr	z,GSLT_RET	;Slot is not expanded.
+	;jr	GSLT_EXP	;Form whole address.
+
+GSLT_EXP:
+	and	00001100b	;Isolate secondary slot bits
+	or	10000000b	;Set "expanded slot" flag
+	or	c		;Include primary slot.
+;
+GSLT_RET:
+	pop	bc
+	pop	hl
+	ret
+
+GSLT_SLTTBL:
+	and	00000011b
+	ld	c,a
+	ld	b,0
+	ld	hl,0FCC1h
+	add	hl,bc		;Look at expanded slot flag
+	bit	7,(hl)		; for this slot and return
+	ret	z		; if slot is not expanded.
+;
+	inc	hl
+	inc	hl
+	inc	hl		;Get current secondary slot
+	inc	hl		; register value for this
+	ld	a,(hl)		; slot
+	ret
 
 	end
