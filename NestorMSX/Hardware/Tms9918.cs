@@ -10,6 +10,8 @@ namespace Konamiman.NestorMSX.Hardware
     /// </summary>
     public class Tms9918 : IExternallyControlledTms9918, IDisposable
     {
+        private const int colorTableSize = 32;
+
         private readonly ITms9918DisplayRenderer displayRenderer;
         private PlainMemory Vram;
         private bool generateInterrupts;
@@ -38,6 +40,7 @@ namespace Konamiman.NestorMSX.Hardware
         private int patternNameTableLength;
         private int[] patternNameTableLengths = { 768, 960 };
         private int patternGeneratorTableLength = 2048;
+        private int screenMode = 0;
 
         private int _patternNameTableAddress;
         private int patternNameTableAddress
@@ -54,9 +57,24 @@ namespace Konamiman.NestorMSX.Hardware
             }
         }
 
+        private int _colorTableAddress;
+        private int colorTableAddress
+        {
+            get
+            {
+                return _colorTableAddress;
+            }
+            set
+            {
+                _colorTableAddress = value;
+                Debug.WriteLine("*** New color table: {0:X}", value);
+            }
+        }
+
         public Tms9918(ITms9918DisplayRenderer displayRenderer)
         {
-            patternNameTableAddress = 0x1800;
+            _patternNameTableAddress = 0x1800;
+            _colorTableAddress = 0x2000;
 
             Vram = new PlainMemory(16384);
             modeBits = new Bit[] {0, 0, 0};
@@ -72,6 +90,7 @@ namespace Konamiman.NestorMSX.Hardware
 
         private void SetScreenMode(int mode)
         {
+            screenMode = mode;
             displayRenderer.SetScreenMode((byte)mode);
             patternNameTableLength = patternNameTableLengths[mode & 1];
         }
@@ -157,6 +176,10 @@ namespace Konamiman.NestorMSX.Hardware
                     patternNameTableAddress = value << 10;
                     break;
 
+                case 3:
+                    colorTableAddress = value << 6;
+                    break;
+
                 case 4:
                     patternGeneratorTableAddress = value << 11;
                     break;
@@ -210,6 +233,9 @@ namespace Konamiman.NestorMSX.Hardware
             }
             if(address >= patternGeneratorTableAddress && address < patternGeneratorTableAddress + patternGeneratorTableLength) {
                 displayRenderer.WriteToPatternGeneratorTable(address - patternGeneratorTableAddress, value);
+            }
+            if(screenMode != 1 && address >= colorTableAddress && address < colorTableAddress + colorTableSize) {
+                displayRenderer.WriteToColourTable(address - colorTableAddress, value);
             }
         }
 

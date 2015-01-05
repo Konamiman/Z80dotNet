@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using Konamiman.NestorMSX.Hardware;
 using Konamiman.Z80dotNet;
@@ -13,9 +14,7 @@ namespace NestorMSX
         private Graphics g = null;
         private Graphics baseGraphics = null;
         private readonly List<Keys> PressedKeys = new List<Keys>();
-        private Brush blue = new SolidBrush(Color.FromArgb(84, 85, 237));
-        private Brush foregroundColor = new SolidBrush(Color.White);
-        private Brush backgroundColor = new SolidBrush(Color.Blue);
+        private Dictionary<Color, SolidBrush> brushes; 
 
         public Form1()
         {
@@ -65,48 +64,37 @@ namespace NestorMSX
             g.TranslateTransform(8, 8);
         }
 
-        public void ClearScreen()
+        public void RegisterColors(Color[] colors)
+        {
+            brushes = colors.Skip(1).ToDictionary(c => c, c => new SolidBrush(c));
+        }
+
+        public void ClearScreen(Color background)
         {
             if(g != null)
             {
                 var state = g.Save();
                 g.ResetTransform();
-                g.FillRectangle(backgroundColor, 0, 0, canvas.Width, canvas.Height);
+                g.FillRectangle(brushes[background], 0, 0, canvas.Width, canvas.Height);
                 g.Restore(state);
             }
         }
 
-        public void PrintChar(Point coordinates, byte[] pattern, int charWidth)
+        public void PrintChar(Point coordinates, Color foreground, Color background, byte[] pattern, int charWidth)
         {
-            var baseX = (coordinates.X * charWidth) + (charWidth == 6 ? 8 : 0);
+            var baseX = (coordinates.X*charWidth) + (charWidth == 6 ? 8 : 0);
             var X = baseX;
-            var Y = coordinates.Y * 8;
-            g.FillRectangle(backgroundColor, baseX, Y, charWidth, 8);
-            for(int i=0; i<8; i++) {
-                for(int bit=7; bit>=8-charWidth; bit--) {
+            var Y = coordinates.Y*8;
+            g.FillRectangle(brushes[background], baseX, Y, charWidth, 8);
+            for(int i = 0; i < 8; i++) {
+                for(int bit = 7; bit >= 8 - charWidth; bit--) {
                     if(pattern[i].GetBit(bit)) {
-                        g.FillRectangle(foregroundColor, X + (7-bit), Y, 1, 1);
+                        g.FillRectangle(brushes[foreground], X + (7 - bit), Y, 1, 1);
                     }
                 }
                 X = baseX;
                 Y++;
             }
-        }
-
-        public void SetForegroundColor(Color color)
-        {
-            if(foregroundColor != null)
-                foregroundColor.Dispose();
-
-            this.foregroundColor = new SolidBrush(color);
-        }
-
-        public void SetBackgroundColor(Color color)
-        {
-            if(backgroundColor != null)
-                backgroundColor.Dispose();
-
-            this.backgroundColor = new SolidBrush(color);
         }
     }
 }

@@ -35,19 +35,19 @@
             // 
             this.canvas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.canvas.Location = new System.Drawing.Point(0, 0);
-            this.canvas.MaximumSize = new System.Drawing.Size(544, 416);
-            this.canvas.MinimumSize = new System.Drawing.Size(544, 416);
+            this.canvas.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.canvas.Name = "canvas";
-            this.canvas.Size = new System.Drawing.Size(544, 416);
+            this.canvas.Size = new System.Drawing.Size(408, 338);
             this.canvas.TabIndex = 0;
             this.canvas.TabStop = false;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(670, 436);
+            this.ClientSize = new System.Drawing.Size(502, 354);
             this.Controls.Add(this.canvas);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NestorMSX";

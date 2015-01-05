@@ -6,31 +6,21 @@ namespace Konamiman.NestorMSX.Host
     public class FormDisplayRenderer : DisplayRendererBase
     {
         private readonly Form1 form;
-        private readonly Color[] Colors;
 
         public FormDisplayRenderer(Form1 form)
         {
             this.form = form;
+            form.RegisterColors(Colors);
         }
 
-        protected override void ClearScreen()
+        protected override void PrintChar(Point coordinates, Color foreground, Color background, byte theChar, int charWidth)
         {
-            form.ClearScreen();
+            form.PrintChar(coordinates, foreground, background, characterPatterns[theChar], charWidth);
         }
 
-        protected override void PrintChar(Point coordinates, byte theChar, int charWidth)
+        protected override void ClearScreen(Color background)
         {
-            form.PrintChar(coordinates, characterPatterns[theChar], charWidth);
-        }
-
-        protected override void SetForegroundColor(Color color)
-        {
-            form.SetForegroundColor(color);
-        }
-
-        protected override void SetBackgroundColor(Color color)
-        {
-            form.SetBackgroundColor(color);
+            form.ClearScreen(background);
         }
     }
 }

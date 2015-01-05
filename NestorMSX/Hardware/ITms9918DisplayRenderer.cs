@@ -16,6 +16,8 @@
 
         void WriteToPatternGeneratorTable(int position, byte value);
 
+        void WriteToColourTable(int position, byte value);
+
         void SetForegroundColor(byte colorIndex);
 
         void SetBackgroundColor(byte colorIndex);

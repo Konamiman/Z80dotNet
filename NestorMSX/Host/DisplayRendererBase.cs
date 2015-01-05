@@ -12,19 +12,21 @@ namespace Konamiman.NestorMSX.Host
     public abstract class DisplayRendererBase : ITms9918DisplayRenderer
     {
         protected int characterWidthInPixels = 8;
+        protected int colorTableSize = 32;
 
         private int charWidth = 8;
         private int currentScreenMode = 0;
         private int screenWidthInCharacters = 32;
         private bool screenIsActive = false;
         private Dictionary<Point, byte> screenBuffer = new Dictionary<Point, byte>();
-        private Color[] Colors;
+        private Tuple<Color, Color>[] colorTable; 
+        protected Color[] Colors { get; private set; }
+        protected Color BackgroundColor { get; private set; }
+        protected Color ForegroundColor { get; private set; }
 
         protected Dictionary<byte, byte[]> characterPatterns = new Dictionary<byte, byte[]>();
-        protected abstract void ClearScreen();
-        protected abstract void PrintChar(Point coordinates, byte theChar, int charWidth);
-        protected abstract void SetForegroundColor(Color color);
-        protected abstract void SetBackgroundColor(Color color);
+        protected abstract void ClearScreen(Color background);
+        protected abstract void PrintChar(Point coordinates, Color foreground, Color background, byte theChar, int charWidth);
         
         public DisplayRendererBase()
         {
@@ -37,7 +39,15 @@ namespace Konamiman.NestorMSX.Host
             {
                 var line = colorsLines[i];
                 var tokens = line.Split(new[] {" ", "\t"}, StringSplitOptions.RemoveEmptyEntries);
-                Colors[i] = Color.FromArgb(int.Parse(tokens[0]), int.Parse(tokens[1]), int.Parse(tokens[2]));
+                Colors[i] = Color.FromArgb(255, int.Parse(tokens[0]), int.Parse(tokens[1]), int.Parse(tokens[2]));
+            }
+
+            ForegroundColor = Colors[0];
+            BackgroundColor = Colors[0];
+
+            colorTable = new Tuple<Color, Color>[colorTableSize];
+            for(int i = 0; i < colorTableSize; i++) {
+                colorTable[i] = new Tuple<Color, Color>(Color.Transparent, Color.Transparent);
             }
         }
 
@@ -54,14 +64,14 @@ namespace Konamiman.NestorMSX.Host
             Debug.WriteLine("*** Activate");
             screenIsActive = true;
             foreach(var position in screenBuffer.Keys)
-                PrintChar(position, screenBuffer[position], charWidth);
+                DoPrintChar(position, screenBuffer[position], charWidth);
         }
 
         public void BlankScreen()
         {
             Debug.WriteLine("*** Blank");
             screenIsActive = false;
-            ClearScreen();
+            ClearScreen(BackgroundColor);
         }
 
         public void SetScreenMode(byte mode)
@@ -77,8 +87,7 @@ namespace Konamiman.NestorMSX.Host
 
         public void WriteToNameTable(int position, byte value)
         {
-            var theChar = value==255 ? "" : Encoding.ASCII.GetString(new[] {value});
-            Debug.Write(theChar);
+            Debug.Write(value==255 ? "" : Encoding.ASCII.GetString(new[] {value}));
             var coordinates = new Point(position%screenWidthInCharacters, position/screenWidthInCharacters);
             if(coordinates.X >= screenWidthInCharacters || coordinates.Y >= 24)
                 return;
@@ -86,7 +95,7 @@ namespace Konamiman.NestorMSX.Host
             screenBuffer[coordinates] = value;
 
             if(screenIsActive)
-                PrintChar(coordinates, value, charWidth);
+                DoPrintChar(coordinates, value, charWidth);
         }
 
         public void WriteToPatternGeneratorTable(int position, byte value)
@@ -97,26 +106,51 @@ namespace Konamiman.NestorMSX.Host
 
             if(screenIsActive)
                 foreach(var p in screenBuffer.Keys.Where(k => screenBuffer[k] == charIndex))
-                    PrintChar(p, screenBuffer[p], charWidth);
+                    DoPrintChar(p, screenBuffer[p], charWidth);
+        }
+
+        public void WriteToColourTable(int position, byte value)
+        {
+            var foregroundColorIndex = value >> 4;
+            var backgroundColorIndex = value & 0x0F;
+
+            colorTable[position] = new Tuple<Color, Color>(
+                foregroundColorIndex == 0 ? BackgroundColor : Colors[foregroundColorIndex],
+                backgroundColorIndex == 0 ? BackgroundColor : Colors[backgroundColorIndex]);
+            ReprintAll();
         }
 
         public void SetForegroundColor(byte colorIndex)
         {
-            SetForegroundColor(Colors[colorIndex]);
+            ForegroundColor = Colors[colorIndex];
             ReprintAll();
         }
 
         public void SetBackgroundColor(byte colorIndex)
         {
-            SetBackgroundColor(Colors[colorIndex]);
+            BackgroundColor = Colors[colorIndex];
+            ClearScreen(BackgroundColor);
             ReprintAll();
         }
 
         private void ReprintAll()
         {
+            ClearScreen(BackgroundColor);
             if(screenIsActive)
                 foreach(var position in screenBuffer.Keys)
-                    PrintChar(position, screenBuffer[position], charWidth);
+                    DoPrintChar(position, screenBuffer[position], charWidth);
+        }
+
+        private void DoPrintChar(Point coordinates, byte theChar, int charWidth)
+        {
+            if(currentScreenMode == 1) {
+                PrintChar(coordinates, ForegroundColor, BackgroundColor, theChar, charWidth);
+            }
+            else {
+                var colorTableIndex = theChar/8;
+                var colors = colorTable[colorTableIndex];
+                PrintChar(coordinates, colors.Item1, colors.Item2, theChar, charWidth);
+            }
         }
     }
 }

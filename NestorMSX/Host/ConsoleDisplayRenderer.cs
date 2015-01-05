@@ -15,10 +15,22 @@ namespace Konamiman.NestorMSX.Host
         {
             Console.Title = "NestorMSX";
 
-            ClearScreen();
+            ClearScreen(Color.Transparent);
            
             Console.WindowHeight = 25;
             Console.BufferHeight = 25;
+        }
+
+        protected override void ClearScreen(Color background)
+        {
+            Console.Clear();
+        }
+
+        protected override void PrintChar(Point coordinates, Color foreground, Color background, byte theChar, int charWidth)
+        {
+            Console.SetCursorPosition(coordinates.X, coordinates.Y);
+            if(theChar != 255)
+                Console.Write(Convert.ToString(theChar));
         }
 
         protected override void SetScreenWidth(int width)
@@ -26,26 +38,6 @@ namespace Konamiman.NestorMSX.Host
             base.SetScreenWidth(width);
             Console.WindowWidth = width;
             Console.BufferWidth = width;
-        }
-
-        protected override void SetForegroundColor(Color color)
-        {
-        }
-
-        protected override void SetBackgroundColor(Color color)
-        {
-        }
-
-        protected override void ClearScreen()
-        {
-            Console.Clear();
-        }
-
-        protected override void PrintChar(Point coordinates, byte theChar, int charWidth)
-        {
-            Console.SetCursorPosition(coordinates.X, coordinates.Y);
-            if(theChar != 255)
-                Console.Write(Convert.ToString(theChar));
         }
     }
 }
