@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{68EDF6DD-384A-4264-A64D-E67A58DFC9BA}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Konamiman.NestorMSX</RootNamespace>
     <AssemblyName>NestorMSX</AssemblyName>
@@ -69,14 +69,19 @@
     <Compile Include="Hardware\SlotSelectionRegisterWrittenEventArgs.cs" />
     <Compile Include="Hardware\SlotsSystem.cs" />
     <Compile Include="Hardware\Tms9918.cs" />
+    <Compile Include="Host\DisplayRendererBase.cs" />
     <Compile Include="Host\ConsoleDisplayRenderer.cs" />
     <Compile Include="Host\DosFunctionCallExecutor.cs" />
+    <Compile Include="Host\FormDisplayRenderer.cs" />
     <Compile Include="Host\MsxEmulator.cs" />
     <Compile Include="Misc\SlotNumber.cs" />
     <Compile Include="Misc\TwinBit.cs" />
     <Compile Include="Misc\Z80Page.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -106,6 +111,9 @@
     </Compile>
     <None Include="DiskBasic\CPM32.EXE" />
     <None Include="DiskBasic\HEX2BIN.EXE" />
+    <Content Include="Colors.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="KeyMappings.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Konamiman.NestorMSX.Hardware;
 using Konamiman.Z80dotNet;
+using NestorMSX;
 
 namespace Konamiman.NestorMSX.Host
 {
@@ -14,13 +15,15 @@ namespace Konamiman.NestorMSX.Host
         private readonly Tms9918 vdp;
         private readonly SlotsSystem slots;
         private readonly IKeyboardController keyboard;
-        private readonly KeyEventSource keyboardEventSource;
+        private readonly IKeyEventSource keyboardEventSource;
         private readonly DosFunctionCallExecutor dosFunctionsExecutor;
+        private readonly Form1 form;
 
         public MsxEmulator()
         {
             z80 = new Z80Processor();
-            z80.ClockSynchronizer = null;
+            z80.ClockFrequencyInMHz = 7;
+            //z80.ClockSynchronizer = null;
 
             slots = new SlotsSystem();
             slots.SetSlotContents(0, new PlainRom(File.ReadAllBytes("v20bios.rom")));
@@ -29,11 +32,12 @@ namespace Konamiman.NestorMSX.Host
             slots.SetSlotContents(3, ram);
             z80.Memory = slots;
 
-            vdp = new Tms9918(new ConsoleDisplayRenderer());
+            form = new Form1();
+            keyboardEventSource = form;
+            vdp = new Tms9918(new FormDisplayRenderer(form));
             z80.RegisterInterruptSource(vdp);
          
-            keyboardEventSource = new KeyEventSource();
-            keyboard = new KeyboardController(keyboardEventSource, File.ReadAllText("KeyMappings.txt"));
+            keyboard = new KeyboardController(form, File.ReadAllText("KeyMappings.txt"));
 
             dosFunctionsExecutor = new DosFunctionCallExecutor(z80.Registers, slots);
 
@@ -53,7 +57,7 @@ namespace Konamiman.NestorMSX.Host
         {
             keyboardEventSource.Start();
             Task.Run(() => z80.Start());
-            Application.Run();
+            Application.Run(form);
         }
 
         private void Z80OnMemoryAccess(object sender, MemoryAccessEventArgs args)

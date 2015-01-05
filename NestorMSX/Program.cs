@@ -20,10 +20,10 @@ namespace NestorMSX
             if (args.Length > 0 && args[0].ToLower() == "keytest")
             {
                 Console.WriteLine("*** Key test running. Press keys to see their name. Press CTRL-C to quit.");
-                var keyEventsource = new KeyEventSource();
+                var keyEventsource = new Form1();// KeyEventSource();
                 keyEventsource.KeyPressed += (sender, keyArgs) => Console.WriteLine(keyArgs.Value.ToString());
                 Console.CancelKeyPress += (sender, eventArgs) => { while (Console.KeyAvailable) Console.ReadKey(true); };
-                Application.Run();
+                Application.Run(keyEventsource);
                 return;
             }
 

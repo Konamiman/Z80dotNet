@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using Konamiman.NestorMSX.Hardware;
 
 namespace Konamiman.NestorMSX.Host
 {
-    public class ConsoleDisplayRenderer : ITms9918DisplayRenderer
+    public class ConsoleDisplayRenderer : DisplayRendererBase
     {
         private int screenWidth = 32;
         private bool screenIsActive = false;
@@ -19,82 +15,37 @@ namespace Konamiman.NestorMSX.Host
         {
             Console.Title = "NestorMSX";
 
-            screenBuffer = new Dictionary<Point, string>();
-            Console.Clear();
+            ClearScreen();
            
             Console.WindowHeight = 25;
             Console.BufferHeight = 25;
         }
 
-        void SetScreenWidth(int width)
+        protected override void SetScreenWidth(int width)
         {
-            screenWidth = width;
+            base.SetScreenWidth(width);
             Console.WindowWidth = width;
             Console.BufferWidth = width;
-            var itemsToRemove = screenBuffer.Keys.Where(x => x.X >= width).ToArray();
-            for(int i=0; i<itemsToRemove.Length; i++)
-                screenBuffer.Remove(itemsToRemove[i]);
         }
 
-        public void ActivateScreen()
+        protected override void SetForegroundColor(Color color)
         {
-            Debug.WriteLine("*** Activate");
-            screenIsActive = true;
-            foreach(var position in screenBuffer.Keys)
-                PrintChar(position, screenBuffer[position]);
         }
 
-        public void BlankScreen()
+        protected override void SetBackgroundColor(Color color)
         {
-            Debug.WriteLine("*** Blank");
-            screenIsActive = false;
+        }
+
+        protected override void ClearScreen()
+        {
             Console.Clear();
         }
 
-        public void SetScreenMode(byte mode)
-        {
-            if(mode > 1)
-                return;
-
-            Debug.WriteLine("*** Mode " + mode);
-            currentScreenMode = mode;
-            SetScreenWidth(mode == 1 ? 40 : 32);
-        }
-
-        public void WriteToNameTable(int position, byte value)
-        {
-            var theChar = value==255 ? "" : Encoding.ASCII.GetString(new[] {value});
-            Debug.Write(theChar);
-            var coordinates = new Point(position%screenWidth, position/screenWidth);
-            if(coordinates.X >= screenWidth || coordinates.Y >= 24)
-                return;
-
-            screenBuffer[coordinates] = theChar;
-
-            if(screenIsActive)
-                PrintChar(coordinates, theChar);
-        }
-
-        private void PrintChar(Point coordinates, string theChar)
+        protected override void PrintChar(Point coordinates, byte theChar, int charWidth)
         {
             Console.SetCursorPosition(coordinates.X, coordinates.Y);
-            if(theChar != "")
-                Console.Write(theChar);
-        }
-
-        public void WriteToPatternGeneratorTable(int position, byte value)
-        {
-            //Console.WriteLine("*** Write to pattern table: {0}, {1}", position, value);
-        }
-
-        public void SetForegroundColor(byte colorIndex)
-        {
-            //Console.WriteLine("*** Set foreground color: " + colorIndex);
-        }
-
-        public void SetBackgroundColor(byte colorIndex)
-        {
-            //Console.WriteLine("*** Set background color: " + colorIndex);
+            if(theChar != 255)
+                Console.Write(Convert.ToString(theChar));
         }
     }
 }

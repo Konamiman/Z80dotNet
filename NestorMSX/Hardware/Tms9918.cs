@@ -14,7 +14,21 @@ namespace Konamiman.NestorMSX.Hardware
         private PlainMemory Vram;
         private bool generateInterrupts;
         
-        private int patternGeneratorTableAddress;
+        private int _patternGeneratorTableAddress;
+        private int patternGeneratorTableAddress
+        {
+            get
+            {
+                return _patternGeneratorTableAddress;
+            }
+            set
+            {
+                _patternGeneratorTableAddress = value;
+                for(var position = 0; position < patternGeneratorTableLength; position++)
+                    displayRenderer.WriteToPatternGeneratorTable(position, Vram[patternGeneratorTableAddress + position]);
+            }
+        }
+
         private byte? valueWrittenToPort1;
         private byte readAheadBuffer;
         private Timer interruptTimer;
