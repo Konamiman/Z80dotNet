@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Konamiman.NestorMSX;
 using Konamiman.NestorMSX.Hardware;
 using Konamiman.NestorMSX.Host;
 
@@ -17,6 +18,9 @@ namespace NestorMSX
         /// </summary>
         static void Main(string[] args)
         {
+            Application.Run(new FormTest());
+            return;
+            
             if (args.Length > 0 && args[0].ToLower() == "keytest")
             {
                 Console.WriteLine("*** Key test running. Press keys to see their name. Press CTRL-C to quit.");
