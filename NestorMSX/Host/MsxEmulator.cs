@@ -22,8 +22,8 @@ namespace Konamiman.NestorMSX.Host
         public MsxEmulator()
         {
             z80 = new Z80Processor();
-            z80.ClockFrequencyInMHz = 7;
-            //z80.ClockSynchronizer = null;
+            //z80.ClockFrequencyInMHz = 7;
+            z80.ClockSynchronizer = null;
 
             slots = new SlotsSystem();
             slots.SetSlotContents(0, new PlainRom(File.ReadAllBytes("SpanishMsx1Bios.rom")));

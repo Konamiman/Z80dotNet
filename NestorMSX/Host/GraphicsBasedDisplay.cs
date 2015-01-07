@@ -1,10 +1,7 @@
-﻿//#define USE_BITMAPS
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
 using System.Linq;
 using System.Windows.Forms;
 using Konamiman.Z80dotNet;
@@ -16,7 +13,6 @@ namespace Konamiman.NestorMSX.Host
         private const int zoomLevel = 2;
 
         private readonly IDrawingSurface drawingSurface;
-        private readonly IDictionary<byte, Image> characterImages;
         private IDictionary<Point, byte> screenBuffer;
         private Graphics graphics;
         private Color BackdropColor;
@@ -30,9 +26,7 @@ namespace Konamiman.NestorMSX.Host
         {
             BackdropColor = Color.Blue;
 
-            characterImages = new Dictionary<byte, Image>();
             for(int i = 0; i < 256; i++) {
-                characterImages[(byte)i] = new Bitmap(8, 8, PixelFormat.Format1bppIndexed);
                 characterColors[(byte)i] = new Tuple<Color, Color>(Color.Black, Color.Black);
                 characterBrushes[(byte)i] = new Tuple<Brush, Brush>(new SolidBrush(Color.Black), new SolidBrush(Color.Black));
             }
@@ -47,6 +41,7 @@ namespace Konamiman.NestorMSX.Host
 
         private void DrawingSurfaceOnRequiresPaint(object sender, PaintEventArgs eventArgs)
         {
+            eventArgs.Graphics.Clear(BackdropColor);
             RepaintAll();
         }
 
@@ -62,27 +57,21 @@ namespace Konamiman.NestorMSX.Host
             if(!screenIsActive)
                 return;
 
-#if USE_BITMAPS
-            graphics.DrawImage(
-                characterImages[charIndex],
-                coordinates.X*characterWidth + (characterWidth == 6 ? 8 : 0), 
-                coordinates.Y*8);
-#else
             var baseX = (coordinates.X*characterWidth) + (characterWidth == 6 ? 8 : 0);
             var X = baseX;
             var Y = coordinates.Y*8;
             var brushes = characterBrushes[charIndex];
+            var pattern = characterPatterns[charIndex];
             graphics.FillRectangle(brushes.Item2, baseX, Y, characterWidth, 8);
-            for(int i = 0; i < 8; i++) {
-                for(int bit = 7; bit >= 8 - characterWidth; bit--) {
-                    if(characterPatterns[charIndex][i].GetBit(bit)) {
-                        graphics.FillRectangle(brushes.Item1, X + (7 - bit), Y, 1, 1);
+            for(int row = 0; row < 8; row++) {
+                for(int column = 7; column >= 8 - characterWidth; column--) {
+                    if(pattern[row].GetBit(column)) {
+                        graphics.FillRectangle(brushes.Item1, X + (7 - column), Y, 1, 1);
                     }
                 }
                 X = baseX;
                 Y++;
             }
-#endif
         }
 
         public void SetScreenBufer(IDictionary<Point, byte> value)
@@ -101,44 +90,14 @@ namespace Konamiman.NestorMSX.Host
             graphics.Clear(BackdropColor);
         }
 
-        public unsafe void SetCharacterPattern(byte charIndex, byte[] pattern)
+        public void SetCharacterPattern(byte charIndex, byte[] pattern)
         {
-#if USE_BITMAPS
-
-            var oldImage = characterImages[charIndex];
-            var palette = oldImage.Palette;
-            oldImage.Dispose();
-
-            var bmpData = new byte[8*4];
-            for(int i = 0; i < 8; i++)
-                bmpData[i*4] = pattern[i];
-
-            Bitmap newImage;
-
-            fixed(byte* p = bmpData)
-                newImage = new Bitmap(8, 8, 4, PixelFormat.Format1bppIndexed, new IntPtr(p));
-
-            newImage.Palette = palette;
-
-            characterImages[charIndex] = newImage;
-
-#else 
             characterPatterns[charIndex] = pattern;
-#endif
-
             ReprintAllInstancesOf(charIndex);
         }
 
         public void SetCharacterColors(byte charIndex, Color foreground, Color background)
         {
-
-#if USE_BITMAPS
-            var image = characterImages[charIndex];
-            var palette = image.Palette;
-            palette.Entries[0] = background;
-            palette.Entries[1] = foreground;
-            image.Palette = palette;
-#else
             characterColors[charIndex] = new Tuple<Color, Color>(foreground, background);
 
             var oldBrushes = characterBrushes[charIndex];
@@ -150,8 +109,6 @@ namespace Konamiman.NestorMSX.Host
                 new SolidBrush(background));
             characterBrushes[charIndex] = newBrushes;
 
-#endif
-            
             ReprintAllInstancesOf(charIndex);
         }
 

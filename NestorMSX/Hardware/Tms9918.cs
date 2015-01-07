@@ -10,7 +10,8 @@ namespace Konamiman.NestorMSX.Hardware
     /// </summary>
     public class Tms9918 : IExternallyControlledTms9918, IDisposable
     {
-        private const int colorTableSize = 32;
+        private const int colorTableLength = 32;
+        private const int patternGeneratorTableLength = 2048;
 
         private readonly ITms9918DisplayRenderer displayRenderer;
         private PlainMemory Vram;
@@ -39,7 +40,7 @@ namespace Konamiman.NestorMSX.Hardware
         private Bit[] modeBits;
         private int patternNameTableLength;
         private int[] patternNameTableLengths = { 768, 960 };
-        private int patternGeneratorTableLength = 2048;
+        
         private int screenMode = 0;
 
         private int _patternNameTableAddress;
@@ -68,7 +69,7 @@ namespace Konamiman.NestorMSX.Hardware
             {
                 _colorTableAddress = value;
                 Debug.WriteLine("*** New color table: {0:X}", value);
-                for(int i = 0; i < colorTableSize; i++)
+                for(int i = 0; i < colorTableLength; i++)
                     displayRenderer.WriteToColourTable(i, Vram[_colorTableAddress + i]);
             }
         }
@@ -236,7 +237,7 @@ namespace Konamiman.NestorMSX.Hardware
             if(address >= patternGeneratorTableAddress && address < patternGeneratorTableAddress + patternGeneratorTableLength) {
                 displayRenderer.WriteToPatternGeneratorTable(address - patternGeneratorTableAddress, value);
             }
-            if(screenMode != 1 && address >= colorTableAddress && address < colorTableAddress + colorTableSize) {
+            if(screenMode != 1 && address >= colorTableAddress && address < colorTableAddress + colorTableLength) {
                 displayRenderer.WriteToColourTable(address - colorTableAddress, value);
             }
         }

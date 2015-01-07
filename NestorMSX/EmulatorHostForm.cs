@@ -15,6 +15,7 @@ namespace NestorMSX
         public EmulatorHostForm()
         {
             InitializeComponent();
+            ClientSize = new Size(((32*8) + 16) * 2, ((24*8) + 16) * 2);
             canvas.Paint += CanvasOnPaint;
         }
         
@@ -37,12 +38,6 @@ namespace NestorMSX
 
         public void Stop()
         {
-        }
-
-        protected override void OnLoad(EventArgs e)
-        {
-            ClientSize = new Size(((32*8) + 16) * 2, ((24*8) + 16) * 2);
-            base.OnLoad(e);
         }
 
         public event EventHandler<KeyEventArgs> KeyPressed;

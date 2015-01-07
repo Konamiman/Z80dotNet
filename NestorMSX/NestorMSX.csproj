@@ -61,7 +61,6 @@
     <Compile Include="FormTest.Designer.cs">
       <DependentUpon>FormTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="Hardware\ConsoleKeyEventSource.cs" />
     <Compile Include="Hardware\IExternallyControlledSlotsSystem.cs" />
     <Compile Include="Hardware\IExternallyControlledTms9918.cs" />
     <Compile Include="Hardware\IKeyboardController.cs" />
@@ -71,7 +70,6 @@
     <Compile Include="Hardware\ITms9918DisplayRenderer.cs" />
     <Compile Include="Hardware\KeyboardController.cs" />
     <Compile Include="Hardware\KeyEventArgs.cs" />
-    <Compile Include="Hardware\KeyEventSource.cs" />
     <Compile Include="Hardware\NotConnectedMemory.cs" />
     <Compile Include="Hardware\PlainRom.cs" />
     <Compile Include="Hardware\SlotSelectionRegisterWrittenEventArgs.cs" />
