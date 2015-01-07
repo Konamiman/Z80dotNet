@@ -17,7 +17,7 @@ namespace Konamiman.NestorMSX.Host
         private readonly IKeyboardController keyboard;
         private readonly IKeyEventSource keyboardEventSource;
         private readonly DosFunctionCallExecutor dosFunctionsExecutor;
-        private readonly Form1 form;
+        private readonly EmulatorHostForm form;
 
         public MsxEmulator()
         {
@@ -26,15 +26,15 @@ namespace Konamiman.NestorMSX.Host
             //z80.ClockSynchronizer = null;
 
             slots = new SlotsSystem();
-            slots.SetSlotContents(0, new PlainRom(File.ReadAllBytes("v20bios.rom")));
+            slots.SetSlotContents(0, new PlainRom(File.ReadAllBytes("SpanishMsx1Bios.rom")));
             slots.SetSlotContents(1, new PlainRom(File.ReadAllBytes("dskrom.rom"), 1));
             var ram = new PlainMemory(65536);
             slots.SetSlotContents(3, ram);
             z80.Memory = slots;
 
-            form = new Form1();
+            form = new EmulatorHostForm();
             keyboardEventSource = form;
-            vdp = new Tms9918(new FormDisplayRenderer(form));
+            vdp = new Tms9918(new DisplayRenderer(new GraphicsBasedDisplay(form)));
             z80.RegisterInterruptSource(vdp);
          
             keyboard = new KeyboardController(form, File.ReadAllText("KeyMappings.txt"));

@@ -68,6 +68,8 @@ namespace Konamiman.NestorMSX.Hardware
             {
                 _colorTableAddress = value;
                 Debug.WriteLine("*** New color table: {0:X}", value);
+                for(int i = 0; i < colorTableSize; i++)
+                    displayRenderer.WriteToColourTable(i, Vram[_colorTableAddress + i]);
             }
         }
 

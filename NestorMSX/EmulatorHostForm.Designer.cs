@@ -1,6 +1,6 @@
 ﻿namespace NestorMSX
 {
-    partial class Form1
+    partial class EmulatorHostForm
     {
         /// <summary>
         /// Required designer variable.
@@ -41,17 +41,16 @@
             this.canvas.TabIndex = 0;
             this.canvas.TabStop = false;
             // 
-            // Form1
+            // EmulatorHostForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(502, 354);
             this.Controls.Add(this.canvas);
             this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.Name = "Form1";
+            this.Name = "EmulatorHostForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NestorMSX";
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.canvas)).EndInit();
             this.ResumeLayout(false);
 
