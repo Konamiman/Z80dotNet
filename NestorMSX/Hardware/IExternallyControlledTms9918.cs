@@ -28,14 +28,22 @@
         /// <returns></returns>
         byte[] GetVramContents(int startAddress, int length);
 
-        byte[] GetPatternNameTableContents();
+        /// <summary>
+        /// Returns the current base address for the pattern name table.
+        /// </summary>
+        int PatternNameTableAddress { get; }
+
+        /// <summary>
+        /// Returns the current size of the pattern name table.
+        /// </summary>
+        int PatternNameTableSize { get; }
 
         /// <summary>
         /// Sets the contents of a portion of VRAM
         /// </summary>
         /// <param name="startAddress">First VRAM address that will be set</param>
         /// <param name="contents">New contents of VRAM</param>
-        /// <param name="startIndex">Start index for starting copying within the contens array</param>
+        /// <param name="startIndex">StartGeneratingKeyEvents index for starting copying within the contens array</param>
         /// <param name="length">Length of the contents array that will be copied. If null,
         /// the whole array is copied.</param>
         void SetVramContents(int startAddress, byte[] contents, int startIndex = 0, int? length = null);

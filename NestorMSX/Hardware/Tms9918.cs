@@ -38,21 +38,20 @@ namespace Konamiman.NestorMSX.Hardware
         private byte statusRegisterValue;
         private int vramPointer;
         private Bit[] modeBits;
-        private int patternNameTableLength;
-        private int[] patternNameTableLengths = { 768, 960 };
+        private int[] PatternNameTableSizes = { 768, 960 };
         
         private int screenMode = 0;
 
-        private int _patternNameTableAddress;
-        private int patternNameTableAddress
+        private int _PatternNameTableAddress;
+        public int PatternNameTableAddress
         {
             get
             {
-                return _patternNameTableAddress;
+                return _PatternNameTableAddress;
             }
-            set
+            private set
             {
-                _patternNameTableAddress = value;
+                _PatternNameTableAddress = value;
                 Debug.WriteLine("*** New pattern name table: {0:X}", value);
                 ReprintAll();
             }
@@ -76,7 +75,7 @@ namespace Konamiman.NestorMSX.Hardware
 
         public Tms9918(ITms9918DisplayRenderer displayRenderer)
         {
-            _patternNameTableAddress = 0x1800;
+            _PatternNameTableAddress = 0x1800;
             _colorTableAddress = 0x2000;
 
             Vram = new PlainMemory(16384);
@@ -95,13 +94,13 @@ namespace Konamiman.NestorMSX.Hardware
         {
             screenMode = mode;
             displayRenderer.SetScreenMode((byte)mode);
-            patternNameTableLength = patternNameTableLengths[mode & 1];
+            PatternNameTableSize = PatternNameTableSizes[mode & 1];
         }
 
         void ReprintAll()
         {
-            for(int i=0; i<patternNameTableLength; i++)
-                displayRenderer.WriteToNameTable(i, Vram[patternNameTableAddress + i]);
+            for(int i = 0; i < PatternNameTableSize; i++)
+                displayRenderer.WriteToNameTable(i, Vram[PatternNameTableAddress + i]);
         }
 
         private void InterruptTimerOnElapsed(object sender, ElapsedEventArgs args)
@@ -176,7 +175,7 @@ namespace Konamiman.NestorMSX.Hardware
                     break;
 
                 case 2:
-                    patternNameTableAddress = value << 10;
+                    PatternNameTableAddress = value << 10;
                     break;
 
                 case 3:
@@ -188,8 +187,8 @@ namespace Konamiman.NestorMSX.Hardware
                     break;
 
                 case 7:
-                    displayRenderer.SetBackgroundColor((byte)(value & 0x0F));
-                    displayRenderer.SetForegroundColor((byte)(value >> 4));
+                    displayRenderer.SetBackdropColor((byte)(value & 0x0F));
+                    displayRenderer.SetTextColor((byte)(value >> 4));
                     break;
             }
         }
@@ -231,8 +230,8 @@ namespace Konamiman.NestorMSX.Hardware
         public void WriteVram(int address, byte value)
         {
             Vram[address] = value;
-            if(address >= patternNameTableAddress && address < patternNameTableAddress + patternNameTableLength) {
-                displayRenderer.WriteToNameTable(address - patternNameTableAddress, value);
+            if(address >= PatternNameTableAddress && address < PatternNameTableAddress + PatternNameTableSize) {
+                displayRenderer.WriteToNameTable(address - PatternNameTableAddress, value);
             }
             if(address >= patternGeneratorTableAddress && address < patternGeneratorTableAddress + patternGeneratorTableLength) {
                 displayRenderer.WriteToPatternGeneratorTable(address - patternGeneratorTableAddress, value);
@@ -252,10 +251,7 @@ namespace Konamiman.NestorMSX.Hardware
             return Vram.GetContents(startAddress, length);
         }
 
-        public byte[] GetPatternNameTableContents()
-        {
-            return Vram.GetContents(patternNameTableAddress, patternNameTableLength);
-        }
+        public int PatternNameTableSize { get; private set; }
 
         public void SetVramContents(int startAddress, byte[] contents, int startIndex = 0, int? length = null)
         {

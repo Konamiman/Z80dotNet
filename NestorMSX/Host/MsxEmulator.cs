@@ -56,7 +56,7 @@ namespace Konamiman.NestorMSX.Host
 
         public void Run()
         {
-            keyboardEventSource.Start();
+            keyboardEventSource.StartGeneratingKeyEvents();
             Task.Run(() => z80.Start());
             Application.Run(form);
         }

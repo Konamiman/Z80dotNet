@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Security.Policy;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Konamiman.NestorMSX.Hardware;
 using Konamiman.Z80dotNet;
 using Moq;
@@ -176,8 +171,8 @@ namespace Konamiman.NestorMSX.Tests
             var value = Fixture.Create<byte>();
             WriteControlRegister(7, value);
 
-            Verify(m => m.SetForegroundColor((byte)(value >> 4)));
-            Verify(m => m.SetBackgroundColor((byte)(value & 0x0F)));
+            Verify(m => m.SetTextColor((byte)(value >> 4)));
+            Verify(m => m.SetBackdropColor((byte)(value & 0x0F)));
         }
 
         #endregion
@@ -261,6 +256,39 @@ namespace Konamiman.NestorMSX.Tests
         }
 
         [Test]
+        public void Notifies_write_to_color_table()
+        {
+            var colorTableBaseAddressHighBits = Fixture.Create<byte>();
+            var colorTableBaseAddress = colorTableBaseAddressHighBits << 6;
+            var offset = Fixture.Create<byte>() & 0x1F;
+            var value = Fixture.Create<byte>();
+
+            WriteControlRegister(3, colorTableBaseAddressHighBits);
+
+            SetupVramWrite(colorTableBaseAddress + offset);
+            Sut.WriteToPort(0, value);
+
+            Verify(m => m.WriteToColourTable(offset, value));
+        }
+
+        [Test]
+        public void Does_not_notify_write_outside_color_table()
+        {
+            var colorTableBaseAddressHighBits = Fixture.Create<byte>();
+            var colorTableBaseAddress = colorTableBaseAddressHighBits << 6;
+            var offset = 32 - 1;
+            var value = Fixture.Create<byte>();
+
+            WriteControlRegister(3, colorTableBaseAddressHighBits);
+
+            SetupVramWrite(colorTableBaseAddress + offset);
+            Sut.WriteToPort(0, value);
+            Verify(m => m.WriteToColourTable(offset, value), true);
+            Sut.WriteToPort(0, value);
+            DisplayRenderer.Verify(m => m.WriteToColourTable(It.IsAny<int>(), It.IsAny<byte>()), Times.Never);
+        }
+
+        [Test]
         public void Notifies_writing_name_table_on_bulk_vram_write()
         {
             var nameTableBaseAddressHighBits = Fixture.Create<byte>() & 0x0F;
@@ -292,6 +320,22 @@ namespace Konamiman.NestorMSX.Tests
                 Verify(m => m.WriteToPatternGeneratorTable(offset + i, values[i]));
         }
 
+        [Test]
+        public void Notifies_writing_color_table_on_bulk_vram_write()
+        {
+            var colorTableBaseAddressHighBits = Fixture.Create<byte>();
+            var colorTableBaseAddress = colorTableBaseAddressHighBits << 6;
+            var offset = Fixture.Create<byte>() & 0x1F;
+            var values = Fixture.Create<byte[]>();
+
+            WriteControlRegister(3, colorTableBaseAddressHighBits);
+
+            Sut.SetVramContents(colorTableBaseAddress + offset, values);
+
+            for(int i=0; i<values.Length; i++)
+                Verify(m => m.WriteToColourTable(offset + i, values[i]));
+        }
+
         #endregion
 
         #region Interrupts
@@ -314,7 +358,6 @@ namespace Konamiman.NestorMSX.Tests
             }
 
             Assert.True(bit7Set);
-            Assert.GreaterOrEqual(sw.ElapsedMilliseconds, 20);
             Assert.LessOrEqual(sw.ElapsedMilliseconds, 30);
             Assert.AreEqual(0, nextBitValue);
         }

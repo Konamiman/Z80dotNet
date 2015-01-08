@@ -14,14 +14,11 @@ namespace Konamiman.NestorMSX.Host
         private const int SCREEN_1 = 0;
         private const int SCREEN_0 = 1;
 
-        protected int colorTableSize = 32;
-
         private readonly ICharacterBasedDisplay display;
 
         private int charWidth = 8;
         private int currentScreenMode = SCREEN_1;
         private int screenWidthInCharacters = 32;
-        private bool screenIsActive = false;
         private readonly Dictionary<Point, byte> screenBuffer = new Dictionary<Point, byte>();
         private Color[] Colors { get; set; }
         private Color BackdropColor { get; set; }
@@ -65,14 +62,12 @@ namespace Konamiman.NestorMSX.Host
         public void ActivateScreen()
         {
             Debug.WriteLine("*** Activate");
-            screenIsActive = true;
             display.ActivateScreen();
         }
 
         public void BlankScreen()
         {
             Debug.WriteLine("*** Blank");
-            screenIsActive = false;
             display.BlankScreen();
         }
 
@@ -125,7 +120,7 @@ namespace Konamiman.NestorMSX.Host
             }
         }
 
-        public void SetForegroundColor(byte colorIndex)
+        public void SetTextColor(byte colorIndex)
         {
             TextColor = Colors[colorIndex];
             if(currentScreenMode == SCREEN_0)
@@ -154,7 +149,7 @@ namespace Konamiman.NestorMSX.Host
                     Colors[CharacterColorsForScreen1[(byte)i].Item2]);    
         }
 
-        public void SetBackgroundColor(byte colorIndex)
+        public void SetBackdropColor(byte colorIndex)
         {
             display.SetBackdropColor(Colors[colorIndex]);
             BackdropColor = Colors[colorIndex];

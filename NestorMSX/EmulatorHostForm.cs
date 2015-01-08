@@ -77,11 +77,11 @@ namespace NestorMSX
                 RequiresPaint(this, paintEventArgs);
         }
 
-        public void Start()
+        public void StartGeneratingKeyEvents()
         {
         }
 
-        public void Stop()
+        public void StopGeneratingKeyEvents()
         {
         }
 
@@ -129,7 +129,7 @@ namespace NestorMSX
         private void CopyScreenAsText()
         {
             var sb = new StringBuilder();
-            var screenBytes = Vdp.GetPatternNameTableContents();
+            var screenBytes = Vdp.GetVramContents(Vdp.PatternNameTableAddress, Vdp.PatternNameTableSize);
             var lineWidth = screenBytes.Length/ScreenLines;
             for(int i = 0; i < ScreenLines; i++) {
                 var lineBytes =

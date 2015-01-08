@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Konamiman.NestorMSX.Host;
 using Konamiman.Z80dotNet;
 
 namespace Konamiman.NestorMSX.Hardware
