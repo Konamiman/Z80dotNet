@@ -303,18 +303,19 @@ namespace Konamiman.NestorMSX.Tests
             Bit nextBitValue = 0;
             var sw = new Stopwatch();
             sw.Start();
-            while (sw.ElapsedMilliseconds < 1000) {
+            while (sw.ElapsedMilliseconds < 100) {
                 if (Sut.ReadFromPort(1).GetBit(7) == 1) {
+                    sw.Stop();
                     nextBitValue = Sut.ReadFromPort(1).GetBit(7);
                     bit7Set = true;
                     break;
                 }
                 Thread.Sleep(1);
             }
-            sw.Stop();
 
             Assert.True(bit7Set);
-            Assert.True(sw.ElapsedMilliseconds > 100 && sw.ElapsedMilliseconds < 300);
+            Assert.GreaterOrEqual(sw.ElapsedMilliseconds, 20);
+            Assert.LessOrEqual(sw.ElapsedMilliseconds, 30);
             Assert.AreEqual(0, nextBitValue);
         }
 

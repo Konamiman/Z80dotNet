@@ -12,6 +12,7 @@ namespace Konamiman.NestorMSX.Host
     {
         private const int zoomLevel = 2;
 
+        private readonly object syncObject = new object();
         private readonly IDrawingSurface drawingSurface;
         private IDictionary<Point, byte> screenBuffer;
         private Graphics graphics;
@@ -41,7 +42,9 @@ namespace Konamiman.NestorMSX.Host
 
         private void DrawingSurfaceOnRequiresPaint(object sender, PaintEventArgs eventArgs)
         {
-            eventArgs.Graphics.Clear(BackdropColor);
+            lock(syncObject)
+                eventArgs.Graphics.Clear(BackdropColor);
+
             RepaintAll();
         }
 
@@ -57,20 +60,22 @@ namespace Konamiman.NestorMSX.Host
             if(!screenIsActive)
                 return;
 
-            var baseX = (coordinates.X*characterWidth) + (characterWidth == 6 ? 8 : 0);
-            var X = baseX;
-            var Y = coordinates.Y*8;
-            var brushes = characterBrushes[charIndex];
-            var pattern = characterPatterns[charIndex];
-            graphics.FillRectangle(brushes.Item2, baseX, Y, characterWidth, 8);
-            for(int row = 0; row < 8; row++) {
-                for(int column = 7; column >= 8 - characterWidth; column--) {
-                    if(pattern[row].GetBit(column)) {
-                        graphics.FillRectangle(brushes.Item1, X + (7 - column), Y, 1, 1);
+            lock(syncObject) {
+                var baseX = (coordinates.X*characterWidth) + (characterWidth == 6 ? 8 : 0);
+                var X = baseX;
+                var Y = coordinates.Y*8;
+                var brushes = characterBrushes[charIndex];
+                var pattern = characterPatterns[charIndex];
+                graphics.FillRectangle(brushes.Item2, baseX, Y, characterWidth, 8);
+                for(int row = 0; row < 8; row++) {
+                    for(int column = 7; column >= 8 - characterWidth; column--) {
+                        if(pattern[row].GetBit(column)) {
+                            graphics.FillRectangle(brushes.Item1, X + (7 - column), Y, 1, 1);
+                        }
                     }
+                    X = baseX;
+                    Y++;
                 }
-                X = baseX;
-                Y++;
             }
         }
 
@@ -87,7 +92,8 @@ namespace Konamiman.NestorMSX.Host
 
         public void ClearScreen()
         {
-            graphics.Clear(BackdropColor);
+            lock(syncObject)
+                graphics.Clear(BackdropColor);
         }
 
         public void SetCharacterPattern(byte charIndex, byte[] pattern)

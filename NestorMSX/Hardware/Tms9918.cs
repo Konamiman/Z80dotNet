@@ -86,7 +86,7 @@ namespace Konamiman.NestorMSX.Hardware
             displayRenderer.BlankScreen();
             SetScreenMode(0);
 
-            interruptTimer = new Timer(((double)1)/50);
+            interruptTimer = new Timer(TimeSpan.FromSeconds(((double)1)/60).TotalMilliseconds / 1.15);
             interruptTimer.Elapsed += InterruptTimerOnElapsed;
             interruptTimer.Start();
         }
@@ -250,6 +250,11 @@ namespace Konamiman.NestorMSX.Hardware
         public byte[] GetVramContents(int startAddress, int length)
         {
             return Vram.GetContents(startAddress, length);
+        }
+
+        public byte[] GetPatternNameTableContents()
+        {
+            return Vram.GetContents(patternNameTableAddress, patternNameTableLength);
         }
 
         public void SetVramContents(int startAddress, byte[] contents, int startIndex = 0, int? length = null)

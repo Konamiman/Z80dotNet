@@ -28,6 +28,8 @@
         /// <returns></returns>
         byte[] GetVramContents(int startAddress, int length);
 
+        byte[] GetPatternNameTableContents();
+
         /// <summary>
         /// Sets the contents of a portion of VRAM
         /// </summary>

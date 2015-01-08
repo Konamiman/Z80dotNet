@@ -22,7 +22,7 @@ namespace Konamiman.NestorMSX.Host
         public MsxEmulator()
         {
             z80 = new Z80Processor();
-            //z80.ClockFrequencyInMHz = 7;
+            //z80.ClockFrequencyInMHz = 100;
             z80.ClockSynchronizer = null;
 
             slots = new SlotsSystem();
@@ -32,9 +32,10 @@ namespace Konamiman.NestorMSX.Host
             slots.SetSlotContents(3, ram);
             z80.Memory = slots;
 
-            form = new EmulatorHostForm();
+            form = new EmulatorHostForm(z80);
             keyboardEventSource = form;
             vdp = new Tms9918(new DisplayRenderer(new GraphicsBasedDisplay(form)));
+            form.Vdp = vdp;
             z80.RegisterInterruptSource(vdp);
          
             keyboard = new KeyboardController(form, File.ReadAllText("KeyMappings.txt"));
