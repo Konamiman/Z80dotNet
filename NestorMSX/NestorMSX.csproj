@@ -55,6 +55,7 @@
     <Compile Include="EmulatorHostForm.Designer.cs">
       <DependentUpon>EmulatorHostForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Emulator\MsxHardwareSet.cs" />
     <Compile Include="FormTest.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -80,7 +81,8 @@
     <Compile Include="Host\GraphicsBasedDisplay.cs" />
     <Compile Include="Host\ICharacterBasedDisplay.cs" />
     <Compile Include="Host\IDrawingSurface.cs" />
-    <Compile Include="Host\MsxEmulator.cs" />
+    <Compile Include="Emulator\MsxEmulator.cs" />
+    <Compile Include="Emulator\MsxEmulationEnvironment.cs" />
     <Compile Include="Misc\SlotNumber.cs" />
     <Compile Include="Misc\TwinBit.cs" />
     <Compile Include="Misc\Z80Page.cs" />

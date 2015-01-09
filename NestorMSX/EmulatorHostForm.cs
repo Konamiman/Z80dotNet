@@ -9,7 +9,7 @@ using Konamiman.NestorMSX.Host;
 using Konamiman.Z80dotNet;
 using KeyEventArgs = Konamiman.NestorMSX.Hardware.KeyEventArgs;
 
-namespace NestorMSX
+namespace Konamiman.NestorMSX
 {
     public partial class EmulatorHostForm : Form, IKeyEventSource, IDrawingSurface
     {

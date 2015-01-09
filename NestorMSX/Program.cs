@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
-using Konamiman.NestorMSX.Host;
+using Konamiman.NestorMSX.Emulator;
 
-namespace NestorMSX
+namespace Konamiman.NestorMSX
 {
     static class Program
     {
@@ -22,7 +22,7 @@ namespace NestorMSX
                 return;
             }
 
-            (new MsxEmulator()).Run();
+            (new MsxEmulationEnvironment()).Run();
         }
     }
 }
