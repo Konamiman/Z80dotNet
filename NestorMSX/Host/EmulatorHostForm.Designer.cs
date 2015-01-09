@@ -1,4 +1,4 @@
-﻿namespace Konamiman.NestorMSX
+﻿namespace Konamiman.NestorMSX.Host
 {
     partial class EmulatorHostForm
     {

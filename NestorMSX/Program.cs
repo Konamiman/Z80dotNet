@@ -1,6 +1,9 @@
 ﻿using System;
+using System.IO;
+using System.Runtime.Serialization;
 using System.Windows.Forms;
 using Konamiman.NestorMSX.Emulator;
+using Konamiman.NestorMSX.Host;
 using Konamiman.NestorMSX.Misc;
 
 namespace Konamiman.NestorMSX
@@ -13,19 +16,37 @@ namespace Konamiman.NestorMSX
         [STAThread]
         static void Main(string[] args)
         {
-            if (args.Length > 0 && args[0].ToLower() == "keytest")
-            {
-                Console.WriteLine("*** Key test running. Press keys to see their name. Press CTRL-C to quit.");
-                var keyEventsource = new EmulatorHostForm();// KeyEventSource();
-                keyEventsource.KeyPressed += (sender, keyArgs) => Console.WriteLine(keyArgs.Value.ToString());
-                Console.CancelKeyPress += (sender, eventArgs) => { while (Console.KeyAvailable) Console.ReadKey(true); };
-                Application.Run(keyEventsource);
+            if (args.Length > 0 && args[0].ToLower() == "keytest") {
+                Application.Run(new KeyTestForm());
                 return;
             }
 
-            var config = IniDeserializer.Deserialize<Configuration>("NestorMSX.config".AsAbsolutePath());
+            var configFileName = "NestorMSX.config".AsAbsolutePath();
+
+            var config = ReadConfig(configFileName);
+            if(config == null)
+                return;
 
             (new MsxEmulationEnvironment(config)).Run();
+        }
+
+        private static Configuration ReadConfig(string configFileName)
+        {
+            Configuration config = null;
+            try {
+                config = IniDeserializer.Deserialize<Configuration>(configFileName);
+            }
+            catch(FileNotFoundException) {
+                MessageBox.Show(
+                    "Sorry, I couldn't find the configuration file. It is supposed to be here:\r\n" + configFileName,
+                    "NestorMSX");
+            }
+            catch(DeserializationException ex) {
+                MessageBox.Show(
+                    "Sorry, I couldn't parse the configuration file. The value of '" + ex.Key + "' is invalid.",
+                    "NestorMSX");
+            }
+            return config;
         }
     }
 }

@@ -50,10 +50,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration.cs" />
-    <Compile Include="EmulatorHostForm.cs">
+    <Compile Include="Host\EmulatorHostForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EmulatorHostForm.Designer.cs">
+    <Compile Include="Host\EmulatorHostForm.Designer.cs">
       <DependentUpon>EmulatorHostForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Emulator\MsxHardwareSet.cs" />
@@ -79,14 +79,23 @@
     <Compile Include="Emulator\MsxEmulator.cs" />
     <Compile Include="Emulator\MsxEmulationEnvironment.cs" />
     <Compile Include="Misc\IniDeserializer.cs" />
+    <Compile Include="Misc\KeyTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Misc\KeyTestForm.Designer.cs">
+      <DependentUpon>KeyTestForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Misc\SlotNumber.cs" />
     <Compile Include="Misc\StringExtensions.cs" />
     <Compile Include="Misc\TwinBit.cs" />
     <Compile Include="Misc\Z80Page.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="EmulatorHostForm.resx">
+    <EmbeddedResource Include="Host\EmulatorHostForm.resx">
       <DependentUpon>EmulatorHostForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Misc\KeyTestForm.resx">
+      <DependentUpon>KeyTestForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -112,9 +121,9 @@
     <None Include="JapaneseMsx1Bios.rom">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="NestorMSX.config">
+    <Content Include="NestorMSX.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Konamiman.NestorMSX.Hardware;
-using Konamiman.NestorMSX.Host;
 using Konamiman.Z80dotNet;
 using KeyEventArgs = Konamiman.NestorMSX.Hardware.KeyEventArgs;
 
-namespace Konamiman.NestorMSX
+namespace Konamiman.NestorMSX.Host
 {
     public partial class EmulatorHostForm : Form, IKeyEventSource, IDrawingSurface
     {

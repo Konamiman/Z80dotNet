@@ -2,6 +2,10 @@
 
 namespace Konamiman.NestorMSX.Emulator
 {
+    /// <summary>
+    /// A class that represents a MSX computer as a Z80 CPU
+    /// connected to a set of hardware devices.
+    /// </summary>
     public class MsxEmulator
     {
         private readonly MsxHardwareSet hardware;
