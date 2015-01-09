@@ -15,7 +15,7 @@ namespace Konamiman.NestorMSX.Host
         private readonly object syncObject = new object();
         private readonly IDrawingSurface drawingSurface;
         private IDictionary<Point, byte> screenBuffer;
-        private Graphics graphics;
+        private Graphics defaultGraphics;
         private Color BackdropColor;
         private int characterWidth = 8;
         private bool screenIsActive = false;
@@ -32,30 +32,31 @@ namespace Konamiman.NestorMSX.Host
                 characterBrushes[(byte)i] = new Tuple<Brush, Brush>(new SolidBrush(Color.Black), new SolidBrush(Color.Black));
             }
 
-            graphics = drawingSurface.GetGraphics();
-            graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
-            graphics.ScaleTransform(zoomLevel, zoomLevel);
-            graphics.TranslateTransform(8, 8);
+            defaultGraphics = drawingSurface.GetGraphics();
+            defaultGraphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+            defaultGraphics.ScaleTransform(zoomLevel, zoomLevel);
+            defaultGraphics.TranslateTransform(8, 8);
 
             drawingSurface.RequiresPaint += DrawingSurfaceOnRequiresPaint;
         }
 
         private void DrawingSurfaceOnRequiresPaint(object sender, PaintEventArgs eventArgs)
         {
-            lock(syncObject)
-                eventArgs.Graphics.Clear(BackdropColor);
-
-            RepaintAll();
+            lock(syncObject) {
+                eventArgs.Graphics.ScaleTransform(2, 2);
+                eventArgs.Graphics.TranslateTransform(8, 8);
+                RepaintAll(eventArgs.Graphics);
+            }
         }
 
-        private void RepaintAll()
+        private void RepaintAll(Graphics graphics)
         {
-            ClearScreen();
+            ClearScreen(graphics);
             foreach(var item in screenBuffer)
-                DrawCharacter(item.Key, item.Value);
+                DrawCharacter(item.Key, item.Value, graphics);
         }
 
-        private void DrawCharacter(Point coordinates, byte charIndex)
+        private void DrawCharacter(Point coordinates, byte charIndex, Graphics graphics)
         {
             if(!screenIsActive)
                 return;
@@ -87,10 +88,10 @@ namespace Konamiman.NestorMSX.Host
         public void SetBackdropColor(Color color)
         {
             BackdropColor = color;
-            RepaintAll();
+            RepaintAll(defaultGraphics);
         }
 
-        public void ClearScreen()
+        public void ClearScreen(Graphics graphics)
         {
             lock(syncObject)
                 graphics.Clear(BackdropColor);
@@ -121,7 +122,7 @@ namespace Konamiman.NestorMSX.Host
         private void ReprintAllInstancesOf(byte charIndex)
         {
             foreach(var item in screenBuffer.Where(i => i.Value == charIndex))
-                DrawCharacter(item.Key, item.Value);
+                DrawCharacter(item.Key, item.Value, defaultGraphics);
         }
 
         public void SetCharacterWidth(int width)
@@ -131,7 +132,7 @@ namespace Konamiman.NestorMSX.Host
 
         public void NotifyScreenBufferContentsAddedOrChanged(Point coordinates)
         {
-            DrawCharacter(coordinates, screenBuffer[coordinates]);
+            DrawCharacter(coordinates, screenBuffer[coordinates], defaultGraphics);
         }
 
         public void NotifyScreenBufferContentsRemoved(Point coordinates)
@@ -140,14 +141,14 @@ namespace Konamiman.NestorMSX.Host
 
         public void BlankScreen()
         {
-            ClearScreen();
+            ClearScreen(defaultGraphics);
             screenIsActive = false;
         }
 
         public void ActivateScreen()
         {
             screenIsActive = true;
-            RepaintAll();
+            RepaintAll(defaultGraphics);
         }
     }
 }
