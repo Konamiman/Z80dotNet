@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Konamiman.NestorMSX.Misc;
 using Konamiman.Z80dotNet;
 
 namespace Konamiman.NestorMSX.Host
@@ -30,6 +31,7 @@ namespace Konamiman.NestorMSX.Host
         private readonly IZ80Registers regs;
         private readonly IMemory memory;
         private readonly Dictionary<byte, FileStream> files = new Dictionary<byte, FileStream>();
+        private readonly string filesystemBase;
 
         private Dictionary<Type, byte> exceptionsMapping = new Dictionary<Type, byte>
         {
@@ -42,10 +44,14 @@ namespace Konamiman.NestorMSX.Host
             {typeof(NotSupportedException), InvalidPathname}
         };
 
-        public DosFunctionCallExecutor(IZ80Registers regs, IMemory memory)
+        public DosFunctionCallExecutor(IZ80Registers regs, IMemory memory, Configuration config)
         {
             this.regs = regs;
             this.memory = memory;
+
+            filesystemBase = config.FilesystemBaseLocation.AsAbsolutePath();
+            if(!Directory.Exists(filesystemBase))
+                Directory.CreateDirectory(filesystemBase);
         }
 
         public void ExecuteFunctionCall()
@@ -126,14 +132,7 @@ namespace Konamiman.NestorMSX.Host
 
             var filename = Encoding.ASCII.GetString(stringBytes.ToArray());
             if(!Path.IsPathRooted(filename))
-            {
-                var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                    "NestorMSX\\FileSystem");
-                if(!Directory.Exists(folder))
-                    Directory.CreateDirectory(folder);
-
-                filename = Path.Combine(folder, filename);
-            }
+                filename = Path.Combine(filesystemBase, filename);
 
             return filename;
         }

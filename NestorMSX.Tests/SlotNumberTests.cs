@@ -116,15 +116,6 @@ namespace Konamiman.NestorMSX.Tests
         }
 
         [Test]
-        public void Two_instances_are_not_equal_if_all_properties_are_different()
-        {
-            var sut1 = new SlotNumber(Fixture.Create<byte>());
-            var sut2 = new SlotNumber(Fixture.Create<byte>());
-            Assert.True(sut1 != sut2);
-            Assert.False(sut1.Equals(sut2));
-        }
-
-        [Test]
         public void Can_be_implicitly_cast_to_byte_and_unused_bits_are_zeroed()
         {
             var primarySlotNumber = RandomSlotNumber();

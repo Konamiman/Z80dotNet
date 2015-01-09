@@ -21,14 +21,14 @@ namespace Konamiman.NestorMSX.Tests
         {
             Fixture = new Fixture();
             DisplayRenderer = new Mock<ITms9918DisplayRenderer>();
-            Sut = new Tms9918(DisplayRenderer.Object);
+            Sut = new Tms9918(DisplayRenderer.Object, new Configuration {VdpFrequencyMultiplier = 1.2M});
             DisplayRenderer.ResetCalls();
         }
 
         [Test]
         public void Can_create_instances_and_initializes_properly()
         {
-            new Tms9918(DisplayRenderer.Object);
+            new Tms9918(DisplayRenderer.Object, new Configuration {VdpFrequencyMultiplier = 1.2M});
             Verify(m => m.BlankScreen());
             Verify(m => m.SetScreenMode(0));
         }

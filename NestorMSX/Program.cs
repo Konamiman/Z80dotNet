@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Konamiman.NestorMSX.Emulator;
+using Konamiman.NestorMSX.Misc;
 
 namespace Konamiman.NestorMSX
 {
@@ -22,7 +23,9 @@ namespace Konamiman.NestorMSX
                 return;
             }
 
-            (new MsxEmulationEnvironment()).Run();
+            var config = IniDeserializer.Deserialize<Configuration>("NestorMSX.config".AsAbsolutePath());
+
+            (new MsxEmulationEnvironment(config)).Run();
         }
     }
 }

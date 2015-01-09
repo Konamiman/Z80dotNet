@@ -73,7 +73,7 @@ namespace Konamiman.NestorMSX.Hardware
             }
         }
 
-        public Tms9918(ITms9918DisplayRenderer displayRenderer)
+        public Tms9918(ITms9918DisplayRenderer displayRenderer, Configuration config)
         {
             _PatternNameTableAddress = 0x1800;
             _colorTableAddress = 0x2000;
@@ -85,7 +85,7 @@ namespace Konamiman.NestorMSX.Hardware
             displayRenderer.BlankScreen();
             SetScreenMode(0);
 
-            interruptTimer = new Timer(TimeSpan.FromSeconds(((double)1)/60).TotalMilliseconds / 1.15);
+            interruptTimer = new Timer(TimeSpan.FromSeconds(((double)1)/60).TotalMilliseconds / (double)config.VdpFrequencyMultiplier);
             interruptTimer.Elapsed += InterruptTimerOnElapsed;
             interruptTimer.Start();
         }

@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Konamiman.NestorMSX.Hardware;
+using Konamiman.NestorMSX.Misc;
 
 namespace Konamiman.NestorMSX.Host
 {
@@ -26,7 +27,7 @@ namespace Konamiman.NestorMSX.Host
         private Dictionary<byte, byte[]> characterPatterns = new Dictionary<byte, byte[]>();
         private readonly Dictionary<byte, Tuple<byte, byte>> CharacterColorsForScreen1 = new Dictionary<byte, Tuple<byte, byte>>();
         
-        public DisplayRenderer(ICharacterBasedDisplay display)
+        public DisplayRenderer(ICharacterBasedDisplay display, Configuration config)
         {
             this.display = display;
             display.SetScreenBufer(screenBuffer);
@@ -36,7 +37,7 @@ namespace Konamiman.NestorMSX.Host
                 CharacterColorsForScreen1[(byte)i] = new Tuple<byte, byte>(0, 0);
             }
 
-            var colorsLines = File.ReadAllLines("Colors.txt");
+            var colorsLines = File.ReadAllLines(config.ColorsFile.AsAbsolutePath());
             Colors = new Color[16];
             for(int i=0; i<16; i++)
             {

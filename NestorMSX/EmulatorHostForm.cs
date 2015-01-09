@@ -27,22 +27,29 @@ namespace Konamiman.NestorMSX
         private readonly IZ80Processor processor;
         private readonly List<Keys> PressedKeys = new List<Keys>();
         private readonly List<byte> PastedText = new List<byte>();
+        private readonly Keys CopyKey;
+        private readonly Keys PasteKey;
 
-        public EmulatorHostForm() : this(null)
+        public EmulatorHostForm() : this(null, new Configuration())
         {
         }
 
-        public EmulatorHostForm(IZ80Processor processor)
+        public EmulatorHostForm(IZ80Processor processor, Configuration config)
         {
             this.processor = processor;
             this.Vdp = null;
             InitializeComponent();
-            ClientSize = new Size(((32*8) + 16) * 2, ((24*8) + 16) * 2);
+            var width = (int)(((32*8) + config.HorizontalMarginInPixels*2)*config.DisplayZoomLevel);
+            var height = (int)(((24*8) + config.VerticalMarginInPixels*2)*config.DisplayZoomLevel);
+            ClientSize = new Size(width, height);
             canvas.Paint += CanvasOnPaint;
             
             this.processor = processor;
             if(processor != null)
                 processor.BeforeInstructionFetch += ProcessorOnBeforeInstructionFetch;
+
+            CopyKey = (Keys)Enum.Parse(typeof(Keys), config.CopyKey);
+            PasteKey = (Keys)Enum.Parse(typeof(Keys), config.PasteKey);
         }
 
         public IExternallyControlledTms9918 Vdp { get; set; }
@@ -97,11 +104,11 @@ namespace Konamiman.NestorMSX
                 {
                     PressedKeys.Add(key);
 
-                    if(key == Keys.F11 && Vdp != null) {
+                    if(key == CopyKey && Vdp != null) {
                         CopyScreenAsText();
                     }
                     
-                    if(key == Keys.F12) {
+                    if(key == PasteKey) {
                         PasteTextAsKeyboardData();
                     }
 

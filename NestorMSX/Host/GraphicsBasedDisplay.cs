@@ -22,9 +22,12 @@ namespace Konamiman.NestorMSX.Host
         private IDictionary<byte, byte[]> characterPatterns = new Dictionary<byte, byte[]>();
         private IDictionary<byte, Tuple<Color, Color>> characterColors = new Dictionary<byte, Tuple<Color, Color>>();
         private IDictionary<byte, Tuple<Brush, Brush>> characterBrushes = new Dictionary<byte, Tuple<Brush, Brush>>();
+        private readonly Configuration config;
 
-        public GraphicsBasedDisplay(IDrawingSurface drawingSurface)
+        public GraphicsBasedDisplay(IDrawingSurface drawingSurface, Configuration config)
         {
+            this.config = config;
+
             BackdropColor = Color.Blue;
 
             for(int i = 0; i < 256; i++) {
@@ -34,8 +37,7 @@ namespace Konamiman.NestorMSX.Host
 
             defaultGraphics = drawingSurface.GetGraphics();
             defaultGraphics.InterpolationMode = InterpolationMode.NearestNeighbor;
-            defaultGraphics.ScaleTransform(zoomLevel, zoomLevel);
-            defaultGraphics.TranslateTransform(8, 8);
+            Transform(defaultGraphics);
 
             drawingSurface.RequiresPaint += DrawingSurfaceOnRequiresPaint;
         }
@@ -43,10 +45,15 @@ namespace Konamiman.NestorMSX.Host
         private void DrawingSurfaceOnRequiresPaint(object sender, PaintEventArgs eventArgs)
         {
             lock(syncObject) {
-                eventArgs.Graphics.ScaleTransform(2, 2);
-                eventArgs.Graphics.TranslateTransform(8, 8);
+                Transform(eventArgs.Graphics);
                 RepaintAll(eventArgs.Graphics);
             }
+        }
+
+        private void Transform(Graphics graphics)
+        {
+            graphics.ScaleTransform((float)config.DisplayZoomLevel, (float)config.DisplayZoomLevel);
+            graphics.TranslateTransform(config.HorizontalMarginInPixels, config.VerticalMarginInPixels);
         }
 
         private void RepaintAll(Graphics graphics)

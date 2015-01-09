@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration.cs" />
     <Compile Include="EmulatorHostForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -56,12 +57,6 @@
       <DependentUpon>EmulatorHostForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Emulator\MsxHardwareSet.cs" />
-    <Compile Include="FormTest.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormTest.Designer.cs">
-      <DependentUpon>FormTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Hardware\IExternallyControlledSlotsSystem.cs" />
     <Compile Include="Hardware\IExternallyControlledTms9918.cs" />
     <Compile Include="Hardware\IKeyboardController.cs" />
@@ -83,16 +78,15 @@
     <Compile Include="Host\IDrawingSurface.cs" />
     <Compile Include="Emulator\MsxEmulator.cs" />
     <Compile Include="Emulator\MsxEmulationEnvironment.cs" />
+    <Compile Include="Misc\IniDeserializer.cs" />
     <Compile Include="Misc\SlotNumber.cs" />
+    <Compile Include="Misc\StringExtensions.cs" />
     <Compile Include="Misc\TwinBit.cs" />
     <Compile Include="Misc\Z80Page.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="EmulatorHostForm.resx">
       <DependentUpon>EmulatorHostForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormTest.resx">
-      <DependentUpon>FormTest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -112,10 +106,13 @@
     <None Include="DiskBasic\dskbasic.mac" />
     <None Include="DiskBasic\L80.CPM" />
     <None Include="DiskBasic\M80.CPM" />
-    <None Include="dskrom.rom">
+    <None Include="diskrom.rom">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="JapaneseMsx1Bios.rom">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="NestorMSX.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Properties\Settings.settings">
