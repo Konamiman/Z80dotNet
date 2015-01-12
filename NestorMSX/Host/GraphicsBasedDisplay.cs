@@ -9,10 +9,11 @@ using Konamiman.Z80dotNet;
 
 namespace Konamiman.NestorMSX.Host
 {
+    /// <summary>
+    /// An implementation of ICharacterBasedDisplay that writes on a Graphics object.
+    /// </summary>
     public class GraphicsBasedDisplay : ICharacterBasedDisplay
     {
-        private const int zoomLevel = 2;
-
         private readonly object syncObject = new object();
         private readonly IDrawingSurface drawingSurface;
         private IDictionary<Point, byte> screenBuffer;

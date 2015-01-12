@@ -53,7 +53,6 @@ namespace Konamiman.NestorMSX.Hardware
             private set
             {
                 _PatternNameTableAddress = value;
-                Debug.WriteLine("*** New pattern name table: {0:X}", value);
                 ReprintAll();
             }
         }
@@ -68,7 +67,6 @@ namespace Konamiman.NestorMSX.Hardware
             set
             {
                 _colorTableAddress = value;
-                Debug.WriteLine("*** New color table: {0:X}", value);
                 for(int i = 0; i < colorTableLength; i++)
                     displayRenderer.WriteToColourTable(i, Vram[_colorTableAddress + i]);
             }

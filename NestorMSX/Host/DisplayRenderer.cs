@@ -72,13 +72,11 @@ namespace Konamiman.NestorMSX.Host
 
         public void ActivateScreen()
         {
-            Debug.WriteLine("*** Activate");
             display.ActivateScreen();
         }
 
         public void BlankScreen()
         {
-            Debug.WriteLine("*** Blank");
             display.BlankScreen();
         }
 
@@ -87,7 +85,6 @@ namespace Konamiman.NestorMSX.Host
             if(mode > 1)
                 return;
 
-            Debug.WriteLine("*** Mode " + mode);
             currentScreenMode = mode;
             SetScreenWidth(mode == SCREEN_0 ? 40 : 32);
             display.SetCharacterWidth(mode == SCREEN_0 ? 6 : 8);
@@ -97,7 +94,6 @@ namespace Konamiman.NestorMSX.Host
 
         public void WriteToNameTable(int position, byte value)
         {
-            Debug.Write(value==255 ? "" : Encoding.ASCII.GetString(new[] {value}));
             var coordinates = new Point(position%screenWidthInCharacters, position/screenWidthInCharacters);
             if(coordinates.X >= screenWidthInCharacters || coordinates.Y >= 24)
                 return;

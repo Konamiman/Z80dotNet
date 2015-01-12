@@ -18,13 +18,13 @@ namespace Konamiman.NestorMSX.Hardware
             memory = Enumerable.Repeat<byte>(0xFF, Size).ToArray();
         }
 
-        public PlainRom(byte[] contents, Z80Page page = null) : this()
+        public PlainRom(byte[] contents, Z80Page? page = null) : this()
         {
             if(contents.Length == 0)
                 throw new EmulationEnvironmentCreationException(
                     "The ROM file specified is empty.");
 
-            var startAddress = page == null ? 0 : page.AddressMask;
+            var startAddress = page == null ? 0 : page.Value.AddressMask;
 
             var maxSize = 65536 - startAddress;
             if(contents.Length > maxSize)

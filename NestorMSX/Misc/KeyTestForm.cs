@@ -2,6 +2,9 @@
 
 namespace Konamiman.NestorMSX.Misc
 {
+    /// <summary>
+    /// The keyboard test form.
+    /// </summary>
     public partial class KeyTestForm : Form
     {
         public KeyTestForm()

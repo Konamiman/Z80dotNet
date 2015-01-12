@@ -5,14 +5,14 @@ namespace Konamiman.NestorMSX.Misc
     /// <summary>
     /// Represents a two-bit number that can be implicitly cast to/from and compared with integers.
     /// </summary>
-    public class TwinBit
+    public struct TwinBit
     {
         /// <summary>
         /// Creates a new instance of the class.
         /// </summary>
         /// <param name="value">The number that this instance will represent, must be an integer from 0 to 3</param>
         /// <exception cref="InvalidOperationException">The supplied number is invalid</exception>
-        public TwinBit(int value)
+        public TwinBit(int value) : this()
         {
             if(value < 0 || value > 3)
                 throw new InvalidOperationException("Page number must be a number between 0 and 3");
@@ -21,7 +21,7 @@ namespace Konamiman.NestorMSX.Misc
         }
 
         /// <summary>
-        /// Gets the page number that this instance represents
+        /// Gets the two bit value that this instance represents
         /// </summary>
         public int Value { get; private set; }
 

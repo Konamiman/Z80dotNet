@@ -13,6 +13,12 @@ namespace Konamiman.NestorMSX.Emulator
         public MsxEmulator(MsxHardwareSet hardware)
         {
             this.hardware = hardware;
+
+            hardware.Cpu.Memory = hardware.SlotsSystem;
+            hardware.Cpu.RegisterInterruptSource(hardware.Vdp);
+
+            hardware.Cpu.SetMemoryWaitStatesForM1(0, hardware.Cpu.Memory.Size, waitStates: 1);
+
             hardware.Cpu.MemoryAccess += Z80OnMemoryAccess;
         }
 

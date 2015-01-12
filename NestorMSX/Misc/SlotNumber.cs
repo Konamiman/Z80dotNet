@@ -5,13 +5,13 @@ namespace Konamiman.NestorMSX.Misc
     /// <summary>
     /// Represents a MSX slot number that can be implicitly cast to/from and compared with bytes.
     /// </summary>
-    public class SlotNumber
+    public struct SlotNumber
     {
         /// <summary>
         /// Creates a new instance of the class from an encoded slot number byte.
         /// </summary>
         /// <param name="encodedSlotNumber">Encoded slot number byte (only primary, or primary + 4*sub + 0x80)</param>
-        public SlotNumber(byte encodedSlotNumber)
+        public SlotNumber(byte encodedSlotNumber) : this()
         {
             PrimarySlotNumber = encodedSlotNumber & 3;
             EncodedByte = (byte)(encodedSlotNumber & 0x8F);
@@ -31,7 +31,7 @@ namespace Konamiman.NestorMSX.Misc
         /// </summary>
         /// <param name="primarySlotNumber">Primary slot number</param>
         /// <param name="subSlotNumber">Secondary slot number</param>
-        public SlotNumber(int primarySlotNumber, int subSlotNumber)
+        public SlotNumber(int primarySlotNumber, int subSlotNumber) : this()
         {
             if(!ValidSlotNumberPart(primarySlotNumber) || !ValidSlotNumberPart(subSlotNumber))
                 throw new InvalidOperationException("Primary and secondary slot numbers must be in the range 0 to 3");

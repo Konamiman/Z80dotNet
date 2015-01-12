@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Specialized;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -8,6 +9,10 @@ using System.Text.RegularExpressions;
 
 namespace Konamiman.NestorMSX.Misc
 {
+    /// <summary>
+    /// A class that deserializes .INI files, that is,
+    /// text files with "key = value" lines.
+    /// </summary>
 	public class IniDeserializer
 	{
 		private IniDeserializer()	{}
@@ -166,7 +171,7 @@ namespace Konamiman.NestorMSX.Misc
 						
 						try
 						{
-							ParsedObject=FieldParseMethod.Invoke(null,new object[] {items[key]});
+							ParsedObject=FieldParseMethod.Invoke(null,new object[] {items[key], CultureInfo.InvariantCulture});
 						}
 						catch(Exception ex)
 						{
@@ -219,7 +224,7 @@ namespace Konamiman.NestorMSX.Misc
 		{
 			return type.GetMethod("Parse",
 				BindingFlags.Static | BindingFlags.Public,
-				null,new[] {typeof(string)},null);
+				null,new[] {typeof(string), typeof(IFormatProvider)},null);
 		}
 
 	    private static MemberInfo[] GetSerializableMembers(Type type,bool methods)

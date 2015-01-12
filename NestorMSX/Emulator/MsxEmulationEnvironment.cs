@@ -26,13 +26,11 @@ namespace Konamiman.NestorMSX.Emulator
             var z80 = CreateCpu(config);
 
             var slots = CreateSlotsSystem(config);
-            z80.Memory = slots;
             
             form = CreateHostForm(config, z80);
             keyboardEventSource = form;
 
             var vdp = CreateVdp(config, form);
-            z80.RegisterInterruptSource(vdp);
             form.Vdp = vdp;
 
             var keyboard = CreateKeyboardController(config, form);

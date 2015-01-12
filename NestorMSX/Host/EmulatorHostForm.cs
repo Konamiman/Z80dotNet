@@ -12,6 +12,9 @@ using KeyEventArgs = Konamiman.NestorMSX.Hardware.KeyEventArgs;
 
 namespace Konamiman.NestorMSX.Host
 {
+    /// <summary>
+    /// The form that displays the emulated screen.
+    /// </summary>
     public partial class EmulatorHostForm : Form, IKeyEventSource, IDrawingSurface
     {
         private const int WM_KEYDOWN = 0x100;
@@ -24,7 +27,7 @@ namespace Konamiman.NestorMSX.Host
         private const int LF = 10;
 
         private const int ScreenLines = 24;
-
+        
         private readonly IZ80Processor processor;
         private readonly List<Keys> PressedKeys = new List<Keys>();
         private readonly List<byte> PastedText = new List<byte>();
@@ -32,17 +35,24 @@ namespace Konamiman.NestorMSX.Host
         private readonly Keys PasteKey;
         private readonly Encoding EncodingForCopyPaste;
 
-        public EmulatorHostForm() : this(null, new Configuration())
+        public IExternallyControlledTms9918 Vdp { get; set; }
+
+        #region Initialization
+
+        public EmulatorHostForm() : this(null, null)
         {
         }
 
         public EmulatorHostForm(IZ80Processor processor, Configuration config)
         {
+            InitializeComponent();
+            if(config == null)
+                return;
+
             ValidateConfiguration(config);
             
             this.processor = processor;
             this.Vdp = null;
-            InitializeComponent();
             var width = (int)(((32*8) + config.HorizontalMarginInPixels*2)*config.DisplayZoomLevel);
             var height = (int)(((24*8) + config.VerticalMarginInPixels*2)*config.DisplayZoomLevel);
             ClientSize = new Size(width, height);
@@ -87,24 +97,9 @@ namespace Konamiman.NestorMSX.Host
                     "The value for the Paste key is invalid. It must be a member of the .NET's System.Windows.Forms enumeration.");
         }
 
-        public IExternallyControlledTms9918 Vdp { get; set; }
+        #endregion
 
-        private void ProcessorOnBeforeInstructionFetch(object sender, BeforeInstructionFetchEventArgs eventArgs)
-        {
-            var count = Math.Min(PastedText.Count, 8);
-            if(count > 0 && (processor.Memory[GETPNT] == processor.Memory[PUTPNT])) {
-                processor.Memory.SetContents(KEYBUF, PastedText.Take(count).ToArray(), 0, count);
-                WriteShort(GETPNT, KEYBUF);
-                WriteShort(PUTPNT, KEYBUF + count);
-                PastedText.RemoveRange(0, count);
-            }
-        }
-
-        void WriteShort(ushort address, int value)
-        {
-            processor.Memory[address] = ((ushort)value).GetLowByte();
-            processor.Memory[address+1] = ((ushort)value).GetHighByte();
-        }
+        #region IDrawingSurface
 
         public event EventHandler<PaintEventArgs> RequiresPaint;
 
@@ -118,6 +113,10 @@ namespace Konamiman.NestorMSX.Host
             if(RequiresPaint != null)
                 RequiresPaint(this, paintEventArgs);
         }
+
+        #endregion
+
+        #region Keyboard management
 
         public void StartGeneratingKeyEvents()
         {
@@ -162,6 +161,10 @@ namespace Konamiman.NestorMSX.Host
             return base.ProcessKeyMessage(ref m);
         }
 
+        #endregion
+
+        #region Copy & Paste
+
         private void PasteTextAsKeyboardData()
         {
             var text = Clipboard.GetText();
@@ -184,5 +187,24 @@ namespace Konamiman.NestorMSX.Host
 
             Clipboard.SetText(sb.ToString().TrimEnd());
         }
+
+        private void ProcessorOnBeforeInstructionFetch(object sender, BeforeInstructionFetchEventArgs eventArgs)
+        {
+            var count = Math.Min(PastedText.Count, 8);
+            if(count > 0 && (processor.Memory[GETPNT] == processor.Memory[PUTPNT])) {
+                processor.Memory.SetContents(KEYBUF, PastedText.Take(count).ToArray(), 0, count);
+                WriteShort(GETPNT, KEYBUF);
+                WriteShort(PUTPNT, KEYBUF + count);
+                PastedText.RemoveRange(0, count);
+            }
+        }
+
+        void WriteShort(ushort address, int value)
+        {
+            processor.Memory[address] = ((ushort)value).GetLowByte();
+            processor.Memory[address+1] = ((ushort)value).GetHighByte();
+        }
+
+        #endregion
     }
 }
