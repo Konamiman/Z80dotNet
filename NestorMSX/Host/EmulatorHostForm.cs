@@ -30,6 +30,7 @@ namespace Konamiman.NestorMSX.Host
         private readonly List<byte> PastedText = new List<byte>();
         private readonly Keys CopyKey;
         private readonly Keys PasteKey;
+        private readonly Encoding EncodingForCopyPaste;
 
         public EmulatorHostForm() : this(null, new Configuration())
         {
@@ -53,6 +54,16 @@ namespace Konamiman.NestorMSX.Host
 
             CopyKey = (Keys)Enum.Parse(typeof(Keys), config.CopyKey);
             PasteKey = (Keys)Enum.Parse(typeof(Keys), config.PasteKey);
+
+            try {
+                EncodingForCopyPaste = Encoding.GetEncoding(config.EncodingForCopyAndPaste);
+            }
+            catch(Exception ex) {
+                throw new EmulationEnvironmentCreationException(
+                    "Your system does not support the text encoding named '{0}'. Please edit the configuration file and enter a suitable value for the 'EncodingForCopyAndPaste' key. If in doubt, just specify 'ASCII'."
+                        .FormatWith(config.EncodingForCopyAndPaste)
+                    ,ex);
+            }
         }
 
         private static void ValidateConfiguration(Configuration config)
@@ -154,7 +165,7 @@ namespace Konamiman.NestorMSX.Host
         private void PasteTextAsKeyboardData()
         {
             var text = Clipboard.GetText();
-            PastedText.AddRange(Encoding.ASCII.GetBytes(text).Where(b => b != LF).ToArray());
+            PastedText.AddRange(EncodingForCopyPaste.GetBytes(text).Where(b => b != LF).ToArray());
         }
 
         private void CopyScreenAsText()
@@ -167,9 +178,8 @@ namespace Konamiman.NestorMSX.Host
                     screenBytes
                         .Skip(lineWidth*i)
                         .Take(lineWidth)
-                        .Where(b => b >= 32 && b < 127)
                         .ToArray();
-                sb.AppendLine(Encoding.ASCII.GetString(lineBytes));
+                sb.AppendLine(EncodingForCopyPaste.GetString(lineBytes));
             }
 
             Clipboard.SetText(sb.ToString().TrimEnd());

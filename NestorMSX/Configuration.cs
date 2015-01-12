@@ -38,5 +38,8 @@ namespace Konamiman.NestorMSX
 
         [Mandatory]
         public string PasteKey { get; set; }
+
+        [Mandatory]
+        public string EncodingForCopyAndPaste { get; set; }
     }
 }
