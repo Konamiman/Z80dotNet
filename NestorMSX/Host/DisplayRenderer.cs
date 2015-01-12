@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Text;
+using Konamiman.NestorMSX.Exceptions;
 using Konamiman.NestorMSX.Hardware;
 using Konamiman.NestorMSX.Misc;
 
@@ -37,17 +37,27 @@ namespace Konamiman.NestorMSX.Host
                 CharacterColorsForScreen1[(byte)i] = new Tuple<byte, byte>(0, 0);
             }
 
-            var colorsLines = File.ReadAllLines(config.ColorsFile.AsAbsolutePath());
-            Colors = new Color[16];
-            for(int i=0; i<16; i++)
-            {
-                var line = colorsLines[i];
-                var tokens = line.Split(new[] {" ", "\t"}, StringSplitOptions.RemoveEmptyEntries);
-                Colors[i] = Color.FromArgb(255, int.Parse(tokens[0]), int.Parse(tokens[1]), int.Parse(tokens[2]));
+            var colorsLines = FileUtils.ReadAllLines(config.ColorsFile);
+            try {
+                Colors = ParseColorsFile(colorsLines);
+            }
+            catch(Exception ex) {
+                ThrowParseColorsException(ex);
             }
 
             TextColor = Colors[0];
             BackdropColor = Colors[0];
+        }
+
+        private Color[] ParseColorsFile(string[] colorsLines)
+        {
+            var colors = new Color[16];
+            for(int i = 0; i < 16; i++) {
+                var line = colorsLines[i];
+                var tokens = line.Split(new[] {" ", "\t"}, StringSplitOptions.RemoveEmptyEntries);
+                colors[i] = Color.FromArgb(255, int.Parse(tokens[0]), int.Parse(tokens[1]), int.Parse(tokens[2]));
+            }
+            return colors;
         }
 
         protected virtual void SetScreenWidth(int width)
@@ -156,6 +166,18 @@ namespace Konamiman.NestorMSX.Host
             BackdropColor = Colors[colorIndex];
             if(currentScreenMode == SCREEN_0)
                 SetAllCharsColorsForScreen0();
+        }
+
+        
+        private void ThrowParseColorsException(Exception exception)
+        {
+            throw new EmulationEnvironmentCreationException(
+ @"I couldn't parse the colors palette file. Make sure that:
+
+- It is a text file containing extactly 16 text lines.
+- Each line contains 3 color components, separated by spaces.
+- Each color component is an integer number in the range 0-255."
+            ,exception);
         }
     }
 }

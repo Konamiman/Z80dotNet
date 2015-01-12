@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Konamiman.NestorMSX.Exceptions;
 using Konamiman.NestorMSX.Misc;
 using Konamiman.Z80dotNet;
 
@@ -19,7 +20,18 @@ namespace Konamiman.NestorMSX.Hardware
 
         public PlainRom(byte[] contents, Z80Page page = null) : this()
         {
-            Array.Copy(contents, 0, memory, page == null ? 0 : page.AddressMask, contents.Length);
+            if(contents.Length == 0)
+                throw new EmulationEnvironmentCreationException(
+                    "The ROM file specified is empty.");
+
+            var startAddress = page == null ? 0 : page.AddressMask;
+
+            var maxSize = 65536 - startAddress;
+            if(contents.Length > maxSize)
+                throw new EmulationEnvironmentCreationException(
+                    "The ROM file specified is too big. The maximum size is {0} bytes.".FormatWith(maxSize));
+
+            Array.Copy(contents, 0, memory, startAddress, contents.Length);
         }
 
         public int Size

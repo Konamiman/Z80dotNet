@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
+using Konamiman.NestorMSX.Exceptions;
 using Konamiman.Z80dotNet;
 
 namespace Konamiman.NestorMSX.Host
@@ -26,6 +27,8 @@ namespace Konamiman.NestorMSX.Host
 
         public GraphicsBasedDisplay(IDrawingSurface drawingSurface, Configuration config)
         {
+            ValidateConfiguration(config);
+
             this.config = config;
 
             BackdropColor = Color.Blue;
@@ -40,6 +43,12 @@ namespace Konamiman.NestorMSX.Host
             Transform(defaultGraphics);
 
             drawingSurface.RequiresPaint += DrawingSurfaceOnRequiresPaint;
+        }
+
+        private void ValidateConfiguration(Configuration configuration)
+        {
+            if(configuration.DisplayZoomLevel < 0.1M || configuration.DisplayZoomLevel > 1000)
+                throw new ConfigurationException("Display zoom level must be a number between 0.1 and 1000.");
         }
 
         private void DrawingSurfaceOnRequiresPaint(object sender, PaintEventArgs eventArgs)

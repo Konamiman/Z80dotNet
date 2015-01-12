@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Timers;
+using Konamiman.NestorMSX.Exceptions;
 using Konamiman.Z80dotNet;
 
 namespace Konamiman.NestorMSX.Hardware
@@ -84,6 +85,9 @@ namespace Konamiman.NestorMSX.Hardware
             this.displayRenderer = displayRenderer;
             displayRenderer.BlankScreen();
             SetScreenMode(0);
+
+            if(config.VdpFrequencyMultiplier < 0.01M || config.VdpFrequencyMultiplier > 100)
+                throw new ConfigurationException("The VDP frequency multiplier must be a number between 0.01 and 100.");
 
             interruptTimer = new Timer(TimeSpan.FromSeconds(((double)1)/60).TotalMilliseconds / (double)config.VdpFrequencyMultiplier);
             interruptTimer.Elapsed += InterruptTimerOnElapsed;

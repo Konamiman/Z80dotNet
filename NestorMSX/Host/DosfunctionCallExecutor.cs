@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Konamiman.NestorMSX.Exceptions;
 using Konamiman.NestorMSX.Misc;
 using Konamiman.Z80dotNet;
 
@@ -51,7 +52,14 @@ namespace Konamiman.NestorMSX.Host
 
             filesystemBase = config.FilesystemBaseLocation.AsAbsolutePath();
             if(!Directory.Exists(filesystemBase))
-                Directory.CreateDirectory(filesystemBase);
+                try {
+                    Directory.CreateDirectory(filesystemBase);
+                }
+                catch(Exception ex) {
+                    throw new EmulationEnvironmentCreationException(
+                        "Error when trying to create the base directory for DiskBASIC:\r\n{0}\r\n\r\nDirectory location as specified in config file:\r\n{1}"
+                        .FormatWith(ex.Message, filesystemBase));
+                }
         }
 
         public void ExecuteFunctionCall()

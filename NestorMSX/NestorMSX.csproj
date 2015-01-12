@@ -50,6 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration.cs" />
+    <Compile Include="Exceptions\ConfigurationException.cs" />
+    <Compile Include="Exceptions\EmulationEnvironmentCreationException.cs" />
     <Compile Include="Host\EmulatorHostForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,6 +80,8 @@
     <Compile Include="Host\IDrawingSurface.cs" />
     <Compile Include="Emulator\MsxEmulator.cs" />
     <Compile Include="Emulator\MsxEmulationEnvironment.cs" />
+    <Compile Include="Misc\MandatoryAttribute.cs" />
+    <Compile Include="Misc\FileUtils.cs" />
     <Compile Include="Misc\IniDeserializer.cs" />
     <Compile Include="Misc\KeyTestForm.cs">
       <SubType>Form</SubType>

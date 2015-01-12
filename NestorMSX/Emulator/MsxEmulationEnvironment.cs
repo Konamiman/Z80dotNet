@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Konamiman.NestorMSX.Exceptions;
 using Konamiman.NestorMSX.Hardware;
 using Konamiman.NestorMSX.Host;
 using Konamiman.NestorMSX.Misc;
@@ -51,7 +52,7 @@ namespace Konamiman.NestorMSX.Emulator
         private void ConfigureDiskRom(Configuration config, IExternallyControlledSlotsSystem slots, IZ80Processor z80)
         {
             if(config.DiskRomFile != null) {
-                slots.SetSlotContents(1, new PlainRom(File.ReadAllBytes(config.DiskRomFile.AsAbsolutePath()), 1));
+                slots.SetSlotContents(1, new PlainRom(FileUtils.ReadAllBytes(config.DiskRomFile), 1));
                 z80.BeforeInstructionFetch += Z80OnBeforeInstructionFetch;
                 dosFunctionsExecutor = new DosFunctionCallExecutor(z80.Registers, slots, config);
             }
@@ -59,7 +60,7 @@ namespace Konamiman.NestorMSX.Emulator
 
         private KeyboardController CreateKeyboardController(Configuration config, IKeyEventSource keyEventSource)
         {
-            return new KeyboardController(keyEventSource, File.ReadAllText(config.KeymapFile));
+            return new KeyboardController(keyEventSource, FileUtils.ReadAllText(config.KeymapFile));
         }
 
         private IExternallyControlledTms9918 CreateVdp(Configuration config, IDrawingSurface drawingSurface)
@@ -76,10 +77,10 @@ namespace Konamiman.NestorMSX.Emulator
         {
             var slots = new SlotsSystem();
 
-            slots.SetSlotContents(0, new PlainRom(File.ReadAllBytes(config.BiosFile)));
+            slots.SetSlotContents(0, new PlainRom(FileUtils.ReadAllBytes(config.BiosFile)));
 
             if(config.Slot2RomFile != null)
-                slots.SetSlotContents(2, new PlainRom(File.ReadAllBytes(config.Slot2RomFile.AsAbsolutePath()), 1));
+                slots.SetSlotContents(2, new PlainRom(FileUtils.ReadAllBytes(config.Slot2RomFile), 1));
 
             var ram = new PlainMemory(ushort.MaxValue + 1);
             slots.SetSlotContents(3, ram);
@@ -93,6 +94,8 @@ namespace Konamiman.NestorMSX.Emulator
 
             if(config.CpuSpeedInMHz == 0)
                 z80.ClockSynchronizer = null;
+            else if(config.CpuSpeedInMHz < 0.001M || config.CpuSpeedInMHz > 100)
+                throw new ConfigurationException("CPU speed must be either zero or a value between 0.001 and 100");
             else
                 z80.ClockFrequencyInMHz = config.CpuSpeedInMHz;
 

@@ -4,7 +4,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Konamiman.NestorMSX.Exceptions;
 using Konamiman.NestorMSX.Hardware;
+using Konamiman.NestorMSX.Misc;
 using Konamiman.Z80dotNet;
 using KeyEventArgs = Konamiman.NestorMSX.Hardware.KeyEventArgs;
 
@@ -35,6 +37,8 @@ namespace Konamiman.NestorMSX.Host
 
         public EmulatorHostForm(IZ80Processor processor, Configuration config)
         {
+            ValidateConfiguration(config);
+            
             this.processor = processor;
             this.Vdp = null;
             InitializeComponent();
@@ -49,6 +53,27 @@ namespace Konamiman.NestorMSX.Host
 
             CopyKey = (Keys)Enum.Parse(typeof(Keys), config.CopyKey);
             PasteKey = (Keys)Enum.Parse(typeof(Keys), config.PasteKey);
+        }
+
+        private static void ValidateConfiguration(Configuration config)
+        {
+            if(config.HorizontalMarginInPixels < 0 || config.HorizontalMarginInPixels > 1000) {
+                throw new ConfigurationException(
+                    "Horizontal margin for display area must be an integer number between 0 and 1000");
+            }
+
+            if(config.VerticalMarginInPixels < 0 || config.VerticalMarginInPixels > 1000) {
+                throw new ConfigurationException(
+                    "Vertical margin for display area must be an integer number between 0 and 1000");
+            }
+
+            if(!config.CopyKey.IsValidKeyName())
+                throw new ConfigurationException(
+                    "The value for the Copy key is invalid. It must be a member of the .NET's System.Windows.Forms enumeration.");
+
+            if(!config.PasteKey.IsValidKeyName())
+                throw new ConfigurationException(
+                    "The value for the Paste key is invalid. It must be a member of the .NET's System.Windows.Forms enumeration.");
         }
 
         public IExternallyControlledTms9918 Vdp { get; set; }

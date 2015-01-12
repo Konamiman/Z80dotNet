@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Konamiman.NestorMSX.Exceptions;
 using Konamiman.NestorMSX.Host;
 using Konamiman.Z80dotNet;
 
@@ -38,6 +39,16 @@ namespace Konamiman.NestorMSX.Hardware
         }
 
         private void InitializeKeyMappings(string keyMappingsMatrix)
+        {
+            try {
+                InitializeKeyMappingsCore(keyMappingsMatrix);
+            }
+            catch(Exception ex) {
+                ThrowInvalidKeyMappingsFileException(ex);
+            }
+        }
+
+        private void InitializeKeyMappingsCore(string keyMappingsMatrix)
         {
             keyMappingsByKeyId = new Dictionary<Keys, KeyMapping>();
             var keyMappings = new List<KeyMapping>();
@@ -79,6 +90,17 @@ namespace Konamiman.NestorMSX.Hardware
             }
 
             return value;
+        }
+        
+        private void ThrowInvalidKeyMappingsFileException(Exception exception)
+        {
+            throw new EmulationEnvironmentCreationException(
+ @"I couldn't parse the key mappings file. Please verify that:
+
+- It is a text file consisting of exactly 16 text lines.
+- Each line consists of exactly 8 key names separated by spaces.
+- Each key name is a member of the .NET's System.Windows.Forms enumeration.",
+            exception);
         }
 
         class KeyMapping
