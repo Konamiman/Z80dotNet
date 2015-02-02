@@ -7,6 +7,8 @@ Z80.NET is a Z80 processor simulator that can be used as the core component for 
 
 *NOTE: If you are reading this from the overview page of the project site in BitBucket, the links to documentation and code will not work. Please go and open [the README file itself in the root of the source code](https://bitbucket.org/konamiman/z80dotnet/src/develop/README.md) instead. Thanks!* 
 
+Want to say something? Head to the [discussion site](http://konamiman.bitbucket.org/Z80dotNet)!
+
 ## Hello, world! ##
 
 ```
