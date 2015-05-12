@@ -17,12 +17,12 @@
             var memory = processor.Memory;
 
             var oldAddress = registers.PC.ToShort();
-			var sp = registers.SP.Dec();
-            memory[sp.ToUShort()] = oldAddress.GetHighByte();
-			sp = sp.Dec();
-            memory[sp.ToUShort()] = oldAddress.GetLowByte();
+			var sp = (ushort)(registers.SP - 1);
+            memory[sp] = oldAddress.GetHighByte();
+			sp--;
+            memory[sp] = oldAddress.GetLowByte();
 
-			registers.SP = sp;
+			registers.SP = (short)sp;
 			registers.PC = address;
         }
 
@@ -37,10 +37,10 @@
             var memory = processor.Memory;
 
             var sp = registers.SP.ToUShort();
-            var newPC = NumberUtils.CreateShort(memory[sp], memory[sp.Inc()]);
+            var newPC = NumberUtils.CreateShort(memory[sp], memory[sp + 1]);
             
             registers.PC = newPC.ToUShort();
-            registers.SP = registers.SP.Add(2);
+            registers.SP += 2;
         }
     }
 }

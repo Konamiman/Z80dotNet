@@ -107,6 +107,17 @@ namespace Konamiman.Z80dotNet
         }
 
         /// <summary>
+        /// Generates a ushort number from two bytes.
+        /// </summary>
+        /// <param name="lowByte">Low byte of the new number</param>
+        /// <param name="highByte">High byte of the new number</param>
+        /// <returns>Generated number</returns>
+        public static ushort CreateUshort(byte lowByte, byte highByte)
+        {
+            return (ushort)((highByte << 8) | lowByte);
+        }
+
+        /// <summary>
         /// Gets the value of a certain bit in a byte.
         /// The rightmost bit has position 0, the leftmost bit has position 7.
         /// </summary>

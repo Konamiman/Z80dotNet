@@ -399,9 +399,9 @@ namespace Konamiman.Z80dotNet.Tests
         }
 
         [Test]
-        public void Cannot_set_ClockSynchronizationHelper_to_null()
+        public void Can_set_ClockSynchronizationHelper_to_null()
         {
-            Assert.Throws<ArgumentNullException>(() => Sut.ClockSynchronizer = null);
+            Sut.ClockSynchronizer = null;
         }
 
         [Test]

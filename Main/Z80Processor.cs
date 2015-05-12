@@ -184,13 +184,13 @@ namespace Konamiman.Z80dotNet
                     InstructionExecutor.Execute(RST38h_opcode);
                     return 13;
                 case 2:
-                    var pointerAddress = NumberUtils.CreateShort(
+                    var pointerAddress = NumberUtils.CreateUshort(
                         lowByte: activeIntSource.ValueOnDataBus.GetValueOrDefault(0xFF),
                         highByte: Registers.I);
-                    var callAddress = NumberUtils.CreateShort(
+                    var callAddress = NumberUtils.CreateUshort(
                         lowByte: Memory[pointerAddress],
-                        highByte: Memory[pointerAddress.Inc()]);
-                    this.ExecuteCall(callAddress.ToUShort());
+                        highByte: Memory[pointerAddress + 1]);
+                    this.ExecuteCall(callAddress);
                     return 19;
             }
 
@@ -203,7 +203,7 @@ namespace Konamiman.Z80dotNet
                 return;
 
             throw new InstructionFetchFinishedEventNotFiredException(
-                instructionAddress: Registers.PC.Sub((ushort)executionContext.OpcodeBytes.Count),
+                instructionAddress: (ushort)(Registers.PC - executionContext.OpcodeBytes.Count),
                 fetchedBytes: executionContext.OpcodeBytes.ToArray());
         }
 
@@ -650,7 +650,7 @@ namespace Konamiman.Z80dotNet
             }
 
             executionContext.OpcodeBytes.Add(opcode);
-            Registers.PC = Registers.PC.Inc();
+            Registers.PC++;
             return opcode;
         }
         
