@@ -1,4 +1,6 @@
-﻿namespace Konamiman.Z80dotNet
+﻿using System;
+
+namespace Konamiman.Z80dotNet
 {
     public partial class Z80InstructionExecutor
     {
@@ -16,7 +18,7 @@
             if(oldValue == 1)
                 return 8;
 
-            Registers.PC = Registers.PC.AddSignedByte(offset);
+            Registers.PC = (ushort)(Registers.PC + (SByte)offset);
             return 13;
         }
     }
