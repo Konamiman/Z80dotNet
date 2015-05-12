@@ -75,8 +75,8 @@ namespace Konamiman.Z80dotNet
 <# } #>
 <# if (isCompareInc) { #>
 			var counter = Registers.BC;
-            Registers.HL = Registers.HL.<#=isCPI || isCPIR ? "Inc" : "Dec"#>();
-			counter = counter.Dec();
+            Registers.HL<#=isCPI || isCPIR ? "++" : "--"#>;
+			counter--;
 			Registers.BC = counter;
 <# } #>
 
@@ -93,7 +93,7 @@ namespace Konamiman.Z80dotNet
 <# } #>
             Registers.NF = <#=isAdd ? 0 : 1#>;
 <# if (isCompareInc) { #>
-			var valueForFlags3And5 = newValue.Sub(Registers.HF).GetLowByte();
+			var valueForFlags3And5 = (byte)(newValue - Registers.HF);
 			Registers.Flag3 = valueForFlags3And5.GetBit(3);
 			Registers.Flag5 = valueForFlags3And5.GetBit(1);
 <# } else { #>

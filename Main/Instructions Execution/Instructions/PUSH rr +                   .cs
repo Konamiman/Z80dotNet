@@ -17,11 +17,11 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
 			var valueToPush = Registers.AF;
-			var sp = Registers.SP.Dec();
-			ProcessorAgent.WriteToMemory(sp.ToUShort(), valueToPush.GetHighByte());
-			sp = sp.Dec();
-			ProcessorAgent.WriteToMemory(sp.ToUShort(), valueToPush.GetLowByte());
-			Registers.SP = sp;
+			var sp = (ushort)(Registers.SP - 1);
+			ProcessorAgent.WriteToMemory(sp, valueToPush.GetHighByte());
+			sp--;
+			ProcessorAgent.WriteToMemory(sp, valueToPush.GetLowByte());
+			Registers.SP = (short)sp;
 
             return 11;
         }
@@ -36,10 +36,10 @@ namespace Konamiman.Z80dotNet
 			var sp = Registers.SP.ToUShort();
             var newAF = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
-                ProcessorAgent.ReadFromMemory(sp.Inc()));
+                ProcessorAgent.ReadFromMemory((ushort)(sp + 1)));
             Registers.AF = newAF;
 
-            Registers.SP = Registers.SP.Add(2);
+            Registers.SP += 2;
 
             return 10;
         }
@@ -52,11 +52,11 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
 			var valueToPush = Registers.BC;
-			var sp = Registers.SP.Dec();
-			ProcessorAgent.WriteToMemory(sp.ToUShort(), valueToPush.GetHighByte());
-			sp = sp.Dec();
-			ProcessorAgent.WriteToMemory(sp.ToUShort(), valueToPush.GetLowByte());
-			Registers.SP = sp;
+			var sp = (ushort)(Registers.SP - 1);
+			ProcessorAgent.WriteToMemory(sp, valueToPush.GetHighByte());
+			sp--;
+			ProcessorAgent.WriteToMemory(sp, valueToPush.GetLowByte());
+			Registers.SP = (short)sp;
 
             return 11;
         }
@@ -71,10 +71,10 @@ namespace Konamiman.Z80dotNet
 			var sp = Registers.SP.ToUShort();
             var newBC = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
-                ProcessorAgent.ReadFromMemory(sp.Inc()));
+                ProcessorAgent.ReadFromMemory((ushort)(sp + 1)));
             Registers.BC = newBC;
 
-            Registers.SP = Registers.SP.Add(2);
+            Registers.SP += 2;
 
             return 10;
         }
@@ -87,11 +87,11 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
 			var valueToPush = Registers.DE;
-			var sp = Registers.SP.Dec();
-			ProcessorAgent.WriteToMemory(sp.ToUShort(), valueToPush.GetHighByte());
-			sp = sp.Dec();
-			ProcessorAgent.WriteToMemory(sp.ToUShort(), valueToPush.GetLowByte());
-			Registers.SP = sp;
+			var sp = (ushort)(Registers.SP - 1);
+			ProcessorAgent.WriteToMemory(sp, valueToPush.GetHighByte());
+			sp--;
+			ProcessorAgent.WriteToMemory(sp, valueToPush.GetLowByte());
+			Registers.SP = (short)sp;
 
             return 11;
         }
@@ -106,10 +106,10 @@ namespace Konamiman.Z80dotNet
 			var sp = Registers.SP.ToUShort();
             var newDE = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
-                ProcessorAgent.ReadFromMemory(sp.Inc()));
+                ProcessorAgent.ReadFromMemory((ushort)(sp + 1)));
             Registers.DE = newDE;
 
-            Registers.SP = Registers.SP.Add(2);
+            Registers.SP += 2;
 
             return 10;
         }
@@ -122,11 +122,11 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
 			var valueToPush = Registers.HL;
-			var sp = Registers.SP.Dec();
-			ProcessorAgent.WriteToMemory(sp.ToUShort(), valueToPush.GetHighByte());
-			sp = sp.Dec();
-			ProcessorAgent.WriteToMemory(sp.ToUShort(), valueToPush.GetLowByte());
-			Registers.SP = sp;
+			var sp = (ushort)(Registers.SP - 1);
+			ProcessorAgent.WriteToMemory(sp, valueToPush.GetHighByte());
+			sp--;
+			ProcessorAgent.WriteToMemory(sp, valueToPush.GetLowByte());
+			Registers.SP = (short)sp;
 
             return 11;
         }
@@ -141,10 +141,10 @@ namespace Konamiman.Z80dotNet
 			var sp = Registers.SP.ToUShort();
             var newHL = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
-                ProcessorAgent.ReadFromMemory(sp.Inc()));
+                ProcessorAgent.ReadFromMemory((ushort)(sp + 1)));
             Registers.HL = newHL;
 
-            Registers.SP = Registers.SP.Add(2);
+            Registers.SP += 2;
 
             return 10;
         }
@@ -157,11 +157,11 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
 			var valueToPush = Registers.IX;
-			var sp = Registers.SP.Dec();
-			ProcessorAgent.WriteToMemory(sp.ToUShort(), valueToPush.GetHighByte());
-			sp = sp.Dec();
-			ProcessorAgent.WriteToMemory(sp.ToUShort(), valueToPush.GetLowByte());
-			Registers.SP = sp;
+			var sp = (ushort)(Registers.SP - 1);
+			ProcessorAgent.WriteToMemory(sp, valueToPush.GetHighByte());
+			sp--;
+			ProcessorAgent.WriteToMemory(sp, valueToPush.GetLowByte());
+			Registers.SP = (short)sp;
 
             return 15;
         }
@@ -176,10 +176,10 @@ namespace Konamiman.Z80dotNet
 			var sp = Registers.SP.ToUShort();
             var newIX = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
-                ProcessorAgent.ReadFromMemory(sp.Inc()));
+                ProcessorAgent.ReadFromMemory((ushort)(sp + 1)));
             Registers.IX = newIX;
 
-            Registers.SP = Registers.SP.Add(2);
+            Registers.SP += 2;
 
             return 14;
         }
@@ -192,11 +192,11 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
 			var valueToPush = Registers.IY;
-			var sp = Registers.SP.Dec();
-			ProcessorAgent.WriteToMemory(sp.ToUShort(), valueToPush.GetHighByte());
-			sp = sp.Dec();
-			ProcessorAgent.WriteToMemory(sp.ToUShort(), valueToPush.GetLowByte());
-			Registers.SP = sp;
+			var sp = (ushort)(Registers.SP - 1);
+			ProcessorAgent.WriteToMemory(sp, valueToPush.GetHighByte());
+			sp--;
+			ProcessorAgent.WriteToMemory(sp, valueToPush.GetLowByte());
+			Registers.SP = (short)sp;
 
             return 15;
         }
@@ -211,10 +211,10 @@ namespace Konamiman.Z80dotNet
 			var sp = Registers.SP.ToUShort();
             var newIY = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
-                ProcessorAgent.ReadFromMemory(sp.Inc()));
+                ProcessorAgent.ReadFromMemory((ushort)(sp + 1)));
             Registers.IY = newIY;
 
-            Registers.SP = Registers.SP.Add(2);
+            Registers.SP += 2;
 
             return 14;
         }

@@ -31,9 +31,9 @@ namespace Konamiman.Z80dotNet
             var value = ProcessorAgent.ReadFromMemory(sourceAddress.ToUShort());
             ProcessorAgent.WriteToMemory(destAddress.ToUShort(), value);
 
-            Registers.HL = sourceAddress.<#= incBC ? "Inc" : "Dec"#>();
-            Registers.DE = destAddress.<#= incBC ? "Inc" : "Dec"#>();
-            counter = counter.Dec();
+            Registers.HL = (short)(sourceAddress<#= incBC ? " + 1" : " - 1"#>);
+            Registers.DE = (short)(destAddress<#= incBC ? " + 1" : " - 1"#>);
+            counter--;
             Registers.BC = counter;
 
             Registers.HF = 0;

@@ -17,8 +17,8 @@
             var oldValue = Registers.A;
             var newValue = oldValue;
 
-            if(Registers.HF || (oldValue & 0x0F) > 9) newValue = (byte)newValue.Add(Registers.NF ? -0x06 : 0x06); //FA
-            if(Registers.CF || oldValue > 0x99) newValue = (byte)newValue.Add(Registers.NF ? -0x60 : 0x60); //A0
+            if(Registers.HF || (oldValue & 0x0F) > 9) newValue = (byte)(newValue + (Registers.NF ? -0x06 : 0x06)); //FA
+            if(Registers.CF || oldValue > 0x99) newValue = (byte)(newValue + (Registers.NF ? -0x60 : 0x60)); //A0
 
             Registers.CF |= (oldValue > 0x99);
             Registers.HF = ((oldValue ^ newValue) & 0x10);

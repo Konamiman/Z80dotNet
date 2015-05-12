@@ -10,7 +10,7 @@
             FetchFinished();
 
             var oldValue = Registers.A;
-            var newValue = (byte)((byte)0).Sub(oldValue);
+            var newValue = (byte)-oldValue;
             Registers.A = newValue;
 
             Registers.SF = newValue.GetBit(7);

@@ -35,7 +35,7 @@ namespace Konamiman.Z80dotNet
             ProcessorAgent.WriteToMemory(address.ToUShort(), value);
 <# } #>
 
-            Registers.HL = address.<#=isInc ? "Inc" : "Dec" #>();
+            Registers.HL<#=isInc ? "++" : "--" #>;
             var counter = Registers.B;
             counter = counter.Dec();
             Registers.B = counter;

@@ -21,9 +21,9 @@ namespace Konamiman.Z80dotNet
             var value = ProcessorAgent.ReadFromMemory(sourceAddress.ToUShort());
             ProcessorAgent.WriteToMemory(destAddress.ToUShort(), value);
 
-            Registers.HL = sourceAddress.Inc();
-            Registers.DE = destAddress.Inc();
-            counter = counter.Dec();
+            Registers.HL = (short)(sourceAddress + 1);
+            Registers.DE = (short)(destAddress + 1);
+            counter--;
             Registers.BC = counter;
 
             Registers.HF = 0;
@@ -51,9 +51,9 @@ namespace Konamiman.Z80dotNet
             var value = ProcessorAgent.ReadFromMemory(sourceAddress.ToUShort());
             ProcessorAgent.WriteToMemory(destAddress.ToUShort(), value);
 
-            Registers.HL = sourceAddress.Dec();
-            Registers.DE = destAddress.Dec();
-            counter = counter.Dec();
+            Registers.HL = (short)(sourceAddress - 1);
+            Registers.DE = (short)(destAddress - 1);
+            counter--;
             Registers.BC = counter;
 
             Registers.HF = 0;
@@ -81,9 +81,9 @@ namespace Konamiman.Z80dotNet
             var value = ProcessorAgent.ReadFromMemory(sourceAddress.ToUShort());
             ProcessorAgent.WriteToMemory(destAddress.ToUShort(), value);
 
-            Registers.HL = sourceAddress.Inc();
-            Registers.DE = destAddress.Inc();
-            counter = counter.Dec();
+            Registers.HL = (short)(sourceAddress + 1);
+            Registers.DE = (short)(destAddress + 1);
+            counter--;
             Registers.BC = counter;
 
             Registers.HF = 0;
@@ -115,9 +115,9 @@ namespace Konamiman.Z80dotNet
             var value = ProcessorAgent.ReadFromMemory(sourceAddress.ToUShort());
             ProcessorAgent.WriteToMemory(destAddress.ToUShort(), value);
 
-            Registers.HL = sourceAddress.Dec();
-            Registers.DE = destAddress.Dec();
-            counter = counter.Dec();
+            Registers.HL = (short)(sourceAddress - 1);
+            Registers.DE = (short)(destAddress - 1);
+            counter--;
             Registers.BC = counter;
 
             Registers.HF = 0;
