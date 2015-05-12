@@ -4,6 +4,8 @@
 // Do not make changes directly to this (.cs) file.
 // Change "ADD A,r +             .tt" instead.
 
+using System;
+
 namespace Konamiman.Z80dotNet
 {
     public partial class Z80InstructionExecutor
