@@ -877,7 +877,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.A;
-			var address = (ushort)(Registers.IX + offset.ToSignedByte());
+			var address = (ushort)(Registers.IX + (SByte)offset);
 			var argument = ProcessorAgent.ReadFromMemory(address);
 			var newValue = (byte)(oldValue & argument);
             Registers.A = newValue;
@@ -901,7 +901,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.A;
-			var address = (ushort)(Registers.IX + offset.ToSignedByte());
+			var address = (ushort)(Registers.IX + (SByte)offset);
 			var argument = ProcessorAgent.ReadFromMemory(address);
 			var newValue = (byte)(oldValue ^ argument);
             Registers.A = newValue;
@@ -925,7 +925,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.A;
-			var address = (ushort)(Registers.IX + offset.ToSignedByte());
+			var address = (ushort)(Registers.IX + (SByte)offset);
 			var argument = ProcessorAgent.ReadFromMemory(address);
 			var newValue = (byte)(oldValue | argument);
             Registers.A = newValue;
@@ -949,7 +949,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.A;
-			var address = (ushort)(Registers.IY + offset.ToSignedByte());
+			var address = (ushort)(Registers.IY + (SByte)offset);
 			var argument = ProcessorAgent.ReadFromMemory(address);
 			var newValue = (byte)(oldValue & argument);
             Registers.A = newValue;
@@ -973,7 +973,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.A;
-			var address = (ushort)(Registers.IY + offset.ToSignedByte());
+			var address = (ushort)(Registers.IY + (SByte)offset);
 			var argument = ProcessorAgent.ReadFromMemory(address);
 			var newValue = (byte)(oldValue ^ argument);
             Registers.A = newValue;
@@ -997,7 +997,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.A;
-			var address = (ushort)(Registers.IY + offset.ToSignedByte());
+			var address = (ushort)(Registers.IY + (SByte)offset);
 			var argument = ProcessorAgent.ReadFromMemory(address);
 			var newValue = (byte)(oldValue | argument);
             Registers.A = newValue;

@@ -31,7 +31,7 @@ namespace Konamiman.Z80dotNet
             var newValue = ProcessorAgent.FetchNextOpcode();
             FetchFinished();
 
-			var address = (ushort)(Registers.IX + offset.ToSignedByte());
+			var address = (ushort)(Registers.IX + (SByte)offset);
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 19;
@@ -46,7 +46,7 @@ namespace Konamiman.Z80dotNet
             var newValue = ProcessorAgent.FetchNextOpcode();
             FetchFinished();
 
-			var address = (ushort)(Registers.IY + offset.ToSignedByte());
+			var address = (ushort)(Registers.IY + (SByte)offset);
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 19;

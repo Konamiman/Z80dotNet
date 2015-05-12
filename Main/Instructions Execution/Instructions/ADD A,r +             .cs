@@ -1691,7 +1691,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.A;
-			var address = (ushort)(Registers.IX + offset.ToSignedByte());
+			var address = (ushort)(Registers.IX + (SByte)offset);
 				var valueToAdd = ProcessorAgent.ReadFromMemory(address);
 			var newValueInt = (int)oldValue + (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
@@ -1717,7 +1717,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.A;
-			var address = (ushort)(Registers.IX + offset.ToSignedByte());
+			var address = (ushort)(Registers.IX + (SByte)offset);
 				var valueToAdd = ProcessorAgent.ReadFromMemory(address);
 			var newValueInt = (int)oldValue - (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
@@ -1743,7 +1743,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.A;
-			var address = (ushort)(Registers.IX + offset.ToSignedByte());
+			var address = (ushort)(Registers.IX + (SByte)offset);
 				var valueToAdd = ProcessorAgent.ReadFromMemory(address);
 			var newValueInt = (int)oldValue + (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
@@ -1769,7 +1769,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.A;
-			var address = (ushort)(Registers.IX + offset.ToSignedByte());
+			var address = (ushort)(Registers.IX + (SByte)offset);
 				var valueToAdd = ProcessorAgent.ReadFromMemory(address);
 			var newValueInt = (int)oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
@@ -1795,7 +1795,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.A;
-			var address = (ushort)(Registers.IX + offset.ToSignedByte());
+			var address = (ushort)(Registers.IX + (SByte)offset);
 				var valueToAdd = ProcessorAgent.ReadFromMemory(address);
 			var newValueInt = (int)oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
@@ -1820,7 +1820,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.A;
-			var address = (ushort)(Registers.IY + offset.ToSignedByte());
+			var address = (ushort)(Registers.IY + (SByte)offset);
 				var valueToAdd = ProcessorAgent.ReadFromMemory(address);
 			var newValueInt = (int)oldValue + (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
@@ -1846,7 +1846,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.A;
-			var address = (ushort)(Registers.IY + offset.ToSignedByte());
+			var address = (ushort)(Registers.IY + (SByte)offset);
 				var valueToAdd = ProcessorAgent.ReadFromMemory(address);
 			var newValueInt = (int)oldValue - (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
@@ -1872,7 +1872,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.A;
-			var address = (ushort)(Registers.IY + offset.ToSignedByte());
+			var address = (ushort)(Registers.IY + (SByte)offset);
 				var valueToAdd = ProcessorAgent.ReadFromMemory(address);
 			var newValueInt = (int)oldValue + (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
@@ -1898,7 +1898,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.A;
-			var address = (ushort)(Registers.IY + offset.ToSignedByte());
+			var address = (ushort)(Registers.IY + (SByte)offset);
 				var valueToAdd = ProcessorAgent.ReadFromMemory(address);
 			var newValueInt = (int)oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
@@ -1924,7 +1924,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.A;
-			var address = (ushort)(Registers.IY + offset.ToSignedByte());
+			var address = (ushort)(Registers.IY + (SByte)offset);
 				var valueToAdd = ProcessorAgent.ReadFromMemory(address);
 			var newValueInt = (int)oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);

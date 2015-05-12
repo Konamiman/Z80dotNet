@@ -63,7 +63,7 @@ void PushToStack(string reg, bool isUshort = false)
 void GetAddressFromReg(string reg)
 {
 	if (reg == "(IX+n)" || reg == "(IY+n)") { #>
-			var address = (ushort)(Registers.<#=reg.Substring(1, 2) #> + offset.ToSignedByte());
+			var address = (ushort)(Registers.<#=reg.Substring(1, 2) #> + (SByte)offset);
 	<#+ } else if(reg.StartsWith("(")) { #>
 			var address = (ushort)Registers.<#=reg.Substring(1,2)#>;
 	<#+ } #>
@@ -73,7 +73,7 @@ void GetAddressFromReg(string reg)
 void GetOldValueFromRegOrMem(string reg)
 { 
 	if (reg == "(IX+n)" || reg == "(IY+n)") { #>
-			var address = (ushort)(Registers.<#=reg.Substring(1, 2) #> + offset.ToSignedByte());
+			var address = (ushort)(Registers.<#=reg.Substring(1, 2) #> + (SByte)offset);
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
 	<#+ } else if(reg.StartsWith("(")) { #>
 			var address = (ushort)Registers.<#=reg.Substring(1,2)#>;
