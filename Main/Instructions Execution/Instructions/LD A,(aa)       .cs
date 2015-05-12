@@ -7,7 +7,7 @@
         /// </summary>
         private byte LD_A_aa()
         {
-            var address = FetchWord().ToUShort();
+            var address = (ushort)FetchWord();
             FetchFinished();
 
             Registers.A = ProcessorAgent.ReadFromMemory(address);

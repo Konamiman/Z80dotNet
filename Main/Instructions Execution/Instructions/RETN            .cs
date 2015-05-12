@@ -16,11 +16,11 @@ namespace Konamiman.Z80dotNet
 		{
 		    FetchFinished(isRet: true);
 
-			var sp = Registers.SP.ToUShort();
+			var sp = (ushort)Registers.SP;
             var newPC = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
                 ProcessorAgent.ReadFromMemory((ushort)(sp + 1)));
-            Registers.PC = newPC.ToUShort();
+            Registers.PC = (ushort)newPC;
 
             Registers.SP += 2;
 

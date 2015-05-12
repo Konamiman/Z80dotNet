@@ -17,8 +17,8 @@ namespace Konamiman.Z80dotNet
 
 			var oldValue = Registers.HL;
 			var valueToAdd = Registers.BC;
-			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort());
-            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			var newValueInt = (ushort)oldValue + (ushort)valueToAdd;
+            var newValue = (short)(newValueInt & 0xFFFF);
 			Registers.HL = newValue;
 
 			Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x1000;
@@ -38,8 +38,8 @@ namespace Konamiman.Z80dotNet
 
 			var oldValue = Registers.HL;
 			var valueToAdd = Registers.DE;
-			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort());
-            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			var newValueInt = (ushort)oldValue + (ushort)valueToAdd;
+            var newValue = (short)(newValueInt & 0xFFFF);
 			Registers.HL = newValue;
 
 			Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x1000;
@@ -59,8 +59,8 @@ namespace Konamiman.Z80dotNet
 
 			var oldValue = Registers.HL;
 			var valueToAdd = Registers.HL;
-			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort());
-            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			var newValueInt = (ushort)oldValue + (ushort)valueToAdd;
+            var newValue = (short)(newValueInt & 0xFFFF);
 			Registers.HL = newValue;
 
 			Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x1000;
@@ -80,8 +80,8 @@ namespace Konamiman.Z80dotNet
 
 			var oldValue = Registers.HL;
 			var valueToAdd = Registers.SP;
-			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort());
-            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			var newValueInt = (ushort)oldValue + (ushort)valueToAdd;
+            var newValue = (short)(newValueInt & 0xFFFF);
 			Registers.HL = newValue;
 
 			Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x1000;
@@ -101,8 +101,8 @@ namespace Konamiman.Z80dotNet
 
 			var oldValue = Registers.IX;
 			var valueToAdd = Registers.BC;
-			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort());
-            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			var newValueInt = (ushort)oldValue + (ushort)valueToAdd;
+            var newValue = (short)(newValueInt & 0xFFFF);
 			Registers.IX = newValue;
 
 			Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x1000;
@@ -122,8 +122,8 @@ namespace Konamiman.Z80dotNet
 
 			var oldValue = Registers.IX;
 			var valueToAdd = Registers.DE;
-			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort());
-            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			var newValueInt = (ushort)oldValue + (ushort)valueToAdd;
+            var newValue = (short)(newValueInt & 0xFFFF);
 			Registers.IX = newValue;
 
 			Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x1000;
@@ -143,8 +143,8 @@ namespace Konamiman.Z80dotNet
 
 			var oldValue = Registers.IX;
 			var valueToAdd = Registers.IX;
-			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort());
-            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			var newValueInt = (ushort)oldValue + (ushort)valueToAdd;
+            var newValue = (short)(newValueInt & 0xFFFF);
 			Registers.IX = newValue;
 
 			Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x1000;
@@ -164,8 +164,8 @@ namespace Konamiman.Z80dotNet
 
 			var oldValue = Registers.IX;
 			var valueToAdd = Registers.SP;
-			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort());
-            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			var newValueInt = (ushort)oldValue + (ushort)valueToAdd;
+            var newValue = (short)(newValueInt & 0xFFFF);
 			Registers.IX = newValue;
 
 			Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x1000;
@@ -185,8 +185,8 @@ namespace Konamiman.Z80dotNet
 
 			var oldValue = Registers.IY;
 			var valueToAdd = Registers.BC;
-			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort());
-            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			var newValueInt = (ushort)oldValue + (ushort)valueToAdd;
+            var newValue = (short)(newValueInt & 0xFFFF);
 			Registers.IY = newValue;
 
 			Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x1000;
@@ -206,8 +206,8 @@ namespace Konamiman.Z80dotNet
 
 			var oldValue = Registers.IY;
 			var valueToAdd = Registers.DE;
-			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort());
-            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			var newValueInt = (ushort)oldValue + (ushort)valueToAdd;
+            var newValue = (short)(newValueInt & 0xFFFF);
 			Registers.IY = newValue;
 
 			Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x1000;
@@ -227,8 +227,8 @@ namespace Konamiman.Z80dotNet
 
 			var oldValue = Registers.IY;
 			var valueToAdd = Registers.IY;
-			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort());
-            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			var newValueInt = (ushort)oldValue + (ushort)valueToAdd;
+            var newValue = (short)(newValueInt & 0xFFFF);
 			Registers.IY = newValue;
 
 			Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x1000;
@@ -248,8 +248,8 @@ namespace Konamiman.Z80dotNet
 
 			var oldValue = Registers.IY;
 			var valueToAdd = Registers.SP;
-			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort());
-            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			var newValueInt = (ushort)oldValue + (ushort)valueToAdd;
+            var newValue = (short)(newValueInt & 0xFFFF);
 			Registers.IY = newValue;
 
 			Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x1000;

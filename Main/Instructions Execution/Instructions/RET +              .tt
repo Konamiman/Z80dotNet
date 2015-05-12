@@ -37,7 +37,7 @@ namespace Konamiman.Z80dotNet
         private byte <#=instrNames[i]#><#=name=="" ? "" : "_"+name#><#=!isRet ? "_nn" : ""#>()
         {
 <# if(!isRet) { #>
-			var newAddress = FetchWord().ToUShort();
+			var newAddress = (ushort)FetchWord();
 <# } #>
             FetchFinished(<#if(isRet) {#>isRet: true<# } #>);
 <# if(flag!="") { #>

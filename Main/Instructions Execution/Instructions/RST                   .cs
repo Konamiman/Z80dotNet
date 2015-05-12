@@ -16,7 +16,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-			var valueToPush = Registers.PC.ToShort();
+			var valueToPush = (short)Registers.PC;
 			var sp = (ushort)(Registers.SP - 1);
 			ProcessorAgent.WriteToMemory(sp, valueToPush.GetHighByte());
 			sp--;
@@ -34,7 +34,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-			var valueToPush = Registers.PC.ToShort();
+			var valueToPush = (short)Registers.PC;
 			var sp = (ushort)(Registers.SP - 1);
 			ProcessorAgent.WriteToMemory(sp, valueToPush.GetHighByte());
 			sp--;
@@ -52,7 +52,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-			var valueToPush = Registers.PC.ToShort();
+			var valueToPush = (short)Registers.PC;
 			var sp = (ushort)(Registers.SP - 1);
 			ProcessorAgent.WriteToMemory(sp, valueToPush.GetHighByte());
 			sp--;
@@ -70,7 +70,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-			var valueToPush = Registers.PC.ToShort();
+			var valueToPush = (short)Registers.PC;
 			var sp = (ushort)(Registers.SP - 1);
 			ProcessorAgent.WriteToMemory(sp, valueToPush.GetHighByte());
 			sp--;
@@ -88,7 +88,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-			var valueToPush = Registers.PC.ToShort();
+			var valueToPush = (short)Registers.PC;
 			var sp = (ushort)(Registers.SP - 1);
 			ProcessorAgent.WriteToMemory(sp, valueToPush.GetHighByte());
 			sp--;
@@ -106,7 +106,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-			var valueToPush = Registers.PC.ToShort();
+			var valueToPush = (short)Registers.PC;
 			var sp = (ushort)(Registers.SP - 1);
 			ProcessorAgent.WriteToMemory(sp, valueToPush.GetHighByte());
 			sp--;
@@ -124,7 +124,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-			var valueToPush = Registers.PC.ToShort();
+			var valueToPush = (short)Registers.PC;
 			var sp = (ushort)(Registers.SP - 1);
 			ProcessorAgent.WriteToMemory(sp, valueToPush.GetHighByte());
 			sp--;
@@ -142,7 +142,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-			var valueToPush = Registers.PC.ToShort();
+			var valueToPush = (short)Registers.PC;
 			var sp = (ushort)(Registers.SP - 1);
 			ProcessorAgent.WriteToMemory(sp, valueToPush.GetHighByte());
 			sp--;

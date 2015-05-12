@@ -26,8 +26,8 @@ namespace Konamiman.Z80dotNet
 
 			var oldValue = Registers.<#=dest#>;
 			var valueToAdd = Registers.<#=src #>;
-			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort());
-            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			var newValueInt = (ushort)oldValue + (ushort)valueToAdd;
+            var newValue = (short)(newValueInt & 0xFFFF);
 			Registers.<#=dest#> = newValue;
 
 			Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x1000;

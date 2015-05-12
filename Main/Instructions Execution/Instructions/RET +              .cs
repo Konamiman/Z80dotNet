@@ -16,11 +16,11 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished(isRet: true);
 
-			var sp = Registers.SP.ToUShort();
+			var sp = (ushort)Registers.SP;
             var newPC = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
                 ProcessorAgent.ReadFromMemory((ushort)(sp + 1)));
-            Registers.PC = newPC.ToUShort();
+            Registers.PC = (ushort)newPC;
 
             Registers.SP += 2;
 
@@ -34,11 +34,11 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished(isRet: true);
 
-			var sp = Registers.SP.ToUShort();
+			var sp = (ushort)Registers.SP;
             var newPC = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
                 ProcessorAgent.ReadFromMemory((ushort)(sp + 1)));
-            Registers.PC = newPC.ToUShort();
+            Registers.PC = (ushort)newPC;
 
             Registers.SP += 2;
 
@@ -50,7 +50,7 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte JP_nn()
         {
-			var newAddress = FetchWord().ToUShort();
+			var newAddress = (ushort)FetchWord();
             FetchFinished();
 
 			Registers.PC = newAddress;
@@ -63,10 +63,10 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte CALL_nn()
         {
-			var newAddress = FetchWord().ToUShort();
+			var newAddress = (ushort)FetchWord();
             FetchFinished();
 
-			var valueToPush = Registers.PC.ToShort();
+			var valueToPush = (short)Registers.PC;
 			var sp = (ushort)(Registers.SP - 1);
 			ProcessorAgent.WriteToMemory(sp, valueToPush.GetHighByte());
 			sp--;
@@ -87,11 +87,11 @@ namespace Konamiman.Z80dotNet
             if(Registers.CF == 0)
                 return 5;
 
-			var sp = Registers.SP.ToUShort();
+			var sp = (ushort)Registers.SP;
             var newPC = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
                 ProcessorAgent.ReadFromMemory((ushort)(sp + 1)));
-            Registers.PC = newPC.ToUShort();
+            Registers.PC = (ushort)newPC;
 
             Registers.SP += 2;
 
@@ -103,7 +103,7 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte JP_C_nn()
         {
-			var newAddress = FetchWord().ToUShort();
+			var newAddress = (ushort)FetchWord();
             FetchFinished();
 
             if(Registers.CF == 0)
@@ -119,13 +119,13 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte CALL_C_nn()
         {
-			var newAddress = FetchWord().ToUShort();
+			var newAddress = (ushort)FetchWord();
             FetchFinished();
 
             if(Registers.CF == 0)
                 return 10;
 
-			var valueToPush = Registers.PC.ToShort();
+			var valueToPush = (short)Registers.PC;
 			var sp = (ushort)(Registers.SP - 1);
 			ProcessorAgent.WriteToMemory(sp, valueToPush.GetHighByte());
 			sp--;
@@ -146,11 +146,11 @@ namespace Konamiman.Z80dotNet
             if(Registers.CF == 1)
                 return 5;
 
-			var sp = Registers.SP.ToUShort();
+			var sp = (ushort)Registers.SP;
             var newPC = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
                 ProcessorAgent.ReadFromMemory((ushort)(sp + 1)));
-            Registers.PC = newPC.ToUShort();
+            Registers.PC = (ushort)newPC;
 
             Registers.SP += 2;
 
@@ -162,7 +162,7 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte JP_NC_nn()
         {
-			var newAddress = FetchWord().ToUShort();
+			var newAddress = (ushort)FetchWord();
             FetchFinished();
 
             if(Registers.CF == 1)
@@ -178,13 +178,13 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte CALL_NC_nn()
         {
-			var newAddress = FetchWord().ToUShort();
+			var newAddress = (ushort)FetchWord();
             FetchFinished();
 
             if(Registers.CF == 1)
                 return 10;
 
-			var valueToPush = Registers.PC.ToShort();
+			var valueToPush = (short)Registers.PC;
 			var sp = (ushort)(Registers.SP - 1);
 			ProcessorAgent.WriteToMemory(sp, valueToPush.GetHighByte());
 			sp--;
@@ -205,11 +205,11 @@ namespace Konamiman.Z80dotNet
             if(Registers.ZF == 0)
                 return 5;
 
-			var sp = Registers.SP.ToUShort();
+			var sp = (ushort)Registers.SP;
             var newPC = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
                 ProcessorAgent.ReadFromMemory((ushort)(sp + 1)));
-            Registers.PC = newPC.ToUShort();
+            Registers.PC = (ushort)newPC;
 
             Registers.SP += 2;
 
@@ -221,7 +221,7 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte JP_Z_nn()
         {
-			var newAddress = FetchWord().ToUShort();
+			var newAddress = (ushort)FetchWord();
             FetchFinished();
 
             if(Registers.ZF == 0)
@@ -237,13 +237,13 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte CALL_Z_nn()
         {
-			var newAddress = FetchWord().ToUShort();
+			var newAddress = (ushort)FetchWord();
             FetchFinished();
 
             if(Registers.ZF == 0)
                 return 10;
 
-			var valueToPush = Registers.PC.ToShort();
+			var valueToPush = (short)Registers.PC;
 			var sp = (ushort)(Registers.SP - 1);
 			ProcessorAgent.WriteToMemory(sp, valueToPush.GetHighByte());
 			sp--;
@@ -264,11 +264,11 @@ namespace Konamiman.Z80dotNet
             if(Registers.ZF == 1)
                 return 5;
 
-			var sp = Registers.SP.ToUShort();
+			var sp = (ushort)Registers.SP;
             var newPC = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
                 ProcessorAgent.ReadFromMemory((ushort)(sp + 1)));
-            Registers.PC = newPC.ToUShort();
+            Registers.PC = (ushort)newPC;
 
             Registers.SP += 2;
 
@@ -280,7 +280,7 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte JP_NZ_nn()
         {
-			var newAddress = FetchWord().ToUShort();
+			var newAddress = (ushort)FetchWord();
             FetchFinished();
 
             if(Registers.ZF == 1)
@@ -296,13 +296,13 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte CALL_NZ_nn()
         {
-			var newAddress = FetchWord().ToUShort();
+			var newAddress = (ushort)FetchWord();
             FetchFinished();
 
             if(Registers.ZF == 1)
                 return 10;
 
-			var valueToPush = Registers.PC.ToShort();
+			var valueToPush = (short)Registers.PC;
 			var sp = (ushort)(Registers.SP - 1);
 			ProcessorAgent.WriteToMemory(sp, valueToPush.GetHighByte());
 			sp--;
@@ -323,11 +323,11 @@ namespace Konamiman.Z80dotNet
             if(Registers.PF == 0)
                 return 5;
 
-			var sp = Registers.SP.ToUShort();
+			var sp = (ushort)Registers.SP;
             var newPC = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
                 ProcessorAgent.ReadFromMemory((ushort)(sp + 1)));
-            Registers.PC = newPC.ToUShort();
+            Registers.PC = (ushort)newPC;
 
             Registers.SP += 2;
 
@@ -339,7 +339,7 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte JP_PE_nn()
         {
-			var newAddress = FetchWord().ToUShort();
+			var newAddress = (ushort)FetchWord();
             FetchFinished();
 
             if(Registers.PF == 0)
@@ -355,13 +355,13 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte CALL_PE_nn()
         {
-			var newAddress = FetchWord().ToUShort();
+			var newAddress = (ushort)FetchWord();
             FetchFinished();
 
             if(Registers.PF == 0)
                 return 10;
 
-			var valueToPush = Registers.PC.ToShort();
+			var valueToPush = (short)Registers.PC;
 			var sp = (ushort)(Registers.SP - 1);
 			ProcessorAgent.WriteToMemory(sp, valueToPush.GetHighByte());
 			sp--;
@@ -382,11 +382,11 @@ namespace Konamiman.Z80dotNet
             if(Registers.PF == 1)
                 return 5;
 
-			var sp = Registers.SP.ToUShort();
+			var sp = (ushort)Registers.SP;
             var newPC = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
                 ProcessorAgent.ReadFromMemory((ushort)(sp + 1)));
-            Registers.PC = newPC.ToUShort();
+            Registers.PC = (ushort)newPC;
 
             Registers.SP += 2;
 
@@ -398,7 +398,7 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte JP_PO_nn()
         {
-			var newAddress = FetchWord().ToUShort();
+			var newAddress = (ushort)FetchWord();
             FetchFinished();
 
             if(Registers.PF == 1)
@@ -414,13 +414,13 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte CALL_PO_nn()
         {
-			var newAddress = FetchWord().ToUShort();
+			var newAddress = (ushort)FetchWord();
             FetchFinished();
 
             if(Registers.PF == 1)
                 return 10;
 
-			var valueToPush = Registers.PC.ToShort();
+			var valueToPush = (short)Registers.PC;
 			var sp = (ushort)(Registers.SP - 1);
 			ProcessorAgent.WriteToMemory(sp, valueToPush.GetHighByte());
 			sp--;
@@ -441,11 +441,11 @@ namespace Konamiman.Z80dotNet
             if(Registers.SF == 0)
                 return 5;
 
-			var sp = Registers.SP.ToUShort();
+			var sp = (ushort)Registers.SP;
             var newPC = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
                 ProcessorAgent.ReadFromMemory((ushort)(sp + 1)));
-            Registers.PC = newPC.ToUShort();
+            Registers.PC = (ushort)newPC;
 
             Registers.SP += 2;
 
@@ -457,7 +457,7 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte JP_M_nn()
         {
-			var newAddress = FetchWord().ToUShort();
+			var newAddress = (ushort)FetchWord();
             FetchFinished();
 
             if(Registers.SF == 0)
@@ -473,13 +473,13 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte CALL_M_nn()
         {
-			var newAddress = FetchWord().ToUShort();
+			var newAddress = (ushort)FetchWord();
             FetchFinished();
 
             if(Registers.SF == 0)
                 return 10;
 
-			var valueToPush = Registers.PC.ToShort();
+			var valueToPush = (short)Registers.PC;
 			var sp = (ushort)(Registers.SP - 1);
 			ProcessorAgent.WriteToMemory(sp, valueToPush.GetHighByte());
 			sp--;
@@ -500,11 +500,11 @@ namespace Konamiman.Z80dotNet
             if(Registers.SF == 1)
                 return 5;
 
-			var sp = Registers.SP.ToUShort();
+			var sp = (ushort)Registers.SP;
             var newPC = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
                 ProcessorAgent.ReadFromMemory((ushort)(sp + 1)));
-            Registers.PC = newPC.ToUShort();
+            Registers.PC = (ushort)newPC;
 
             Registers.SP += 2;
 
@@ -516,7 +516,7 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte JP_P_nn()
         {
-			var newAddress = FetchWord().ToUShort();
+			var newAddress = (ushort)FetchWord();
             FetchFinished();
 
             if(Registers.SF == 1)
@@ -532,13 +532,13 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte CALL_P_nn()
         {
-			var newAddress = FetchWord().ToUShort();
+			var newAddress = (ushort)FetchWord();
             FetchFinished();
 
             if(Registers.SF == 1)
                 return 10;
 
-			var valueToPush = Registers.PC.ToShort();
+			var valueToPush = (short)Registers.PC;
 			var sp = (ushort)(Registers.SP - 1);
 			ProcessorAgent.WriteToMemory(sp, valueToPush.GetHighByte());
 			sp--;

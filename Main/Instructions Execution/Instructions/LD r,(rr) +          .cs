@@ -15,7 +15,7 @@ namespace Konamiman.Z80dotNet
         {
 		    FetchFinished();
 
-			var address = Registers.BC.ToUShort();
+			var address = (ushort)Registers.BC;
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
     	    Registers.A = oldValue;
 
@@ -30,7 +30,7 @@ namespace Konamiman.Z80dotNet
 		    FetchFinished();
 
 	        var newValue = Registers.A;
-			var address = Registers.BC.ToUShort();
+			var address = (ushort)Registers.BC;
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 7;
@@ -43,7 +43,7 @@ namespace Konamiman.Z80dotNet
         {
 		    FetchFinished();
 
-			var address = Registers.DE.ToUShort();
+			var address = (ushort)Registers.DE;
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
     	    Registers.A = oldValue;
 
@@ -58,7 +58,7 @@ namespace Konamiman.Z80dotNet
 		    FetchFinished();
 
 	        var newValue = Registers.A;
-			var address = Registers.DE.ToUShort();
+			var address = (ushort)Registers.DE;
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 7;
@@ -71,7 +71,7 @@ namespace Konamiman.Z80dotNet
         {
 		    FetchFinished();
 
-			var address = Registers.HL.ToUShort();
+			var address = (ushort)Registers.HL;
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
     	    Registers.A = oldValue;
 
@@ -86,7 +86,7 @@ namespace Konamiman.Z80dotNet
 		    FetchFinished();
 
 	        var newValue = Registers.A;
-			var address = Registers.HL.ToUShort();
+			var address = (ushort)Registers.HL;
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 7;
@@ -99,7 +99,7 @@ namespace Konamiman.Z80dotNet
         {
 		    FetchFinished();
 
-			var address = Registers.HL.ToUShort();
+			var address = (ushort)Registers.HL;
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
     	    Registers.B = oldValue;
 
@@ -114,7 +114,7 @@ namespace Konamiman.Z80dotNet
 		    FetchFinished();
 
 	        var newValue = Registers.B;
-			var address = Registers.HL.ToUShort();
+			var address = (ushort)Registers.HL;
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 7;
@@ -127,7 +127,7 @@ namespace Konamiman.Z80dotNet
         {
 		    FetchFinished();
 
-			var address = Registers.HL.ToUShort();
+			var address = (ushort)Registers.HL;
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
     	    Registers.C = oldValue;
 
@@ -142,7 +142,7 @@ namespace Konamiman.Z80dotNet
 		    FetchFinished();
 
 	        var newValue = Registers.C;
-			var address = Registers.HL.ToUShort();
+			var address = (ushort)Registers.HL;
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 7;
@@ -155,7 +155,7 @@ namespace Konamiman.Z80dotNet
         {
 		    FetchFinished();
 
-			var address = Registers.HL.ToUShort();
+			var address = (ushort)Registers.HL;
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
     	    Registers.D = oldValue;
 
@@ -170,7 +170,7 @@ namespace Konamiman.Z80dotNet
 		    FetchFinished();
 
 	        var newValue = Registers.D;
-			var address = Registers.HL.ToUShort();
+			var address = (ushort)Registers.HL;
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 7;
@@ -183,7 +183,7 @@ namespace Konamiman.Z80dotNet
         {
 		    FetchFinished();
 
-			var address = Registers.HL.ToUShort();
+			var address = (ushort)Registers.HL;
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
     	    Registers.E = oldValue;
 
@@ -198,7 +198,7 @@ namespace Konamiman.Z80dotNet
 		    FetchFinished();
 
 	        var newValue = Registers.E;
-			var address = Registers.HL.ToUShort();
+			var address = (ushort)Registers.HL;
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 7;
@@ -211,7 +211,7 @@ namespace Konamiman.Z80dotNet
         {
 		    FetchFinished();
 
-			var address = Registers.HL.ToUShort();
+			var address = (ushort)Registers.HL;
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
     	    Registers.H = oldValue;
 
@@ -226,7 +226,7 @@ namespace Konamiman.Z80dotNet
 		    FetchFinished();
 
 	        var newValue = Registers.H;
-			var address = Registers.HL.ToUShort();
+			var address = (ushort)Registers.HL;
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 7;
@@ -239,7 +239,7 @@ namespace Konamiman.Z80dotNet
         {
 		    FetchFinished();
 
-			var address = Registers.HL.ToUShort();
+			var address = (ushort)Registers.HL;
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
     	    Registers.L = oldValue;
 
@@ -254,7 +254,7 @@ namespace Konamiman.Z80dotNet
 		    FetchFinished();
 
 	        var newValue = Registers.L;
-			var address = Registers.HL.ToUShort();
+			var address = (ushort)Registers.HL;
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 7;
@@ -268,7 +268,7 @@ namespace Konamiman.Z80dotNet
 			var offset = ProcessorAgent.FetchNextOpcode();
 		    FetchFinished();
 
-			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IX + offset.ToSignedByte());
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
 		    Registers.A = oldValue;
 
@@ -284,7 +284,7 @@ namespace Konamiman.Z80dotNet
 		    FetchFinished();
 
 	        var newValue = Registers.A;
-			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IX + offset.ToSignedByte());
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 19;
@@ -298,7 +298,7 @@ namespace Konamiman.Z80dotNet
 			var offset = ProcessorAgent.FetchNextOpcode();
 		    FetchFinished();
 
-			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IX + offset.ToSignedByte());
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
 		    Registers.B = oldValue;
 
@@ -314,7 +314,7 @@ namespace Konamiman.Z80dotNet
 		    FetchFinished();
 
 	        var newValue = Registers.B;
-			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IX + offset.ToSignedByte());
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 19;
@@ -328,7 +328,7 @@ namespace Konamiman.Z80dotNet
 			var offset = ProcessorAgent.FetchNextOpcode();
 		    FetchFinished();
 
-			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IX + offset.ToSignedByte());
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
 		    Registers.C = oldValue;
 
@@ -344,7 +344,7 @@ namespace Konamiman.Z80dotNet
 		    FetchFinished();
 
 	        var newValue = Registers.C;
-			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IX + offset.ToSignedByte());
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 19;
@@ -358,7 +358,7 @@ namespace Konamiman.Z80dotNet
 			var offset = ProcessorAgent.FetchNextOpcode();
 		    FetchFinished();
 
-			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IX + offset.ToSignedByte());
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
 		    Registers.D = oldValue;
 
@@ -374,7 +374,7 @@ namespace Konamiman.Z80dotNet
 		    FetchFinished();
 
 	        var newValue = Registers.D;
-			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IX + offset.ToSignedByte());
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 19;
@@ -388,7 +388,7 @@ namespace Konamiman.Z80dotNet
 			var offset = ProcessorAgent.FetchNextOpcode();
 		    FetchFinished();
 
-			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IX + offset.ToSignedByte());
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
 		    Registers.E = oldValue;
 
@@ -404,7 +404,7 @@ namespace Konamiman.Z80dotNet
 		    FetchFinished();
 
 	        var newValue = Registers.E;
-			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IX + offset.ToSignedByte());
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 19;
@@ -418,7 +418,7 @@ namespace Konamiman.Z80dotNet
 			var offset = ProcessorAgent.FetchNextOpcode();
 		    FetchFinished();
 
-			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IX + offset.ToSignedByte());
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
 		    Registers.H = oldValue;
 
@@ -434,7 +434,7 @@ namespace Konamiman.Z80dotNet
 		    FetchFinished();
 
 	        var newValue = Registers.H;
-			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IX + offset.ToSignedByte());
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 19;
@@ -448,7 +448,7 @@ namespace Konamiman.Z80dotNet
 			var offset = ProcessorAgent.FetchNextOpcode();
 		    FetchFinished();
 
-			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IX + offset.ToSignedByte());
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
 		    Registers.L = oldValue;
 
@@ -464,7 +464,7 @@ namespace Konamiman.Z80dotNet
 		    FetchFinished();
 
 	        var newValue = Registers.L;
-			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IX + offset.ToSignedByte());
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 19;
@@ -478,7 +478,7 @@ namespace Konamiman.Z80dotNet
 			var offset = ProcessorAgent.FetchNextOpcode();
 		    FetchFinished();
 
-			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IY + offset.ToSignedByte());
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
 		    Registers.A = oldValue;
 
@@ -494,7 +494,7 @@ namespace Konamiman.Z80dotNet
 		    FetchFinished();
 
 	        var newValue = Registers.A;
-			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IY + offset.ToSignedByte());
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 19;
@@ -508,7 +508,7 @@ namespace Konamiman.Z80dotNet
 			var offset = ProcessorAgent.FetchNextOpcode();
 		    FetchFinished();
 
-			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IY + offset.ToSignedByte());
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
 		    Registers.B = oldValue;
 
@@ -524,7 +524,7 @@ namespace Konamiman.Z80dotNet
 		    FetchFinished();
 
 	        var newValue = Registers.B;
-			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IY + offset.ToSignedByte());
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 19;
@@ -538,7 +538,7 @@ namespace Konamiman.Z80dotNet
 			var offset = ProcessorAgent.FetchNextOpcode();
 		    FetchFinished();
 
-			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IY + offset.ToSignedByte());
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
 		    Registers.C = oldValue;
 
@@ -554,7 +554,7 @@ namespace Konamiman.Z80dotNet
 		    FetchFinished();
 
 	        var newValue = Registers.C;
-			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IY + offset.ToSignedByte());
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 19;
@@ -568,7 +568,7 @@ namespace Konamiman.Z80dotNet
 			var offset = ProcessorAgent.FetchNextOpcode();
 		    FetchFinished();
 
-			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IY + offset.ToSignedByte());
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
 		    Registers.D = oldValue;
 
@@ -584,7 +584,7 @@ namespace Konamiman.Z80dotNet
 		    FetchFinished();
 
 	        var newValue = Registers.D;
-			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IY + offset.ToSignedByte());
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 19;
@@ -598,7 +598,7 @@ namespace Konamiman.Z80dotNet
 			var offset = ProcessorAgent.FetchNextOpcode();
 		    FetchFinished();
 
-			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IY + offset.ToSignedByte());
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
 		    Registers.E = oldValue;
 
@@ -614,7 +614,7 @@ namespace Konamiman.Z80dotNet
 		    FetchFinished();
 
 	        var newValue = Registers.E;
-			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IY + offset.ToSignedByte());
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 19;
@@ -628,7 +628,7 @@ namespace Konamiman.Z80dotNet
 			var offset = ProcessorAgent.FetchNextOpcode();
 		    FetchFinished();
 
-			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IY + offset.ToSignedByte());
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
 		    Registers.H = oldValue;
 
@@ -644,7 +644,7 @@ namespace Konamiman.Z80dotNet
 		    FetchFinished();
 
 	        var newValue = Registers.H;
-			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IY + offset.ToSignedByte());
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 19;
@@ -658,7 +658,7 @@ namespace Konamiman.Z80dotNet
 			var offset = ProcessorAgent.FetchNextOpcode();
 		    FetchFinished();
 
-			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IY + offset.ToSignedByte());
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
 		    Registers.L = oldValue;
 
@@ -674,7 +674,7 @@ namespace Konamiman.Z80dotNet
 		    FetchFinished();
 
 	        var newValue = Registers.L;
-			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IY + offset.ToSignedByte());
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 19;

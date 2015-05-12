@@ -17,8 +17,8 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.HL;
             var valueToAdd = Registers.BC;
-			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort() + Registers.CF);
-            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			var newValueInt = (ushort)oldValue + (ushort)valueToAdd + Registers.CF;
+            var newValue = (short)(newValueInt & 0xFFFF);
             Registers.HL = newValue;
 
             Registers.SF = newValue & 0x8000;
@@ -42,8 +42,8 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.HL;
             var valueToAdd = Registers.BC;
-			var newValueInt = (oldValue.ToUShort() - valueToAdd.ToUShort() - Registers.CF);
-            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			var newValueInt = (ushort)oldValue - (ushort)valueToAdd - Registers.CF;
+            var newValue = (short)(newValueInt & 0xFFFF);
             Registers.HL = newValue;
 
             Registers.SF = newValue & 0x8000;
@@ -67,8 +67,8 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.HL;
             var valueToAdd = Registers.DE;
-			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort() + Registers.CF);
-            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			var newValueInt = (ushort)oldValue + (ushort)valueToAdd + Registers.CF;
+            var newValue = (short)(newValueInt & 0xFFFF);
             Registers.HL = newValue;
 
             Registers.SF = newValue & 0x8000;
@@ -92,8 +92,8 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.HL;
             var valueToAdd = Registers.DE;
-			var newValueInt = (oldValue.ToUShort() - valueToAdd.ToUShort() - Registers.CF);
-            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			var newValueInt = (ushort)oldValue - (ushort)valueToAdd - Registers.CF;
+            var newValue = (short)(newValueInt & 0xFFFF);
             Registers.HL = newValue;
 
             Registers.SF = newValue & 0x8000;
@@ -117,8 +117,8 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.HL;
             var valueToAdd = Registers.HL;
-			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort() + Registers.CF);
-            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			var newValueInt = (ushort)oldValue + (ushort)valueToAdd + Registers.CF;
+            var newValue = (short)(newValueInt & 0xFFFF);
             Registers.HL = newValue;
 
             Registers.SF = newValue & 0x8000;
@@ -142,8 +142,8 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.HL;
             var valueToAdd = Registers.HL;
-			var newValueInt = (oldValue.ToUShort() - valueToAdd.ToUShort() - Registers.CF);
-            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			var newValueInt = (ushort)oldValue - (ushort)valueToAdd - Registers.CF;
+            var newValue = (short)(newValueInt & 0xFFFF);
             Registers.HL = newValue;
 
             Registers.SF = newValue & 0x8000;
@@ -167,8 +167,8 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.HL;
             var valueToAdd = Registers.SP;
-			var newValueInt = (oldValue.ToUShort() + valueToAdd.ToUShort() + Registers.CF);
-            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			var newValueInt = (ushort)oldValue + (ushort)valueToAdd + Registers.CF;
+            var newValue = (short)(newValueInt & 0xFFFF);
             Registers.HL = newValue;
 
             Registers.SF = newValue & 0x8000;
@@ -192,8 +192,8 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.HL;
             var valueToAdd = Registers.SP;
-			var newValueInt = (oldValue.ToUShort() - valueToAdd.ToUShort() - Registers.CF);
-            var newValue = ((ushort)newValueInt & 0xFFFF).ToShort();
+			var newValueInt = (ushort)oldValue - (ushort)valueToAdd - Registers.CF;
+            var newValue = (short)(newValueInt & 0xFFFF);
             Registers.HL = newValue;
 
             Registers.SF = newValue & 0x8000;

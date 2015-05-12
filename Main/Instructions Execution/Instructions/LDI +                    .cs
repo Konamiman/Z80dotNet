@@ -18,8 +18,8 @@ namespace Konamiman.Z80dotNet
             var sourceAddress = Registers.HL;
             var destAddress = Registers.DE;
             var counter = Registers.BC;
-            var value = ProcessorAgent.ReadFromMemory(sourceAddress.ToUShort());
-            ProcessorAgent.WriteToMemory(destAddress.ToUShort(), value);
+            var value = ProcessorAgent.ReadFromMemory((ushort)sourceAddress);
+            ProcessorAgent.WriteToMemory((ushort)destAddress, value);
 
             Registers.HL = (short)(sourceAddress + 1);
             Registers.DE = (short)(destAddress + 1);
@@ -48,8 +48,8 @@ namespace Konamiman.Z80dotNet
             var sourceAddress = Registers.HL;
             var destAddress = Registers.DE;
             var counter = Registers.BC;
-            var value = ProcessorAgent.ReadFromMemory(sourceAddress.ToUShort());
-            ProcessorAgent.WriteToMemory(destAddress.ToUShort(), value);
+            var value = ProcessorAgent.ReadFromMemory((ushort)sourceAddress);
+            ProcessorAgent.WriteToMemory((ushort)destAddress, value);
 
             Registers.HL = (short)(sourceAddress - 1);
             Registers.DE = (short)(destAddress - 1);
@@ -78,8 +78,8 @@ namespace Konamiman.Z80dotNet
             var sourceAddress = Registers.HL;
             var destAddress = Registers.DE;
             var counter = Registers.BC;
-            var value = ProcessorAgent.ReadFromMemory(sourceAddress.ToUShort());
-            ProcessorAgent.WriteToMemory(destAddress.ToUShort(), value);
+            var value = ProcessorAgent.ReadFromMemory((ushort)sourceAddress);
+            ProcessorAgent.WriteToMemory((ushort)destAddress, value);
 
             Registers.HL = (short)(sourceAddress + 1);
             Registers.DE = (short)(destAddress + 1);
@@ -112,8 +112,8 @@ namespace Konamiman.Z80dotNet
             var sourceAddress = Registers.HL;
             var destAddress = Registers.DE;
             var counter = Registers.BC;
-            var value = ProcessorAgent.ReadFromMemory(sourceAddress.ToUShort());
-            ProcessorAgent.WriteToMemory(destAddress.ToUShort(), value);
+            var value = ProcessorAgent.ReadFromMemory((ushort)sourceAddress);
+            ProcessorAgent.WriteToMemory((ushort)destAddress, value);
 
             Registers.HL = (short)(sourceAddress - 1);
             Registers.DE = (short)(destAddress - 1);

@@ -33,7 +33,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-			var sp = Registers.SP.ToUShort();
+			var sp = (ushort)Registers.SP;
             var newAF = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
                 ProcessorAgent.ReadFromMemory((ushort)(sp + 1)));
@@ -68,7 +68,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-			var sp = Registers.SP.ToUShort();
+			var sp = (ushort)Registers.SP;
             var newBC = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
                 ProcessorAgent.ReadFromMemory((ushort)(sp + 1)));
@@ -103,7 +103,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-			var sp = Registers.SP.ToUShort();
+			var sp = (ushort)Registers.SP;
             var newDE = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
                 ProcessorAgent.ReadFromMemory((ushort)(sp + 1)));
@@ -138,7 +138,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-			var sp = Registers.SP.ToUShort();
+			var sp = (ushort)Registers.SP;
             var newHL = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
                 ProcessorAgent.ReadFromMemory((ushort)(sp + 1)));
@@ -173,7 +173,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-			var sp = Registers.SP.ToUShort();
+			var sp = (ushort)Registers.SP;
             var newIX = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
                 ProcessorAgent.ReadFromMemory((ushort)(sp + 1)));
@@ -208,7 +208,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-			var sp = Registers.SP.ToUShort();
+			var sp = (ushort)Registers.SP;
             var newIY = NumberUtils.CreateShort(
                 ProcessorAgent.ReadFromMemory(sp),
                 ProcessorAgent.ReadFromMemory((ushort)(sp + 1)));

@@ -28,7 +28,7 @@ namespace Konamiman.Z80dotNet
             
             AutoStopOnDiPlusHalt = true;
             AutoStopOnRetWithStackEmpty = false;
-            StartOfStack = 0xFFFF.ToShort();
+            unchecked { StartOfStack =  (short)0xFFFF; }
 
             SetMemoryWaitStatesForM1(0, MemorySpaceSize, 0);
             SetMemoryWaitStatesForNonM1(0, MemorySpaceSize, 0);
@@ -300,8 +300,8 @@ namespace Konamiman.Z80dotNet
             Registers.IFF1 = 0;
             Registers.IFF2 = 0;
             Registers.PC = 0;
-            Registers.AF = 0xFFFF.ToShort();
-            Registers.SP = 0xFFFF.ToShort();
+            unchecked { Registers.AF = (short)0xFFFF; }
+            unchecked { Registers.SP = (short)0xFFFF; }
             InterruptMode = 0;
 
             NmiInterruptPending = false;

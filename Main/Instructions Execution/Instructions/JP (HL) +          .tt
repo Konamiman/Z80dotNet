@@ -20,7 +20,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            Registers.PC = Registers.<#=reg#>.ToUShort();
+            Registers.PC = (ushort)Registers.<#=reg#>;
 
             return <#=reg == "HL" ? 4 : 8#>;
         }

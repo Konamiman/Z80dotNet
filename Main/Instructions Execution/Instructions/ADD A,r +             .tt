@@ -61,7 +61,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
 <# if(isCompareInc) { #>
-			var valueToAdd = ProcessorAgent.ReadFromMemory(Registers.HL.ToUShort());
+			var valueToAdd = ProcessorAgent.ReadFromMemory((ushort)Registers.HL);
 <# } else if(isMem) { #>
 <# GetAddressFromReg(reg); #>
 			var valueToAdd = ProcessorAgent.ReadFromMemory(address);
