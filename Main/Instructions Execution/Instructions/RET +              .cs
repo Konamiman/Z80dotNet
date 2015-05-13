@@ -51,6 +51,7 @@ namespace Konamiman.Z80dotNet
         private byte JP_nn()
         {
 			var newAddress = (ushort)FetchWord();
+
             FetchFinished();
 
 			Registers.PC = newAddress;
@@ -64,6 +65,7 @@ namespace Konamiman.Z80dotNet
         private byte CALL_nn()
         {
 			var newAddress = (ushort)FetchWord();
+
             FetchFinished();
 
 			var valueToPush = (short)Registers.PC;
@@ -82,10 +84,12 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte RET_C()
         {
-            FetchFinished(isRet: true);
-
-            if(Registers.CF == 0)
+            if(Registers.CF == 0) {
+				FetchFinished(isRet: false);
                 return 5;
+			}
+
+			FetchFinished(isRet: true);
 
 			var sp = (ushort)Registers.SP;
             var newPC = NumberUtils.CreateShort(
@@ -104,8 +108,8 @@ namespace Konamiman.Z80dotNet
         private byte JP_C_nn()
         {
 			var newAddress = (ushort)FetchWord();
-            FetchFinished();
 
+            FetchFinished();
             if(Registers.CF == 0)
                 return 10;
 
@@ -120,8 +124,8 @@ namespace Konamiman.Z80dotNet
         private byte CALL_C_nn()
         {
 			var newAddress = (ushort)FetchWord();
-            FetchFinished();
 
+            FetchFinished();
             if(Registers.CF == 0)
                 return 10;
 
@@ -141,10 +145,12 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte RET_NC()
         {
-            FetchFinished(isRet: true);
-
-            if(Registers.CF == 1)
+            if(Registers.CF == 1) {
+				FetchFinished(isRet: false);
                 return 5;
+			}
+
+			FetchFinished(isRet: true);
 
 			var sp = (ushort)Registers.SP;
             var newPC = NumberUtils.CreateShort(
@@ -163,8 +169,8 @@ namespace Konamiman.Z80dotNet
         private byte JP_NC_nn()
         {
 			var newAddress = (ushort)FetchWord();
-            FetchFinished();
 
+            FetchFinished();
             if(Registers.CF == 1)
                 return 10;
 
@@ -179,8 +185,8 @@ namespace Konamiman.Z80dotNet
         private byte CALL_NC_nn()
         {
 			var newAddress = (ushort)FetchWord();
-            FetchFinished();
 
+            FetchFinished();
             if(Registers.CF == 1)
                 return 10;
 
@@ -200,10 +206,12 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte RET_Z()
         {
-            FetchFinished(isRet: true);
-
-            if(Registers.ZF == 0)
+            if(Registers.ZF == 0) {
+				FetchFinished(isRet: false);
                 return 5;
+			}
+
+			FetchFinished(isRet: true);
 
 			var sp = (ushort)Registers.SP;
             var newPC = NumberUtils.CreateShort(
@@ -222,8 +230,8 @@ namespace Konamiman.Z80dotNet
         private byte JP_Z_nn()
         {
 			var newAddress = (ushort)FetchWord();
-            FetchFinished();
 
+            FetchFinished();
             if(Registers.ZF == 0)
                 return 10;
 
@@ -238,8 +246,8 @@ namespace Konamiman.Z80dotNet
         private byte CALL_Z_nn()
         {
 			var newAddress = (ushort)FetchWord();
-            FetchFinished();
 
+            FetchFinished();
             if(Registers.ZF == 0)
                 return 10;
 
@@ -259,10 +267,12 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte RET_NZ()
         {
-            FetchFinished(isRet: true);
-
-            if(Registers.ZF == 1)
+            if(Registers.ZF == 1) {
+				FetchFinished(isRet: false);
                 return 5;
+			}
+
+			FetchFinished(isRet: true);
 
 			var sp = (ushort)Registers.SP;
             var newPC = NumberUtils.CreateShort(
@@ -281,8 +291,8 @@ namespace Konamiman.Z80dotNet
         private byte JP_NZ_nn()
         {
 			var newAddress = (ushort)FetchWord();
-            FetchFinished();
 
+            FetchFinished();
             if(Registers.ZF == 1)
                 return 10;
 
@@ -297,8 +307,8 @@ namespace Konamiman.Z80dotNet
         private byte CALL_NZ_nn()
         {
 			var newAddress = (ushort)FetchWord();
-            FetchFinished();
 
+            FetchFinished();
             if(Registers.ZF == 1)
                 return 10;
 
@@ -318,10 +328,12 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte RET_PE()
         {
-            FetchFinished(isRet: true);
-
-            if(Registers.PF == 0)
+            if(Registers.PF == 0) {
+				FetchFinished(isRet: false);
                 return 5;
+			}
+
+			FetchFinished(isRet: true);
 
 			var sp = (ushort)Registers.SP;
             var newPC = NumberUtils.CreateShort(
@@ -340,8 +352,8 @@ namespace Konamiman.Z80dotNet
         private byte JP_PE_nn()
         {
 			var newAddress = (ushort)FetchWord();
-            FetchFinished();
 
+            FetchFinished();
             if(Registers.PF == 0)
                 return 10;
 
@@ -356,8 +368,8 @@ namespace Konamiman.Z80dotNet
         private byte CALL_PE_nn()
         {
 			var newAddress = (ushort)FetchWord();
-            FetchFinished();
 
+            FetchFinished();
             if(Registers.PF == 0)
                 return 10;
 
@@ -377,10 +389,12 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte RET_PO()
         {
-            FetchFinished(isRet: true);
-
-            if(Registers.PF == 1)
+            if(Registers.PF == 1) {
+				FetchFinished(isRet: false);
                 return 5;
+			}
+
+			FetchFinished(isRet: true);
 
 			var sp = (ushort)Registers.SP;
             var newPC = NumberUtils.CreateShort(
@@ -399,8 +413,8 @@ namespace Konamiman.Z80dotNet
         private byte JP_PO_nn()
         {
 			var newAddress = (ushort)FetchWord();
-            FetchFinished();
 
+            FetchFinished();
             if(Registers.PF == 1)
                 return 10;
 
@@ -415,8 +429,8 @@ namespace Konamiman.Z80dotNet
         private byte CALL_PO_nn()
         {
 			var newAddress = (ushort)FetchWord();
-            FetchFinished();
 
+            FetchFinished();
             if(Registers.PF == 1)
                 return 10;
 
@@ -436,10 +450,12 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte RET_M()
         {
-            FetchFinished(isRet: true);
-
-            if(Registers.SF == 0)
+            if(Registers.SF == 0) {
+				FetchFinished(isRet: false);
                 return 5;
+			}
+
+			FetchFinished(isRet: true);
 
 			var sp = (ushort)Registers.SP;
             var newPC = NumberUtils.CreateShort(
@@ -458,8 +474,8 @@ namespace Konamiman.Z80dotNet
         private byte JP_M_nn()
         {
 			var newAddress = (ushort)FetchWord();
-            FetchFinished();
 
+            FetchFinished();
             if(Registers.SF == 0)
                 return 10;
 
@@ -474,8 +490,8 @@ namespace Konamiman.Z80dotNet
         private byte CALL_M_nn()
         {
 			var newAddress = (ushort)FetchWord();
-            FetchFinished();
 
+            FetchFinished();
             if(Registers.SF == 0)
                 return 10;
 
@@ -495,10 +511,12 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         private byte RET_P()
         {
-            FetchFinished(isRet: true);
-
-            if(Registers.SF == 1)
+            if(Registers.SF == 1) {
+				FetchFinished(isRet: false);
                 return 5;
+			}
+
+			FetchFinished(isRet: true);
 
 			var sp = (ushort)Registers.SP;
             var newPC = NumberUtils.CreateShort(
@@ -517,8 +535,8 @@ namespace Konamiman.Z80dotNet
         private byte JP_P_nn()
         {
 			var newAddress = (ushort)FetchWord();
-            FetchFinished();
 
+            FetchFinished();
             if(Registers.SF == 1)
                 return 10;
 
@@ -533,8 +551,8 @@ namespace Konamiman.Z80dotNet
         private byte CALL_P_nn()
         {
 			var newAddress = (ushort)FetchWord();
-            FetchFinished();
 
+            FetchFinished();
             if(Registers.SF == 1)
                 return 10;
 

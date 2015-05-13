@@ -102,14 +102,18 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [Test]
         [TestCaseSource("RET_cc_Source")]
         [TestCaseSource("RET_Source")]
-        public void RET_fires_FetchFinished_with_isRet_true(string flagName, byte opcode, int flagValue)
+        public void RET_fires_FetchFinished_with_isRet_true_if_flag_is_set(string flagName, byte opcode, int flagValue)
         {
             var eventFired = false;
 
+            Sut.ProcessorAgent.Registers.F = 255;
             Sut.InstructionFetchFinished += (sender, e) =>
             {
                 eventFired = true;
-                Assert.True(e.IsRetInstruction);
+                if((opcode & 0x0F) == 0)
+                    Assert.False(e.IsRetInstruction);
+                else
+                    Assert.True(e.IsRetInstruction);
             };
 
             Execute(opcode);

@@ -38,12 +38,24 @@ namespace Konamiman.Z80dotNet
         {
 <# if(!isRet) { #>
 			var newAddress = (ushort)FetchWord();
-<# } #>
-            FetchFinished(<#if(isRet) {#>isRet: true<# } #>);
-<# if(flag!="") { #>
 
+<# } #>
+<# if(flag=="" && isRet) { #>
+            FetchFinished(isRet: true);
+<# } else if(!isRet) { #>
+            FetchFinished(<#if(isRet) {#>isRet: true<# } #>);
+<# } #>
+<# if(flag!="" && !isRet) { #>
             if(Registers.<#=flag#>F == <#=flagValue ^ 1#>)
-                return <#=isRet ? 5 : 10#>;
+                return 10;
+<# } #>
+<# if(flag!="" && isRet) { #>
+            if(Registers.<#=flag#>F == <#=flagValue ^ 1#>) {
+				FetchFinished(isRet: false);
+                return 5;
+			}
+
+			FetchFinished(isRet: true);
 <# } #>
 
 <# if(isRet)

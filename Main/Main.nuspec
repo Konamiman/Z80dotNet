@@ -12,7 +12,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>$description$</summary>
 	<description>Z80.NET is a Z80 processor simulator complete with all instructions (documented and undocumented) and support for interrupts. Memory and port access can be controlled via events or by plugging custom memory space implementations, while interrupts are handled by plugging one or more custom interrupt sources. Use Z80.NET to exercise pieces of Z80 code or to create your dream 8 bit computer emulator!</description>
-    <releaseNotes>There were some helper methods to deal with 8 and 16 bit numbers arithmetic taking care of overflows and short/ushort conversions. These are not used anymore, since C# can handle all of this with the built-in arithmetic and casting operators. They are still used in test code, though.</releaseNotes>
+    <releaseNotes>Fixed: conditional RET instructions were causing execution to terminate when AutoStopOnRetWithStackEmpty was set, even when the condition was not met.</releaseNotes>
     <copyright>Copyright (c) 2015 Konamiman</copyright>
     <tags></tags>
   </metadata>
