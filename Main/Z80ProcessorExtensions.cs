@@ -35,9 +35,9 @@
         {
             var registers = processor.Registers;
             var memory = processor.Memory;
-
+             
             var sp = (ushort)registers.SP;
-            var newPC = NumberUtils.CreateShort(memory[sp], memory[sp + 1]);
+            var newPC = NumberUtils.CreateShort(memory[sp], memory[(ushort)(sp + 1)]);
             
             registers.PC = (ushort)newPC;
             registers.SP += 2;
