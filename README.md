@@ -5,6 +5,10 @@
 
 Z80.NET is a Z80 processor simulator that can be used as the core component for developing computer emulators, or to exercise pieces of Z80 code in custom test code. It is written in C# targetting the .NET Framework 4 Client Profile.  
 
+If you like Z80.NET you may want to take a look at [ZWatcher](https://bitbucket.org/konamiman/zwatcher) too.
+
+Want to say something? Head to the [discussion site](https://github.com/Konamiman/ZWatcher)!
+
 ## Hello, world! ##
 
 ```
