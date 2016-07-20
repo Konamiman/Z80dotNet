@@ -1,6 +1,6 @@
 ## Checking state
 
-[IZ80Processor](../Main/IZ80Processor.cs) contains a handful of properties that allow to check the current state of the simulated processor. These properties can be checked when the processor is stopped, or when handling [the instruction execution events](InstructionExecutionWorkflow.md) and [the memory access events](MemoryAccessWorkflow.md) while the processor is running and executing instructions. The properties are:
+[IZ80Processor](../Main/IZ80Processor.cs) contains a handful of properties that allow to check the current state of the simulated processor. These properties can be checked when the processor is stopped, or when handling [the instruction execution events](InstructionExecutionFlow.md) and [the memory access events](MemoryAccessFlow.md) while the processor is running and executing instructions. The properties are:
 
 * **`TStatesElapsedSinceStart`**: The number of T states elapsed since the execution started with the `Start` method. This is the sum of the states consumed by the instructions themselves and the extra wait states introduced by memory and ports access (the amount of wait states required by memory and ports must be configured before starting execution, see the [documentation about configuration](Configuration.md)).
 

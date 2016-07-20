@@ -10,13 +10,13 @@ _NOTE:_ Remember that plugging [custom dependencies](Dependencies.md) is an alte
 
 * **`ClockFrequencyInMhz`** and **`ClockSpeedFactor`**: These two values, when multiplied, hold the clock speed at which the simulated processor runs; this information is only relevant for [the clock synchronizer](../Main/Dependencies%20Interfaces/IClockSynchronizer.cs). There are two properties to help in the development of computer emulators, so it is possible to fix the clock frequency to the value for the real system but allow the user to tune the speed factor as appropriate. The default value is 4 (MHz) for the clock frequency and 1 for the speed factor.
 
-* **`SetMemoryAccessMode`** and **`GetMemoryAccessMode`** methods allow to set and get the memory access mode for a certain range of memory addresses (see the [memory access workflow](MemoryAccessWorkflow.md) for details). The default value is `MemoryAccessMode.ReadAndWrite` for the entire memory.
+* **`SetMemoryAccessMode`** and **`GetMemoryAccessMode`** methods allow to set and get the memory access mode for a certain range of memory addresses (see the [memory access workflow](MemoryAccessFlow.md) for details). The default value is `MemoryAccessMode.ReadAndWrite` for the entire memory.
 
 * **`SetMemoryWaitStatesForM1`** and **`GetMemoryWaitStatesForM1`** methods allow to configure the amount of extra T states that will be counted for timing purposes when the memory is read during the M1 state (when fetching the instruction opcode bytes). The default value is zero for the entire memory.
 
 * **`SetMemoryWaitStatesForNonM1`** and **`GetMemoryWaitStatesForNonM1`** methods allow to configure the amount of extra T states that will be counted for timing purposes when the memory is read or written during the execution of an instruction but outside the M1 state. The default value is zero for the entire memory.
 
-* **`SetPortsSpaceAccessMode`** and **`GetPortsSpaceAccessMode`** methods allow to set and get the ports space access mode for a certain range of port numbers (see the [memory access workflow](MemoryAccessWorkflow.md) for details). The default value is `MemoryAccessMode.ReadAndWrite` for the entire ports space.
+* **`SetPortsSpaceAccessMode`** and **`GetPortsSpaceAccessMode`** methods allow to set and get the ports space access mode for a certain range of port numbers (see the [memory access workflow](MemoryAccessFlow.md) for details). The default value is `MemoryAccessMode.ReadAndWrite` for the entire ports space.
 
 * **`SetPortWaitStates`** and **`GetPortWaitStates`** methods allow to configure the amount of extra T states that will be counted for timing purposes when a port is read or written during the execution of an instruction (not including the extra T state that is always added by the Z80 itself). The default value is zero for the entire ports space.
 

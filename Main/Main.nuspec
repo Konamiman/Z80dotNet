@@ -6,8 +6,8 @@
     <title>$title$</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
-    <licenseUrl>https://bitbucket.org/konamiman/z80dotnet/src/develop/LICENSE.txt</licenseUrl>
-    <projectUrl>https://bitbucket.org/konamiman/z80dotnet</projectUrl>
+    <licenseUrl>https://github.com/Konamiman/Z80dotNet/blob/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/Konamiman/Z80dotNet</projectUrl>
     <iconUrl>http://www.konamiman.com/images/Z80dotNet_48.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>$description$</summary>

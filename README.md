@@ -5,8 +5,6 @@
 
 Z80.NET is a Z80 processor simulator that can be used as the core component for developing computer emulators, or to exercise pieces of Z80 code in custom test code. It is written in C# targetting the .NET Framework 4 Client Profile.  
 
-*NOTE: If you are reading this from the overview page of the project site in BitBucket, the links to documentation and code will not work. Please go and open [the README file itself in the root of the source code](https://bitbucket.org/konamiman/z80dotnet/src/develop/README.md) instead. Thanks!* 
-
 ## Hello, world! ##
 
 ```
@@ -63,7 +61,7 @@ The following resources have been used to develop this project:
 
 ## Last but not least...
 
-...if you like this project **[please consider donating!](http://www.konamiman.com#donate)** My kids need moar shoes!
+...if you like this project **[please consider donating!](http://www.konamiman.com/msx/msx-e.html#donate)** My kids need moar shoes!
 
 ## But who am I? ##
 
