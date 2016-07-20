@@ -38,4 +38,4 @@ The default implementation is [ClockSynchronizer](../Main/Dependencies%20Impleme
 
 [IZ80Processor](../Main/IZ80Processor.cs) holds one instance of IZ80InstructionExecutor in the `ClockSynchronizer ` property.
 
-_NOTE:_ Real time syncrhonization is not performed when the processor is running in single instruction execution mode. See the documentation about [the execution control methods](ExecutionControlMethods.md).
+_NOTE:_ Real time syncrhonization is not performed when the processor is running in single instruction execution mode. See the documentation about [the execution control methods](HowExecutionWorks.md).
