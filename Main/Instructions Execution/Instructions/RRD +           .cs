@@ -15,7 +15,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            var memoryAddress = Registers.HL.ToUShort();
+            var memoryAddress = (ushort)Registers.HL;
 
             var Avalue = Registers.A;
             var HLcontents = ProcessorAgent.ReadFromMemory(memoryAddress);
@@ -42,7 +42,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            var memoryAddress = Registers.HL.ToUShort();
+            var memoryAddress = (ushort)Registers.HL;
 
             var Avalue = Registers.A;
             var HLcontents = ProcessorAgent.ReadFromMemory(memoryAddress);

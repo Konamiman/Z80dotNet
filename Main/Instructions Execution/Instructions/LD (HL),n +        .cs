@@ -4,6 +4,8 @@
 // Do not make changes directly to this (.cs) file.
 // Change "LD (HL),n +        .tt" instead.
 
+using System;
+
 namespace Konamiman.Z80dotNet
 {
     public partial class Z80InstructionExecutor
@@ -16,7 +18,7 @@ namespace Konamiman.Z80dotNet
             var newValue = ProcessorAgent.FetchNextOpcode();
             FetchFinished();
 
-			var address = Registers.HL.ToUShort();
+			var address = (ushort)Registers.HL;
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 10;
@@ -31,7 +33,7 @@ namespace Konamiman.Z80dotNet
             var newValue = ProcessorAgent.FetchNextOpcode();
             FetchFinished();
 
-			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IX + (SByte)offset);
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 19;
@@ -46,7 +48,7 @@ namespace Konamiman.Z80dotNet
             var newValue = ProcessorAgent.FetchNextOpcode();
             FetchFinished();
 
-			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IY + (SByte)offset);
 				ProcessorAgent.WriteToMemory(address, newValue);
     
             return 19;

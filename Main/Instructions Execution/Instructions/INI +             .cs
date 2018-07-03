@@ -18,9 +18,9 @@ namespace Konamiman.Z80dotNet
             var portNumber = Registers.C;
             var address = Registers.HL;
             var value = ProcessorAgent.ReadFromPort(portNumber);
-            ProcessorAgent.WriteToMemory(address.ToUShort(), value);
+            ProcessorAgent.WriteToMemory((ushort)address, value);
 
-            Registers.HL = address.Inc();
+            Registers.HL++;
             var counter = Registers.B;
             counter = counter.Dec();
             Registers.B = counter;
@@ -43,9 +43,9 @@ namespace Konamiman.Z80dotNet
             var portNumber = Registers.C;
             var address = Registers.HL;
             var value = ProcessorAgent.ReadFromPort(portNumber);
-            ProcessorAgent.WriteToMemory(address.ToUShort(), value);
+            ProcessorAgent.WriteToMemory((ushort)address, value);
 
-            Registers.HL = address.Dec();
+            Registers.HL--;
             var counter = Registers.B;
             counter = counter.Dec();
             Registers.B = counter;
@@ -68,9 +68,9 @@ namespace Konamiman.Z80dotNet
             var portNumber = Registers.C;
             var address = Registers.HL;
             var value = ProcessorAgent.ReadFromPort(portNumber);
-            ProcessorAgent.WriteToMemory(address.ToUShort(), value);
+            ProcessorAgent.WriteToMemory((ushort)address, value);
 
-            Registers.HL = address.Inc();
+            Registers.HL++;
             var counter = Registers.B;
             counter = counter.Dec();
             Registers.B = counter;
@@ -97,9 +97,9 @@ namespace Konamiman.Z80dotNet
             var portNumber = Registers.C;
             var address = Registers.HL;
             var value = ProcessorAgent.ReadFromPort(portNumber);
-            ProcessorAgent.WriteToMemory(address.ToUShort(), value);
+            ProcessorAgent.WriteToMemory((ushort)address, value);
 
-            Registers.HL = address.Dec();
+            Registers.HL--;
             var counter = Registers.B;
             counter = counter.Dec();
             Registers.B = counter;
@@ -125,10 +125,10 @@ namespace Konamiman.Z80dotNet
 
             var portNumber = Registers.C;
             var address = Registers.HL;
-            var value = ProcessorAgent.ReadFromMemory(address.ToUShort());
+            var value = ProcessorAgent.ReadFromMemory((ushort)address);
             ProcessorAgent.WriteToPort(portNumber, value);
 
-            Registers.HL = address.Inc();
+            Registers.HL++;
             var counter = Registers.B;
             counter = counter.Dec();
             Registers.B = counter;
@@ -150,10 +150,10 @@ namespace Konamiman.Z80dotNet
 
             var portNumber = Registers.C;
             var address = Registers.HL;
-            var value = ProcessorAgent.ReadFromMemory(address.ToUShort());
+            var value = ProcessorAgent.ReadFromMemory((ushort)address);
             ProcessorAgent.WriteToPort(portNumber, value);
 
-            Registers.HL = address.Dec();
+            Registers.HL--;
             var counter = Registers.B;
             counter = counter.Dec();
             Registers.B = counter;
@@ -175,10 +175,10 @@ namespace Konamiman.Z80dotNet
 
             var portNumber = Registers.C;
             var address = Registers.HL;
-            var value = ProcessorAgent.ReadFromMemory(address.ToUShort());
+            var value = ProcessorAgent.ReadFromMemory((ushort)address);
             ProcessorAgent.WriteToPort(portNumber, value);
 
-            Registers.HL = address.Inc();
+            Registers.HL++;
             var counter = Registers.B;
             counter = counter.Dec();
             Registers.B = counter;
@@ -204,10 +204,10 @@ namespace Konamiman.Z80dotNet
 
             var portNumber = Registers.C;
             var address = Registers.HL;
-            var value = ProcessorAgent.ReadFromMemory(address.ToUShort());
+            var value = ProcessorAgent.ReadFromMemory((ushort)address);
             ProcessorAgent.WriteToPort(portNumber, value);
 
-            Registers.HL = address.Dec();
+            Registers.HL--;
             var counter = Registers.B;
             counter = counter.Dec();
             Registers.B = counter;

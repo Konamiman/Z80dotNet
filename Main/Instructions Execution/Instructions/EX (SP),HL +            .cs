@@ -15,7 +15,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            var sp = Registers.SP.ToUShort();
+            var sp = (ushort)Registers.SP;
             
             var temp = ReadShortFromMemory(sp);
             WriteShortToMemory(sp, Registers.HL);
@@ -31,7 +31,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            var sp = Registers.SP.ToUShort();
+            var sp = (ushort)Registers.SP;
             
             var temp = ReadShortFromMemory(sp);
             WriteShortToMemory(sp, Registers.IX);
@@ -47,7 +47,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            var sp = Registers.SP.ToUShort();
+            var sp = (ushort)Registers.SP;
             
             var temp = ReadShortFromMemory(sp);
             WriteShortToMemory(sp, Registers.IY);

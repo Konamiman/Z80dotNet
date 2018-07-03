@@ -365,6 +365,10 @@ namespace Konamiman.Z80dotNet
         /// <summary>
         /// Gets or sets the period waiter used to achieve proper timing on the execution flow.
         /// </summary>
+        /// <remarks>
+        /// </remarks>
+        /// This property can be set to _null_, in this case no clock syncrhonization will be performed
+        /// and the simulation will run at the maximum speed that the host system can provide.
         IClockSynchronizer ClockSynchronizer { get; set; }
 
         #endregion

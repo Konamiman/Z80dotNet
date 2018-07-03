@@ -37,13 +37,25 @@ namespace Konamiman.Z80dotNet
         private byte <#=instrNames[i]#><#=name=="" ? "" : "_"+name#><#=!isRet ? "_nn" : ""#>()
         {
 <# if(!isRet) { #>
-			var newAddress = FetchWord().ToUShort();
-<# } #>
-            FetchFinished(<#if(isRet) {#>isRet: true<# } #>);
-<# if(flag!="") { #>
+			var newAddress = (ushort)FetchWord();
 
+<# } #>
+<# if(flag=="" && isRet) { #>
+            FetchFinished(isRet: true);
+<# } else if(!isRet) { #>
+            FetchFinished(<#if(isRet) {#>isRet: true<# } #>);
+<# } #>
+<# if(flag!="" && !isRet) { #>
             if(Registers.<#=flag#>F == <#=flagValue ^ 1#>)
-                return <#=isRet ? 5 : 10#>;
+                return 10;
+<# } #>
+<# if(flag!="" && isRet) { #>
+            if(Registers.<#=flag#>F == <#=flagValue ^ 1#>) {
+				FetchFinished(isRet: false);
+                return 5;
+			}
+
+			FetchFinished(isRet: true);
 <# } #>
 
 <# if(isRet)

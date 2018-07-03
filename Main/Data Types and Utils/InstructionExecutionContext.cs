@@ -34,6 +34,13 @@ namespace Konamiman.Z80dotNet
             LocalUserStateFromPreviousEvent = null;
             AccummulatedMemoryWaitStates = 0;
             PeekedOpcode = null;
+            IsEiOrDiInstruction = false;
+        }
+
+        public bool ExecutingBeforeInstructionEvent
+        {
+            get; 
+            set;
         }
 
         public bool FetchComplete

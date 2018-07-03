@@ -1,4 +1,6 @@
-﻿namespace Konamiman.Z80dotNet
+﻿using System;
+
+namespace Konamiman.Z80dotNet
 {
     public partial class Z80InstructionExecutor
     {
@@ -10,7 +12,7 @@
             var offset = ProcessorAgent.FetchNextOpcode();
             FetchFinished();
 
-            Registers.PC = Registers.PC.AddSignedByte(offset);
+            Registers.PC = (ushort)(Registers.PC + (SByte)offset);
 
             return 12;
         }

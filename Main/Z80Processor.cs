@@ -28,7 +28,7 @@ namespace Konamiman.Z80dotNet
             
             AutoStopOnDiPlusHalt = true;
             AutoStopOnRetWithStackEmpty = false;
-            StartOfStack = 0xFFFF.ToShort();
+            unchecked { StartOfStack =  (short)0xFFFF; }
 
             SetMemoryWaitStatesForM1(0, MemorySpaceSize, 0);
             SetMemoryWaitStatesForNonM1(0, MemorySpaceSize, 0);
@@ -84,7 +84,7 @@ namespace Konamiman.Z80dotNet
 
         private int InstructionExecutionLoopCore(bool isSingleInstruction)
         {
-            ClockSynchronizer.Start();
+            if(clockSynchronizer != null) clockSynchronizer.Start();
             executionContext = new InstructionExecutionContext();
             StopReason = StopReason.NotApplicable;
             State = ProcessorState.Running;
@@ -119,16 +119,18 @@ namespace Konamiman.Z80dotNet
                     IsHalted = executionContext.IsHaltInstruction;
 
                 var interruptTStates = AcceptPendingInterrupt();
+                totalTStates += interruptTStates;
                 TStatesElapsedSinceStart += (ulong)interruptTStates;
                 TStatesElapsedSinceReset += (ulong)interruptTStates;
 
                 if(isSingleInstruction)
                     executionContext.StopReason = StopReason.ExecuteNextInstructionInvoked;
-                else
-                    ClockSynchronizer.TryWait(totalTStates);
+                else if(clockSynchronizer != null)
+                    clockSynchronizer.TryWait(totalTStates);
             }
 
-            ClockSynchronizer.Stop();
+            if(clockSynchronizer != null)
+                clockSynchronizer.Stop();
             this.StopReason = executionContext.StopReason;
             this.State =
                 StopReason == StopReason.PauseInvoked
@@ -182,13 +184,13 @@ namespace Konamiman.Z80dotNet
                     InstructionExecutor.Execute(RST38h_opcode);
                     return 13;
                 case 2:
-                    var pointerAddress = NumberUtils.CreateShort(
+                    var pointerAddress = NumberUtils.CreateUshort(
                         lowByte: activeIntSource.ValueOnDataBus.GetValueOrDefault(0xFF),
                         highByte: Registers.I);
-                    var callAddress = NumberUtils.CreateShort(
+                    var callAddress = NumberUtils.CreateUshort(
                         lowByte: Memory[pointerAddress],
-                        highByte: Memory[pointerAddress.Inc()]);
-                    this.ExecuteCall(callAddress.ToUShort());
+                        highByte: Memory[pointerAddress + 1]);
+                    this.ExecuteCall(callAddress);
                     return 19;
             }
 
@@ -201,7 +203,7 @@ namespace Konamiman.Z80dotNet
                 return;
 
             throw new InstructionFetchFinishedEventNotFiredException(
-                instructionAddress: Registers.PC.Sub((ushort)executionContext.OpcodeBytes.Count),
+                instructionAddress: (ushort)(Registers.PC - executionContext.OpcodeBytes.Count),
                 fetchedBytes: executionContext.OpcodeBytes.ToArray());
         }
 
@@ -264,13 +266,19 @@ namespace Konamiman.Z80dotNet
             executionContext.LocalUserStateFromPreviousEvent = eventArgs.LocalUserState;
         }
 
-
         void FireBeforeInstructionFetchEvent()
         {
             var eventArgs = new BeforeInstructionFetchEventArgs(stopper: this);
 
-            if(BeforeInstructionFetch != null)
-                BeforeInstructionFetch(this, eventArgs);
+            if(BeforeInstructionFetch != null) {
+                executionContext.ExecutingBeforeInstructionEvent = true;
+                try {
+                    BeforeInstructionFetch(this, eventArgs);
+                }
+                finally {
+                    executionContext.ExecutingBeforeInstructionEvent = false;
+                }
+            }
 
             executionContext.LocalUserStateFromPreviousEvent = eventArgs.LocalUserState;
         }
@@ -292,8 +300,8 @@ namespace Konamiman.Z80dotNet
             Registers.IFF1 = 0;
             Registers.IFF2 = 0;
             Registers.PC = 0;
-            Registers.AF = 0xFFFF.ToShort();
-            Registers.SP = 0xFFFF.ToShort();
+            unchecked { Registers.AF = (short)0xFFFF; }
+            unchecked { Registers.SP = (short)0xFFFF; }
             InterruptMode = 0;
 
             NmiInterruptPending = false;
@@ -502,7 +510,8 @@ namespace Konamiman.Z80dotNet
                 throw new ArgumentException(string.Format("Clock frequency multiplied by clock speed factor must be a number between {0} and {1}", MinEffectiveClockSpeed, MaxEffectiveClockSpeed));
 
             this.effectiveClockFrequency = effectiveClockFrequency;
-            ClockSynchronizer.EffectiveClockFrequencyInMHz = effectiveClockFrequency;
+            if(clockSynchronizer != null)
+                clockSynchronizer.EffectiveClockFrequencyInMHz = effectiveClockFrequency;
         }
 
         private decimal _ClockSpeedFactor = 1;
@@ -589,10 +598,10 @@ namespace Konamiman.Z80dotNet
             }
             set
             {
-                if(value == null)
-                    throw new ArgumentNullException("ClockSynchronizationHelper");
-
                 clockSynchronizer = value;
+                if (value == null)
+                    return;
+
                 clockSynchronizer.EffectiveClockFrequencyInMHz = effectiveClockFrequency;
             }
         }
@@ -641,7 +650,7 @@ namespace Konamiman.Z80dotNet
             }
 
             executionContext.OpcodeBytes.Add(opcode);
-            Registers.PC = Registers.PC.Inc();
+            Registers.PC++;
             return opcode;
         }
         
@@ -823,7 +832,9 @@ namespace Konamiman.Z80dotNet
         public void Stop(bool isPause = false)
         {
             FailIfNoExecutionContext();
-            FailIfNoInstructionFetchComplete();
+
+            if(!executionContext.ExecutingBeforeInstructionEvent)
+                FailIfNoInstructionFetchComplete();
 
             executionContext.StopReason = 
                 isPause ? 

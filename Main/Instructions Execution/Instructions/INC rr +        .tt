@@ -20,7 +20,7 @@ namespace Konamiman.Z80dotNet
         byte <#=isInc ? "INC" : "DEC"#>_<#=reg#>()
         {
             FetchFinished();
-            <#=Register(reg)#> = <#=Register(reg)#>.<#=isInc ? "Inc" : "Dec"#>();
+            <#=Register(reg)#><#=isInc ? "++" : "--"#>;
             return <#=IfIndexRegister(reg, 10, @else: 6) #>;
         }
 

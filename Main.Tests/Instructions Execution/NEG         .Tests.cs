@@ -77,7 +77,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 var b = (byte)i;
                 Registers.A = b;
                 Execute();
-                var expected = b == 0 ? 0 : 1;
+                var expected = (Bit)((b ^ Registers.A) & 0x10);
                 Assert.AreEqual(expected, Registers.HF);
             }
         }

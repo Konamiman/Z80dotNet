@@ -15,7 +15,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            Registers.PC = Registers.HL.ToUShort();
+            Registers.PC = (ushort)Registers.HL;
 
             return 4;
         }
@@ -27,7 +27,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            Registers.PC = Registers.IX.ToUShort();
+            Registers.PC = (ushort)Registers.IX;
 
             return 8;
         }
@@ -39,7 +39,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            Registers.PC = Registers.IY.ToUShort();
+            Registers.PC = (ushort)Registers.IY;
 
             return 8;
         }

@@ -26,6 +26,7 @@ namespace Konamiman.Z80dotNet.Tests
             Sut = new Z80ProcessorForTests();
             Sut.AutoStopOnRetWithStackEmpty = true;
             Sut.Memory[0] = RET_opcode;
+            Sut.MustFailIfNoInstructionFetchComplete = true;
 
             clockSyncHelper = new Mock<IClockSynchronizer>();
 

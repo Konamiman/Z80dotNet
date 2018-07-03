@@ -16,7 +16,7 @@ namespace Konamiman.Z80dotNet
    for(int op=0; op<=1; op++)
    {
        var isAdd = op == 0;
-       var opToUse = isAdd ? "Add" : "Sub";
+       var opToUse = isAdd ? "+" : "-";
        var instrName = isAdd ? "ADC" : "SBC"; #>
         /// <summary>
         /// The <#=instrName#> HL,<#=src #> instruction
@@ -25,30 +25,18 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            var previousHighByte = Registers.H;
             var oldValue = Registers.HL;
             var valueToAdd = Registers.<#=src #>;
-            var newValue = oldValue.<#=opToUse#>(valueToAdd).<#=opToUse#>((short)Registers.CF);
+			var newValueInt = (ushort)oldValue <#=opToUse#> (ushort)valueToAdd <#=opToUse#> Registers.CF;
+            var newValue = (short)(newValueInt & 0xFFFF);
             Registers.HL = newValue;
-            var newHighByte = Registers.H;
 
-            Registers.SF = newHighByte.GetBit(7);
+            Registers.SF = newValue & 0x8000;
             Registers.ZF = (newValue == 0);
-            Registers.HF = (newHighByte & 0x0F) <#=isAdd ? "<" : ">" #> (previousHighByte & 0x0F);
-            Registers.CF = (previousHighByte.GetBit(7) == <#=isAdd ? 1 : 0#>) && (newHighByte.GetBit(7) == <#=isAdd ? 0 : 1#>);
-            var oldValueMSB = previousHighByte.GetBit(7);
-            var newValueMSB = newHighByte.GetBit(7);
-<# if(src=="SP") {#>
-			var valueToAddHighByte = Registers.SP.GetHighByte();
-<#} else {#> 
-			var valueToAddHighByte = Registers.<#=src.Substring(0, 1) #>;
-<# } #>
-<# if (isAdd) { #>
-            Registers.PF = (oldValueMSB == valueToAddHighByte.GetBit(7)) && (oldValueMSB != newValueMSB);
-<# } else { #>
-			var valueToAddMSB = valueToAddHighByte.GetBit(7);
-			Registers.PF = (oldValueMSB != valueToAddMSB) && (valueToAddMSB == newValueMSB);
-<# } #>
+            Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x1000;
+            Registers.CF = (newValueInt & 0x10000);
+			Registers.PF = (oldValue ^ valueToAdd<#= isAdd ? " ^ 0x8000" : ""#>) & (<#= isAdd ? "valueToAdd" : "oldValue"#> ^ newValue) & 0x8000;
+
             Registers.NF = <#=op#>;
             SetFlags3and5From(newValue.GetHighByte());
 

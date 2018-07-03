@@ -4,6 +4,8 @@
 // Do not make changes directly to this (.cs) file.
 // Change "INC r +         .tt" instead.
 
+using System;
+
 namespace Konamiman.Z80dotNet
 {
     public partial class Z80InstructionExecutor
@@ -477,7 +479,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-			var address = Registers.HL.ToUShort();
+			var address = (ushort)Registers.HL;
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
             var newValue = oldValue.Inc();
 			ProcessorAgent.WriteToMemory(address, newValue);
@@ -499,7 +501,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-			var address = Registers.HL.ToUShort();
+			var address = (ushort)Registers.HL;
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
             var newValue = oldValue.Dec();
 			ProcessorAgent.WriteToMemory(address, newValue);
@@ -522,7 +524,7 @@ namespace Konamiman.Z80dotNet
 			var offset = ProcessorAgent.FetchNextOpcode();
             FetchFinished();
 
-			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IX + (SByte)offset);
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
 	        var newValue = oldValue.Inc();
 			ProcessorAgent.WriteToMemory(address, newValue);
@@ -545,7 +547,7 @@ namespace Konamiman.Z80dotNet
 			var offset = ProcessorAgent.FetchNextOpcode();
             FetchFinished();
 
-			var address = Registers.IX.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IX + (SByte)offset);
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
 	        var newValue = oldValue.Dec();
 			ProcessorAgent.WriteToMemory(address, newValue);
@@ -568,7 +570,7 @@ namespace Konamiman.Z80dotNet
 			var offset = ProcessorAgent.FetchNextOpcode();
             FetchFinished();
 
-			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IY + (SByte)offset);
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
 	        var newValue = oldValue.Inc();
 			ProcessorAgent.WriteToMemory(address, newValue);
@@ -591,7 +593,7 @@ namespace Konamiman.Z80dotNet
 			var offset = ProcessorAgent.FetchNextOpcode();
             FetchFinished();
 
-			var address = Registers.IY.ToUShort().Add(offset.ToSignedByte());
+			var address = (ushort)(Registers.IY + (SByte)offset);
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
 	        var newValue = oldValue.Dec();
 			ProcessorAgent.WriteToMemory(address, newValue);

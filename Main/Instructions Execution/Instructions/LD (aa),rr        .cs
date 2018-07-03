@@ -13,7 +13,7 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         byte LD_aa_HL()
         {
-			var address = FetchWord().ToUShort();
+			var address = (ushort)FetchWord();
 		    FetchFinished();
 
 			WriteShortToMemory(address, Registers.HL);
@@ -26,7 +26,7 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         byte LD_aa_DE()
         {
-			var address = FetchWord().ToUShort();
+			var address = (ushort)FetchWord();
 		    FetchFinished();
 
 			WriteShortToMemory(address, Registers.DE);
@@ -39,7 +39,7 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         byte LD_aa_BC()
         {
-			var address = FetchWord().ToUShort();
+			var address = (ushort)FetchWord();
 		    FetchFinished();
 
 			WriteShortToMemory(address, Registers.BC);
@@ -52,7 +52,7 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         byte LD_aa_SP()
         {
-			var address = FetchWord().ToUShort();
+			var address = (ushort)FetchWord();
 		    FetchFinished();
 
 			WriteShortToMemory(address, Registers.SP);
@@ -65,7 +65,7 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         byte LD_aa_IX()
         {
-			var address = FetchWord().ToUShort();
+			var address = (ushort)FetchWord();
 		    FetchFinished();
 
 			WriteShortToMemory(address, Registers.IX);
@@ -78,7 +78,7 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         byte LD_aa_IY()
         {
-			var address = FetchWord().ToUShort();
+			var address = (ushort)FetchWord();
 		    FetchFinished();
 
 			WriteShortToMemory(address, Registers.IY);

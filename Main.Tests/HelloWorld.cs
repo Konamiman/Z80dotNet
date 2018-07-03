@@ -18,6 +18,7 @@ namespace Konamiman.Z80dotNet.Tests
                 0xC9        //RET
             };
             Sut.Memory.SetContents(0, program);
+            //hola
 
             Sut.Start();
 

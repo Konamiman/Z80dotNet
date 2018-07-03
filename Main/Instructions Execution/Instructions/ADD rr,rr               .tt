@@ -24,13 +24,16 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            var previousHighByte = Registers.<#=high#>;
-            Registers.<#=dest#> = Registers.<#=dest#>.Add(Registers.<#=src#>);
-            var newHighByte = Registers.<#=high#>;
-            Registers.CF = (previousHighByte.GetBit(7) == 1) && (newHighByte.GetBit(7) == 0);
-            Registers.HF = (newHighByte & 0x0F) < (previousHighByte & 0x0F);
+			var oldValue = Registers.<#=dest#>;
+			var valueToAdd = Registers.<#=src #>;
+			var newValueInt = (ushort)oldValue + (ushort)valueToAdd;
+            var newValue = (short)(newValueInt & 0xFFFF);
+			Registers.<#=dest#> = newValue;
+
+			Registers.HF = (oldValue ^ newValue ^ valueToAdd) & 0x1000;
+            Registers.CF = (newValueInt & 0x10000);
             Registers.NF = 0;
-            SetFlags3and5From(newHighByte);
+            SetFlags3and5From(newValue.GetHighByte());
 
             return <#=IfIndexRegister(dest, 15, @else: 11)#>;
         }

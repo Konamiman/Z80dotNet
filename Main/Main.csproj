@@ -30,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -148,7 +149,7 @@
     <None Include="Instructions Execution\Instructions\RLD               --see RRD" />
     <None Include="Instructions Execution\Instructions\LD R,A           --see LD I,A" />
     <None Include="Instructions Execution\Instructions\LD A,R            --see LD A,I" />
-    <None Include="Instructions Execution\Instructions\ADC HL,rr      --see SBC HL,rr" />
+    <None Include="Instructions Execution\Instructions\SBC HL,rr      --see ADC HL,rr" />
     <None Include="Instructions Execution\Instructions\CP n                --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\AND %28HL%29       --see AND r" />
     <None Include="Instructions Execution\Instructions\CALL                 --see RET" />
@@ -479,7 +480,9 @@
     <None Include="Instructions Execution\Instructions\XOR r             --see AND r" />
     <None Include="Instructions Execution\Instructions\OR r                --see AND r" />
     <None Include="Instructions Execution\Instructions\_Utils.t4" />
-    <None Include="Main.nuspec" />
+    <None Include="Main.nuspec">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Instructions Execution\Core\Execute_xD_Instruction.tt">

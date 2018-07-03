@@ -19,7 +19,7 @@ namespace Konamiman.Z80dotNet
         /// </summary>
         byte LD_<#=reg#>_aa()
         {
-			var address = FetchWord().ToUShort();
+			var address = (ushort)FetchWord();
 		    FetchFinished();
 
 			<#=Register(reg)#> = ReadShortFromMemory(address);

@@ -14,7 +14,7 @@ namespace Konamiman.Z80dotNet
         byte INC_BC()
         {
             FetchFinished();
-            Registers.BC = Registers.BC.Inc();
+            Registers.BC++;
             return 6;
         }
 
@@ -24,7 +24,7 @@ namespace Konamiman.Z80dotNet
         byte DEC_BC()
         {
             FetchFinished();
-            Registers.BC = Registers.BC.Dec();
+            Registers.BC--;
             return 6;
         }
 
@@ -34,7 +34,7 @@ namespace Konamiman.Z80dotNet
         byte INC_DE()
         {
             FetchFinished();
-            Registers.DE = Registers.DE.Inc();
+            Registers.DE++;
             return 6;
         }
 
@@ -44,7 +44,7 @@ namespace Konamiman.Z80dotNet
         byte DEC_DE()
         {
             FetchFinished();
-            Registers.DE = Registers.DE.Dec();
+            Registers.DE--;
             return 6;
         }
 
@@ -54,7 +54,7 @@ namespace Konamiman.Z80dotNet
         byte INC_HL()
         {
             FetchFinished();
-            Registers.HL = Registers.HL.Inc();
+            Registers.HL++;
             return 6;
         }
 
@@ -64,7 +64,7 @@ namespace Konamiman.Z80dotNet
         byte DEC_HL()
         {
             FetchFinished();
-            Registers.HL = Registers.HL.Dec();
+            Registers.HL--;
             return 6;
         }
 
@@ -74,7 +74,7 @@ namespace Konamiman.Z80dotNet
         byte INC_SP()
         {
             FetchFinished();
-            Registers.SP = Registers.SP.Inc();
+            Registers.SP++;
             return 6;
         }
 
@@ -84,7 +84,7 @@ namespace Konamiman.Z80dotNet
         byte DEC_SP()
         {
             FetchFinished();
-            Registers.SP = Registers.SP.Dec();
+            Registers.SP--;
             return 6;
         }
 
@@ -94,7 +94,7 @@ namespace Konamiman.Z80dotNet
         byte INC_IX()
         {
             FetchFinished();
-            Registers.IX = Registers.IX.Inc();
+            Registers.IX++;
             return 10;
         }
 
@@ -104,7 +104,7 @@ namespace Konamiman.Z80dotNet
         byte DEC_IX()
         {
             FetchFinished();
-            Registers.IX = Registers.IX.Dec();
+            Registers.IX--;
             return 10;
         }
 
@@ -114,7 +114,7 @@ namespace Konamiman.Z80dotNet
         byte INC_IY()
         {
             FetchFinished();
-            Registers.IY = Registers.IY.Inc();
+            Registers.IY++;
             return 10;
         }
 
@@ -124,7 +124,7 @@ namespace Konamiman.Z80dotNet
         byte DEC_IY()
         {
             FetchFinished();
-            Registers.IY = Registers.IY.Dec();
+            Registers.IY--;
             return 10;
         }
 
