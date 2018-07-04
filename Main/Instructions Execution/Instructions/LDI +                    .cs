@@ -30,7 +30,7 @@ namespace Konamiman.Z80dotNet
             Registers.NF = 0;
             Registers.PF = (counter != 0);
 
-            var valuePlusA = value.Add(Registers.A).GetLowByte();
+            var valuePlusA = (byte)(value + Registers.A);
             Registers.Flag3 = valuePlusA.GetBit(3);
             Registers.Flag5 = valuePlusA.GetBit(1);
 
@@ -60,7 +60,7 @@ namespace Konamiman.Z80dotNet
             Registers.NF = 0;
             Registers.PF = (counter != 0);
 
-            var valuePlusA = value.Add(Registers.A).GetLowByte();
+            var valuePlusA = (byte)(value + Registers.A);
             Registers.Flag3 = valuePlusA.GetBit(3);
             Registers.Flag5 = valuePlusA.GetBit(1);
 
@@ -90,12 +90,12 @@ namespace Konamiman.Z80dotNet
             Registers.NF = 0;
             Registers.PF = (counter != 0);
 
-            var valuePlusA = value.Add(Registers.A).GetLowByte();
+            var valuePlusA = (byte)(value + Registers.A);
             Registers.Flag3 = valuePlusA.GetBit(3);
             Registers.Flag5 = valuePlusA.GetBit(1);
 
 			if(counter != 0) {
-				Registers.PC = Registers.PC.Sub(2);
+				Registers.PC = (ushort)(Registers.PC - 2);
 				return 21;
 			}
 
@@ -124,12 +124,12 @@ namespace Konamiman.Z80dotNet
             Registers.NF = 0;
             Registers.PF = (counter != 0);
 
-            var valuePlusA = value.Add(Registers.A).GetLowByte();
+            var valuePlusA = (byte)(value + Registers.A);
             Registers.Flag3 = valuePlusA.GetBit(3);
             Registers.Flag5 = valuePlusA.GetBit(1);
 
 			if(counter != 0) {
-				Registers.PC = Registers.PC.Sub(2);
+				Registers.PC = (ushort)(Registers.PC - 2);
 				return 21;
 			}
 

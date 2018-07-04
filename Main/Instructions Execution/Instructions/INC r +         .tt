@@ -30,7 +30,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
 <# GetOldValueFromRegOrMem(reg); #>
-        var newValue = oldValue.<#=isInc ? "Inc" : "Dec"#>();
+        var newValue = (byte)(oldValue <#=isInc ? "+" : "-"#> 1);
 <# SetNewValueToRegOrMem(reg); #>
 
             Registers.SF = newValue.GetBit(7);

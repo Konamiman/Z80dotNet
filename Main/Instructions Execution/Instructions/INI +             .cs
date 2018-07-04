@@ -22,7 +22,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.HL++;
             var counter = Registers.B;
-            counter = counter.Dec();
+            counter = (byte)(counter - 1);
             Registers.B = counter;
             Registers.ZF = (counter == 0);
             Registers.NF = 1;
@@ -47,7 +47,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.HL--;
             var counter = Registers.B;
-            counter = counter.Dec();
+            counter = (byte)(counter - 1);
             Registers.B = counter;
             Registers.ZF = (counter == 0);
             Registers.NF = 1;
@@ -72,7 +72,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.HL++;
             var counter = Registers.B;
-            counter = counter.Dec();
+            counter = (byte)(counter - 1);
             Registers.B = counter;
             Registers.ZF = (counter == 0);
             Registers.NF = 1;
@@ -80,7 +80,7 @@ namespace Konamiman.Z80dotNet
             SetFlags3and5From(counter);
 
 			if(counter != 0) {
-				Registers.PC = Registers.PC.Sub(2);
+				Registers.PC = (ushort)(Registers.PC - 2);
 				return 21;
 			}
 
@@ -101,7 +101,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.HL--;
             var counter = Registers.B;
-            counter = counter.Dec();
+            counter = (byte)(counter - 1);
             Registers.B = counter;
             Registers.ZF = (counter == 0);
             Registers.NF = 1;
@@ -109,7 +109,7 @@ namespace Konamiman.Z80dotNet
             SetFlags3and5From(counter);
 
 			if(counter != 0) {
-				Registers.PC = Registers.PC.Sub(2);
+				Registers.PC = (ushort)(Registers.PC - 2);
 				return 21;
 			}
 
@@ -130,7 +130,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.HL++;
             var counter = Registers.B;
-            counter = counter.Dec();
+            counter = (byte)(counter - 1);
             Registers.B = counter;
             Registers.ZF = (counter == 0);
             Registers.NF = 1;
@@ -155,7 +155,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.HL--;
             var counter = Registers.B;
-            counter = counter.Dec();
+            counter = (byte)(counter - 1);
             Registers.B = counter;
             Registers.ZF = (counter == 0);
             Registers.NF = 1;
@@ -180,7 +180,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.HL++;
             var counter = Registers.B;
-            counter = counter.Dec();
+            counter = (byte)(counter - 1);
             Registers.B = counter;
             Registers.ZF = (counter == 0);
             Registers.NF = 1;
@@ -188,7 +188,7 @@ namespace Konamiman.Z80dotNet
             SetFlags3and5From(counter);
 
 			if(counter != 0) {
-				Registers.PC = Registers.PC.Sub(2);
+				Registers.PC = (ushort)(Registers.PC - 2);
 				return 21;
 			}
 
@@ -209,7 +209,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.HL--;
             var counter = Registers.B;
-            counter = counter.Dec();
+            counter = (byte)(counter - 1);
             Registers.B = counter;
             Registers.ZF = (counter == 0);
             Registers.NF = 1;
@@ -217,7 +217,7 @@ namespace Konamiman.Z80dotNet
             SetFlags3and5From(counter);
 
 			if(counter != 0) {
-				Registers.PC = Registers.PC.Sub(2);
+				Registers.PC = (ushort)(Registers.PC - 2);
 				return 21;
 			}
 

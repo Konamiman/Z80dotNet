@@ -18,7 +18,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.A;
-	        var newValue = oldValue.Inc();
+	        var newValue = (byte)(oldValue + 1);
             Registers.A = newValue;
 	
             Registers.SF = newValue.GetBit(7);
@@ -39,7 +39,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.A;
-	        var newValue = oldValue.Dec();
+	        var newValue = (byte)(oldValue - 1);
             Registers.A = newValue;
 	
             Registers.SF = newValue.GetBit(7);
@@ -60,7 +60,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.B;
-	        var newValue = oldValue.Inc();
+	        var newValue = (byte)(oldValue + 1);
             Registers.B = newValue;
 	
             Registers.SF = newValue.GetBit(7);
@@ -81,7 +81,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.B;
-	        var newValue = oldValue.Dec();
+	        var newValue = (byte)(oldValue - 1);
             Registers.B = newValue;
 	
             Registers.SF = newValue.GetBit(7);
@@ -102,7 +102,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.C;
-	        var newValue = oldValue.Inc();
+	        var newValue = (byte)(oldValue + 1);
             Registers.C = newValue;
 	
             Registers.SF = newValue.GetBit(7);
@@ -123,7 +123,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.C;
-	        var newValue = oldValue.Dec();
+	        var newValue = (byte)(oldValue - 1);
             Registers.C = newValue;
 	
             Registers.SF = newValue.GetBit(7);
@@ -144,7 +144,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.D;
-	        var newValue = oldValue.Inc();
+	        var newValue = (byte)(oldValue + 1);
             Registers.D = newValue;
 	
             Registers.SF = newValue.GetBit(7);
@@ -165,7 +165,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.D;
-	        var newValue = oldValue.Dec();
+	        var newValue = (byte)(oldValue - 1);
             Registers.D = newValue;
 	
             Registers.SF = newValue.GetBit(7);
@@ -186,7 +186,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.E;
-	        var newValue = oldValue.Inc();
+	        var newValue = (byte)(oldValue + 1);
             Registers.E = newValue;
 	
             Registers.SF = newValue.GetBit(7);
@@ -207,7 +207,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.E;
-	        var newValue = oldValue.Dec();
+	        var newValue = (byte)(oldValue - 1);
             Registers.E = newValue;
 	
             Registers.SF = newValue.GetBit(7);
@@ -228,7 +228,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.H;
-	        var newValue = oldValue.Inc();
+	        var newValue = (byte)(oldValue + 1);
             Registers.H = newValue;
 	
             Registers.SF = newValue.GetBit(7);
@@ -249,7 +249,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.H;
-	        var newValue = oldValue.Dec();
+	        var newValue = (byte)(oldValue - 1);
             Registers.H = newValue;
 	
             Registers.SF = newValue.GetBit(7);
@@ -270,7 +270,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.L;
-	        var newValue = oldValue.Inc();
+	        var newValue = (byte)(oldValue + 1);
             Registers.L = newValue;
 	
             Registers.SF = newValue.GetBit(7);
@@ -291,7 +291,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.L;
-	        var newValue = oldValue.Dec();
+	        var newValue = (byte)(oldValue - 1);
             Registers.L = newValue;
 	
             Registers.SF = newValue.GetBit(7);
@@ -312,7 +312,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.IXH;
-	        var newValue = oldValue.Inc();
+	        var newValue = (byte)(oldValue + 1);
             Registers.IXH = newValue;
 	
             Registers.SF = newValue.GetBit(7);
@@ -333,7 +333,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.IXH;
-	        var newValue = oldValue.Dec();
+	        var newValue = (byte)(oldValue - 1);
             Registers.IXH = newValue;
 	
             Registers.SF = newValue.GetBit(7);
@@ -354,7 +354,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.IXL;
-	        var newValue = oldValue.Inc();
+	        var newValue = (byte)(oldValue + 1);
             Registers.IXL = newValue;
 	
             Registers.SF = newValue.GetBit(7);
@@ -375,7 +375,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.IXL;
-	        var newValue = oldValue.Dec();
+	        var newValue = (byte)(oldValue - 1);
             Registers.IXL = newValue;
 	
             Registers.SF = newValue.GetBit(7);
@@ -396,7 +396,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.IYH;
-	        var newValue = oldValue.Inc();
+	        var newValue = (byte)(oldValue + 1);
             Registers.IYH = newValue;
 	
             Registers.SF = newValue.GetBit(7);
@@ -417,7 +417,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.IYH;
-	        var newValue = oldValue.Dec();
+	        var newValue = (byte)(oldValue - 1);
             Registers.IYH = newValue;
 	
             Registers.SF = newValue.GetBit(7);
@@ -438,7 +438,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.IYL;
-	        var newValue = oldValue.Inc();
+	        var newValue = (byte)(oldValue + 1);
             Registers.IYL = newValue;
 	
             Registers.SF = newValue.GetBit(7);
@@ -459,7 +459,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.IYL;
-	        var newValue = oldValue.Dec();
+	        var newValue = (byte)(oldValue - 1);
             Registers.IYL = newValue;
 	
             Registers.SF = newValue.GetBit(7);
@@ -481,7 +481,7 @@ namespace Konamiman.Z80dotNet
 
 			var address = (ushort)Registers.HL;
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
-            var newValue = oldValue.Inc();
+            var newValue = (byte)(oldValue + 1);
 			ProcessorAgent.WriteToMemory(address, newValue);
     
             Registers.SF = newValue.GetBit(7);
@@ -503,7 +503,7 @@ namespace Konamiman.Z80dotNet
 
 			var address = (ushort)Registers.HL;
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
-            var newValue = oldValue.Dec();
+            var newValue = (byte)(oldValue - 1);
 			ProcessorAgent.WriteToMemory(address, newValue);
     
             Registers.SF = newValue.GetBit(7);
@@ -526,7 +526,7 @@ namespace Konamiman.Z80dotNet
 
 			var address = (ushort)(Registers.IX + (SByte)offset);
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
-	        var newValue = oldValue.Inc();
+	        var newValue = (byte)(oldValue + 1);
 			ProcessorAgent.WriteToMemory(address, newValue);
     
             Registers.SF = newValue.GetBit(7);
@@ -549,7 +549,7 @@ namespace Konamiman.Z80dotNet
 
 			var address = (ushort)(Registers.IX + (SByte)offset);
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
-	        var newValue = oldValue.Dec();
+	        var newValue = (byte)(oldValue - 1);
 			ProcessorAgent.WriteToMemory(address, newValue);
     
             Registers.SF = newValue.GetBit(7);
@@ -572,7 +572,7 @@ namespace Konamiman.Z80dotNet
 
 			var address = (ushort)(Registers.IY + (SByte)offset);
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
-	        var newValue = oldValue.Inc();
+	        var newValue = (byte)(oldValue + 1);
 			ProcessorAgent.WriteToMemory(address, newValue);
     
             Registers.SF = newValue.GetBit(7);
@@ -595,7 +595,7 @@ namespace Konamiman.Z80dotNet
 
 			var address = (ushort)(Registers.IY + (SByte)offset);
 			var oldValue = ProcessorAgent.ReadFromMemory(address);
-	        var newValue = oldValue.Dec();
+	        var newValue = (byte)(oldValue - 1);
 			ProcessorAgent.WriteToMemory(address, newValue);
     
             Registers.SF = newValue.GetBit(7);

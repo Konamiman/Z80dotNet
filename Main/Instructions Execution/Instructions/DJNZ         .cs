@@ -13,7 +13,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.B;
-            Registers.B = oldValue.Dec();
+            Registers.B = (byte)(oldValue - 1);
 
             if(oldValue == 1)
                 return 8;

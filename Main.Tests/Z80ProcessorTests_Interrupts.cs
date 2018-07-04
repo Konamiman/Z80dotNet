@@ -314,7 +314,7 @@ namespace Konamiman.Z80dotNet.Tests
         }
 
         [Test]
-        public void Int2_calls_to_address_composed_from_I_and_data_bus()
+        public void Int2_calls_to_address_composed_from_I_and_data_bus_and_triggers_memory_events()
         {
             Sut.RegisterInterruptSource(InterruptSource1);
 
@@ -333,6 +333,8 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.Memory[1] = RET_opcode;
             Sut.Memory[calledAddress] = RET_opcode;
             bool serviceRoutineInvoked = false;
+            bool beforeMemoryReadEventFiredForPointerAddress = false;
+            bool afterMemoryReadEventFiredForPointerAddress = false;
 
             Sut.Reset();
             Sut.Registers.IFF1 = 1;
@@ -349,9 +351,28 @@ namespace Konamiman.Z80dotNet.Tests
                         args.ExecutionStopper.Stop();
                 };
 
+            Sut.MemoryAccess +=
+                (sender, args) =>
+                {
+                    if(args.Address != pointerAddress)
+                        return;
+
+                    if(args.EventType == MemoryAccessEventType.BeforeMemoryRead)
+                        beforeMemoryReadEventFiredForPointerAddress = true;
+                    else if(args.EventType == MemoryAccessEventType.AfterMemoryRead)
+                        afterMemoryReadEventFiredForPointerAddress = true;
+                };
+
             Sut.Continue();
 
             Assert.True(serviceRoutineInvoked);
+            Assert.True(beforeMemoryReadEventFiredForPointerAddress, "BeforeMemoryRead not fired for pointer");
+            Assert.True(afterMemoryReadEventFiredForPointerAddress, "AfterMemoryRead not fired for pointer");
+        }
+
+        private void Sut_MemoryAccess(object sender, MemoryAccessEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

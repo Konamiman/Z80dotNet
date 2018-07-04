@@ -211,7 +211,7 @@ namespace Konamiman.Z80dotNet
 			Registers.Flag5 = valueForFlags3And5.GetBit(1);
 
 			if(counter != 0 && Registers.ZF == 0) {
-				Registers.PC = Registers.PC.Sub(2);
+				Registers.PC = (ushort)(Registers.PC - 2);
 				return 21;
 			}
 
@@ -244,7 +244,7 @@ namespace Konamiman.Z80dotNet
 			Registers.Flag5 = valueForFlags3And5.GetBit(1);
 
 			if(counter != 0 && Registers.ZF == 0) {
-				Registers.PC = Registers.PC.Sub(2);
+				Registers.PC = (ushort)(Registers.PC - 2);
 				return 21;
 			}
 

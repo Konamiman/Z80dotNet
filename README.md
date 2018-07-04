@@ -3,18 +3,15 @@
 
 ## What is this? ##
 
-Z80.NET is a Z80 processor simulator that can be used as the core component for developing computer emulators (see for examle [NestorMSX](https://bitbucket.org/konamiman/nestormsx)), or to exercise pieces of Z80 code in custom test code. It is written in C# targetting the .NET Framework 4 Client Profile.  
+Z80.NET is a Z80 processor simulator that can be used as the core component for developing computer emulators (see for example [NestorMSX](https://bitbucket.org/konamiman/nestormsx)), or to exercise pieces of Z80 code in custom test code. It is written in C# targetting the .NET Framework 4 Client Profile.  
 
 If you like Z80.NET you may want to take a look at [ZWatcher](https://github.com/Konamiman/ZWatcher) too.
-
-If you like Z80.NET you may want to take a look at [ZWatcher](https://bitbucket.org/konamiman/zwatcher) too.
 
 Want to say something? Head to the [discussion site](http://konamiman.bitbucket.org/Z80dotNet)!
 
 ## Hello, world! ##
 
 ```
-#!csharp
 var z80 = new Z80Processor();
 z80.AutoStopOnRetWithStackEmpty = true;
 

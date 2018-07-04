@@ -13,7 +13,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         private const byte RLC_B_opcode = 0x00;
 
 		[Test]
-		public void Instructions_execution_fire_FetchFinished_event_and_return_proper_T_states_count()
+		public void InstructionsExecution_fire_FetchFinished_event_and_return_proper_T_states_count()
 		{
 		    var fetchFinishedEventsCount = 0;
 

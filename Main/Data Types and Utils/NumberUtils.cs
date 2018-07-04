@@ -162,7 +162,7 @@ namespace Konamiman.Z80dotNet
         /// <returns>Converted number</returns>
         public static short ToShort(this int value)
         {
-            return (value >= 32768 ? (short)(value - 65536) : (short)value);
+            return (short)(ushort)value;
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Konamiman.Z80dotNet
         /// <returns>Converted number</returns>
         public static short ToShort(this ushort value)
         {
-            return (value >= 32768 ? (short)(value - 65536) : (short)value);
+            return (short)value;
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace Konamiman.Z80dotNet
         /// <returns>Converted number</returns>
         public static ushort ToUShort(this int value)
         {
-            return (value < 0 ? (ushort)(value + 65536) : (ushort)value);
+            return (ushort)value;
         }
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace Konamiman.Z80dotNet
         /// <returns>Converted number</returns>
         public static ushort ToUShort(this short value)
         {
-            return (value < 0 ? (ushort)(value + 65536) : (ushort)value);
+            return (ushort)value;
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Konamiman.Z80dotNet
         /// <returns>Converted number</returns>
         public static SByte ToSignedByte(this int value)
         {
-            return (value >= 128 ? (SByte)(value - 256) : (SByte)value);
+            return (SByte)value;
         }
 
         /// <summary>
@@ -212,17 +212,17 @@ namespace Konamiman.Z80dotNet
         /// <returns>Converted number</returns>
         public static SByte ToSignedByte(this byte value)
         {
-            return (value >= 128 ? (SByte)((int)value - 256) : (SByte)value);
+            return (SByte)value;
         }
 
         /// <summary>
-        /// Increases a number and turns it into zero if it has its maximum value.
+        /// Increases a number and turns it into min value if it has its maximum value.
         /// </summary>
         /// <param name="value">Number to increase</param>
         /// <returns>Increased number, or zero</returns>
         public static short Inc(this short value)
         {
-            return ((((int)value)+1) & 0xFFFF).ToShort();
+            return (short)(value + 1);
         }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace Konamiman.Z80dotNet
         /// <returns>Increased number, or zero</returns>
         public static ushort Inc(this ushort value)
         {
-            return ((((int)value)+1) & 0xFFFF).ToUShort();
+            return (ushort)(value + 1);
         }
 
         /// <summary>
@@ -242,7 +242,7 @@ namespace Konamiman.Z80dotNet
         /// <returns>Increased number, or zero</returns>
         public static ushort Dec(this ushort value)
         {
-            return ((((int)value)-1) & 0xFFFF).ToUShort();
+            return (ushort)(value - 1);
         }
 
         /// <summary>
@@ -252,17 +252,18 @@ namespace Konamiman.Z80dotNet
         /// <returns>Increased number, or zero</returns>
         public static short Dec(this short value)
         {
-            return ((((int)value)-1) & 0xFFFF).ToShort();
+            return (short)(value - 1);
         }
 
         /// <summary>
         /// Adds a value to a number and overlaps it from zero if it passes its maximum value.
         /// </summary>
-        /// <param name="value">Number to increase</param>
+        /// <param name="value">Number to be added to</param>
+        /// <param name="amount">Number to add</param>
         /// <returns>Increased number, or zero</returns>
         public static short Add(this short value, short amount)
         {
-            return ((((int)value)+amount) & 0xFFFF).ToShort();
+            return (short)(value + amount);
         }
 
         /// <summary>
@@ -272,7 +273,7 @@ namespace Konamiman.Z80dotNet
         /// <returns>Increased number, or zero</returns>
         public static ushort Add(this ushort value, ushort amount)
         {
-            return ((((int)value)+amount) & 0xFFFF).ToUShort();
+            return (ushort)(value + amount);
         }
 
         /// <summary>
@@ -282,7 +283,7 @@ namespace Konamiman.Z80dotNet
         /// <returns>Increased number, or zero</returns>
         public static ushort Add(this ushort value, SByte amount)
         {
-            return ((((int)value)+amount) & 0xFFFF).ToUShort();
+            return (ushort)(value + amount);
         }
 
         /// <summary>
@@ -292,7 +293,7 @@ namespace Konamiman.Z80dotNet
         /// <returns>Increased number, or zero</returns>
         public static short Sub(this short value, short amount)
         {
-            return ((((int)value)-amount) & 0xFFFF).ToShort();
+            return (short)(value - amount);
         }
 
         /// <summary>
@@ -302,7 +303,7 @@ namespace Konamiman.Z80dotNet
         /// <returns>Increased number, or zero</returns>
         public static ushort Sub(this ushort value, ushort amount)
         {
-            return ((((int)value)-amount) & 0xFFFF).ToUShort();
+            return (ushort)(value - amount);
         }
 
         /// <summary>
@@ -312,7 +313,7 @@ namespace Konamiman.Z80dotNet
         /// <returns>Increased number, or zero</returns>
         public static byte Inc(this byte value)
         {
-            return (byte)((((int)value) + 1) & 0xFF);
+            return (byte)(value + 1);
         }
 
         /// <summary>
@@ -322,8 +323,8 @@ namespace Konamiman.Z80dotNet
         /// <returns>Increased number, or zero</returns>
         public static byte Dec(this byte value)
         {
-            return (byte)((((int)value) - 1) & 0xFF);
-            
+            return (byte)(value - 1);
+
         }
 
         /// <summary>
@@ -334,7 +335,7 @@ namespace Konamiman.Z80dotNet
         /// <returns>Increased number, or zero</returns>
         public static short Add(this byte value, byte amount)
         {
-            return ((((int)value)+amount) & 0xFF).ToShort();
+            return (byte)(value + amount);
         }
 
         /// <summary>
@@ -345,7 +346,7 @@ namespace Konamiman.Z80dotNet
         /// <returns>Increased number, or zero</returns>
         public static short Add(this byte value, int amount)
         {
-            return ((((int)value)+amount) & 0xFF).ToShort();
+            return (byte)(value + (byte)amount);
         }
 
         /// <summary>
@@ -356,7 +357,7 @@ namespace Konamiman.Z80dotNet
         /// <returns>Increased number, or zero</returns>
         public static short Sub(this byte value, byte amount)
         {
-            return ((((int)value)-amount) & 0xFF).ToShort();
+            return (short)(value - amount);
         }
 
         /// <summary>
@@ -367,7 +368,7 @@ namespace Konamiman.Z80dotNet
         /// <returns>Increased number, or zero</returns>
         public static short Sub(this byte value, int amount)
         {
-            return ((((int)value)-amount) & 0xFF).ToShort();
+            return (byte)(value - (byte)amount);
         }
 
         /// <summary>
