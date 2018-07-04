@@ -7,8 +7,6 @@ Z80.NET is a Z80 processor simulator that can be used as the core component for 
 
 If you like Z80.NET you may want to take a look at [ZWatcher](https://github.com/Konamiman/ZWatcher) too.
 
-Want to say something? Head to the [discussion site](http://konamiman.bitbucket.org/Z80dotNet)!
-
 ## Hello, world! ##
 
 ```
