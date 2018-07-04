@@ -7,14 +7,11 @@ Z80.NET is a Z80 processor simulator that can be used as the core component for 
 
 If you like Z80.NET you may want to take a look at [ZWatcher](https://github.com/Konamiman/ZWatcher) too.
 
-If you like Z80.NET you may want to take a look at [ZWatcher](https://bitbucket.org/konamiman/zwatcher) too.
-
 Want to say something? Head to the [discussion site](http://konamiman.bitbucket.org/Z80dotNet)!
 
 ## Hello, world! ##
 
 ```
-#!csharp
 var z80 = new Z80Processor();
 z80.AutoStopOnRetWithStackEmpty = true;
 
