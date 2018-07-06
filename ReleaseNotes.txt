@@ -1,6 +1,35 @@
 ﻿Z80.NET Release Notes
 ---------------------
 
+* v1.0.6
+
+- FIX: memory access events were not fired when reading the address of the code to execute
+       when servicing an interrupt in IM2 mode.
+
+- Z80ProcessorExtensions class removed, its methods are now part of (I)Z80Processor.
+
+- Cleanup of some residual usages of Inc, Dec, Add, Sub from the NumberUtils class.
+
+
+* v1.0.5
+
+- FIX: ExecuteRet was causing IndexOutOfRangeException when invoked with SP=FFFFh.
+
+
+* v1.0.4
+
+- FIX: Conditional RET instructions were causing execution to terminate when
+       AutoStopOnRetWithStackEmpty was set, even when the condition was not met.
+
+
+* v1.0.3
+
+- REFACTOR: There were some helper methods in place to deal with 8 and 16 bit numbers arithmetic
+            taking care of overflows and short/ushort conversions. These are not used anymore, 
+            since C# can handle all of this with the built-in arithmetic and casting operators. 
+            They are still used in test code, though.
+
+
 * v1.0.2
 
 - FIX: Fixed the flags 3 and 5 calculation for the CP instructions.

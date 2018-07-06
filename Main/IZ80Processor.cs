@@ -161,7 +161,7 @@ namespace Konamiman.Z80dotNet
         /// Returns true when a HALT instruction is executed, returns to false when an interrupt request arrives.
         /// </summary>
         bool IsHalted { get; }
-        
+
         /// <summary>
         /// The current interrupt mode. It has always the value 0, 1 or 2.
         /// </summary>
@@ -394,6 +394,23 @@ namespace Konamiman.Z80dotNet
         /// Post-instruction execution event. It is triggered after an instruction is executed.
         /// </summary>
         event EventHandler<AfterInstructionExecutionEventArgs> AfterInstructionExecution;
+
+        #endregion
+
+        #region Utils
+
+        /// <summary>
+        /// Simulate the execution of a CALL instruction by pushing the current content of the PC register
+        /// into the stack and setting it to the specified value.
+        /// </summary>
+        /// <param name="address">New value for the PC register</param>
+        void ExecuteCall(ushort address);
+
+        /// <summary>
+        /// Simulate the execution of a RET instruction by setting the value of the PC register
+        /// from the value popped from the stack.
+        /// </summary>
+        void ExecuteRet();
 
         #endregion
     }

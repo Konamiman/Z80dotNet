@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using Ploeh.AutoFixture;
 
-namespace Konamiman.Z80dotNet.Tests.Instructions_Execution
+namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
     public class ADC_HL_rr_tests : InstructionsExecutionTestsBase
     {

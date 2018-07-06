@@ -37,7 +37,7 @@ namespace Konamiman.Z80dotNet
 
             Registers.HL<#=isInc ? "++" : "--" #>;
             var counter = Registers.B;
-            counter = counter.Dec();
+            counter = (byte)(counter - 1);
             Registers.B = counter;
             Registers.ZF = (counter == 0);
             Registers.NF = 1;
@@ -46,7 +46,7 @@ namespace Konamiman.Z80dotNet
 
 <# if(isRepeat) { #>
 			if(counter != 0) {
-				Registers.PC = Registers.PC.Sub(2);
+				Registers.PC = (ushort)(Registers.PC - 2);
 				return 21;
 			}
 <# } #>

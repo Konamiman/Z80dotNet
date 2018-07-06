@@ -1,7 +1,7 @@
 ﻿using Konamiman.Z80dotNet.Tests.InstructionsExecution;
 using NUnit.Framework;
 
-namespace Konamiman.Z80dotNet.Tests.Instructions_Execution
+namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
     public class IM_n_tests : InstructionsExecutionTestsBase
     {

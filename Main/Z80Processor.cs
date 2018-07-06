@@ -160,7 +160,7 @@ namespace Konamiman.Z80dotNet
             if(NmiInterruptPending) {
                 IsHalted = false;
                 Registers.IFF1 = 0;
-                this.ExecuteCall(NmiServiceRoutine);
+                ExecuteCall(NmiServiceRoutine);
                 return 11;
             }
 
@@ -188,13 +188,34 @@ namespace Konamiman.Z80dotNet
                         lowByte: activeIntSource.ValueOnDataBus.GetValueOrDefault(0xFF),
                         highByte: Registers.I);
                     var callAddress = NumberUtils.CreateUshort(
-                        lowByte: Memory[pointerAddress],
-                        highByte: Memory[pointerAddress + 1]);
-                    this.ExecuteCall(callAddress);
+                        lowByte: ReadFromMemoryInternal(pointerAddress),
+                        highByte: ReadFromMemoryInternal((ushort)(pointerAddress + 1)));
+                    ExecuteCall(callAddress);
                     return 19;
             }
 
             return 0;
+        }
+
+        public void ExecuteCall(ushort address)
+        {
+            var oldAddress = (short)Registers.PC;
+            var sp = (ushort)(Registers.SP - 1);
+            WriteToMemoryInternal(sp, oldAddress.GetHighByte());
+            sp = (ushort)(sp - 1);
+            WriteToMemoryInternal(sp, oldAddress.GetLowByte());
+
+            Registers.SP = (short)sp;
+            Registers.PC = address;
+        }
+
+        public void ExecuteRet()
+        {
+            var sp = (ushort)Registers.SP;
+            var newPC = NumberUtils.CreateShort(ReadFromMemoryInternal(sp), ReadFromMemoryInternal((ushort)(sp + 1)));
+
+            Registers.PC = (ushort)newPC;
+            Registers.SP += 2;
         }
 
         private void ThrowIfNoFetchFinishedEventFired()
@@ -240,12 +261,11 @@ namespace Konamiman.Z80dotNet
         
         void FireAfterInstructionExecutionEvent(int tStates)
         {
-            if(AfterInstructionExecution != null)
-                AfterInstructionExecution(this, new AfterInstructionExecutionEventArgs(
-                    executionContext.OpcodeBytes.ToArray(), 
-                    stopper: this,
-                    localUserState: executionContext.LocalUserStateFromPreviousEvent,
-                    tStates: tStates));
+            AfterInstructionExecution?.Invoke(this, new AfterInstructionExecutionEventArgs(
+                executionContext.OpcodeBytes.ToArray(),
+                stopper: this,
+                localUserState: executionContext.LocalUserStateFromPreviousEvent,
+                tStates: tStates));
         }
 
         void InstructionExecutor_InstructionFetchFinished(object sender, InstructionFetchFinishedEventArgs e)
@@ -693,18 +713,23 @@ namespace Konamiman.Z80dotNet
             FailIfNoExecutionContext();
             FailIfNoInstructionFetchComplete();
 
+            return ReadFromMemoryInternal(address);
+        }
+
+        private byte ReadFromMemoryInternal(ushort address)
+        {
             return ReadFromMemoryOrPort(
-                address, 
-                Memory, 
+                address,
+                Memory,
                 GetMemoryAccessMode(address),
                 MemoryAccessEventType.BeforeMemoryRead,
                 MemoryAccessEventType.AfterMemoryRead,
                 GetMemoryWaitStatesForNonM1(address));
         }
-        
+
         protected virtual void FailIfNoInstructionFetchComplete()
         {
-            if(!executionContext.FetchComplete)
+            if(executionContext != null && !executionContext.FetchComplete)
                 throw new InvalidOperationException("IZ80ProcessorAgent members other than FetchNextOpcode can be invoked only after the InstructionFetchFinished event has been raised.");
         }
 
@@ -737,7 +762,6 @@ namespace Konamiman.Z80dotNet
             return afterEventArgs.Value;
         }
 
-
         MemoryAccessEventArgs FireMemoryAccessEvent(
             MemoryAccessEventType eventType,
             ushort address, 
@@ -746,8 +770,7 @@ namespace Konamiman.Z80dotNet
             bool cancelMemoryAccess = false)
         {
             var eventArgs = new MemoryAccessEventArgs(eventType, address, value, localUserState, cancelMemoryAccess);
-            if(MemoryAccess != null)
-                MemoryAccess(this, eventArgs);
+            MemoryAccess?.Invoke(this, eventArgs);
             return eventArgs;
         }
 
@@ -756,6 +779,11 @@ namespace Konamiman.Z80dotNet
             FailIfNoExecutionContext();
             FailIfNoInstructionFetchComplete();
 
+            WriteToMemoryInternal(address, value);
+        }
+
+        private void WriteToMemoryInternal(ushort address, byte value)
+        {
             WritetoMemoryOrPort(
                 address,
                 value,
