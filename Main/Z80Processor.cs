@@ -190,6 +190,7 @@ namespace Konamiman.Z80dotNet
                     var callAddress = NumberUtils.CreateUshort(
                         lowByte: ReadFromMemoryInternal(pointerAddress),
                         highByte: ReadFromMemoryInternal((ushort)(pointerAddress + 1)));
+                    activeIntSource.IntLineIsActive = false;
                     ExecuteCall(callAddress);
                     return 19;
             }
