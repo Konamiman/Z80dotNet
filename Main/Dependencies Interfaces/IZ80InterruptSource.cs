@@ -16,7 +16,7 @@ namespace Konamiman.Z80dotNet
         /// Gets the current state of the INT line as set by the source.
         /// This is a logical state: a value of <i>True</i> means that an interrupt is requested.
         /// </summary>
-        bool IntLineIsActive { get; }
+        bool IntLineIsActive { get; set; }
 
         /// <summary>
         /// Gets the value put on the data bus by the source. This is used by the processor in interrupt mode 2 only.
