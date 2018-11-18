@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Konamiman.Z80dotNet.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,6 +19,9 @@ namespace Konamiman.Z80dotNet
         private const ushort NmiServiceRoutine = 0x66;
         private const byte NOP_opcode = 0x00;
         private const byte RST38h_opcode = 0xFF;
+        private const byte RETI_RETN_prefix = 0xED;
+        private const byte RETI_opcode = 0x4D;
+        private const byte RETN_opcode = 0x45;
 
         public Z80Processor()
         {
@@ -161,6 +165,7 @@ namespace Konamiman.Z80dotNet
                 IsHalted = false;
                 Registers.IFF1 = 0;
                 ExecuteCall(NmiServiceRoutine);
+                TriggerInterruptEvent(InterruptType.NonMaskable);
                 return 11;
             }
 
@@ -178,10 +183,12 @@ namespace Konamiman.Z80dotNet
             switch(InterruptMode) {
                 case 0:
                     var opcode = activeIntSource.ValueOnDataBus.GetValueOrDefault(0xFF);
+                    TriggerInterruptEvent(InterruptType.Maskable);
                     InstructionExecutor.Execute(opcode);
                     return 13;
                 case 1:
                     InstructionExecutor.Execute(RST38h_opcode);
+                    TriggerInterruptEvent(InterruptType.Maskable);
                     return 13;
                 case 2:
                     var pointerAddress = NumberUtils.CreateUshort(
@@ -191,6 +198,7 @@ namespace Konamiman.Z80dotNet
                         lowByte: ReadFromMemoryInternal(pointerAddress),
                         highByte: ReadFromMemoryInternal((ushort)(pointerAddress + 1)));
                     ExecuteCall(callAddress);
+                    TriggerInterruptEvent(InterruptType.Maskable);
                     return 19;
             }
 
@@ -207,6 +215,23 @@ namespace Konamiman.Z80dotNet
 
             Registers.SP = (short)sp;
             Registers.PC = address;
+        }
+
+        private void TriggerInterruptEvent(InterruptType interruptType)
+        {
+            switch (interruptType)
+            {
+                case InterruptType.Maskable:
+                    MaskableInterruptServicingStart?.Invoke(this, EventArgs.Empty);
+                    break;
+
+                case InterruptType.NonMaskable:
+                    NonMaskableInterruptServicingStart?.Invoke(this, EventArgs.Empty);
+                    break;
+
+                default:
+                    throw new InvalidOperationException($"Unknown interrupt type: {interruptType}");
+            }
         }
 
         public void ExecuteRet()
@@ -261,11 +286,22 @@ namespace Konamiman.Z80dotNet
         
         void FireAfterInstructionExecutionEvent(int tStates)
         {
+            var opcodeBytes = executionContext.OpcodeBytes.ToArray();
+
             AfterInstructionExecution?.Invoke(this, new AfterInstructionExecutionEventArgs(
-                executionContext.OpcodeBytes.ToArray(),
+                opcodeBytes,
                 stopper: this,
                 localUserState: executionContext.LocalUserStateFromPreviousEvent,
                 tStates: tStates));
+
+            if (opcodeBytes[0] == RETI_RETN_prefix)
+            {
+                opcodeBytes[1] &= 0xCF; //To account for mirrored variants
+                if (opcodeBytes[1] == RETI_opcode)
+                    AfterRetiInstructionExecution?.Invoke(this, EventArgs.Empty);
+                else if (opcodeBytes[1] == RETN_opcode)
+                    AfterRetnInstructionExecution?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         void InstructionExecutor_InstructionFetchFinished(object sender, InstructionFetchFinishedEventArgs e)
@@ -305,12 +341,22 @@ namespace Konamiman.Z80dotNet
 
         BeforeInstructionExecutionEventArgs FireBeforeInstructionExecutionEvent()
         {
+            var opcodeBytes = executionContext.OpcodeBytes.ToArray();
+
             var eventArgs = new BeforeInstructionExecutionEventArgs(
-                executionContext.OpcodeBytes.ToArray(),
+                opcodeBytes,
                 executionContext.LocalUserStateFromPreviousEvent);
 
-            if(BeforeInstructionExecution != null)
-                BeforeInstructionExecution(this, eventArgs);
+            BeforeInstructionExecution?.Invoke(this, eventArgs);
+
+            if (opcodeBytes[0] == RETI_RETN_prefix)
+            {
+                opcodeBytes[1] &= 0xCF; //To account for mirrored variants
+                if(opcodeBytes[1] == RETI_opcode)
+                    BeforeRetiInstructionExecution?.Invoke(this, EventArgs.Empty);
+                else if (opcodeBytes[1] == RETN_opcode)
+                    BeforeRetnInstructionExecution?.Invoke(this, EventArgs.Empty);
+            }
 
             return eventArgs;
         }
@@ -637,6 +683,18 @@ namespace Konamiman.Z80dotNet
         public event EventHandler<BeforeInstructionExecutionEventArgs> BeforeInstructionExecution;
 
         public event EventHandler<AfterInstructionExecutionEventArgs> AfterInstructionExecution;
+
+        public event EventHandler MaskableInterruptServicingStart;
+
+        public event EventHandler NonMaskableInterruptServicingStart;
+
+        public event EventHandler BeforeRetiInstructionExecution;
+
+        public event EventHandler AfterRetiInstructionExecution;
+
+        public event EventHandler BeforeRetnInstructionExecution;
+
+        public event EventHandler AfterRetnInstructionExecution;
 
         #endregion
 

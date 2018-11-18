@@ -6,8 +6,7 @@ namespace Konamiman.Z80dotNet.Tests
     {
         public void FireNmi()
         {
-            if(NmiInterruptPulse != null)
-                NmiInterruptPulse(this, EventArgs.Empty);
+            NmiInterruptPulse?.Invoke(this, EventArgs.Empty);
         }
 
         public event EventHandler NmiInterruptPulse;

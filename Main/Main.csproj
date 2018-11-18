@@ -37,6 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dependencies Interfaces\IZ80InterruptSource.cs" />
+    <Compile Include="Enums\InterruptType.cs" />
     <Compile Include="EventArgs\AfterInstructionExecutionEventArgs.cs" />
     <Compile Include="Data Types and Utils\Bit.cs" />
     <Compile Include="Dependencies Interfaces\IExecutionStopper.cs" />

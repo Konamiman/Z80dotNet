@@ -34,7 +34,7 @@ For your convenience, you can add Z80.NET to your project [as a NuGet package](h
 1. Create an instance of [the Z80Processor class](Main/Z80Processor.cs).
 2. Optionally, plug your own implementations of one or more of the [dependencies](Docs/Dependencies.md).
 3. [Configure your instance](Docs/Configuration.md) as appropriate.
-4. Optionally, register one or more [interrupt sources](Docs/Interrupts.md).
+4. Optionally, register one or more [interrupt sources](Docs/Interrupts.md), and capture the related events if you need to.
 5. Optionally, capture [the memory access events](Docs/MemoryAccessFlow.md) and/or [the instruction execution events](Docs/InstructionExecutionFlow.md).
 6. [Start the simulated processor execution](Docs/HowExecutionWorks.md) by using one of the execution control methods.
 7. Execution will stop (and the execution method invoked will then return) when one of [the execution stop conditions is met](Docs/StopConditions.md). You can then check [the processor state](Docs/State.md) and, if desired, resume execution.   
