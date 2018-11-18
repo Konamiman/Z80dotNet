@@ -13,6 +13,9 @@ namespace Konamiman.Z80dotNet.Tests
         private const byte HALT_opcode = 0x76;
         private const byte NOP_opcode = 0x00;
         private const byte RST20h_opcode = 0xE7;
+        private const byte IM0_opcode = 0x46;
+        private const byte IM1_opcode = 0x56;
+        private const byte IM2_opcode = 0x5E;
 
         Z80ProcessorForTests Sut { get; set; }
         Fixture Fixture { get; set; }
@@ -460,6 +463,59 @@ namespace Konamiman.Z80dotNet.Tests
             Assert.False(Sut.IsHalted);
             Assert.AreEqual(13, instructionsExecutedCount); //10 + extra NOP + RET on 0x66 + RET on 2
             Assert.AreEqual(StopReason.RetWithStackEmpty, Sut.StopReason);
+        }
+
+        #endregion
+
+        #region Interrupt servicing start events
+
+        [Test]
+        public void Fires_NonMaskableInterruptServicingStart()
+        {
+            Sut.RegisterInterruptSource(InterruptSource1);
+
+            Sut.Memory[0] = NOP_opcode;
+
+            var nonMaskableInterruptServicingStartFired = false;
+            Sut.NonMaskableInterruptServicingStart += (server, args) =>
+            {
+                nonMaskableInterruptServicingStartFired = true;
+            };
+
+            InterruptSource1.FireNmi();
+
+            Sut.ExecuteNextInstruction();
+
+            Assert.True(nonMaskableInterruptServicingStartFired);
+        }
+
+        [Test]
+        [TestCase(IM0_opcode)]
+        [TestCase(IM1_opcode)]
+        [TestCase(IM2_opcode)]
+        public void Fires_MaskableInterruptServicingStart(byte imOpcode)
+        {
+            Sut.RegisterInterruptSource(InterruptSource1);
+
+            Sut.Memory[0] = 0xED;
+            Sut.Memory[1] = imOpcode;
+            Sut.Memory[2] = EI_opcode;
+            Sut.Memory[3] = NOP_opcode;
+
+            Sut.ExecuteNextInstruction(); //This sets interrupt mode
+            Sut.ExecuteNextInstruction(); //This runs EI
+
+            var maskableInterruptServicingStartFired = false;
+            Sut.MaskableInterruptServicingStart += (server, args) =>
+            {
+                maskableInterruptServicingStartFired = true;
+            };
+
+            InterruptSource1.IntLineIsActive = true;
+
+            Sut.ExecuteNextInstruction();
+
+            Assert.True(maskableInterruptServicingStartFired);
         }
 
         #endregion
