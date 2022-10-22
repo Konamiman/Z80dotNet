@@ -1,5 +1,6 @@
-﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+﻿using AutoFixture;
+using NUnit.Framework;
+
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -7,9 +8,9 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
     {
         public static object[] ADD_rr_rr_Source =
         {
-            new object[] {"HL", "BC", (byte)0x09, (byte?)null},
-            new object[] {"HL", "DE", (byte)0x19, (byte?)null},
-            new object[] {"HL", "SP", (byte)0x39, (byte?)null},
+            new object[] {"HL", "BC", (byte)0x09, null},
+            new object[] {"HL", "DE", (byte)0x19, null},
+            new object[] {"HL", "SP", (byte)0x39, null},
             new object[] {"IX", "BC", (byte)0x09, (byte?)0xDD},
             new object[] {"IX", "DE", (byte)0x19, (byte?)0xDD},
             new object[] {"IX", "SP", (byte)0x39, (byte?)0xDD},
@@ -20,7 +21,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
         public static object[] ADD_rr_rr_Source_same_src_and_dest =
         {
-            new object[] {"HL", "HL", (byte)0x29, (byte?)null},
+            new object[] {"HL", "HL", (byte)0x29, null},
             new object[] {"IX", "IX", (byte)0x29, (byte?)0xDD},
             new object[] {"IY", "IY", (byte)0x29, (byte?)0xFD},
         };
@@ -39,9 +40,9 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(opcode, prefix);
 
-            Assert.AreEqual(value1.Add(value2), GetReg<short>(dest));
+            Assert.AreEqual(value1.Add(value2), (int)GetReg<short>(dest));
             if(src != dest)
-                Assert.AreEqual(value2, GetReg<short>(src));
+                Assert.AreEqual(value2, (int)GetReg<short>(src));
         }
 
         [Test]
@@ -53,10 +54,10 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             SetReg(src, 1);
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.CF);
+            Assert.AreEqual(0, (int)Registers.CF);
 
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.CF);
+            Assert.AreEqual(1, (int)Registers.CF);
         }
 
         [Test]
@@ -77,10 +78,10 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 SetReg(dest, NumberUtils.CreateShort(0xFF, b));
 
                 Execute(opcode, prefix);
-                Assert.AreEqual(1, Registers.HF);
+                Assert.AreEqual(1, (int)Registers.HF);
 
                 Execute(opcode, prefix);
-                Assert.AreEqual(0, Registers.HF);
+                Assert.AreEqual(0, (int)Registers.HF);
             }
         }
 
@@ -117,13 +118,13 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             SetReg(dest, NumberUtils.CreateShort(0, ((byte)0).WithBit(3, 1).WithBit(5, 0)));
             SetReg(src, 0);
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.Flag3);
-            Assert.AreEqual(0, Registers.Flag5);
+            Assert.AreEqual(1, (int)Registers.Flag3);
+            Assert.AreEqual(0, (int)Registers.Flag5);
 
             SetReg(dest, NumberUtils.CreateShort(0, ((byte)0).WithBit(3, 0).WithBit(5, 1)));
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.Flag3);
-            Assert.AreEqual(1, Registers.Flag5);
+            Assert.AreEqual(0, (int)Registers.Flag3);
+            Assert.AreEqual(1, (int)Registers.Flag5);
         }
 
         [Test]

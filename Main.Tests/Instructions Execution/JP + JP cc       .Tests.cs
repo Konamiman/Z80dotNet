@@ -1,5 +1,6 @@
-﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+﻿using AutoFixture;
+using NUnit.Framework;
+
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -31,7 +32,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             SetFlag(flagName, !(Bit)flagValue);
             ExecuteAt(instructionAddress, opcode);
 
-            Assert.AreEqual(instructionAddress.Add(3), Registers.PC);
+            Assert.AreEqual(instructionAddress.Add(3), (int)Registers.PC);
         }
 
         [Test]
@@ -55,7 +56,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             SetFlagIfNotNull(flagName, flagValue);
             ExecuteAt(instructionAddress, opcode, nextFetches: new[] { jumpAddress.GetLowByte(), jumpAddress.GetHighByte() });
 
-            Assert.AreEqual(jumpAddress, Registers.PC);
+            Assert.AreEqual(jumpAddress, (int)Registers.PC);
         }
 
         private void SetFlagIfNotNull(string flagName, int flagValue)
@@ -85,7 +86,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(opcode);
 
-            Assert.AreEqual(value, Registers.F);
+            Assert.AreEqual(value, (int)Registers.F);
         }
     }
 }

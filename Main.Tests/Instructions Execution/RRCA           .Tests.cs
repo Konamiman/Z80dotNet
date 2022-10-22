@@ -15,7 +15,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             for(var i = 0; i < values.Length; i++)
             {
                 Execute(RRCA_opcode);
-                Assert.AreEqual(values[i], Registers.A);
+                Assert.AreEqual(values[i], (int)Registers.A);
             }
         }
 
@@ -25,16 +25,16 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Registers.A = 0x06;
 
             Execute(RRCA_opcode);
-            Assert.AreEqual(0, Registers.CF);
+            Assert.AreEqual(0, (int)Registers.CF);
 
             Execute(RRCA_opcode);
-            Assert.AreEqual(1, Registers.CF);
+            Assert.AreEqual(1, (int)Registers.CF);
 
             Execute(RRCA_opcode);
-            Assert.AreEqual(1, Registers.CF);
+            Assert.AreEqual(1, (int)Registers.CF);
 
             Execute(RRCA_opcode);
-            Assert.AreEqual(0, Registers.CF);
+            Assert.AreEqual(0, (int)Registers.CF);
         }
 
         [Test]

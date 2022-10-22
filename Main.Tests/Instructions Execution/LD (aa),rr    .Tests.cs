@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
+
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -7,7 +8,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
     {
         static object[] LD_aa_rr_Source =
         {
-            new object[] {"HL", (byte)0x22, (byte?)null},
+            new object[] {"HL", (byte)0x22, null},
             new object[] {"DE", (byte)0x53, (byte?)0xED},
             new object[] {"BC", (byte)0x43, (byte?)0xED},
             new object[] {"SP", (byte)0x73, (byte?)0xED},
@@ -28,7 +29,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(opcode, prefix, nextFetches: address.ToByteArray());
 
-            Assert.AreEqual(newValue, ReadShortFromMemory(address));
+            Assert.AreEqual(newValue, (int)ReadShortFromMemory(address));
         }
 
         [Test]

@@ -1,5 +1,6 @@
-﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+﻿using AutoFixture;
+using NUnit.Framework;
+
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -7,13 +8,13 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
     {
         public static object[] INC_r_Source =
         {
-            new object[] {"A",   (byte)0x3C, (byte?)null},
-            new object[] {"B",   (byte)0x04, (byte?)null},
-            new object[] {"C",   (byte)0x0C, (byte?)null},
-            new object[] {"D",   (byte)0x14, (byte?)null},
-            new object[] {"E",   (byte)0x1C, (byte?)null},
-            new object[] {"H",   (byte)0x24, (byte?)null},
-            new object[] {"L",   (byte)0x2C, (byte?)null},
+            new object[] {"A",   (byte)0x3C, null},
+            new object[] {"B",   (byte)0x04, null},
+            new object[] {"C",   (byte)0x0C, null},
+            new object[] {"D",   (byte)0x14, null},
+            new object[] {"E",   (byte)0x1C, null},
+            new object[] {"H",   (byte)0x24, null},
+            new object[] {"L",   (byte)0x2C, null},
             new object[] {"IXH", (byte)0x24, (byte?)0xDD},
             new object[] {"IXL", (byte)0x2C, (byte?)0xDD},
             new object[] {"IYH", (byte)0x24, (byte?)0xFD},
@@ -26,13 +27,13 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             SetReg(reg, 0xFE);
             Execute(opcode, prefix);
-            Assert.AreEqual(0xFF, GetReg<byte>(reg));
+            Assert.AreEqual(0xFF, (int)GetReg<byte>(reg));
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0x00, GetReg<byte>(reg));
+            Assert.AreEqual(0x00, (int)GetReg<byte>(reg));
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0x01, GetReg<byte>(reg));
+            Assert.AreEqual(0x01, (int)GetReg<byte>(reg));
         }
 
         [Test]
@@ -42,16 +43,16 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             SetReg(reg, 0xFD);
 
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.SF);
+            Assert.AreEqual(1, (int)Registers.SF);
 
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.SF);
+            Assert.AreEqual(1, (int)Registers.SF);
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.SF);
+            Assert.AreEqual(0, (int)Registers.SF);
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.SF);
+            Assert.AreEqual(0, (int)Registers.SF);
         }
 
         [Test]
@@ -61,16 +62,16 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             SetReg(reg, 0xFD);
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.AreEqual(0, (int)Registers.ZF);
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.AreEqual(0, (int)Registers.ZF);
 
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.ZF);
+            Assert.AreEqual(1, (int)Registers.ZF);
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.AreEqual(0, (int)Registers.ZF);
         }
 
         [Test]
@@ -82,13 +83,13 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 SetReg(reg, b);
 
                 Execute(opcode, prefix);
-                Assert.AreEqual(0, Registers.HF);
+                Assert.AreEqual(0, (int)Registers.HF);
 
                 Execute(opcode, prefix);
-                Assert.AreEqual(1, Registers.HF);
+                Assert.AreEqual(1, (int)Registers.HF);
 
                 Execute(opcode, prefix);
-                Assert.AreEqual(0, Registers.HF);
+                Assert.AreEqual(0, (int)Registers.HF);
             }
         }
 
@@ -99,13 +100,13 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             SetReg(reg, 0x7E);
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.PF);
+            Assert.AreEqual(0, (int)Registers.PF);
 
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.PF);
+            Assert.AreEqual(1, (int)Registers.PF);
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.PF);
+            Assert.AreEqual(0, (int)Registers.PF);
         }
 
         [Test]
@@ -127,11 +128,11 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
                 Registers.CF = 0;
                 Execute(opcode, prefix);
-                Assert.AreEqual(0, Registers.CF);
+                Assert.AreEqual(0, (int)Registers.CF);
 
                 Registers.CF = 1;
                 Execute(opcode, prefix);
-                Assert.AreEqual(1, Registers.CF);
+                Assert.AreEqual(1, (int)Registers.CF);
             }
         }
 
@@ -141,13 +142,13 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             SetReg(reg, ((byte)0).WithBit(3, 1).WithBit(5, 0));
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.Flag3);
-            Assert.AreEqual(0, Registers.Flag5);
+            Assert.AreEqual(1, (int)Registers.Flag3);
+            Assert.AreEqual(0, (int)Registers.Flag5);
 
             SetReg(reg, ((byte)0).WithBit(3, 0).WithBit(5, 1));
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.Flag3);
-            Assert.AreEqual(1, Registers.Flag5);
+            Assert.AreEqual(0, (int)Registers.Flag3);
+            Assert.AreEqual(1, (int)Registers.Flag5);
         }
 
         [Test]

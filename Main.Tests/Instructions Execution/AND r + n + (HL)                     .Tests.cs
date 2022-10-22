@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
-using System.Collections.Generic;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -30,7 +29,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
         public static object[] AND_A_Source =
         {
-            new object[] {"A", (byte)0xA7, (byte?)null},
+            new object[] {"A", (byte)0xA7, null},
         };
 
 
@@ -44,7 +43,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Setup(src, oldValue, valueToAnd);
             Execute(opcode, prefix);
 
-            Assert.AreEqual(oldValue & valueToAnd, Registers.A);
+            Assert.AreEqual(oldValue & valueToAnd, (int)Registers.A);
         }
 
         [Test]
@@ -56,7 +55,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Registers.A = value;
             Execute(opcode, prefix);
 
-            Assert.AreEqual(value, Registers.A);
+            Assert.AreEqual(value, (int)Registers.A);
         }
 
         private void Setup(string src, byte oldValue, byte valueToAnd)
@@ -93,13 +92,13 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         public void AND_r_sets_SF_appropriately(string src, byte opcode, byte? prefix)
         {
             ExecuteCase(src, opcode, 0xFF, 0xFF, prefix);
-            Assert.AreEqual(1, Registers.SF);
+            Assert.AreEqual(1, (int)Registers.SF);
 
             ExecuteCase(src, opcode, 0xFF, 0x80, prefix);
-            Assert.AreEqual(1, Registers.SF);
+            Assert.AreEqual(1, (int)Registers.SF);
 
             ExecuteCase(src, opcode, 0xFF, 0, prefix);
-            Assert.AreEqual(0, Registers.SF);
+            Assert.AreEqual(0, (int)Registers.SF);
         }
 
         private void ExecuteCase(string src, byte opcode, int oldValue, int valueToAnd, byte? prefix)
@@ -113,13 +112,13 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         public void AND_r_sets_ZF_appropriately(string src, byte opcode, byte? prefix)
         {
             ExecuteCase(src, opcode, 0xFF, 0xFF, prefix);
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.AreEqual(0, (int)Registers.ZF);
 
             ExecuteCase(src, opcode, 0xFF, 0x80, prefix);
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.AreEqual(0, (int)Registers.ZF);
 
             ExecuteCase(src, opcode, 0xFF, 0, prefix);
-            Assert.AreEqual(1, Registers.ZF);
+            Assert.AreEqual(1, (int)Registers.ZF);
         }
 
         [Test]
@@ -134,16 +133,16 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         public void AND_r_sets_PF_appropriately(string src, byte opcode, byte? prefix)
         {
             ExecuteCase(src, opcode, 0xFF, 0x7E, prefix);
-            Assert.AreEqual(1, Registers.PF);
+            Assert.AreEqual(1, (int)Registers.PF);
 
             ExecuteCase(src, opcode, 0xFF, 0x7F, prefix);
-            Assert.AreEqual(0, Registers.PF);
+            Assert.AreEqual(0, (int)Registers.PF);
 
             ExecuteCase(src, opcode, 0xFF, 0x80, prefix);
-            Assert.AreEqual(0, Registers.PF);
+            Assert.AreEqual(0, (int)Registers.PF);
 
             ExecuteCase(src, opcode, 0xFF, 0x81, prefix);
-            Assert.AreEqual(1, Registers.PF);
+            Assert.AreEqual(1, (int)Registers.PF);
         }
 
         [Test]
@@ -161,14 +160,14 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             var value = ((byte)0).WithBit(3, 1).WithBit(5, 0);
             Setup(src, value, value);
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.Flag3);
-            Assert.AreEqual(0, Registers.Flag5);
+            Assert.AreEqual(1, (int)Registers.Flag3);
+            Assert.AreEqual(0, (int)Registers.Flag5);
 
             value = ((byte)0).WithBit(3, 0).WithBit(5, 1);
             Setup(src, value, value);
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.Flag3);
-            Assert.AreEqual(1, Registers.Flag5);
+            Assert.AreEqual(0, (int)Registers.Flag3);
+            Assert.AreEqual(1, (int)Registers.Flag5);
         }
 
         [Test]

@@ -1,7 +1,6 @@
-﻿using Moq;
+﻿using AutoFixture;
+using Moq;
 using NUnit.Framework;
-using Ploeh.AutoFixture;
-using System;
 
 namespace Konamiman.Z80dotNet.Tests
 {
@@ -46,8 +45,8 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.IX = IX;
 
-            Assert.AreEqual(IXh, Sut.IXH);
-            Assert.AreEqual(IXl, Sut.IXL);
+            Assert.AreEqual(IXh, (int)Sut.IXH);
+            Assert.AreEqual(IXl, (int)Sut.IXL);
         }
 
         [Test]
@@ -60,7 +59,7 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.IXH = IXh;
             Sut.IXL = IXl;
 
-            Assert.AreEqual(expected, Sut.IX);
+            Assert.AreEqual(expected, (int)Sut.IX);
         }
 
         [Test]
@@ -72,8 +71,8 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.IY = IY;
 
-            Assert.AreEqual(IYh, Sut.IYH);
-            Assert.AreEqual(IYl, Sut.IYL);
+            Assert.AreEqual(IYh, (int)Sut.IYH);
+            Assert.AreEqual(IYl, (int)Sut.IYL);
         }
 
         [Test]
@@ -86,7 +85,7 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.IYH = IYh;
             Sut.IYL = IYl;
 
-            Assert.AreEqual(expected, Sut.IY);
+            Assert.AreEqual(expected, (int)Sut.IY);
         }
 
         [Test]
@@ -98,8 +97,8 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.IR = IR;
 
-            Assert.AreEqual(I, Sut.I);
-            Assert.AreEqual(R, Sut.R);
+            Assert.AreEqual(I, (int)Sut.I);
+            Assert.AreEqual(R, (int)Sut.R);
         }
 
         [Test]
@@ -112,7 +111,7 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.I = I;
             Sut.R = R;
 
-            Assert.AreEqual(expected, Sut.IR);
+            Assert.AreEqual(expected, (int)Sut.IR);
         }
     }
 }

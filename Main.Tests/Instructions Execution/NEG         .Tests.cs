@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
-using System.Collections.Generic;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -18,7 +17,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Execute();
 
             var expected = (byte)((byte)0).Sub(oldValue);
-            Assert.AreEqual(expected, Registers.A);
+            Assert.AreEqual(expected, (int)Registers.A);
         }
 
         [Test]
@@ -26,23 +25,23 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             Registers.A = 2;
             Execute();
-            Assert.AreEqual(1, Registers.SF);
+            Assert.AreEqual(1, (int)Registers.SF);
 
             Registers.A = 1;
             Execute();
-            Assert.AreEqual(1, Registers.SF);
+            Assert.AreEqual(1, (int)Registers.SF);
 
             Registers.A = 0;
             Execute();
-            Assert.AreEqual(0, Registers.SF);
+            Assert.AreEqual(0, (int)Registers.SF);
 
             Registers.A = 0xFF;
             Execute();
-            Assert.AreEqual(0, Registers.SF);
+            Assert.AreEqual(0, (int)Registers.SF);
 
             Registers.A = 0x80;
             Execute();
-            Assert.AreEqual(1, Registers.SF);
+            Assert.AreEqual(1, (int)Registers.SF);
         }
 
         [Test]
@@ -50,23 +49,23 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             Registers.A = 2;
             Execute();
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.AreEqual(0, (int)Registers.ZF);
 
             Registers.A = 1;
             Execute();
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.AreEqual(0, (int)Registers.ZF);
 
             Registers.A = 0;
             Execute();
-            Assert.AreEqual(1, Registers.ZF);
+            Assert.AreEqual(1, (int)Registers.ZF);
 
             Registers.A = 0xFF;
             Execute();
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.AreEqual(0, (int)Registers.ZF);
 
             Registers.A = 0x80;
             Execute();
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.AreEqual(0, (int)Registers.ZF);
         }
 
         [Test]
@@ -91,7 +90,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 Registers.A = b;
                 Execute();
                 var expected = b == 0x80 ? 1 : 0;
-                Assert.AreEqual(expected, Registers.PF);
+                Assert.AreEqual(expected, (int)Registers.PF);
             }
         }
 
@@ -110,7 +109,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 Registers.A = b;
                 Execute();
                 var expected = b == 0 ? 0 : 1;
-                Assert.AreEqual(expected, Registers.CF);
+                Assert.AreEqual(expected, (int)Registers.CF);
             }
         }
 
@@ -119,13 +118,13 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             Registers.A = 0x0F;
             Execute();
-            Assert.AreEqual(0, Registers.Flag3);
-            Assert.AreEqual(1, Registers.Flag5);
+            Assert.AreEqual(0, (int)Registers.Flag3);
+            Assert.AreEqual(1, (int)Registers.Flag5);
 
             Registers.A = 0xF1;
             Execute();
-            Assert.AreEqual(1, Registers.Flag3);
-            Assert.AreEqual(0, Registers.Flag5);
+            Assert.AreEqual(1, (int)Registers.Flag3);
+            Assert.AreEqual(0, (int)Registers.Flag5);
         }
 
         [Test]

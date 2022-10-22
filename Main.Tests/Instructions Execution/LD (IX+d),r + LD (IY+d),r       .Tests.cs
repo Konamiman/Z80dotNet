@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
+
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -39,7 +40,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(opcode, prefix, offset);
 
-            Assert.AreEqual(newValue, ProcessorAgent.Memory[actualAddress]);
+            Assert.AreEqual(newValue, (int)ProcessorAgent.Memory[actualAddress]);
         }
 
         [Test]

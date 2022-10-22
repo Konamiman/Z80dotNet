@@ -1,9 +1,5 @@
-﻿using System.CodeDom.Compiler;
-using NUnit.Framework;
-using Ploeh.AutoFixture;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using NUnit.Framework;
+using AutoFixture;
 using System.Reflection;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
@@ -136,7 +132,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Registers.F = value;
             Execute(opcode, prefix);
 
-            Assert.AreEqual(value, Registers.F);
+            Assert.AreEqual(value, (int)Registers.F);
         }
 
         protected void AssertSetsFlags(byte opcode, byte? prefix = null, params string[] flagNames)
@@ -279,7 +275,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                     var regCode = (int)instr[1];
                     var opcode = baseOpcode | (bit << 3) | regCode;
                     //srcReg, dest, opcode, prefix, bit
-                    sources.Add(new object[] {reg, (string)null, (byte)opcode, (byte?)null, bit});
+                    sources.Add(new object[] {reg, null, (byte)opcode, null, bit});
                 }
 
                 foreach (var instr in bases)

@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 using System.Diagnostics;
 
 namespace Konamiman.Z80dotNet.Tests

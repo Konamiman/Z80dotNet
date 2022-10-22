@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
+
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -21,8 +22,8 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             ExecuteAt(instructionAddress, opcode, prefix);
 
-            Assert.AreEqual(returnAddress, Registers.PC);
-            Assert.AreEqual(oldSP.Add(2), Registers.SP);
+            Assert.AreEqual(returnAddress, (int)Registers.PC);
+            Assert.AreEqual(oldSP.Add(2), (int)Registers.SP);
         }
 
         [Test]
@@ -65,7 +66,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(opcode, prefix);
 
-            Assert.AreEqual(initialIFF2, Registers.IFF2);
+            Assert.AreEqual(initialIFF2, (int)Registers.IFF2);
             Assert.AreEqual(Registers.IFF2, Registers.IFF1);
         }
     }

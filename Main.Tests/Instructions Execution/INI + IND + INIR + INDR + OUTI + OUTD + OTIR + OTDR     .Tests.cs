@@ -1,6 +1,6 @@
-﻿using System.Linq;
+﻿using AutoFixture;
 using NUnit.Framework;
-using Ploeh.AutoFixture;
+
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -82,7 +82,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             ExecuteWithPortSetup(opcode, portNumber, value);
 
             var actual = ProcessorAgent.Memory[address];
-            Assert.AreEqual(value, actual);
+            Assert.AreEqual(value, (int)actual);
         }
 
         [Test]
@@ -103,7 +103,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             ExecuteWithPortSetup(opcode, portNumber, oldValue);
 
             var actual = ProcessorAgent.Ports[portNumber];
-            Assert.AreEqual(value, actual);
+            Assert.AreEqual(value, (int)actual);
         }
 
         [Test]
@@ -120,7 +120,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             ExecuteWithPortSetup(opcode);
 
             var expected = address.Inc();
-            Assert.AreEqual(expected, Registers.HL);
+            Assert.AreEqual(expected, (int)Registers.HL);
         }
 
         [Test]
@@ -137,7 +137,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             ExecuteWithPortSetup(opcode);
 
             var expected = address.Dec();
-            Assert.AreEqual(expected, Registers.HL);
+            Assert.AreEqual(expected, (int)Registers.HL);
         }
 
         [Test]
@@ -151,7 +151,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             ExecuteWithPortSetup(opcode);
 
             var expected = counter.Dec();
-            Assert.AreEqual(expected, Registers.B);
+            Assert.AreEqual(expected, (int)Registers.B);
         }
 
         [Test]
@@ -189,13 +189,13 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             Registers.B = ((byte)1).WithBit(3, 1).WithBit(5, 0);
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.Flag3);
-            Assert.AreEqual(0, Registers.Flag5);
+            Assert.AreEqual(1, (int)Registers.Flag3);
+            Assert.AreEqual(0, (int)Registers.Flag5);
 
             Registers.B = ((byte)1).WithBit(3, 0).WithBit(5, 1);
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.Flag3);
-            Assert.AreEqual(1, Registers.Flag5);
+            Assert.AreEqual(0, (int)Registers.Flag3);
+            Assert.AreEqual(1, (int)Registers.Flag5);
         }
 
         [Test]
@@ -205,16 +205,16 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Registers.B = 0x02;
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.SF);
+            Assert.AreEqual(0, (int)Registers.SF);
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.SF);
+            Assert.AreEqual(0, (int)Registers.SF);
 
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.SF);
+            Assert.AreEqual(1, (int)Registers.SF);
 
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.SF);
+            Assert.AreEqual(1, (int)Registers.SF);
         }
 
         [Test]
@@ -248,7 +248,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             ExecuteAt(runAddress, opcode, prefix);
 
-            Assert.AreEqual(runAddress, Registers.PC);
+            Assert.AreEqual(runAddress, (int)Registers.PC);
         }
 
         [Test]
@@ -271,7 +271,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             ExecuteAt(runAddress, opcode, prefix);
 
-            Assert.AreEqual(runAddress.Add(2), Registers.PC);
+            Assert.AreEqual(runAddress.Add(2), (int)Registers.PC);
         }
 
         [Test]
@@ -286,7 +286,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             {
                 var oldB = Registers.B;
                 var states = Execute(opcode, prefix);
-                Assert.AreEqual(oldB.Dec(), Registers.B);
+                Assert.AreEqual(oldB.Dec(), (int)Registers.B);
                 Assert.AreEqual(Registers.B == 0 ? 16 : 21, states);
             }
         }

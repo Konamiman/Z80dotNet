@@ -1,5 +1,4 @@
-﻿using Konamiman.Z80dotNet.Tests.InstructionsExecution;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -24,7 +23,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(opcode, prefix);
 
-            Assert.AreEqual(newMode, ((FakeProcessorAgent)Sut.ProcessorAgent).CurrentInterruptMode);
+            Assert.AreEqual(newMode, (int)((FakeProcessorAgent)Sut.ProcessorAgent).CurrentInterruptMode);
         }
 
         [Test]

@@ -1,5 +1,6 @@
-﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+﻿using AutoFixture;
+using NUnit.Framework;
+
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -18,8 +19,8 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(EX_AF_AF_opcode);
 
-            Assert.AreEqual(alternateValue, Registers.AF);
-            Assert.AreEqual(mainValue, Registers.Alternate.AF);
+            Assert.AreEqual(alternateValue, (int)Registers.AF);
+            Assert.AreEqual(mainValue, (int)Registers.Alternate.AF);
         }
 
         [Test]

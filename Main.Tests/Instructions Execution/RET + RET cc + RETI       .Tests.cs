@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
+
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -35,8 +36,8 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             SetFlag(flagName, !(Bit)flagValue);
             ExecuteAt(instructionAddress, opcode);
 
-            Assert.AreEqual(instructionAddress.Inc(), Registers.PC);
-            Assert.AreEqual(oldSP, Registers.SP);
+            Assert.AreEqual(instructionAddress.Inc(), (int)Registers.PC);
+            Assert.AreEqual(oldSP, (int)Registers.SP);
         }
 
         [Test]
@@ -65,8 +66,8 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             SetFlagIfNotNull(flagName, flagValue);
             ExecuteAt(instructionAddress, opcode);
 
-            Assert.AreEqual(returnAddress, Registers.PC);
-            Assert.AreEqual(oldSP.Add(2), Registers.SP);
+            Assert.AreEqual(returnAddress, (int)Registers.PC);
+            Assert.AreEqual(oldSP.Add(2), (int)Registers.SP);
         }
 
         private void SetFlagIfNotNull(string flagName, int flagValue)
@@ -96,7 +97,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(opcode);
 
-            Assert.AreEqual(value, Registers.F);
+            Assert.AreEqual(value, (int)Registers.F);
         }
 
         [Test]
@@ -134,8 +135,8 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             ExecuteAt(instructionAddress, RETI_opcode, RETI_prefix);
 
-            Assert.AreEqual(returnAddress, Registers.PC);
-            Assert.AreEqual(oldSP.Add(2), Registers.SP);
+            Assert.AreEqual(returnAddress, (int)Registers.PC);
+            Assert.AreEqual(oldSP.Add(2), (int)Registers.SP);
         }
 
         [Test]

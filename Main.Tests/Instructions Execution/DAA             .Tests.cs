@@ -56,7 +56,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(DAA_opcode);
 
-            Assert.AreEqual(((byte)inputA).Add(addedValue), Registers.A);
+            Assert.AreEqual(((byte)inputA).Add(addedValue), (int)Registers.A);
             Assert.AreEqual((Bit)outputC, Registers.CF);
         }
 
@@ -92,7 +92,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(DAA_opcode);
 
-            Assert.AreEqual(Parity[Registers.A], Registers.PF);
+            Assert.AreEqual(Parity[Registers.A], (int)Registers.PF);
         }
 
         [Test]
@@ -114,7 +114,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(DAA_opcode);
 
-            Assert.AreEqual(Registers.A == 0 ? 1 : 0, Registers.ZF);
+            Assert.AreEqual(Registers.A == 0 ? 1 : 0, (int)Registers.ZF);
         }
 
         [Test]

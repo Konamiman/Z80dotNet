@@ -1,5 +1,6 @@
-﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+﻿using AutoFixture;
+using NUnit.Framework;
+
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -15,7 +16,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(CPL_opcode);
 
-            Assert.AreEqual((byte)(~value), Registers.A);
+            Assert.AreEqual((byte)(~value), (int)Registers.A);
         }
 
         [Test]

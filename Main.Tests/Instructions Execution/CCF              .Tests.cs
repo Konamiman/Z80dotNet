@@ -11,11 +11,11 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             Registers.CF = 0;
             Execute(CCF_opcode);
-            Assert.AreEqual(1, Registers.CF);
+            Assert.AreEqual(1, (int)Registers.CF);
 
             Registers.CF = 1;
             Execute(CCF_opcode);
-            Assert.AreEqual(0, Registers.CF);
+            Assert.AreEqual(0, (int)Registers.CF);
         }
 
         [Test]
@@ -24,12 +24,12 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Registers.CF = 0;
             Registers.HF = 1;
             Execute(CCF_opcode);
-            Assert.AreEqual(0, Registers.HF);
+            Assert.AreEqual(0, (int)Registers.HF);
 
             Registers.CF = 1;
             Registers.HF = 0;
             Execute(CCF_opcode);
-            Assert.AreEqual(1, Registers.HF);
+            Assert.AreEqual(1, (int)Registers.HF);
         }
 
         [Test]

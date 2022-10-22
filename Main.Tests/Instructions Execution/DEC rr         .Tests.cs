@@ -20,7 +20,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             SetReg(reg, 0);
             Execute(opcode, prefix);
-            Assert.AreEqual(0xFFFF.ToShort(), GetReg<short>(reg));
+            Assert.AreEqual(0xFFFF.ToShort(), (int)GetReg<short>(reg));
         }
 
         [Test]

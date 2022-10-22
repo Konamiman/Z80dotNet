@@ -1,5 +1,6 @@
-﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+﻿using AutoFixture;
+using NUnit.Framework;
+
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -7,7 +8,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
     {
         public static object[] JP_Source =
         {
-            new object[] { "HL", (byte)0xE9, (byte?)null },
+            new object[] { "HL", (byte)0xE9, null },
             new object[] { "IX", (byte)0xE9, (byte?)0xDD },
             new object[] { "IY", (byte)0xE9, (byte?)0xFD }
         };
@@ -22,7 +23,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             SetReg(reg, jumpAddress);
             ExecuteAt(instructionAddress, opcode, prefix);
 
-            Assert.AreEqual(jumpAddress.ToUShort(), Registers.PC);
+            Assert.AreEqual(jumpAddress.ToUShort(), (int)Registers.PC);
         }
 
         [Test]

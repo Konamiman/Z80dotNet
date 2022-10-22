@@ -1,7 +1,5 @@
-﻿using System;
-using Moq;
+﻿using AutoFixture;
 using NUnit.Framework;
-using Ploeh.AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests
 {
@@ -139,7 +137,7 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.Continue();
 
             Assert.True(nmiFired);
-            Assert.AreEqual(0, Sut.Registers.IFF1);
+            Assert.AreEqual(0, (int)Sut.Registers.IFF1);
         }
 
         [Test]
@@ -209,8 +207,8 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.Continue();
 
-            Assert.AreEqual(0, Sut.Registers.IFF1);
-            Assert.AreEqual(0, Sut.Registers.IFF2);
+            Assert.AreEqual(0, (int)Sut.Registers.IFF1);
+            Assert.AreEqual(0, (int)Sut.Registers.IFF2);
         }
 
         [Test]

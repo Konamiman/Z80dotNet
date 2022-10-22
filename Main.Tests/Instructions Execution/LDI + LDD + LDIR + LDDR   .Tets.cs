@@ -1,6 +1,6 @@
-﻿using System.Security.Cryptography;
-using NUnit.Framework;
-using Ploeh.AutoFixture;
+﻿using NUnit.Framework;
+using AutoFixture;
+
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -49,7 +49,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Execute(opcode, prefix);
 
             var newValue = ProcessorAgent.Memory[destAddress];
-            Assert.AreEqual(value, newValue);
+            Assert.AreEqual(value, (int)newValue);
         }
 
         [Test]
@@ -65,8 +65,8 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(opcode, prefix);
 
-            Assert.AreEqual(srcAddress.Inc(), Registers.HL);
-            Assert.AreEqual(destAddress.Inc(), Registers.DE);
+            Assert.AreEqual(srcAddress.Inc(), (int)Registers.HL);
+            Assert.AreEqual(destAddress.Inc(), (int)Registers.DE);
         }
 
         [Test]
@@ -82,8 +82,8 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(opcode, prefix);
 
-            Assert.AreEqual(srcAddress.Dec(), Registers.HL);
-            Assert.AreEqual(destAddress.Dec(), Registers.DE);
+            Assert.AreEqual(srcAddress.Dec(), (int)Registers.HL);
+            Assert.AreEqual(destAddress.Dec(), (int)Registers.DE);
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(opcode, prefix);
 
-            Assert.AreEqual(counter.Dec(), Registers.BC);
+            Assert.AreEqual(counter.Dec(), (int)Registers.BC);
         }
 
         [Test]
@@ -133,7 +133,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             {
                 var oldBC = Registers.BC;
                 Execute(opcode, prefix);
-                Assert.AreEqual(oldBC.Dec(), Registers.BC);
+                Assert.AreEqual(oldBC.Dec(), (int)Registers.BC);
                 Assert.AreEqual(Registers.BC != 0, (bool)Registers.PF);
             }
         }
@@ -175,8 +175,8 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 var oldPC = Registers.PC;
                 var oldBC = Registers.BC;
                 ExecuteAt(address, opcode, prefix);
-                Assert.AreEqual(oldBC.Dec(), Registers.BC);
-                Assert.AreEqual(Registers.BC == 0 ? address.Add(2) : address, Registers.PC);
+                Assert.AreEqual(oldBC.Dec(), (int)Registers.BC);
+                Assert.AreEqual(Registers.BC == 0 ? address.Add(2) : address, (int)Registers.PC);
             }
         }
 
@@ -199,7 +199,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             {
                 var oldBC = Registers.BC;
                 var states = Execute(opcode, prefix);
-                Assert.AreEqual(oldBC.Dec(), Registers.BC);
+                Assert.AreEqual(oldBC.Dec(), (int)Registers.BC);
                 Assert.AreEqual(Registers.BC == 0 ? 16 : 21, states);
             }
         }

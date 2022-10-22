@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
+
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -27,9 +28,9 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             
             ExecuteAt(instructionAddress, opcode);
 
-            Assert.AreEqual((ushort)address, Registers.PC);
-            Assert.AreEqual(oldSP.Sub(2), Registers.SP);
-            Assert.AreEqual(instructionAddress.Inc().ToShort(), ReadShortFromMemory(Registers.SP.ToUShort()));
+            Assert.AreEqual((ushort)address, (int)Registers.PC);
+            Assert.AreEqual(oldSP.Sub(2), (int)Registers.SP);
+            Assert.AreEqual(instructionAddress.Inc().ToShort(), (int)ReadShortFromMemory(Registers.SP.ToUShort()));
         }
 
         [Test]

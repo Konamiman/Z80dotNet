@@ -1,6 +1,5 @@
-﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
-using System;
+﻿using AutoFixture;
+using NUnit.Framework;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -70,28 +69,28 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 			Registers.R = 0xFE;
 
 			Execute(NOP_opcode);
-			Assert.AreEqual(0xFF, Registers.R);
+			Assert.AreEqual(0xFF, (int)Registers.R);
 
             Execute(LD_BC_nn_opcode, null, Fixture.Create<byte>(), Fixture.Create<byte>());
-			Assert.AreEqual(0x80, Registers.R);
+			Assert.AreEqual(0x80, (int)Registers.R);
 
 			Execute(RLC_B_opcode, 0xCB);
-			Assert.AreEqual(0x82, Registers.R);
+			Assert.AreEqual(0x82, (int)Registers.R);
 
             Execute(ADD_HL_BC_opcode, 0xDD);
-   			Assert.AreEqual(0x84, Registers.R);
+   			Assert.AreEqual(0x84, (int)Registers.R);
 
             Execute(ADD_HL_BC_opcode, 0xFD);
-			Assert.AreEqual(0x86, Registers.R);
+			Assert.AreEqual(0x86, (int)Registers.R);
 
 			Execute(IN_B_C_opcode, 0xED);
-			Assert.AreEqual(0x88, Registers.R);
+			Assert.AreEqual(0x88, (int)Registers.R);
 
             Execute(0xCB, 0xDD, 0);
-            Assert.AreEqual(0x8A, Registers.R);
+            Assert.AreEqual(0x8A, (int)Registers.R);
 
             Execute(0xCB, 0xFD, 0);
-            Assert.AreEqual(0x8C, Registers.R);
+            Assert.AreEqual(0x8C, (int)Registers.R);
         }
 
         [Test]

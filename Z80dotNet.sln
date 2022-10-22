@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2035
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Main", "Main\Main.csproj", "{BBA3EC3E-C8F8-421C-A450-5C206BACDC98}"
 EndProject
@@ -28,8 +28,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{43991AEE-1
 		Docs\StopConditions.md = Docs\StopConditions.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZexallTest", "ZexallTest\ZexallTest.csproj", "{8BBEA494-2013-481A-B38C-735F22B93D73}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,10 +42,6 @@ Global
 		{B2F2FEA1-C72C-46E9-8AE4-4DEE9A85E234}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2F2FEA1-C72C-46E9-8AE4-4DEE9A85E234}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2F2FEA1-C72C-46E9-8AE4-4DEE9A85E234}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8BBEA494-2013-481A-B38C-735F22B93D73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8BBEA494-2013-481A-B38C-735F22B93D73}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8BBEA494-2013-481A-B38C-735F22B93D73}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8BBEA494-2013-481A-B38C-735F22B93D73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,5 +1,6 @@
-﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+﻿using AutoFixture;
+using NUnit.Framework;
+
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -26,12 +27,12 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(EXX_opcode);
 
-            Assert.AreEqual(altBC, Registers.BC);
-            Assert.AreEqual(altDE, Registers.DE);
-            Assert.AreEqual(altHL, Registers.HL);
-            Assert.AreEqual(BC, Registers.Alternate.BC);
-            Assert.AreEqual(DE, Registers.Alternate.DE);
-            Assert.AreEqual(HL, Registers.Alternate.HL);
+            Assert.AreEqual(altBC, (int)Registers.BC);
+            Assert.AreEqual(altDE, (int)Registers.DE);
+            Assert.AreEqual(altHL, (int)Registers.HL);
+            Assert.AreEqual(BC, (int)Registers.Alternate.BC);
+            Assert.AreEqual(DE, (int)Registers.Alternate.DE);
+            Assert.AreEqual(HL, (int)Registers.Alternate.HL);
         }
 
         [Test]

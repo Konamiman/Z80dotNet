@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
+
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -7,10 +8,10 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
     {
         public static object[] POP_rr_Source =
         {
-            new object[] {"BC", (byte)0xC1, (byte?)null},
-            new object[] {"DE", (byte)0xD1, (byte?)null},
-            new object[] {"HL", (byte)0xE1, (byte?)null},
-            new object[] {"AF", (byte)0xF1, (byte?)null},
+            new object[] {"BC", (byte)0xC1, null},
+            new object[] {"DE", (byte)0xD1, null},
+            new object[] {"HL", (byte)0xE1, null},
+            new object[] {"AF", (byte)0xF1, null},
             new object[] {"IX", (byte)0xE1, (byte?)0xDD},
             new object[] {"IY", (byte)0xE1, (byte?)0xFD},
         };
@@ -29,8 +30,8 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             ExecuteAt(instructionAddress, opcode, prefix);
 
-            Assert.AreEqual(value, GetReg<short>(reg));
-            Assert.AreEqual(oldSP.Add(2), Registers.SP);
+            Assert.AreEqual(value, (int)GetReg<short>(reg));
+            Assert.AreEqual(oldSP.Add(2), (int)Registers.SP);
         }
 
         [Test]

@@ -1,7 +1,6 @@
 ﻿using Moq;
 using NUnit.Framework;
-using Ploeh.AutoFixture;
-using System;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests
 {
@@ -50,7 +49,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             var actual = Read(address, isPort);
 
-            Assert.AreEqual(value, actual);
+            Assert.AreEqual(value, (int)actual);
             memory.Verify(m => m[address]);
         }
 
@@ -102,8 +101,8 @@ namespace Konamiman.Z80dotNet.Tests
                 {
                     eventFired = true;
                     Assert.AreEqual(Sut, sender);
-                    Assert.AreEqual(address, args.Address);
-                    Assert.AreEqual(0xFF, args.Value);
+                    Assert.AreEqual(address, (int)args.Address);
+                    Assert.AreEqual(0xFF, (int)args.Value);
                 }
             };
 
@@ -139,15 +138,15 @@ namespace Konamiman.Z80dotNet.Tests
                 {
                     eventFired = true;
                     Assert.AreEqual(Sut, sender);
-                    Assert.AreEqual(address, args.Address);
-                    Assert.AreEqual(value, args.Value);
+                    Assert.AreEqual(address, (int)args.Address);
+                    Assert.AreEqual(value, (int)args.Value);
                 }
             };
 
             var actual = Read(address, isPort);
 
             Assert.IsTrue(eventFired);
-            Assert.AreEqual(value, actual);
+            Assert.AreEqual(value, (int)actual);
         }
 
         MemoryAccessEventType AfterReadEventType(bool isPort)
@@ -178,14 +177,14 @@ namespace Konamiman.Z80dotNet.Tests
                 if(args.EventType == BeforeReadEventType(isPort))
                 {
                     beforeEventFired = true;
-                    Assert.AreEqual(address, args.Address);
+                    Assert.AreEqual(address, (int)args.Address);
                     args.Value = value;
                 }
                 if(args.EventType == AfterReadEventType(isPort))
                 {
                     afterEventFired = true;
-                    Assert.AreEqual(address, args.Address);
-                    Assert.AreEqual(value, args.Value);
+                    Assert.AreEqual(address, (int)args.Address);
+                    Assert.AreEqual(value, (int)args.Value);
                 }
             };
 
@@ -221,7 +220,7 @@ namespace Konamiman.Z80dotNet.Tests
             var actual = Read(address, isPort);
 
             Assert.IsTrue(eventFired);
-            Assert.AreEqual(valueFromEvent, actual);
+            Assert.AreEqual(valueFromEvent, (int)actual);
         }
 
         [Test]
@@ -246,7 +245,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             var actual = Read(address, isPort);
 
-            Assert.AreEqual(value, actual);
+            Assert.AreEqual(value, (int)actual);
         }
 
         [Test]
@@ -347,7 +346,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             var actual = Sut.FetchNextOpcode();
 
-            Assert.AreEqual(value, actual);
+            Assert.AreEqual(value, (int)actual);
             Memory.Verify(m => m[address]);
         }
 
@@ -359,7 +358,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.FetchNextOpcode();
 
-            Assert.AreEqual(address.ToShort().Inc(), Sut.Registers.PC);
+            Assert.AreEqual(address.ToShort().Inc(), (int)Sut.Registers.PC);
         }
 
         #endregion
@@ -426,8 +425,8 @@ namespace Konamiman.Z80dotNet.Tests
                 {
                     eventFired = true;
                     Assert.AreEqual(Sut, sender);
-                    Assert.AreEqual(address, args.Address);
-                    Assert.AreEqual(value, args.Value);
+                    Assert.AreEqual(address, (int)args.Address);
+                    Assert.AreEqual(value, (int)args.Value);
                 }
             };
 
@@ -461,8 +460,8 @@ namespace Konamiman.Z80dotNet.Tests
                 {
                     eventFired = true;
                     Assert.AreEqual(Sut, sender);
-                    Assert.AreEqual(address, args.Address);
-                    Assert.AreEqual(value, args.Value);
+                    Assert.AreEqual(address, (int)args.Address);
+                    Assert.AreEqual(value, (int)args.Value);
                 }
             };
 
@@ -501,14 +500,14 @@ namespace Konamiman.Z80dotNet.Tests
                 if(args.EventType == BeforeWriteEventType(isPort))
                 {
                     beforeEventFired = true;
-                    Assert.AreEqual(address, args.Address);
+                    Assert.AreEqual(address, (int)args.Address);
                     args.Value = modifiedValue;
                 }
                 if(args.EventType == AfterWriteEventType(isPort))
                 {
                     afterEventFired = true;
-                    Assert.AreEqual(address, args.Address);
-                    Assert.AreEqual(modifiedValue, args.Value);
+                    Assert.AreEqual(address, (int)args.Address);
+                    Assert.AreEqual(modifiedValue, (int)args.Value);
                 }
             };
 

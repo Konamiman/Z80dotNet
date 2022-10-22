@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
+
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -34,7 +35,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             }
 
             AssertMemoryContents(address, expectedHLContents);
-            Assert.AreEqual(expectedAValue, Registers.A);
+            Assert.AreEqual(expectedAValue, (int)Registers.A);
         }
 
         private ushort Setup(byte HLcontents, byte Avalue)
@@ -48,7 +49,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
         private void AssertMemoryContents(ushort address, byte expected)
         {
-            Assert.AreEqual(expected, ProcessorAgent.Memory[address]);
+            Assert.AreEqual(expected, (int)ProcessorAgent.Memory[address]);
         }
 
         [Test]
@@ -93,7 +94,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 var b = (byte)i;
                 Setup(Fixture.Create<byte>(), b);
                 Execute(opcode, prefix);
-                Assert.AreEqual(Parity[Registers.A], Registers.PF);
+                Assert.AreEqual(Parity[Registers.A], (int)Registers.PF);
             }
         }
 

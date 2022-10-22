@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
+
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -31,9 +32,9 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             ExecuteBit(opcode, prefix, offset);
             var expected = value.WithBit(bit, 1);
             var actual = ValueOfRegOrMem(reg, offset);
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expected, (int)actual);
             if(!string.IsNullOrEmpty(destReg))
-                Assert.AreEqual(expected, ValueOfRegOrMem(destReg, actual));
+                Assert.AreEqual(expected, (int)ValueOfRegOrMem(destReg, actual));
         }
 
         [Test]
@@ -45,7 +46,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             ExecuteBit(opcode, prefix, offset);
             var expected = value.WithBit(bit, 0);
             var actual = ValueOfRegOrMem(reg, offset);
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expected, (int)actual);
         }
 
         [Test]

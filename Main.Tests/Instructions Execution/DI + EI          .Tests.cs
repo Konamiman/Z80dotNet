@@ -15,8 +15,8 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(DI_opcode);
 
-            Assert.AreEqual(0, Registers.IFF1);
-            Assert.AreEqual(0, Registers.IFF2);
+            Assert.AreEqual(0, (int)Registers.IFF1);
+            Assert.AreEqual(0, (int)Registers.IFF2);
         }
 
         [Test]
@@ -27,8 +27,8 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(EI_opcode);
 
-            Assert.AreEqual(1, Registers.IFF1);
-            Assert.AreEqual(1, Registers.IFF2);
+            Assert.AreEqual(1, (int)Registers.IFF1);
+            Assert.AreEqual(1, (int)Registers.IFF2);
         }
 
         [Test]

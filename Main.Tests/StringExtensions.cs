@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Konamiman.Z80dotNet.Tests
+﻿namespace Konamiman.Z80dotNet.Tests
 {
     public static class StringExtensions
     {

@@ -19,7 +19,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.A;
-			var newValueInt = (int)oldValue + (valueToAdd + Registers.CF);
+			var newValueInt = oldValue + (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -43,7 +43,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.A;
-			var newValueInt = (int)oldValue - (valueToAdd + Registers.CF);
+			var newValueInt = oldValue - (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -67,7 +67,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.A;
-			var newValueInt = (int)oldValue + (valueToAdd);
+			var newValueInt = oldValue + (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -91,7 +91,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.A;
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -115,7 +115,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.A;
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
 
             Registers.SF = newValue & 0x80;
@@ -138,7 +138,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
 			var valueToAdd = ProcessorAgent.ReadFromMemory((ushort)Registers.HL);
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
 			var counter = Registers.BC;
             Registers.HL++;
@@ -166,7 +166,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
 			var valueToAdd = ProcessorAgent.ReadFromMemory((ushort)Registers.HL);
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
 			var counter = Registers.BC;
             Registers.HL--;
@@ -194,7 +194,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
 			var valueToAdd = ProcessorAgent.ReadFromMemory((ushort)Registers.HL);
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
 			var counter = Registers.BC;
             Registers.HL++;
@@ -227,7 +227,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
 			var valueToAdd = ProcessorAgent.ReadFromMemory((ushort)Registers.HL);
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
 			var counter = Registers.BC;
             Registers.HL--;
@@ -260,7 +260,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.B;
-			var newValueInt = (int)oldValue + (valueToAdd + Registers.CF);
+			var newValueInt = oldValue + (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -284,7 +284,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.B;
-			var newValueInt = (int)oldValue - (valueToAdd + Registers.CF);
+			var newValueInt = oldValue - (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -308,7 +308,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.B;
-			var newValueInt = (int)oldValue + (valueToAdd);
+			var newValueInt = oldValue + (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -332,7 +332,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.B;
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -356,7 +356,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.B;
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
 
             Registers.SF = newValue & 0x80;
@@ -379,7 +379,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.C;
-			var newValueInt = (int)oldValue + (valueToAdd + Registers.CF);
+			var newValueInt = oldValue + (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -403,7 +403,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.C;
-			var newValueInt = (int)oldValue - (valueToAdd + Registers.CF);
+			var newValueInt = oldValue - (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -427,7 +427,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.C;
-			var newValueInt = (int)oldValue + (valueToAdd);
+			var newValueInt = oldValue + (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -451,7 +451,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.C;
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -475,7 +475,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.C;
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
 
             Registers.SF = newValue & 0x80;
@@ -498,7 +498,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.D;
-			var newValueInt = (int)oldValue + (valueToAdd + Registers.CF);
+			var newValueInt = oldValue + (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -522,7 +522,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.D;
-			var newValueInt = (int)oldValue - (valueToAdd + Registers.CF);
+			var newValueInt = oldValue - (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -546,7 +546,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.D;
-			var newValueInt = (int)oldValue + (valueToAdd);
+			var newValueInt = oldValue + (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -570,7 +570,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.D;
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -594,7 +594,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.D;
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
 
             Registers.SF = newValue & 0x80;
@@ -617,7 +617,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.E;
-			var newValueInt = (int)oldValue + (valueToAdd + Registers.CF);
+			var newValueInt = oldValue + (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -641,7 +641,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.E;
-			var newValueInt = (int)oldValue - (valueToAdd + Registers.CF);
+			var newValueInt = oldValue - (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -665,7 +665,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.E;
-			var newValueInt = (int)oldValue + (valueToAdd);
+			var newValueInt = oldValue + (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -689,7 +689,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.E;
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -713,7 +713,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.E;
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
 
             Registers.SF = newValue & 0x80;
@@ -736,7 +736,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.H;
-			var newValueInt = (int)oldValue + (valueToAdd + Registers.CF);
+			var newValueInt = oldValue + (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -760,7 +760,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.H;
-			var newValueInt = (int)oldValue - (valueToAdd + Registers.CF);
+			var newValueInt = oldValue - (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -784,7 +784,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.H;
-			var newValueInt = (int)oldValue + (valueToAdd);
+			var newValueInt = oldValue + (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -808,7 +808,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.H;
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -832,7 +832,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.H;
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
 
             Registers.SF = newValue & 0x80;
@@ -855,7 +855,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.L;
-			var newValueInt = (int)oldValue + (valueToAdd + Registers.CF);
+			var newValueInt = oldValue + (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -879,7 +879,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.L;
-			var newValueInt = (int)oldValue - (valueToAdd + Registers.CF);
+			var newValueInt = oldValue - (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -903,7 +903,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.L;
-			var newValueInt = (int)oldValue + (valueToAdd);
+			var newValueInt = oldValue + (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -927,7 +927,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.L;
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -951,7 +951,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.L;
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
 
             Registers.SF = newValue & 0x80;
@@ -975,7 +975,7 @@ namespace Konamiman.Z80dotNet
             var oldValue = Registers.A;
 			var address = (ushort)Registers.HL;
 				var valueToAdd = ProcessorAgent.ReadFromMemory(address);
-			var newValueInt = (int)oldValue + (valueToAdd + Registers.CF);
+			var newValueInt = oldValue + (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1000,7 +1000,7 @@ namespace Konamiman.Z80dotNet
             var oldValue = Registers.A;
 			var address = (ushort)Registers.HL;
 				var valueToAdd = ProcessorAgent.ReadFromMemory(address);
-			var newValueInt = (int)oldValue - (valueToAdd + Registers.CF);
+			var newValueInt = oldValue - (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1025,7 +1025,7 @@ namespace Konamiman.Z80dotNet
             var oldValue = Registers.A;
 			var address = (ushort)Registers.HL;
 				var valueToAdd = ProcessorAgent.ReadFromMemory(address);
-			var newValueInt = (int)oldValue + (valueToAdd);
+			var newValueInt = oldValue + (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1050,7 +1050,7 @@ namespace Konamiman.Z80dotNet
             var oldValue = Registers.A;
 			var address = (ushort)Registers.HL;
 				var valueToAdd = ProcessorAgent.ReadFromMemory(address);
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1075,7 +1075,7 @@ namespace Konamiman.Z80dotNet
             var oldValue = Registers.A;
 			var address = (ushort)Registers.HL;
 				var valueToAdd = ProcessorAgent.ReadFromMemory(address);
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
 
             Registers.SF = newValue & 0x80;
@@ -1098,7 +1098,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.A;
-			var newValueInt = (int)oldValue + (valueToAdd + Registers.CF);
+			var newValueInt = oldValue + (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1122,7 +1122,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.A;
-			var newValueInt = (int)oldValue - (valueToAdd + Registers.CF);
+			var newValueInt = oldValue - (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1146,7 +1146,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.A;
-			var newValueInt = (int)oldValue + (valueToAdd);
+			var newValueInt = oldValue + (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1170,7 +1170,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.A;
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1194,7 +1194,7 @@ namespace Konamiman.Z80dotNet
             FetchFinished();
 
             var oldValue = Registers.A;
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
 
             Registers.SF = newValue & 0x80;
@@ -1217,7 +1217,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.IXH;
-			var newValueInt = (int)oldValue + (valueToAdd + Registers.CF);
+			var newValueInt = oldValue + (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1241,7 +1241,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.IXH;
-			var newValueInt = (int)oldValue - (valueToAdd + Registers.CF);
+			var newValueInt = oldValue - (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1265,7 +1265,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.IXH;
-			var newValueInt = (int)oldValue + (valueToAdd);
+			var newValueInt = oldValue + (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1289,7 +1289,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.IXH;
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1313,7 +1313,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.IXH;
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
 
             Registers.SF = newValue & 0x80;
@@ -1336,7 +1336,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.IXL;
-			var newValueInt = (int)oldValue + (valueToAdd + Registers.CF);
+			var newValueInt = oldValue + (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1360,7 +1360,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.IXL;
-			var newValueInt = (int)oldValue - (valueToAdd + Registers.CF);
+			var newValueInt = oldValue - (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1384,7 +1384,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.IXL;
-			var newValueInt = (int)oldValue + (valueToAdd);
+			var newValueInt = oldValue + (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1408,7 +1408,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.IXL;
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1432,7 +1432,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.IXL;
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
 
             Registers.SF = newValue & 0x80;
@@ -1455,7 +1455,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.IYH;
-			var newValueInt = (int)oldValue + (valueToAdd + Registers.CF);
+			var newValueInt = oldValue + (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1479,7 +1479,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.IYH;
-			var newValueInt = (int)oldValue - (valueToAdd + Registers.CF);
+			var newValueInt = oldValue - (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1503,7 +1503,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.IYH;
-			var newValueInt = (int)oldValue + (valueToAdd);
+			var newValueInt = oldValue + (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1527,7 +1527,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.IYH;
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1551,7 +1551,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.IYH;
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
 
             Registers.SF = newValue & 0x80;
@@ -1574,7 +1574,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.IYL;
-			var newValueInt = (int)oldValue + (valueToAdd + Registers.CF);
+			var newValueInt = oldValue + (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1598,7 +1598,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.IYL;
-			var newValueInt = (int)oldValue - (valueToAdd + Registers.CF);
+			var newValueInt = oldValue - (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1622,7 +1622,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.IYL;
-			var newValueInt = (int)oldValue + (valueToAdd);
+			var newValueInt = oldValue + (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1646,7 +1646,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.IYL;
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1670,7 +1670,7 @@ namespace Konamiman.Z80dotNet
 
             var oldValue = Registers.A;
             var valueToAdd = Registers.IYL;
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
 
             Registers.SF = newValue & 0x80;
@@ -1695,7 +1695,7 @@ namespace Konamiman.Z80dotNet
             var oldValue = Registers.A;
 			var address = (ushort)(Registers.IX + (SByte)offset);
 				var valueToAdd = ProcessorAgent.ReadFromMemory(address);
-			var newValueInt = (int)oldValue + (valueToAdd + Registers.CF);
+			var newValueInt = oldValue + (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1721,7 +1721,7 @@ namespace Konamiman.Z80dotNet
             var oldValue = Registers.A;
 			var address = (ushort)(Registers.IX + (SByte)offset);
 				var valueToAdd = ProcessorAgent.ReadFromMemory(address);
-			var newValueInt = (int)oldValue - (valueToAdd + Registers.CF);
+			var newValueInt = oldValue - (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1747,7 +1747,7 @@ namespace Konamiman.Z80dotNet
             var oldValue = Registers.A;
 			var address = (ushort)(Registers.IX + (SByte)offset);
 				var valueToAdd = ProcessorAgent.ReadFromMemory(address);
-			var newValueInt = (int)oldValue + (valueToAdd);
+			var newValueInt = oldValue + (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1773,7 +1773,7 @@ namespace Konamiman.Z80dotNet
             var oldValue = Registers.A;
 			var address = (ushort)(Registers.IX + (SByte)offset);
 				var valueToAdd = ProcessorAgent.ReadFromMemory(address);
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1799,7 +1799,7 @@ namespace Konamiman.Z80dotNet
             var oldValue = Registers.A;
 			var address = (ushort)(Registers.IX + (SByte)offset);
 				var valueToAdd = ProcessorAgent.ReadFromMemory(address);
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
 
             Registers.SF = newValue & 0x80;
@@ -1824,7 +1824,7 @@ namespace Konamiman.Z80dotNet
             var oldValue = Registers.A;
 			var address = (ushort)(Registers.IY + (SByte)offset);
 				var valueToAdd = ProcessorAgent.ReadFromMemory(address);
-			var newValueInt = (int)oldValue + (valueToAdd + Registers.CF);
+			var newValueInt = oldValue + (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1850,7 +1850,7 @@ namespace Konamiman.Z80dotNet
             var oldValue = Registers.A;
 			var address = (ushort)(Registers.IY + (SByte)offset);
 				var valueToAdd = ProcessorAgent.ReadFromMemory(address);
-			var newValueInt = (int)oldValue - (valueToAdd + Registers.CF);
+			var newValueInt = oldValue - (valueToAdd + Registers.CF);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1876,7 +1876,7 @@ namespace Konamiman.Z80dotNet
             var oldValue = Registers.A;
 			var address = (ushort)(Registers.IY + (SByte)offset);
 				var valueToAdd = ProcessorAgent.ReadFromMemory(address);
-			var newValueInt = (int)oldValue + (valueToAdd);
+			var newValueInt = oldValue + (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1902,7 +1902,7 @@ namespace Konamiman.Z80dotNet
             var oldValue = Registers.A;
 			var address = (ushort)(Registers.IY + (SByte)offset);
 				var valueToAdd = ProcessorAgent.ReadFromMemory(address);
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
             Registers.A = newValue;
 
@@ -1928,7 +1928,7 @@ namespace Konamiman.Z80dotNet
             var oldValue = Registers.A;
 			var address = (ushort)(Registers.IY + (SByte)offset);
 				var valueToAdd = ProcessorAgent.ReadFromMemory(address);
-			var newValueInt = (int)oldValue - (valueToAdd);
+			var newValueInt = oldValue - (valueToAdd);
 			var newValue = (byte)(newValueInt & 0xFF);
 
             Registers.SF = newValue & 0x80;

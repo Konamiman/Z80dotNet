@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
+
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -28,7 +29,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             if(reg == "R")
                 newValue = newValue.Inc7Bits().Inc7Bits();
 
-            Assert.AreEqual(newValue, Registers.A);
+            Assert.AreEqual(newValue, (int)Registers.A);
         }
 
         [Test]
@@ -78,11 +79,11 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Registers.IFF2 = 0;
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.PF);
+            Assert.AreEqual(0, (int)Registers.PF);
 
             Registers.IFF2 = 1;
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.PF);
+            Assert.AreEqual(1, (int)Registers.PF);
         }
 
         [Test]
@@ -105,13 +106,13 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             SetReg(reg, ((byte)1).WithBit(3, 1).WithBit(5, 0));
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.Flag3);
-            Assert.AreEqual(0, Registers.Flag5);
+            Assert.AreEqual(1, (int)Registers.Flag3);
+            Assert.AreEqual(0, (int)Registers.Flag5);
 
             SetReg(reg, ((byte)1).WithBit(3, 0).WithBit(5, 1));
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.Flag3);
-            Assert.AreEqual(1, Registers.Flag5);
+            Assert.AreEqual(0, (int)Registers.Flag3);
+            Assert.AreEqual(1, (int)Registers.Flag5);
         }
     }
 }

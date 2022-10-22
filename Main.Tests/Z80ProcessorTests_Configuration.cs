@@ -1,7 +1,6 @@
-﻿using Moq;
-using NUnit.Framework;
-using Ploeh.AutoFixture;
-using System;
+﻿using NUnit.Framework;
+using AutoFixture;
+using Moq;
 
 namespace Konamiman.Z80dotNet.Tests
 {
@@ -30,12 +29,12 @@ namespace Konamiman.Z80dotNet.Tests
         [Test]
         public void Has_proper_defaults()
         {
-            Assert.AreEqual(4, Sut.ClockFrequencyInMHz);
-            Assert.AreEqual(1, Sut.ClockSpeedFactor);
+            Assert.AreEqual(4, (int)Sut.ClockFrequencyInMHz);
+            Assert.AreEqual(1, (int)Sut.ClockSpeedFactor);
 
             Assert.IsTrue(Sut.AutoStopOnDiPlusHalt);
             Assert.IsFalse(Sut.AutoStopOnRetWithStackEmpty);
-            Assert.AreEqual(0xFFFF.ToShort(), Sut.StartOfStack);
+            Assert.AreEqual(0xFFFF.ToShort(), (int)Sut.StartOfStack);
 
             Assert.IsInstanceOf<PlainMemory>(Sut.Memory);
             Assert.AreEqual(65536, Sut.Memory.Size);
@@ -44,12 +43,12 @@ namespace Konamiman.Z80dotNet.Tests
 
             for(int i = 0; i < 65536; i++) {
                 Assert.AreEqual(MemoryAccessMode.ReadAndWrite, Sut.GetMemoryAccessMode((ushort)i));
-                Assert.AreEqual(0, Sut.GetMemoryWaitStatesForM1((ushort)i));
-                Assert.AreEqual(0, Sut.GetMemoryWaitStatesForNonM1((ushort)i));
+                Assert.AreEqual(0, (int)Sut.GetMemoryWaitStatesForM1((ushort)i));
+                Assert.AreEqual(0, (int)Sut.GetMemoryWaitStatesForNonM1((ushort)i));
             }       
             for(int i = 0; i < 256; i++) {
                 Assert.AreEqual(MemoryAccessMode.ReadAndWrite, Sut.GetPortAccessMode((byte) i));
-                Assert.AreEqual(0, Sut.GetPortWaitStates((byte) i));
+                Assert.AreEqual(0, (int)Sut.GetPortWaitStates((byte)i));
             }
 
             Assert.IsInstanceOf<Z80Registers>(Sut.Registers);
@@ -77,14 +76,14 @@ namespace Konamiman.Z80dotNet.Tests
             
             Sut.Reset();
 
-            Assert.AreEqual(0xFFFF.ToShort(), Sut.Registers.AF);
-            Assert.AreEqual(0xFFFF.ToShort(), Sut.Registers.SP);
-            Assert.AreEqual(0, Sut.Registers.PC);
-            Assert.AreEqual(0, Sut.Registers.IFF1);
-            Assert.AreEqual(0, Sut.Registers.IFF2);
-            Assert.AreEqual(0, Sut.InterruptMode);
+            Assert.AreEqual(0xFFFF.ToShort(), (int)Sut.Registers.AF);
+            Assert.AreEqual(0xFFFF.ToShort(), (int)Sut.Registers.SP);
+            Assert.AreEqual(0, (int)Sut.Registers.PC);
+            Assert.AreEqual(0, (int)Sut.Registers.IFF1);
+            Assert.AreEqual(0, (int)Sut.Registers.IFF2);
+            Assert.AreEqual(0, (int)Sut.InterruptMode);
 
-            Assert.AreEqual(0, Sut.TStatesElapsedSinceReset);
+            Assert.AreEqual(0, (int)Sut.TStatesElapsedSinceReset);
 
             Assert.False(Sut.IsHalted);
         }
@@ -205,10 +204,10 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.SetMemoryWaitStatesForM1(0, 0x8000, value1);
             Sut.SetMemoryWaitStatesForM1(0x8000, 0x8000, value2);
 
-            Assert.AreEqual(value1, Sut.GetMemoryWaitStatesForM1(0));
-            Assert.AreEqual(value1, Sut.GetMemoryWaitStatesForM1(0x7FFF));
-            Assert.AreEqual(value2, Sut.GetMemoryWaitStatesForM1(0x8000));
-            Assert.AreEqual(value2, Sut.GetMemoryWaitStatesForM1(0xFFFF));
+            Assert.AreEqual(value1, (int)Sut.GetMemoryWaitStatesForM1(0));
+            Assert.AreEqual(value1, (int)Sut.GetMemoryWaitStatesForM1(0x7FFF));
+            Assert.AreEqual(value2, (int)Sut.GetMemoryWaitStatesForM1(0x8000));
+            Assert.AreEqual(value2, (int)Sut.GetMemoryWaitStatesForM1(0xFFFF));
         }
 
         [Test]
@@ -248,10 +247,10 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.SetMemoryWaitStatesForNonM1(0, 0x8000, value1);
             Sut.SetMemoryWaitStatesForNonM1(0x8000, 0x8000, value2);
 
-            Assert.AreEqual(value1, Sut.GetMemoryWaitStatesForNonM1(0));
-            Assert.AreEqual(value1, Sut.GetMemoryWaitStatesForNonM1(0x7FFF));
-            Assert.AreEqual(value2, Sut.GetMemoryWaitStatesForNonM1(0x8000));
-            Assert.AreEqual(value2, Sut.GetMemoryWaitStatesForNonM1(0xFFFF));
+            Assert.AreEqual(value1, (int)Sut.GetMemoryWaitStatesForNonM1(0));
+            Assert.AreEqual(value1, (int)Sut.GetMemoryWaitStatesForNonM1(0x7FFF));
+            Assert.AreEqual(value2, (int)Sut.GetMemoryWaitStatesForNonM1(0x8000));
+            Assert.AreEqual(value2, (int)Sut.GetMemoryWaitStatesForNonM1(0xFFFF));
         }
 
         [Test]
@@ -291,10 +290,10 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.SetPortWaitStates(0, 128, value1);
             Sut.SetPortWaitStates(128, 128, value2);
 
-            Assert.AreEqual(value1, Sut.GetPortWaitStates(0));
-            Assert.AreEqual(value1, Sut.GetPortWaitStates(127));
-            Assert.AreEqual(value2, Sut.GetPortWaitStates(128));
-            Assert.AreEqual(value2, Sut.GetPortWaitStates(255));
+            Assert.AreEqual(value1, (int)Sut.GetPortWaitStates(0));
+            Assert.AreEqual(value1, (int)Sut.GetPortWaitStates(127));
+            Assert.AreEqual(value2, (int)Sut.GetPortWaitStates(128));
+            Assert.AreEqual(value2, (int)Sut.GetPortWaitStates(255));
         }
 
         [Test]

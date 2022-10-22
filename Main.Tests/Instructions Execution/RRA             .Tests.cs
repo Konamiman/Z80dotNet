@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
+
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -26,12 +27,12 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Registers.A = (byte)(Fixture.Create<byte>() | 0x80);
             Registers.CF = 0;
             Execute(RRA_opcode);
-            Assert.AreEqual(0, Registers.A.GetBit(7));
+            Assert.AreEqual(0, (int)Registers.A.GetBit(7));
 
             Registers.A = (byte)(Fixture.Create<byte>() & 0x7F);
             Registers.CF = 1;
             Execute(RRA_opcode);
-            Assert.AreEqual(1, Registers.A.GetBit(7));
+            Assert.AreEqual(1, (int)Registers.A.GetBit(7));
         }
 
         [Test]
@@ -40,16 +41,16 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Registers.A = 0x06;
 
             Execute(RRA_opcode);
-            Assert.AreEqual(0, Registers.CF);
+            Assert.AreEqual(0, (int)Registers.CF);
 
             Execute(RRA_opcode);
-            Assert.AreEqual(1, Registers.CF);
+            Assert.AreEqual(1, (int)Registers.CF);
 
             Execute(RRA_opcode);
-            Assert.AreEqual(1, Registers.CF);
+            Assert.AreEqual(1, (int)Registers.CF);
 
             Execute(RRA_opcode);
-            Assert.AreEqual(0, Registers.CF);
+            Assert.AreEqual(0, (int)Registers.CF);
         }
 
         [Test]

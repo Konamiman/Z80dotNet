@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
+
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -19,7 +20,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(LD_A_aa_opcode, nextFetches: new[] {address.GetLowByte(), address.GetHighByte()});
 
-            Assert.AreEqual(newValue, Registers.A);
+            Assert.AreEqual(newValue, (int)Registers.A);
         }
 
         [Test]

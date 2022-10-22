@@ -1,7 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
-using System;
-using System.Linq;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests
 {
@@ -52,13 +50,13 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut[address] = value;
             var actual = Sut[address];
-            Assert.AreEqual(value, actual);
+            Assert.AreEqual(value, (int)actual);
 
             value ^= 255;
 
             Sut[address] = value;
             actual = Sut[address];
-            Assert.AreEqual(value, actual);
+            Assert.AreEqual(value, (int)actual);
         }
 
         [Test]

@@ -1,8 +1,6 @@
 ﻿using Moq;
 using NUnit.Framework;
-using Ploeh.AutoFixture;
-using System;
-using System.Collections.Generic;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests
 {
@@ -49,7 +47,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.Start();
 
-            Assert.AreEqual(1, Sut.Registers.PC);
+            Assert.AreEqual(1, (int)Sut.Registers.PC);
         }
 
         void DoBeforeFetch(Action<byte> code)
@@ -68,7 +66,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.Start();
 
-            Assert.AreEqual(0xFFFF.ToShort(), Sut.StartOfStack);
+            Assert.AreEqual(0xFFFF.ToShort(), (int)Sut.StartOfStack);
         }
 
         [Test]
@@ -102,7 +100,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.Continue();
 
-            Assert.AreEqual(pc.Inc(), Sut.Registers.PC);
+            Assert.AreEqual(pc.Inc(), (int)Sut.Registers.PC);
         }
 
         [Test]
@@ -219,7 +217,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.Start();
 
-            Assert.AreEqual(2, Sut.InterruptMode);
+            Assert.AreEqual(2, (int)Sut.InterruptMode);
         }
 
         void DoAfterFetch(Action<byte> code)
@@ -333,7 +331,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Assert.AreEqual(StopReason.RetWithStackEmpty, Sut.StopReason);
             Assert.AreEqual(ProcessorState.Stopped , Sut.State);
-            Assert.AreEqual(spValue, Sut.StartOfStack);
+            Assert.AreEqual(spValue, (int)Sut.StartOfStack);
         }
 
         [Test]
@@ -581,8 +579,8 @@ namespace Konamiman.Z80dotNet.Tests
                 memoryAccessStates * 2 +
                 portAccessStates * 2;
 
-            Assert.AreEqual(expected, Sut.TStatesElapsedSinceReset);
-            Assert.AreEqual(expected, Sut.TStatesElapsedSinceStart);
+            Assert.AreEqual(expected, (int)Sut.TStatesElapsedSinceReset);
+            Assert.AreEqual(expected, (int)Sut.TStatesElapsedSinceStart);
         }
 
         private void SetStatesReturner(Func<byte, byte> returner)
@@ -601,8 +599,8 @@ namespace Konamiman.Z80dotNet.Tests
             {
                 if(!secondRun)
                 {
-                    Assert.AreEqual(M1readMemoryStates, Sut.TStatesElapsedSinceReset);
-                    Assert.AreEqual(M1readMemoryStates, Sut.TStatesElapsedSinceStart);
+                    Assert.AreEqual(M1readMemoryStates, (int)Sut.TStatesElapsedSinceReset);
+                    Assert.AreEqual(M1readMemoryStates, (int)Sut.TStatesElapsedSinceStart);
                 }
             };
 
@@ -610,8 +608,8 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.BeforeInstructionExecution += (sender, e) =>
             {
-                Assert.AreEqual(0, Sut.TStatesElapsedSinceStart);
-                Assert.AreEqual(0, Sut.TStatesElapsedSinceReset);
+                Assert.AreEqual(0, (int)Sut.TStatesElapsedSinceStart);
+                Assert.AreEqual(0, (int)Sut.TStatesElapsedSinceReset);
             };
 
             secondRun = true;
@@ -631,13 +629,13 @@ namespace Konamiman.Z80dotNet.Tests
             {
                 if(secondRun)
                 {
-                    Assert.AreEqual(M1readMemoryStates * 2, Sut.TStatesElapsedSinceReset);
-                    Assert.AreEqual(M1readMemoryStates * 2, Sut.TStatesElapsedSinceStart);
+                    Assert.AreEqual(M1readMemoryStates * 2, (int)Sut.TStatesElapsedSinceReset);
+                    Assert.AreEqual(M1readMemoryStates * 2, (int)Sut.TStatesElapsedSinceStart);
                 }
                 else
                 {
-                    Assert.AreEqual(M1readMemoryStates, Sut.TStatesElapsedSinceReset);
-                    Assert.AreEqual(M1readMemoryStates, Sut.TStatesElapsedSinceStart);
+                    Assert.AreEqual(M1readMemoryStates, (int)Sut.TStatesElapsedSinceReset);
+                    Assert.AreEqual(M1readMemoryStates, (int)Sut.TStatesElapsedSinceStart);
                 }
             };
 
@@ -658,13 +656,13 @@ namespace Konamiman.Z80dotNet.Tests
             {
                 if(secondRun)
                 {
-                    Assert.AreEqual(M1readMemoryStates, Sut.TStatesElapsedSinceReset);
-                    Assert.AreEqual(M1readMemoryStates * 2, Sut.TStatesElapsedSinceStart);
+                    Assert.AreEqual(M1readMemoryStates, (int)Sut.TStatesElapsedSinceReset);
+                    Assert.AreEqual(M1readMemoryStates * 2, (int)Sut.TStatesElapsedSinceStart);
                 }
                 else
                 {
-                    Assert.AreEqual(M1readMemoryStates, Sut.TStatesElapsedSinceReset);
-                    Assert.AreEqual(M1readMemoryStates, Sut.TStatesElapsedSinceStart);
+                    Assert.AreEqual(M1readMemoryStates, (int)Sut.TStatesElapsedSinceReset);
+                    Assert.AreEqual(M1readMemoryStates, (int)Sut.TStatesElapsedSinceStart);
                 }
             };
 
@@ -682,7 +680,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.Reset();
 
-            Assert.AreEqual(0xFFFF.ToShort(), Sut.StartOfStack);
+            Assert.AreEqual(0xFFFF.ToShort(), (int)Sut.StartOfStack);
         }
 
         [Test]
@@ -807,9 +805,9 @@ namespace Konamiman.Z80dotNet.Tests
             SetStatesReturner(b => statesCount);
 
             Sut.ExecuteNextInstruction();
-            Assert.AreEqual(statesCount, Sut.TStatesElapsedSinceStart);
+            Assert.AreEqual(statesCount, (int)Sut.TStatesElapsedSinceStart);
             Sut.ExecuteNextInstruction();
-            Assert.AreEqual(statesCount * 2, Sut.TStatesElapsedSinceStart);
+            Assert.AreEqual(statesCount * 2, (int)Sut.TStatesElapsedSinceStart);
         }
 
         #endregion
@@ -875,7 +873,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             var exception = Assert.Throws<InstructionFetchFinishedEventNotFiredException>(Sut.Continue);
 
-            Assert.AreEqual(address, exception.InstructionAddress);
+            Assert.AreEqual(address, (int)exception.InstructionAddress);
             Assert.AreEqual(new Byte[] {RET_opcode}, exception.FetchedBytes);
         }
 
@@ -910,8 +908,8 @@ namespace Konamiman.Z80dotNet.Tests
                     for (int i = 0; i < 3; i++)
                     {
                         var oldPC = Sut.Registers.PC;
-                        Assert.AreEqual(RET_opcode, Sut.PeekNextOpcode());
-                        Assert.AreEqual(oldPC, Sut.Registers.PC);
+                        Assert.AreEqual(RET_opcode, (int)Sut.PeekNextOpcode());
+                        Assert.AreEqual(oldPC, (int)Sut.Registers.PC);
                     }
                 }
             });
@@ -939,8 +937,8 @@ namespace Konamiman.Z80dotNet.Tests
             AssertExecuted(LD_SP_HL_opcode, 1);
             AssertExecuted(RET_opcode, 1);
 
-            Assert.AreEqual(expected, Sut.TStatesElapsedSinceReset);
-            Assert.AreEqual(expected, Sut.TStatesElapsedSinceStart);
+            Assert.AreEqual(expected, (int)Sut.TStatesElapsedSinceReset);
+            Assert.AreEqual(expected, (int)Sut.TStatesElapsedSinceStart);
         }
 
         [Test]
@@ -982,10 +980,10 @@ namespace Konamiman.Z80dotNet.Tests
                 if(b == LD_SP_HL_opcode)
                 {
                     beforeInvoked = true;
-                    Assert.AreEqual(secondOpcodeByte, Sut.PeekNextOpcode());
-                    Assert.AreEqual(2, Sut.Registers.PC);
-                    Assert.AreEqual(secondOpcodeByte, Sut.FetchNextOpcode());
-                    Assert.AreEqual(3, Sut.Registers.PC);
+                    Assert.AreEqual(secondOpcodeByte, (int)Sut.PeekNextOpcode());
+                    Assert.AreEqual(2, (int)Sut.Registers.PC);
+                    Assert.AreEqual(secondOpcodeByte, (int)Sut.FetchNextOpcode());
+                    Assert.AreEqual(3, (int)Sut.Registers.PC);
                 }
             });
 
@@ -1004,8 +1002,8 @@ namespace Konamiman.Z80dotNet.Tests
             AssertExecuted(LD_SP_HL_opcode, 1);
             AssertExecuted(RET_opcode, 1);
 
-            Assert.AreEqual(expected, Sut.TStatesElapsedSinceReset);
-            Assert.AreEqual(expected, Sut.TStatesElapsedSinceStart);
+            Assert.AreEqual(expected, (int)Sut.TStatesElapsedSinceReset);
+            Assert.AreEqual(expected, (int)Sut.TStatesElapsedSinceStart);
         }
 
         #endregion

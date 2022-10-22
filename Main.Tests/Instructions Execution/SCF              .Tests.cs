@@ -13,7 +13,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(SCF_opcode);
 
-            Assert.AreEqual(1, Registers.CF);
+            Assert.AreEqual(1, (int)Registers.CF);
         }
 
         [Test]
@@ -34,14 +34,14 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Registers.A = Registers.A.WithBit(3, 1);
             Registers.A = Registers.A.WithBit(5, 0);
             Execute(SCF_opcode);
-            Assert.AreEqual(1, Registers.Flag3);
-            Assert.AreEqual(0, Registers.Flag5);
+            Assert.AreEqual(1, (int)Registers.Flag3);
+            Assert.AreEqual(0, (int)Registers.Flag5);
 
             Registers.A = Registers.A.WithBit(3, 0);
             Registers.A = Registers.A.WithBit(5, 1);
             Execute(SCF_opcode);
-            Assert.AreEqual(0, Registers.Flag3);
-            Assert.AreEqual(1, Registers.Flag5);
+            Assert.AreEqual(0, (int)Registers.Flag3);
+            Assert.AreEqual(1, (int)Registers.Flag5);
         }
 
         [Test]

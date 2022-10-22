@@ -22,8 +22,8 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.Start();
 
-            Assert.AreEqual(12, Sut.Registers.A);
-            Assert.AreEqual(28, Sut.TStatesElapsedSinceStart);
+            Assert.AreEqual(12, (int)Sut.Registers.A);
+            Assert.AreEqual(28, (int)Sut.TStatesElapsedSinceStart);
         }
     }
 }

@@ -1,5 +1,6 @@
-﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+﻿using AutoFixture;
+using NUnit.Framework;
+
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -18,8 +19,8 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(EX_DE_HL_opcode);
 
-            Assert.AreEqual(HL, Registers.DE);
-            Assert.AreEqual(DE, Registers.HL);
+            Assert.AreEqual(HL, (int)Registers.DE);
+            Assert.AreEqual(DE, (int)Registers.HL);
         }
 
         [Test]

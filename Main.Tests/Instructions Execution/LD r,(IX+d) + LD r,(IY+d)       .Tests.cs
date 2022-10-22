@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
+
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -39,7 +40,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(opcode, prefix, offset);
 
-            Assert.AreEqual(newValue, GetReg<byte>(destReg));
+            Assert.AreEqual(newValue, (int)GetReg<byte>(destReg));
         }
 
         [Test]

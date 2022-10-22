@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
+
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -43,12 +44,12 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             SetupRegOrMem(reg, (byte)(Fixture.Create<byte>() | 0X80), offset);
             Registers.CF = 0;
             ExecuteBit(opcode, prefix, offset);
-            Assert.AreEqual(0, ValueOfRegOrMem(reg, offset).GetBit(7));
+            Assert.AreEqual(0, (int)ValueOfRegOrMem(reg, offset).GetBit(7));
 
             SetupRegOrMem(reg, (byte)(Fixture.Create<byte>() & 0x7f), offset);
             Registers.CF = 1;
             ExecuteBit(opcode, prefix, offset);
-            Assert.AreEqual(1, ValueOfRegOrMem(reg, offset).GetBit(7));
+            Assert.AreEqual(1, (int)ValueOfRegOrMem(reg, offset).GetBit(7));
         }
 
         [Test]
@@ -58,16 +59,16 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             SetupRegOrMem(reg, 0x06, offset);
 
             ExecuteBit(opcode, prefix, offset);
-            Assert.AreEqual(0, Registers.CF);
+            Assert.AreEqual(0, (int)Registers.CF);
 
             ExecuteBit(opcode, prefix, offset);
-            Assert.AreEqual(1, Registers.CF);
+            Assert.AreEqual(1, (int)Registers.CF);
 
             ExecuteBit(opcode, prefix, offset);
-            Assert.AreEqual(1, Registers.CF);
+            Assert.AreEqual(1, (int)Registers.CF);
 
             ExecuteBit(opcode, prefix, offset);
-            Assert.AreEqual(0, Registers.CF);
+            Assert.AreEqual(0, (int)Registers.CF);
         }
 
         [Test]
@@ -83,11 +84,11 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             Registers.CF = 1;
             ExecuteBit(opcode, prefix, offset);
-            Assert.AreEqual(1, Registers.SF);
+            Assert.AreEqual(1, (int)Registers.SF);
 
             Registers.CF = 0;
             ExecuteBit(opcode, prefix, offset);
-            Assert.AreEqual(0, Registers.SF);
+            Assert.AreEqual(0, (int)Registers.SF);
         }
 
         [Test]
@@ -110,7 +111,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             {
                 SetupRegOrMem(reg, (byte)i, offset);
                 ExecuteBit(opcode, prefix, offset);
-                Assert.AreEqual(Parity[ValueOfRegOrMem(reg, offset)], Registers.PF);
+                Assert.AreEqual(Parity[ValueOfRegOrMem(reg, offset)], (int)Registers.PF);
             }
         }
 

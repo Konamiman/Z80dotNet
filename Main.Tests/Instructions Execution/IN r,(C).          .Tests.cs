@@ -1,7 +1,6 @@
-﻿using System;
-using Konamiman.Z80dotNet.Tests.InstructionsExecution;
+﻿using AutoFixture;
 using NUnit.Framework;
-using Ploeh.AutoFixture;
+
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -38,7 +37,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(opcode, portNumber, value);
 
-            Assert.AreEqual(value, GetReg<byte>(reg));
+            Assert.AreEqual(value, (int)GetReg<byte>(reg));
         }
 
         [Test]
@@ -49,16 +48,16 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             var portNumber = Fixture.Create<byte>();
 
             Execute(opcode, portNumber, 0xFE);
-            Assert.AreEqual(1, Registers.SF);
+            Assert.AreEqual(1, (int)Registers.SF);
 
             Execute(opcode, portNumber, 0xFF);
-            Assert.AreEqual(1, Registers.SF);
+            Assert.AreEqual(1, (int)Registers.SF);
 
             Execute(opcode, portNumber, 0);
-            Assert.AreEqual(0, Registers.SF);
+            Assert.AreEqual(0, (int)Registers.SF);
 
             Execute(opcode, portNumber, 1);
-            Assert.AreEqual(0, Registers.SF);
+            Assert.AreEqual(0, (int)Registers.SF);
         }
 
         [Test]
@@ -69,13 +68,13 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             var portNumber = Fixture.Create<byte>();
 
             Execute(opcode, portNumber, 0xFF);
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.AreEqual(0, (int)Registers.ZF);
 
             Execute(opcode, portNumber, 0);
-            Assert.AreEqual(1, Registers.ZF);
+            Assert.AreEqual(1, (int)Registers.ZF);
 
             Execute(opcode, portNumber, 1);
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.AreEqual(0, (int)Registers.ZF);
         }
 
         [Test]
@@ -98,11 +97,11 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             {
                 Registers.CF = 0;
                 Execute(opcode, portNumber, value);
-                Assert.AreEqual(0, Registers.CF);
+                Assert.AreEqual(0, (int)Registers.CF);
 
                 Registers.CF = 1;
                 Execute(opcode, portNumber, value);
-                Assert.AreEqual(1, Registers.CF);
+                Assert.AreEqual(1, (int)Registers.CF);
             }
         }
 
@@ -117,7 +116,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             foreach (var value in randomValues)
             {
                 Execute(opcode, portNumber, value);
-                Assert.AreEqual(Parity[value], Registers.PF);
+                Assert.AreEqual(Parity[value], (int)Registers.PF);
             }
         }
 
@@ -129,13 +128,13 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             var portNumber = Fixture.Create<byte>();
             var value = ((byte)0).WithBit(3, 1).WithBit(5, 0);
             Execute(opcode, portNumber, value);
-            Assert.AreEqual(1, Registers.Flag3);
-            Assert.AreEqual(0, Registers.Flag5);
+            Assert.AreEqual(1, (int)Registers.Flag3);
+            Assert.AreEqual(0, (int)Registers.Flag5);
 
             value = ((byte)0).WithBit(3, 0).WithBit(5, 1);
             Execute(opcode, portNumber, value);
-            Assert.AreEqual(0, Registers.Flag3);
-            Assert.AreEqual(1, Registers.Flag5);
+            Assert.AreEqual(0, (int)Registers.Flag3);
+            Assert.AreEqual(1, (int)Registers.Flag5);
         }
 
         [Test]

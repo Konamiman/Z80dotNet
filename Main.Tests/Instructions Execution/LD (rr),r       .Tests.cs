@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
+
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -36,7 +37,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Sut.Execute(opcode);
 
             var expected = isHorL ? GetReg<byte>(srcReg) : newValue;
-            Assert.AreEqual(expected, ProcessorAgent.Memory[address]);
+            Assert.AreEqual(expected, (int)ProcessorAgent.Memory[address]);
         }
 
         [Test]

@@ -1,7 +1,6 @@
-﻿using System;
-using Konamiman.Z80dotNet.Tests.InstructionsExecution;
-using NUnit.Framework;
-using Ploeh.AutoFixture;
+﻿using NUnit.Framework;
+using AutoFixture;
+
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -39,7 +38,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(opcode, portNumber, value);
 
-            Assert.AreEqual(reg == "0" ? 0 : value, GetPortValue(portNumber));
+            Assert.AreEqual(reg == "0" ? 0 : value, (int)GetPortValue(portNumber));
         }
 
         [Test]
