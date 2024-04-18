@@ -11,11 +11,11 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             Registers.CF = 0;
             Execute(CCF_opcode);
-            Assert.AreEqual(1, Registers.CF);
+            Assert.That(Registers.CF.Value, Is.EqualTo(1));
 
             Registers.CF = 1;
             Execute(CCF_opcode);
-            Assert.AreEqual(0, Registers.CF);
+            Assert.That(Registers.CF.Value, Is.EqualTo(0));
         }
 
         [Test]
@@ -24,12 +24,12 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Registers.CF = 0;
             Registers.HF = 1;
             Execute(CCF_opcode);
-            Assert.AreEqual(0, Registers.HF);
+            Assert.That(Registers.HF.Value, Is.EqualTo(0));
 
             Registers.CF = 1;
             Registers.HF = 0;
             Execute(CCF_opcode);
-            Assert.AreEqual(1, Registers.HF);
+            Assert.That(Registers.HF.Value, Is.EqualTo(1));
         }
 
         [Test]
@@ -53,15 +53,18 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             Registers.A = (byte)value;
             Execute(CCF_opcode);
-            Assert.AreEqual(Registers.A.GetBit(3), Registers.Flag3);
-            Assert.AreEqual(Registers.A.GetBit(5), Registers.Flag5);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.Flag3, Is.EqualTo(Registers.A.GetBit(3)));
+                Assert.That(Registers.Flag5, Is.EqualTo(Registers.A.GetBit(5)));
+            });
         }
 
         [Test]
         public void CCF_returns_proper_T_states()
         {
             var states = Execute(CCF_opcode);
-            Assert.AreEqual(4, states);
+            Assert.That(states, Is.EqualTo(4));
         }
     }
 }

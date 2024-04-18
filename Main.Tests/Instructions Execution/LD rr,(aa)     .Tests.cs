@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -16,7 +16,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         };
 
         [Test]
-        [TestCaseSource("LD_rr_aa_Source")]
+        [TestCaseSource(nameof(LD_rr_aa_Source))]
         public void LD_rr_aa_loads_value_from_memory(string reg, byte opcode, byte? prefix)
         {
             var address = Fixture.Create<ushort>();
@@ -28,23 +28,26 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(opcode, prefix, nextFetches: address.ToByteArray());
 
-            Assert.AreEqual(newValue, ReadShortFromMemory(address));
-            Assert.AreEqual(newValue, GetReg<short>(reg));
+            Assert.Multiple(() =>
+            {
+                Assert.That(ReadShortFromMemory(address), Is.EqualTo(newValue));
+                Assert.That(GetReg<short>(reg), Is.EqualTo(newValue));
+            });
         }
 
         [Test]
-        [TestCaseSource("LD_rr_aa_Source")]
+        [TestCaseSource(nameof(LD_rr_aa_Source))]
         public void LD_rr_r_do_not_modify_flags(string reg, byte opcode, byte? prefix)
         {
             AssertNoFlagsAreModified(opcode, prefix);
         }
 
         [Test]
-        [TestCaseSource("LD_rr_aa_Source")]
+        [TestCaseSource(nameof(LD_rr_aa_Source))]
         public void LD_rr_r_returns_proper_T_states(string reg, byte opcode, byte? prefix)
         {
             var states = Execute(opcode, prefix);
-            Assert.AreEqual(reg == "HL" ? 16 : 20, states);
+            Assert.That(states, Is.EqualTo(reg == "HL" ? 16 : 20));
         }
     }
 }

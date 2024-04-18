@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -21,7 +21,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         };
 
         [Test]
-        [TestCaseSource("LD_r_n_Source")]
+        [TestCaseSource(nameof(LD_r_n_Source))]
         public void LD_r_n_loads_register_with_value(string reg, byte opcode, byte? prefix)
         {
             var oldValue = Fixture.Create<byte>();
@@ -31,22 +31,22 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(opcode, prefix, newValue);
 
-            Assert.AreEqual(newValue, GetReg<byte>(reg));
+            Assert.That(GetReg<byte>(reg), Is.EqualTo(newValue));
         }
 
         [Test]
-        [TestCaseSource("LD_r_n_Source")]
+        [TestCaseSource(nameof(LD_r_n_Source))]
         public void LD_r_n_do_not_modify_flags(string reg, byte opcode, byte? prefix)
         {
             AssertNoFlagsAreModified(opcode, prefix);
         }
 
         [Test]
-        [TestCaseSource("LD_r_n_Source")]
+        [TestCaseSource(nameof(LD_r_n_Source))]
         public void LD_r_n_returns_proper_T_states(string reg, byte opcode, byte? prefix)
         {
             var states = Execute(opcode, prefix);
-            Assert.AreEqual(IfIndexRegister(reg, 11, @else: 7), states);
+            Assert.That(states, Is.EqualTo(IfIndexRegister(reg, 11, @else: 7)));
         }
     }
 }

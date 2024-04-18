@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 using System.Collections.Generic;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
@@ -35,7 +35,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
 
         [Test]
-        [TestCaseSource("AND_r_Source")]
+        [TestCaseSource(nameof(AND_r_Source))]
         public void AND_r_ands_both_registers(string src, byte opcode, byte? prefix)
         {
             var oldValue = Fixture.Create<byte>();
@@ -44,11 +44,11 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Setup(src, oldValue, valueToAnd);
             Execute(opcode, prefix);
 
-            Assert.AreEqual(oldValue & valueToAnd, Registers.A);
+            Assert.That(Registers.A, Is.EqualTo(oldValue & valueToAnd));
         }
 
         [Test]
-        [TestCaseSource("AND_A_Source")]
+        [TestCaseSource(nameof(AND_A_Source))]
         public void AND_A_does_not_change_A(string src, byte opcode, byte? prefix)
         {
             var value = Fixture.Create<byte>();
@@ -56,7 +56,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Registers.A = value;
             Execute(opcode, prefix);
 
-            Assert.AreEqual(value, Registers.A);
+            Assert.That(Registers.A, Is.EqualTo(value));
         }
 
         private void Setup(string src, byte oldValue, byte valueToAnd)
@@ -89,17 +89,17 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
 
         [Test]
-        [TestCaseSource("AND_r_Source")]
+        [TestCaseSource(nameof(AND_r_Source))]
         public void AND_r_sets_SF_appropriately(string src, byte opcode, byte? prefix)
         {
             ExecuteCase(src, opcode, 0xFF, 0xFF, prefix);
-            Assert.AreEqual(1, Registers.SF);
+            Assert.That(Registers.SF.Value, Is.EqualTo(1));
 
             ExecuteCase(src, opcode, 0xFF, 0x80, prefix);
-            Assert.AreEqual(1, Registers.SF);
+            Assert.That(Registers.SF.Value, Is.EqualTo(1));
 
             ExecuteCase(src, opcode, 0xFF, 0, prefix);
-            Assert.AreEqual(0, Registers.SF);
+            Assert.That(Registers.SF.Value, Is.EqualTo(0));
         }
 
         private void ExecuteCase(string src, byte opcode, int oldValue, int valueToAnd, byte? prefix)
@@ -109,79 +109,85 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
 
         [Test]
-        [TestCaseSource("AND_r_Source")]
+        [TestCaseSource(nameof(AND_r_Source))]
         public void AND_r_sets_ZF_appropriately(string src, byte opcode, byte? prefix)
         {
             ExecuteCase(src, opcode, 0xFF, 0xFF, prefix);
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.That(Registers.ZF.Value, Is.EqualTo(0));
 
             ExecuteCase(src, opcode, 0xFF, 0x80, prefix);
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.That(Registers.ZF.Value, Is.EqualTo(0));
 
             ExecuteCase(src, opcode, 0xFF, 0, prefix);
-            Assert.AreEqual(1, Registers.ZF);
+            Assert.That(Registers.ZF.Value, Is.EqualTo(1));
         }
 
         [Test]
-        [TestCaseSource("AND_r_Source")]
+        [TestCaseSource(nameof(AND_r_Source))]
         public void AND_r_sets_HF(string src, byte opcode, byte? prefix)
         {
             AssertSetsFlags(opcode, null, "H");
         }
 
         [Test]
-        [TestCaseSource("AND_r_Source")]
+        [TestCaseSource(nameof(AND_r_Source))]
         public void AND_r_sets_PF_appropriately(string src, byte opcode, byte? prefix)
         {
             ExecuteCase(src, opcode, 0xFF, 0x7E, prefix);
-            Assert.AreEqual(1, Registers.PF);
+            Assert.That(Registers.PF.Value, Is.EqualTo(1));
 
             ExecuteCase(src, opcode, 0xFF, 0x7F, prefix);
-            Assert.AreEqual(0, Registers.PF);
+            Assert.That(Registers.PF.Value, Is.EqualTo(0));
 
             ExecuteCase(src, opcode, 0xFF, 0x80, prefix);
-            Assert.AreEqual(0, Registers.PF);
+            Assert.That(Registers.PF.Value, Is.EqualTo(0));
 
             ExecuteCase(src, opcode, 0xFF, 0x81, prefix);
-            Assert.AreEqual(1, Registers.PF);
+            Assert.That(Registers.PF.Value, Is.EqualTo(1));
         }
 
         [Test]
-        [TestCaseSource("AND_r_Source")]
-        [TestCaseSource("AND_A_Source")]
+        [TestCaseSource(nameof(AND_r_Source))]
+        [TestCaseSource(nameof(AND_A_Source))]
         public void AND_r_resets_NF_and_CF(string src, byte opcode, byte? prefix)
         {
             AssertResetsFlags(opcode, null, "N", "C");
         }
 
         [Test]
-        [TestCaseSource("AND_r_Source")]
+        [TestCaseSource(nameof(AND_r_Source))]
         public void AND_r_sets_bits_3_and_5_from_result(string src, byte opcode, byte? prefix)
         {
             var value = ((byte)0).WithBit(3, 1).WithBit(5, 0);
             Setup(src, value, value);
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.Flag3);
-            Assert.AreEqual(0, Registers.Flag5);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.Flag3.Value, Is.EqualTo(1));
+                Assert.That(Registers.Flag5.Value, Is.EqualTo(0));
+            });
 
             value = ((byte)0).WithBit(3, 0).WithBit(5, 1);
             Setup(src, value, value);
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.Flag3);
-            Assert.AreEqual(1, Registers.Flag5);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.Flag3.Value, Is.EqualTo(0));
+                Assert.That(Registers.Flag5.Value, Is.EqualTo(1));
+            });
         }
 
         [Test]
-        [TestCaseSource("AND_r_Source")]
-        [TestCaseSource("AND_A_Source")]
+        [TestCaseSource(nameof(AND_r_Source))]
+        [TestCaseSource(nameof(AND_A_Source))]
         public void AND_r_returns_proper_T_states(string src, byte opcode, byte? prefix)
         {
             var states = Execute(opcode, prefix);
-            Assert.AreEqual(
-                (src == "(HL)" || src == "n") ? 7 :
+            Assert.That(
+states, Is.EqualTo((src == "(HL)" || src == "n") ? 7 :
                 src.StartsWith("I") ? 8 :
                 src.StartsWith(("(I")) ? 19 :
-                4, states);
+                4));
         }
     }
 }

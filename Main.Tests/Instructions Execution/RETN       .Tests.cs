@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -21,8 +21,11 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             ExecuteAt(instructionAddress, opcode, prefix);
 
-            Assert.AreEqual(returnAddress, Registers.PC);
-            Assert.AreEqual(oldSP.Add(2), Registers.SP);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.PC, Is.EqualTo(returnAddress));
+                Assert.That(Registers.SP, Is.EqualTo(oldSP.Add(2)));
+            });
         }
 
         [Test]
@@ -30,7 +33,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             var states = Execute(opcode, prefix);
 
-            Assert.AreEqual(14, states);
+            Assert.That(states, Is.EqualTo(14));
         }
 
         [Test]
@@ -47,12 +50,12 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Sut.InstructionFetchFinished += (sender, e) =>
             {
                 eventFired = true;
-                Assert.True(e.IsRetInstruction);
+                Assert.That(e.IsRetInstruction);
             };
 
             Execute(opcode, prefix);
 
-            Assert.IsTrue(eventFired);
+            Assert.That(eventFired);
         }
 
         [Test]
@@ -65,8 +68,11 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(opcode, prefix);
 
-            Assert.AreEqual(initialIFF2, Registers.IFF2);
-            Assert.AreEqual(Registers.IFF2, Registers.IFF1);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.IFF2.Value, Is.EqualTo(initialIFF2));
+                Assert.That(Registers.IFF1, Is.EqualTo(Registers.IFF2));
+            });
         }
     }
 }

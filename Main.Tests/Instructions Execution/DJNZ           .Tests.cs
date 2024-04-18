@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -15,7 +15,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(DJNZ_opcode);
 
-            Assert.AreEqual(value.Dec(), Registers.B);
+            Assert.That(Registers.B, Is.EqualTo(value.Dec()));
         }
 
         [Test]
@@ -26,7 +26,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Registers.B = 1;
             ExecuteAt(instructionAddress, DJNZ_opcode, nextFetches: new[] {Fixture.Create<byte>()});
 
-            Assert.AreEqual(instructionAddress + 2, Registers.PC);
+            Assert.That(Registers.PC, Is.EqualTo(instructionAddress + 2));
         }
 
         [Test]
@@ -35,7 +35,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Registers.B = 1;
             var states = Execute(DJNZ_opcode);
 
-            Assert.AreEqual(8, states);
+            Assert.That(states, Is.EqualTo(8));
         }
 
         [Test]
@@ -45,11 +45,11 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Registers.B = 0;
             ExecuteAt(instructionAddress, DJNZ_opcode, nextFetches: new byte[] {0x7F});
-            Assert.AreEqual(instructionAddress.Add(129), Registers.PC);
+            Assert.That(Registers.PC, Is.EqualTo(instructionAddress.Add(129)));
 
             Registers.B = 0;
             ExecuteAt(instructionAddress, DJNZ_opcode, nextFetches: new byte[] {0x80});
-            Assert.AreEqual(instructionAddress.Sub(126), Registers.PC);
+            Assert.That(Registers.PC, Is.EqualTo(instructionAddress.Sub(126)));
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Registers.B = 0;
             var states = Execute(DJNZ_opcode);
 
-            Assert.AreEqual(13, states);
+            Assert.That(states, Is.EqualTo(13));
         }
 
         [Test]

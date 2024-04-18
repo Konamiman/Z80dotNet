@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -14,7 +14,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         };
 
         [Test]
-        [TestCaseSource("RRD_RLD_Source")]
+        [TestCaseSource(nameof(RRD_RLD_Source))]
         public void RRD_RLD_moves_data_appropriately(byte opcode, string direction)
         {
             var oldHLContents = "1001 0110".AsBinaryByte();
@@ -34,7 +34,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             }
 
             AssertMemoryContents(address, expectedHLContents);
-            Assert.AreEqual(expectedAValue, Registers.A);
+            Assert.That(Registers.A, Is.EqualTo(expectedAValue));
         }
 
         private ushort Setup(byte HLcontents, byte Avalue)
@@ -48,11 +48,11 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
         private void AssertMemoryContents(ushort address, byte expected)
         {
-            Assert.AreEqual(expected, ProcessorAgent.Memory[address]);
+            Assert.That(ProcessorAgent.Memory[address], Is.EqualTo(expected));
         }
 
         [Test]
-        [TestCaseSource("RRD_RLD_Source")]
+        [TestCaseSource(nameof(RRD_RLD_Source))]
         public void RRD_RLD_sets_SF_appropriately(byte opcode, string direction)
         {
             for(int i=0; i<=255; i++)
@@ -60,12 +60,12 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 var b = (byte)i;
                 Registers.A = b;
                 Execute(opcode, prefix);
-                Assert.AreEqual(b >= 128, (bool)Registers.SF);
+                Assert.That((bool)Registers.SF, Is.EqualTo(b >= 128));
             }
         }
 
         [Test]
-        [TestCaseSource("RRD_RLD_Source")]
+        [TestCaseSource(nameof(RRD_RLD_Source))]
         public void RRD_RLD_sets_ZF_appropriately(byte opcode, string direction)
         {
             for(int i=0; i<=255; i++)
@@ -73,19 +73,19 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 var b = (byte)i;
                 Setup(b, 0);
                 Execute(opcode, prefix);
-                Assert.AreEqual(Registers.A == 0, (bool)Registers.ZF);
+                Assert.That((bool)Registers.ZF, Is.EqualTo(Registers.A == 0));
             }
         }
 
         [Test]
-        [TestCaseSource("RRD_RLD_Source")]
+        [TestCaseSource(nameof(RRD_RLD_Source))]
         public void RRD_RLD_resets_HF(byte opcode, string direction)
         {
             AssertResetsFlags(opcode, prefix, "H");
         }
 
         [Test]
-        [TestCaseSource("RRD_RLD_Source")]
+        [TestCaseSource(nameof(RRD_RLD_Source))]
         public void RRD_RLD_sets_PF_as_parity(byte opcode, string direction)
         {
             for(int i=0; i<=255; i++)
@@ -93,26 +93,26 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 var b = (byte)i;
                 Setup(Fixture.Create<byte>(), b);
                 Execute(opcode, prefix);
-                Assert.AreEqual(Parity[Registers.A], Registers.PF);
+                Assert.That(Registers.PF.Value, Is.EqualTo(Parity[Registers.A]));
             }
         }
 
         [Test]
-        [TestCaseSource("RRD_RLD_Source")]
+        [TestCaseSource(nameof(RRD_RLD_Source))]
         public void RRD_RLD_resets_NF(byte opcode, string direction)
         {
             AssertResetsFlags(opcode, prefix, "N");
         }
 
         [Test]
-        [TestCaseSource("RRD_RLD_Source")]
+        [TestCaseSource(nameof(RRD_RLD_Source))]
         public void RRD_RLD_does_not_chance_CF(byte opcode, string direction)
         {
             AssertDoesNotChangeFlags(opcode, prefix, "C");
         }
 
         [Test]
-        [TestCaseSource("RRD_RLD_Source")]
+        [TestCaseSource(nameof(RRD_RLD_Source))]
         public void RRD_RLD_sets_bits_3_and_5_from_result(byte opcode, string direction)
         {
             for(int i=0; i<=255; i++)
@@ -120,17 +120,20 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 var b = (byte)i;
                 Setup(Fixture.Create<byte>(), b);
                 Execute(opcode, prefix);
-                Assert.AreEqual(Registers.A.GetBit(3), Registers.Flag3);
-                Assert.AreEqual(Registers.A.GetBit(5), Registers.Flag5);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(Registers.Flag3, Is.EqualTo(Registers.A.GetBit(3)));
+                    Assert.That(Registers.Flag5, Is.EqualTo(Registers.A.GetBit(5)));
+                });
             }
         }
 
         [Test]
-        [TestCaseSource("RRD_RLD_Source")]
+        [TestCaseSource(nameof(RRD_RLD_Source))]
         public void RRD_RLD_returns_proper_T_states(byte opcode, string direction)
         {
             var states = Execute(opcode, prefix);
-            Assert.AreEqual(18, states);
+            Assert.That(states, Is.EqualTo(18));
         }
     }
 }

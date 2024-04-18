@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -21,60 +21,60 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         };
 
         [Test]
-        [TestCaseSource("DEC_r_Source")]
+        [TestCaseSource(nameof(DEC_r_Source))]
         public void DEC_r_decreases_value_appropriately(string reg, byte opcode, byte? prefix)
         {
             SetReg(reg, 0x01);
             Execute(opcode, prefix);
-            Assert.AreEqual(0x00, GetReg<byte>(reg));
+            Assert.That(GetReg<byte>(reg), Is.EqualTo(0x00));
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0xFF, GetReg<byte>(reg));
+            Assert.That(GetReg<byte>(reg), Is.EqualTo(0xFF));
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0xFE, GetReg<byte>(reg));
+            Assert.That(GetReg<byte>(reg), Is.EqualTo(0xFE));
         }
 
         [Test]
-        [TestCaseSource("DEC_r_Source")]
+        [TestCaseSource(nameof(DEC_r_Source))]
         public void DEC_r_sets_SF_appropriately(string reg, byte opcode, byte? prefix)
         {
             SetReg(reg, 0x02);
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.SF);
+            Assert.That(Registers.SF.Value, Is.EqualTo(0));
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.SF);
+            Assert.That(Registers.SF.Value, Is.EqualTo(0));
 
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.SF);
+            Assert.That(Registers.SF.Value, Is.EqualTo(1));
 
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.SF);
+            Assert.That(Registers.SF.Value, Is.EqualTo(1));
         }
 
         [Test]
-        [TestCaseSource("DEC_r_Source")]
+        [TestCaseSource(nameof(DEC_r_Source))]
         public void DEC_r_sets_ZF_appropriately(string reg, byte opcode, byte? prefix)
         {
             SetReg(reg, 0x03);
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.That(Registers.ZF.Value, Is.EqualTo(0));
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.That(Registers.ZF.Value, Is.EqualTo(0));
 
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.ZF);
+            Assert.That(Registers.ZF.Value, Is.EqualTo(1));
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.That(Registers.ZF.Value, Is.EqualTo(0));
         }
 
         [Test]
-        [TestCaseSource("DEC_r_Source")]
+        [TestCaseSource(nameof(DEC_r_Source))]
         public void DEC_r_sets_HF_appropriately(string reg, byte opcode, byte? prefix)
         {
             foreach(byte b in new byte[] { 0x11, 0x81, 0xF1 }) 
@@ -82,34 +82,34 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 SetReg(reg, b);
 
                 Execute(opcode, prefix);
-                Assert.AreEqual(0, Registers.HF);
+                Assert.That(Registers.HF.Value, Is.EqualTo(0));
 
                 Execute(opcode, prefix);
-                Assert.AreEqual(1, Registers.HF);
+                Assert.That(Registers.HF.Value, Is.EqualTo(1));
 
                 Execute(opcode, prefix);
-                Assert.AreEqual(0, Registers.HF);
+                Assert.That(Registers.HF.Value, Is.EqualTo(0));
             }
         }
 
         [Test]
-        [TestCaseSource("DEC_r_Source")]
+        [TestCaseSource(nameof(DEC_r_Source))]
         public void DEC_r_sets_PF_appropriately(string reg, byte opcode, byte? prefix)
         {
             SetReg(reg, 0x81);
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.PF);
+            Assert.That(Registers.PF.Value, Is.EqualTo(0));
 
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.PF);
+            Assert.That(Registers.PF.Value, Is.EqualTo(1));
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.PF);
+            Assert.That(Registers.PF.Value, Is.EqualTo(0));
         }
 
         [Test]
-        [TestCaseSource("DEC_r_Source")]
+        [TestCaseSource(nameof(DEC_r_Source))]
         public void DEC_r_sets_NF(string reg, byte opcode, byte? prefix)
         {
             var randomValues = Fixture.Create<byte[]>();
@@ -120,12 +120,12 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 Registers.NF = 0;
 
                 Execute(opcode, prefix);
-                Assert.AreEqual(1, Registers.NF);
+                Assert.That(Registers.NF.Value, Is.EqualTo(1));
             }
         }
 
         [Test]
-        [TestCaseSource("DEC_r_Source")]
+        [TestCaseSource(nameof(DEC_r_Source))]
         public void DEC_r_does_not_chance_CF(string reg, byte opcode, byte? prefix)
         {
             var randomValues = Fixture.Create<byte[]>();
@@ -136,35 +136,41 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
                 Registers.CF = 0;
                 Execute(opcode, prefix);
-                Assert.AreEqual(0, Registers.CF);
+                Assert.That(Registers.CF.Value, Is.EqualTo(0));
 
                 Registers.CF = 1;
                 Execute(opcode, prefix);
-                Assert.AreEqual(1, Registers.CF);
+                Assert.That(Registers.CF.Value, Is.EqualTo(1));
             }
         }
 
         [Test]
-        [TestCaseSource("DEC_r_Source")]
+        [TestCaseSource(nameof(DEC_r_Source))]
         public void DEC_r_sets_bits_3_and_5_from_result(string reg, byte opcode, byte? prefix)
         {
             SetReg(reg, ((byte)1).WithBit(3, 1).WithBit(5, 0));
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.Flag3);
-            Assert.AreEqual(0, Registers.Flag5);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.Flag3.Value, Is.EqualTo(1));
+                Assert.That(Registers.Flag5.Value, Is.EqualTo(0));
+            });
 
             SetReg(reg, ((byte)1).WithBit(3, 0).WithBit(5, 1));
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.Flag3);
-            Assert.AreEqual(1, Registers.Flag5);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.Flag3.Value, Is.EqualTo(0));
+                Assert.That(Registers.Flag5.Value, Is.EqualTo(1));
+            });
         }
 
         [Test]
-        [TestCaseSource("DEC_r_Source")]
+        [TestCaseSource(nameof(DEC_r_Source))]
         public void DEC_r_returns_proper_T_states(string reg, byte opcode, byte? prefix)
         {
             var states = Execute(opcode, prefix);
-            Assert.AreEqual(IfIndexRegister(reg, 8, @else: 4), states);
+            Assert.That(states, Is.EqualTo(IfIndexRegister(reg, 8, @else: 4)));
         }
     }
 }

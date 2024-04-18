@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -18,8 +18,11 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(EX_DE_HL_opcode);
 
-            Assert.AreEqual(HL, Registers.DE);
-            Assert.AreEqual(DE, Registers.HL);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.DE, Is.EqualTo(HL));
+                Assert.That(Registers.HL, Is.EqualTo(DE));
+            });
         }
 
         [Test]
@@ -32,7 +35,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         public void EX_DE_HL_returns_proper_T_states()
         {
             var states = Execute(EX_DE_HL_opcode);
-            Assert.AreEqual(4, states);
+            Assert.That(states, Is.EqualTo(4));
         }
     }
 

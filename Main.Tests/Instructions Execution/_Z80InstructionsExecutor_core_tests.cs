@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 using System;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
@@ -20,22 +20,25 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 		    Sut.InstructionFetchFinished += (sender, e) => fetchFinishedEventsCount++;
 
             SetMemoryContents(0);
-			Assert.AreEqual(4, Execute(NOP_opcode));
+            Assert.That(Execute(NOP_opcode), Is.EqualTo(4));
 		    SetMemoryContents(0, Fixture.Create<byte>(), Fixture.Create<byte>());
-            Assert.AreEqual(10, Execute(LD_BC_nn_opcode));
+            Assert.That(Execute(LD_BC_nn_opcode), Is.EqualTo(10));
 
             SetMemoryContents(0);
-			Assert.AreEqual(8, Execute(0xCB, nextFetches: 0));
+            Assert.Multiple(() =>
+            {
+                Assert.That(Execute(0xCB, nextFetches: 0), Is.EqualTo(8));
 
-			Assert.AreEqual(15, Execute(ADD_HL_BC_opcode, 0xDD));
-			Assert.AreEqual(15, Execute(ADD_HL_BC_opcode, 0xFD));
+                Assert.That(Execute(ADD_HL_BC_opcode, 0xDD), Is.EqualTo(15));
+                Assert.That(Execute(ADD_HL_BC_opcode, 0xFD), Is.EqualTo(15));
 
-			Assert.AreEqual(12, Execute(IN_B_C_opcode, 0xED));
+                Assert.That(Execute(IN_B_C_opcode, 0xED), Is.EqualTo(12));
 
-            Assert.AreEqual(23, Execute(0xCB, 0xDD, 0));
-            Assert.AreEqual(23, Execute(0xCB, 0xFD, 0));
-            
-			Assert.AreEqual(8, fetchFinishedEventsCount);
+                Assert.That(Execute(0xCB, 0xDD, 0), Is.EqualTo(23));
+                Assert.That(Execute(0xCB, 0xFD, 0), Is.EqualTo(23));
+
+                Assert.That(fetchFinishedEventsCount, Is.EqualTo(8));
+            });
         }
 
         [Test]
@@ -45,12 +48,15 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
 			Sut.InstructionFetchFinished += (sender, e) => fetchFinishedEventsCount++;
 
-			Assert.AreEqual(8, Execute(0x3F, 0xED));
-			Assert.AreEqual(8, Execute(0xC0, 0xED));
-			Assert.AreEqual(8, Execute(0x80, 0xED));
-			Assert.AreEqual(8, Execute(0x9F, 0xED));
+            Assert.Multiple(() =>
+            {
+                Assert.That(Execute(0x3F, 0xED), Is.EqualTo(8));
+                Assert.That(Execute(0xC0, 0xED), Is.EqualTo(8));
+                Assert.That(Execute(0x80, 0xED), Is.EqualTo(8));
+                Assert.That(Execute(0x9F, 0xED), Is.EqualTo(8));
 
-			Assert.AreEqual(4, fetchFinishedEventsCount);
+                Assert.That(fetchFinishedEventsCount, Is.EqualTo(4));
+            });
         }
 
 		[Test]
@@ -61,7 +67,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 		    Execute(0x3F, 0xED);
 		    Execute(0xC0, 0xED);
 
-			Assert.AreEqual(new Byte[] {0x3F, 0xC0}, ((FakeInstructionExecutor)Sut).UnsupportedExecuted);
+            Assert.That(((FakeInstructionExecutor)Sut).UnsupportedExecuted, Is.EqualTo(new Byte[] {0x3F, 0xC0}));
         }
 
         [Test]
@@ -70,28 +76,28 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 			Registers.R = 0xFE;
 
 			Execute(NOP_opcode);
-			Assert.AreEqual(0xFF, Registers.R);
+            Assert.That(Registers.R, Is.EqualTo(0xFF));
 
             Execute(LD_BC_nn_opcode, null, Fixture.Create<byte>(), Fixture.Create<byte>());
-			Assert.AreEqual(0x80, Registers.R);
+            Assert.That(Registers.R, Is.EqualTo(0x80));
 
 			Execute(RLC_B_opcode, 0xCB);
-			Assert.AreEqual(0x82, Registers.R);
+            Assert.That(Registers.R, Is.EqualTo(0x82));
 
             Execute(ADD_HL_BC_opcode, 0xDD);
-   			Assert.AreEqual(0x84, Registers.R);
+            Assert.That(Registers.R, Is.EqualTo(0x84));
 
             Execute(ADD_HL_BC_opcode, 0xFD);
-			Assert.AreEqual(0x86, Registers.R);
+            Assert.That(Registers.R, Is.EqualTo(0x86));
 
 			Execute(IN_B_C_opcode, 0xED);
-			Assert.AreEqual(0x88, Registers.R);
+            Assert.That(Registers.R, Is.EqualTo(0x88));
 
             Execute(0xCB, 0xDD, 0);
-            Assert.AreEqual(0x8A, Registers.R);
+            Assert.That(Registers.R, Is.EqualTo(0x8A));
 
             Execute(0xCB, 0xFD, 0);
-            Assert.AreEqual(0x8C, Registers.R);
+            Assert.That(Registers.R, Is.EqualTo(0x8C));
         }
 
         [Test]
@@ -101,11 +107,14 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
 		    Sut.InstructionFetchFinished += (sender, e) => fetchFinishedEventsCount++;
 
-            Assert.AreEqual(4, Execute(0xFD, 0xDD));
-            Assert.AreEqual(4, Execute(0x01, 0xFD));
-            Assert.AreEqual(10, Execute(0x01, null, Fixture.Create<byte>(), Fixture.Create<byte>()));
+            Assert.Multiple(() =>
+            {
+                Assert.That(Execute(0xFD, 0xDD), Is.EqualTo(4));
+                Assert.That(Execute(0x01, 0xFD), Is.EqualTo(4));
+                Assert.That(Execute(0x01, null, Fixture.Create<byte>(), Fixture.Create<byte>()), Is.EqualTo(10));
 
-            Assert.AreEqual(3, fetchFinishedEventsCount);
+                Assert.That(fetchFinishedEventsCount, Is.EqualTo(3));
+            });
         }
     }
 }

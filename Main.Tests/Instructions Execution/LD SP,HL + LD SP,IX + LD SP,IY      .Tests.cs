@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -13,7 +13,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         };
 
         [Test]
-        [TestCaseSource("LD_Source")]
+        [TestCaseSource(nameof(LD_Source))]
         public void LD_SP_HL_IX_IY_loads_SP_correctly(string reg, byte opcode, byte? prefix)
         {
             var newSp = Fixture.Create<short>();
@@ -24,12 +24,15 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(opcode, prefix);
 
-            Assert.AreEqual(newSp, GetReg<short>(reg));
-            Assert.AreEqual(newSp, Registers.SP);
+            Assert.Multiple(() =>
+            {
+                Assert.That(GetReg<short>(reg), Is.EqualTo(newSp));
+                Assert.That(Registers.SP, Is.EqualTo(newSp));
+            });
         }
 
         [Test]
-        [TestCaseSource("LD_Source")]
+        [TestCaseSource(nameof(LD_Source))]
         public void LD_SP_HL_IX_IY_fire_FetchFinished_with_isLdSp_true(string reg, byte opcode, byte? prefix)
         {
             var eventFired = false;
@@ -37,27 +40,27 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Sut.InstructionFetchFinished += (sender, e) =>
             {
                 eventFired = true;
-                Assert.True(e.IsLdSpInstruction);
+                Assert.That(e.IsLdSpInstruction);
             };
 
             Execute(opcode, prefix);
 
-            Assert.IsTrue(eventFired);
+            Assert.That(eventFired);
         }
 
         [Test]
-        [TestCaseSource("LD_Source")]
+        [TestCaseSource(nameof(LD_Source))]
         public void LD_SP_HL_IX_IY_do_not_change_flags(string reg, byte opcode, byte? prefix)
         {
             AssertNoFlagsAreModified(opcode, prefix);
         }
 
         [Test]
-        [TestCaseSource("LD_Source")]
+        [TestCaseSource(nameof(LD_Source))]
         public void LD_SP_HL_IX_IY_return_proper_T_states(string reg, byte opcode, byte? prefix)
         {
             var states = Execute(opcode, prefix);
-            Assert.AreEqual(reg == "HL" ? 6 : 10, states);
+            Assert.That(states, Is.EqualTo(reg == "HL" ? 6 : 10));
         }
     }
 }

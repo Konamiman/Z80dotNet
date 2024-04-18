@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -16,7 +16,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             for(var i = 0; i < values.Length; i++)
             {
                 Execute(RLA_opcode);
-                Assert.AreEqual(values[i], Registers.A & 0xFE);
+                Assert.That(Registers.A & 0xFE, Is.EqualTo(values[i]));
             }
         }
 
@@ -26,12 +26,12 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Registers.A = (byte)(Fixture.Create<byte>() | 1);
             Registers.CF = 0;
             Execute(RLA_opcode);
-            Assert.AreEqual(0, Registers.A.GetBit(0));
+            Assert.That(Registers.A.GetBit(0).Value, Is.EqualTo(0));
 
             Registers.A = (byte)(Fixture.Create<byte>() & 0xFE);
             Registers.CF = 1;
             Execute(RLA_opcode);
-            Assert.AreEqual(1, Registers.A.GetBit(0));
+            Assert.That(Registers.A.GetBit(0).Value, Is.EqualTo(1));
         }
 
         [Test]
@@ -40,16 +40,16 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Registers.A = 0x60;
 
             Execute(RLA_opcode);
-            Assert.AreEqual(0, Registers.CF);
+            Assert.That(Registers.CF.Value, Is.EqualTo(0));
 
             Execute(RLA_opcode);
-            Assert.AreEqual(1, Registers.CF);
+            Assert.That(Registers.CF.Value, Is.EqualTo(1));
 
             Execute(RLA_opcode);
-            Assert.AreEqual(1, Registers.CF);
+            Assert.That(Registers.CF.Value, Is.EqualTo(1));
 
             Execute(RLA_opcode);
-            Assert.AreEqual(0, Registers.CF);
+            Assert.That(Registers.CF.Value, Is.EqualTo(0));
         }
 
         [Test]
@@ -73,15 +73,18 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             Registers.A = (byte)value;
             Execute(RLA_opcode);
-            Assert.AreEqual(Registers.A.GetBit(3), Registers.Flag3);
-            Assert.AreEqual(Registers.A.GetBit(5), Registers.Flag5);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.Flag3, Is.EqualTo(Registers.A.GetBit(3)));
+                Assert.That(Registers.Flag5, Is.EqualTo(Registers.A.GetBit(5)));
+            });
         }
 
         [Test]
         public void RLA_returns_proper_T_states()
         {
             var states = Execute(RLA_opcode);
-            Assert.AreEqual(4, states);
+            Assert.That(states, Is.EqualTo(4));
         }
     }
 }

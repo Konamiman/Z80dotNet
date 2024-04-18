@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -23,7 +23,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         };
 
         [Test]
-        [TestCaseSource("CALL_cc_Source")]
+        [TestCaseSource(nameof(CALL_cc_Source))]
         public void CALL_cc_does_not_jump_if_flag_not_set(string flagName, byte opcode, int flagValue)
         {
             var instructionAddress = Fixture.Create<ushort>();
@@ -31,22 +31,22 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             SetFlag(flagName, !(Bit)flagValue);
             ExecuteAt(instructionAddress, opcode);
 
-            Assert.AreEqual(instructionAddress.Add(3), Registers.PC);
+            Assert.That(Registers.PC, Is.EqualTo(instructionAddress.Add(3)));
         }
 
         [Test]
-        [TestCaseSource("CALL_cc_Source")]
+        [TestCaseSource(nameof(CALL_cc_Source))]
         public void CALL_cc_returns_proper_T_states_if_no_jump_is_made(string flagName, byte opcode, int flagValue)
         {
             SetFlag(flagName, !(Bit)flagValue);
             var states = Execute(opcode);
 
-            Assert.AreEqual(10, states);
+            Assert.That(states, Is.EqualTo(10));
         }
 
         [Test]
-        [TestCaseSource("CALL_cc_Source")]
-        [TestCaseSource("CALL_Source")]
+        [TestCaseSource(nameof(CALL_cc_Source))]
+        [TestCaseSource(nameof(CALL_Source))]
         public void CALL_cc_pushes_SP_and_jumps_to_proper_address_if_flag_is_set_CALL_jumps_always(string flagName, byte opcode, int flagValue)
         {
             var instructionAddress = Fixture.Create<ushort>();
@@ -57,9 +57,12 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             SetFlagIfNotNull(flagName, flagValue);
             ExecuteAt(instructionAddress, opcode, nextFetches: new[] { callAddress.GetLowByte(), callAddress.GetHighByte() });
 
-            Assert.AreEqual(callAddress, Registers.PC);
-            Assert.AreEqual(oldSP.Sub(2), Registers.SP);
-            Assert.AreEqual(instructionAddress.Add(3).ToShort(), ReadShortFromMemory(Registers.SP.ToUShort()));
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.PC, Is.EqualTo(callAddress));
+                Assert.That(Registers.SP, Is.EqualTo(oldSP.Sub(2)));
+                Assert.That(ReadShortFromMemory(Registers.SP.ToUShort()), Is.EqualTo(instructionAddress.Add(3).ToShort()));
+            });
         }
 
         private void SetFlagIfNotNull(string flagName, int flagValue)
@@ -68,19 +71,19 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
         
         [Test]
-        [TestCaseSource("CALL_cc_Source")]
-        [TestCaseSource("CALL_Source")]
+        [TestCaseSource(nameof(CALL_cc_Source))]
+        [TestCaseSource(nameof(CALL_Source))]
         public void CALL_and_CALL_cc_return_proper_T_states_if_jump_is_made(string flagName, byte opcode, int flagValue)
         {
             SetFlagIfNotNull(flagName, flagValue);
             var states = Execute(opcode);
 
-            Assert.AreEqual(17, states);
+            Assert.That(states, Is.EqualTo(17));
         }
 
         [Test]
-        [TestCaseSource("CALL_cc_Source")]
-        [TestCaseSource("CALL_Source")]
+        [TestCaseSource(nameof(CALL_cc_Source))]
+        [TestCaseSource(nameof(CALL_Source))]
         public void CALL_and_CALL_cc_do_not_modify_flags(string flagName, byte opcode, int flagValue)
         {
             Registers.F = Fixture.Create<byte>();
@@ -89,7 +92,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(opcode);
 
-            Assert.AreEqual(value, Registers.F);
+            Assert.That(Registers.F, Is.EqualTo(value));
         }
     }
 }

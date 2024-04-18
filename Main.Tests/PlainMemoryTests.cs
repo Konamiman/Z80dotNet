@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 using System;
 using System.Linq;
 
@@ -29,7 +29,7 @@ namespace Konamiman.Z80dotNet.Tests
         [Test]
         public void Can_create_instances()
         {
-            Assert.IsNotNull(Sut);
+            Assert.That(Sut, Is.Not.Null);
         }
 
         [Test]
@@ -52,13 +52,13 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut[address] = value;
             var actual = Sut[address];
-            Assert.AreEqual(value, actual);
+            Assert.That(actual, Is.EqualTo(value));
 
             value ^= 255;
 
             Sut[address] = value;
             actual = Sut[address];
-            Assert.AreEqual(value, actual);
+            Assert.That(actual, Is.EqualTo(value));
         }
 
         [Test]
@@ -88,7 +88,7 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.SetContents(address, data);
 
             var actual = Sut.GetContents(address, data.Length);
-            Assert.AreEqual(data, actual);
+            Assert.That(actual, Is.EqualTo(data));
         }
 
         [Test]
@@ -100,7 +100,7 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.SetContents(address, data);
 
             var actual = Sut.GetContents(address, data.Length);
-            Assert.AreEqual(data, actual);
+            Assert.That(actual, Is.EqualTo(data));
         }
 
         [Test]
@@ -115,7 +115,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             var expected = data.Skip(dataStartIndex).Take(dataLength).ToArray();
             var actual = Sut.GetContents(address, dataLength);
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [Test]
@@ -159,7 +159,7 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.SetContents(address, data, dataStartIndex, length: 0);
             var after = Sut.GetContents(0, MemorySize);
 
-            Assert.AreEqual(before, after);
+            Assert.That(after, Is.EqualTo(before));
         }
 
         [Test]
@@ -211,7 +211,7 @@ namespace Konamiman.Z80dotNet.Tests
             var address = Random(0, MemorySize - 1);
             var actual = Sut.GetContents(address, 0);
 
-            Assert.AreEqual(new Byte[0], actual);
+            Assert.That(actual, Is.EqualTo(new Byte[0]));
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -16,7 +16,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         };
 
         [Test]
-        [TestCaseSource("PUSH_rr_Source")]
+        [TestCaseSource(nameof(PUSH_rr_Source))]
         public void PUSH_rr_loads_stack_with_value_and_decreases_SP(string reg, byte opcode, byte? prefix)
         {
             var value = Fixture.Create<short>();
@@ -26,23 +26,26 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             
             Execute(opcode, prefix);
 
-            Assert.AreEqual(oldSP.Sub(2), Registers.SP);
-            Assert.AreEqual(value, ReadShortFromMemory(Registers.SP.ToUShort()));
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.SP, Is.EqualTo(oldSP.Sub(2)));
+                Assert.That(ReadShortFromMemory(Registers.SP.ToUShort()), Is.EqualTo(value));
+            });
         }
 
         [Test]
-        [TestCaseSource("PUSH_rr_Source")]
+        [TestCaseSource(nameof(PUSH_rr_Source))]
         public void PUSH_rr_do_not_modify_flags(string reg, byte opcode, byte? prefix)
         {
             AssertNoFlagsAreModified(opcode);
         }
 
         [Test]
-        [TestCaseSource("PUSH_rr_Source")]
+        [TestCaseSource(nameof(PUSH_rr_Source))]
         public void PUSH_rr_returns_proper_T_states(string reg, byte opcode, byte? prefix)
         {
             var states = Execute(opcode, prefix);
-            Assert.AreEqual(reg.StartsWith("I") ? 15 : 11, states);
+            Assert.That(states, Is.EqualTo(reg.StartsWith("I") ? 15 : 11));
         }
     }
 }
