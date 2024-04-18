@@ -28,7 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{43991AEE-1
 		Docs\StopConditions.md = Docs\StopConditions.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZexallTest", "ZexallTest\ZexallTest.csproj", "{8BBEA494-2013-481A-B38C-735F22B93D73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZexallTest", "ZexallTest\ZexallTest.csproj", "{8BBEA494-2013-481A-B38C-735F22B93D73}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
