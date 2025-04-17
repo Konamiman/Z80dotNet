@@ -12,7 +12,7 @@ The `HALT` instruction behaves the expected way: after this instruction is execu
 
 [IZ80Processor](../Main/IZ80Processor.cs) provides the following interrupt related events:
 
-* _`NonMaskableInterruptServicingStart`_ is fired right before a maskable interrupt is going to be serviced. The execution state is as follows when the event is fired:
+* _`MaskableInterruptServicingStart`_ is fired right before a maskable interrupt is going to be serviced. The execution state is as follows when the event is fired:
 
   * For interrupt mode 0: the opcode has been already fetched from the data bus and is about to be executed.
 
@@ -20,7 +20,7 @@ The `HALT` instruction behaves the expected way: after this instruction is execu
 
   * For interrupt mode 2: PC is already set to the address of the routine to execute and the return address has been pushed to the stack.
 
-* _`MaskableInterruptServicingStart`_ is fired right before a non-maskable interrupt is going to be serviced. PC is already set to 0x0066 and the return address has been pushed to the stack when this event is fired.
+* _`NonMaskableInterruptServicingStart`_ is fired right before a non-maskable interrupt is going to be serviced. PC is already set to 0x0066 and the return address has been pushed to the stack when this event is fired.
 
 * _`BeforeRetiInstructionExecution`_ and _`BeforeRetnInstructionExecution`_ are fired before a RETI/RETN instruction is about to be executed, right after the corresponding _`BeforeInstructionExecution`_ event.
 
