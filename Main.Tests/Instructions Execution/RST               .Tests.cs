@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -18,7 +18,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         };
 
         [Test]
-        [TestCaseSource("RST_Source")]
+        [TestCaseSource(nameof(RST_Source))]
         public void RST_pushes_SP_and_jumps_to_proper_address(int address, byte opcode)
         {
             var instructionAddress = Fixture.Create<ushort>();
@@ -27,22 +27,25 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             
             ExecuteAt(instructionAddress, opcode);
 
-            Assert.AreEqual((ushort)address, Registers.PC);
-            Assert.AreEqual(oldSP.Sub(2), Registers.SP);
-            Assert.AreEqual(instructionAddress.Inc().ToShort(), ReadShortFromMemory(Registers.SP.ToUShort()));
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.PC, Is.EqualTo((ushort)address));
+                Assert.That(Registers.SP, Is.EqualTo(oldSP.Sub(2)));
+                Assert.That(ReadShortFromMemory(Registers.SP.ToUShort()), Is.EqualTo(instructionAddress.Inc().ToShort()));
+            });
         }
 
         [Test]
-        [TestCaseSource("RST_Source")]
+        [TestCaseSource(nameof(RST_Source))]
         public void RST_return_proper_T_states(int address, byte opcode)
         {
             var states = Execute(opcode);
 
-            Assert.AreEqual(11, states);
+            Assert.That(states, Is.EqualTo(11));
         }
 
         [Test]
-        [TestCaseSource("RST_Source")]
+        [TestCaseSource(nameof(RST_Source))]
         public void RST_do_not_modify_flags(int address, byte opcode)
         {
             AssertDoesNotChangeFlags(opcode);

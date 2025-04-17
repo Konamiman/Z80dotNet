@@ -7,43 +7,48 @@ namespace Konamiman.Z80dotNet.Tests
         [Test]
         public void Default_constructor_creates_instance_with_value_zero()
         {
-            Assert.AreEqual(0, new Bit().Value);
+            Assert.That(new Bit().Value, Is.EqualTo(0));
         }
 
         [Test]
         public void Can_implicitly_convert_to_int()
         {
             int theInt = new Bit(0);
-            Assert.AreEqual(0, theInt);
+            Assert.That(theInt, Is.EqualTo(0));
 
             theInt = new Bit(1);
-            Assert.AreEqual(1, theInt);
+            Assert.That(theInt, Is.EqualTo(1));
         }
 
         [Test]
         public void Can_implicitly_convert_from_zero_int_to_zero_bit()
         {
             Bit theBit = 0;
-            Assert.AreEqual(theBit.Value, 0);
+            Assert.That(theBit.Value, Is.EqualTo(0));
         }
 
         [Test]
         public void Can_implicitly_convert_from_any_nonzero_int_to_one_bit()
         {
             Bit theBit = 34;
-            Assert.AreEqual(theBit.Value, 1);
+            Assert.That(theBit.Value, Is.EqualTo(1));
         }
         
         [Test]
         public void Can_implicity_convert_to_and_from_bool()
         {
-            Assert.IsTrue(new Bit(1));
-            Assert.IsFalse(new Bit(0));
+            bool b1 = new Bit(1);
+            bool b2 = new Bit(0);
+            Assert.That(b1, Is.True);
+            Assert.That(b2, Is.False);
 
             Bit theTrue = true;
             Bit theFalse = false;
-            Assert.AreEqual(1, theTrue.Value);
-            Assert.AreEqual(0, theFalse.Value);
+            Assert.Multiple(() =>
+            {
+                Assert.That(theTrue.Value, Is.EqualTo(1));
+                Assert.That(theFalse.Value, Is.EqualTo(0));
+            });
         }
 
         [Test]
@@ -52,24 +57,27 @@ namespace Konamiman.Z80dotNet.Tests
             Bit zero = 0;
             Bit one = 1;
 
-            Assert.AreEqual(zero, new Bit(zero));
-            Assert.AreEqual(one, new Bit(one));
+            Assert.Multiple(() =>
+            {
+                Assert.That(new Bit(zero), Is.EqualTo(zero));
+                Assert.That(new Bit(one), Is.EqualTo(one));
+            });
         }
 
         [Test]
         public void Can_compare_to_other_bit_with_equals_sign()
         {
-            Assert.True(new Bit(0) == new Bit(0));
-            Assert.True(new Bit(1) == new Bit(1));
-            Assert.False(new Bit(0) == new Bit(1));
+            Assert.That(new Bit(0) == new Bit(0));
+            Assert.That(new Bit(1) == new Bit(1));
+            Assert.That(new Bit(0) == new Bit(1), Is.False);
         }
 
         [Test]
         public void Can_compare_to_other_bit_with_equals_method()
         {
-            Assert.True(new Bit(0).Equals(new Bit(0)));
-            Assert.True(new Bit(1).Equals(new Bit(1)));
-            Assert.False(new Bit(0).Equals(new Bit(1)));
+            Assert.That(new Bit(0).Equals(new Bit(0)));
+            Assert.That(new Bit(1).Equals(new Bit(1)));
+            Assert.That(new Bit(0).Equals(new Bit(1)), Is.False);
         }
 
         [Test]
@@ -78,17 +86,17 @@ namespace Konamiman.Z80dotNet.Tests
             int zero = 0;
             int nonZero = 34;
 
-            Assert.True(new Bit(0) == zero);
-            Assert.True(new Bit(0).Equals(zero));
+            Assert.That(new Bit(0) == zero);
+            Assert.That(new Bit(0).Equals(zero));
 
-            Assert.True(zero == new Bit(0));
-            Assert.True(zero.Equals(new Bit(0)));
+            Assert.That(zero == new Bit(0));
+            Assert.That(zero.Equals(new Bit(0)));
 
-            Assert.False(new Bit(0) == nonZero);
-            Assert.False(new Bit(0).Equals(nonZero));
+            Assert.That(new Bit(0) == nonZero, Is.False);
+            Assert.That(new Bit(0).Equals(nonZero), Is.False);
 
-            Assert.False(nonZero == new Bit(0));
-            Assert.False(nonZero.Equals(new Bit(0)));
+            Assert.That(nonZero == new Bit(0), Is.False);
+            Assert.That(nonZero.Equals(new Bit(0)), Is.False);
         }
 
         [Test]
@@ -97,17 +105,17 @@ namespace Konamiman.Z80dotNet.Tests
             int zero = 0;
             int nonZero = 34;
 
-            Assert.True(new Bit(1) == nonZero);
-            Assert.True(new Bit(1).Equals(nonZero));
+            Assert.That(new Bit(1) == nonZero);
+            Assert.That(new Bit(1).Equals(nonZero));
 
-            Assert.True(nonZero == new Bit(1));
-            //Assert.True(nonZero.Equals(new Bit(1)));
+            Assert.That(nonZero == new Bit(1));
+            //Assert.That(nonZero.Equals(new Bit(1)));
 
-            Assert.False(new Bit(1) == zero);
-            Assert.False(new Bit(1).Equals(zero));
+            Assert.That(new Bit(1) == zero, Is.False);
+            Assert.That(new Bit(1).Equals(zero), Is.False);
 
-            Assert.False(zero == new Bit(1));
-            //Assert.False(zero.Equals(new Bit(1)));
+            Assert.That(zero == new Bit(1), Is.False);
+            //Assert.That(zero.Equals(new Bit(1)), Is.False);
         }
 
         [Test]
@@ -116,18 +124,18 @@ namespace Konamiman.Z80dotNet.Tests
             int zero = 0;
             int nonZero = 34;
 
-            Assert.True(new Bit(1) != zero);
-            Assert.True(zero != new Bit(1));
+            Assert.That(new Bit(1) != zero);
+            Assert.That(zero != new Bit(1));
 
-            Assert.False(new Bit(1) != nonZero);
-            Assert.False(nonZero != new Bit(1));
+            Assert.That(new Bit(1) != nonZero, Is.False);
+            Assert.That(nonZero != new Bit(1), Is.False);
         }
 
         [Test]
         public void Can_convert_to_bool()
         {
-            Assert.False(new Bit(0));
-            Assert.True(new Bit(1));
+            Assert.That((bool)new Bit(0), Is.False);
+            Assert.That(new Bit(1));
         }
 
         [Test]
@@ -136,10 +144,10 @@ namespace Konamiman.Z80dotNet.Tests
             Bit zero = 0;
             Bit one = 1;
 
-            Assert.False(zero | zero);
-            Assert.True(zero | one);
-            Assert.True(one | zero);
-            Assert.True(one | one);
+            Assert.That((bool)(zero | zero), Is.False);
+            Assert.That(zero | one);
+            Assert.That(one | zero);
+            Assert.That(one | one);
         }
 
         [Test]
@@ -148,10 +156,10 @@ namespace Konamiman.Z80dotNet.Tests
             Bit zero = 0;
             Bit one = 1;
 
-            Assert.False(zero || zero);
-            Assert.True(zero || one);
-            Assert.True(one || zero);
-            Assert.True(one || one);
+            Assert.That((bool)(zero || zero), Is.False);
+            Assert.That(zero || one);
+            Assert.That(one || zero);
+            Assert.That(one || one);
         }
 
         [Test]
@@ -160,10 +168,10 @@ namespace Konamiman.Z80dotNet.Tests
             Bit zero = 0;
             Bit one = 1;
 
-            Assert.False(zero & zero);
-            Assert.False(zero & one);
-            Assert.False(one & zero);
-            Assert.True(one & one);
+            Assert.That((bool)(zero & zero), Is.False);
+            Assert.That((bool)(zero & one), Is.False);
+            Assert.That((bool)(one & zero), Is.False);
+            Assert.That((bool)(one & one), Is.True);
         }
 
         [Test]
@@ -172,10 +180,10 @@ namespace Konamiman.Z80dotNet.Tests
             Bit zero = 0;
             Bit one = 1;
 
-            Assert.False(zero && zero);
-            Assert.False(zero && one);
-            Assert.False(one && zero);
-            Assert.True(one && one);
+            Assert.That((bool)(zero && zero), Is.False);
+            Assert.That((bool)(zero && one), Is.False);
+            Assert.That((bool)(one && zero), Is.False);
+            Assert.That(one && one);
         }
 
         [Test]
@@ -184,10 +192,10 @@ namespace Konamiman.Z80dotNet.Tests
             Bit zero = 0;
             Bit one = 1;
 
-            Assert.False(zero ^ zero);
-            Assert.True(zero ^ one);
-            Assert.True(one ^ zero);
-            Assert.False(one ^ one);
+            Assert.That((bool)(zero ^ zero), Is.False);
+            Assert.That(zero ^ one);
+            Assert.That(one ^ zero);
+            Assert.That((bool)(one ^ one), Is.False);
         }
 
         [Test]
@@ -196,8 +204,11 @@ namespace Konamiman.Z80dotNet.Tests
             Bit zero = 0;
             Bit one = 1;
 
-            Assert.AreEqual(zero, ~one);
-            Assert.AreEqual(one, ~zero);
+            Assert.Multiple(() =>
+            {
+                Assert.That(~one, Is.EqualTo(zero));
+                Assert.That(~zero, Is.EqualTo(one));
+            });
         }
 
         [Test]
@@ -206,8 +217,11 @@ namespace Konamiman.Z80dotNet.Tests
             Bit zero = 0;
             Bit one = 1;
 
-            Assert.AreEqual(zero, !one);
-            Assert.AreEqual(one, !zero);
+            Assert.Multiple(() =>
+            {
+                Assert.That(!one, Is.EqualTo(zero));
+                Assert.That(!zero, Is.EqualTo(one));
+            });
         }
     }
 }

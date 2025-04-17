@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests
 {
@@ -24,8 +24,11 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.AF = AF;
 
-            Assert.AreEqual(A, Sut.A);
-            Assert.AreEqual(F, Sut.F);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.A, Is.EqualTo(A));
+                Assert.That(Sut.F, Is.EqualTo(F));
+            });
         }
 
         [Test]
@@ -38,7 +41,7 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.A = A;
             Sut.F = F;
 
-            Assert.AreEqual(expected, Sut.AF);
+            Assert.That(Sut.AF, Is.EqualTo(expected));
         }
 
         [Test]
@@ -50,8 +53,11 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.BC = BC;
 
-            Assert.AreEqual(B, Sut.B);
-            Assert.AreEqual(C, Sut.C);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.B, Is.EqualTo(B));
+                Assert.That(Sut.C, Is.EqualTo(C));
+            });
         }
 
         [Test]
@@ -64,7 +70,7 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.B = B;
             Sut.C = C;
 
-            Assert.AreEqual(expected, Sut.BC);
+            Assert.That(Sut.BC, Is.EqualTo(expected));
         }
 
         [Test]
@@ -76,8 +82,11 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.DE = DE;
 
-            Assert.AreEqual(D, Sut.D);
-            Assert.AreEqual(E, Sut.E);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.D, Is.EqualTo(D));
+                Assert.That(Sut.E, Is.EqualTo(E));
+            });
         }
 
         [Test]
@@ -90,7 +99,7 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.D = D;
             Sut.E = E;
 
-            Assert.AreEqual(expected, Sut.DE);
+            Assert.That(Sut.DE, Is.EqualTo(expected));
         }
 
         [Test]
@@ -102,8 +111,11 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.HL = HL;
 
-            Assert.AreEqual(H, Sut.H);
-            Assert.AreEqual(L, Sut.L);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.H, Is.EqualTo(H));
+                Assert.That(Sut.L, Is.EqualTo(L));
+            });
         }
 
         [Test]
@@ -116,17 +128,17 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.H = H;
             Sut.L = L;
 
-            Assert.AreEqual(expected, Sut.HL);
+            Assert.That(Sut.HL, Is.EqualTo(expected));
         }
 
         [Test]
         public void Gets_CF_correctly_from_F()
         {
             Sut.F = 0xFE;
-            Assert.AreEqual(0, Sut.CF);
+            Assert.That(Sut.CF.Value, Is.EqualTo(0));
 
             Sut.F = 0x01;
-            Assert.AreEqual(1, Sut.CF);
+            Assert.That(Sut.CF.Value, Is.EqualTo(1));
         }
 
         [Test]
@@ -134,21 +146,21 @@ namespace Konamiman.Z80dotNet.Tests
         {
             Sut.F = 0xFF;
             Sut.CF = 0;
-            Assert.AreEqual(0xFE, Sut.F);
+            Assert.That(Sut.F, Is.EqualTo(0xFE));
 
             Sut.F = 0x00;
             Sut.CF = 1;
-            Assert.AreEqual(0x01, Sut.F);
+            Assert.That(Sut.F, Is.EqualTo(0x01));
         }
 
         [Test]
         public void Gets_NF_correctly_from_F()
         {
             Sut.F = 0xFD;
-            Assert.AreEqual(0, Sut.NF);
+            Assert.That(Sut.NF.Value, Is.EqualTo(0));
 
             Sut.F = 0x02;
-            Assert.AreEqual(1, Sut.NF);
+            Assert.That(Sut.NF.Value, Is.EqualTo(1));
         }
 
         [Test]
@@ -156,21 +168,21 @@ namespace Konamiman.Z80dotNet.Tests
         {
             Sut.F = 0xFF;
             Sut.NF = 0;
-            Assert.AreEqual(0xFD, Sut.F);
+            Assert.That(Sut.F, Is.EqualTo(0xFD));
 
             Sut.F = 0x00;
             Sut.NF = 1;
-            Assert.AreEqual(0x02, Sut.F);
+            Assert.That(Sut.F, Is.EqualTo(0x02));
         }
 
         [Test]
         public void Gets_PF_correctly_from_F()
         {
             Sut.F = 0xFB;
-            Assert.AreEqual(0, Sut.PF);
+            Assert.That(Sut.PF.Value, Is.EqualTo(0));
 
             Sut.F = 0x04;
-            Assert.AreEqual(1, Sut.PF);
+            Assert.That(Sut.PF.Value, Is.EqualTo(1));
         }
 
         [Test]
@@ -178,21 +190,21 @@ namespace Konamiman.Z80dotNet.Tests
         {
             Sut.F = 0xFF;
             Sut.PF = 0;
-            Assert.AreEqual(0xFB, Sut.F);
+            Assert.That(Sut.F, Is.EqualTo(0xFB));
 
             Sut.F = 0x00;
             Sut.PF = 1;
-            Assert.AreEqual(0x04, Sut.F);
+            Assert.That(Sut.F, Is.EqualTo(0x04));
         }
 
         [Test]
         public void Gets_Flag3_correctly_from_F()
         {
             Sut.F = 0xF7;
-            Assert.AreEqual(0, Sut.Flag3);
+            Assert.That(Sut.Flag3.Value, Is.EqualTo(0));
 
             Sut.F = 0x08;
-            Assert.AreEqual(1, Sut.Flag3);
+            Assert.That(Sut.Flag3.Value, Is.EqualTo(1));
         }
 
         [Test]
@@ -200,21 +212,21 @@ namespace Konamiman.Z80dotNet.Tests
         {
             Sut.F = 0xFF;
             Sut.Flag3 = 0;
-            Assert.AreEqual(0xF7, Sut.F);
+            Assert.That(Sut.F, Is.EqualTo(0xF7));
 
             Sut.F = 0x00;
             Sut.Flag3 = 1;
-            Assert.AreEqual(0x08, Sut.F);
+            Assert.That(Sut.F, Is.EqualTo(0x08));
         }
 
         [Test]
         public void Gets_HF_correctly_from_F()
         {
             Sut.F = 0xEF;
-            Assert.AreEqual(0, Sut.HF);
+            Assert.That(Sut.HF.Value, Is.EqualTo(0));
 
             Sut.F = 0x10;
-            Assert.AreEqual(1, Sut.HF);
+            Assert.That(Sut.HF.Value, Is.EqualTo(1));
         }
 
         [Test]
@@ -222,21 +234,21 @@ namespace Konamiman.Z80dotNet.Tests
         {
             Sut.F = 0xFF;
             Sut.HF = 0;
-            Assert.AreEqual(0xEF, Sut.F);
+            Assert.That(Sut.F, Is.EqualTo(0xEF));
 
             Sut.F = 0x00;
             Sut.HF = 1;
-            Assert.AreEqual(0x10, Sut.F);
+            Assert.That(Sut.F, Is.EqualTo(0x10));
         }
 
         [Test]
         public void Gets_Flag5_correctly_from_F()
         {
             Sut.F = 0xDF;
-            Assert.AreEqual(0, Sut.Flag5);
+            Assert.That(Sut.Flag5.Value, Is.EqualTo(0));
 
             Sut.F = 0x20;
-            Assert.AreEqual(1, Sut.Flag5);
+            Assert.That(Sut.Flag5.Value, Is.EqualTo(1));
         }
 
         [Test]
@@ -244,21 +256,21 @@ namespace Konamiman.Z80dotNet.Tests
         {
             Sut.F = 0xFF;
             Sut.Flag5 = 0;
-            Assert.AreEqual(0xDF, Sut.F);
+            Assert.That(Sut.F, Is.EqualTo(0xDF));
 
             Sut.F = 0x00;
             Sut.Flag5 = 1;
-            Assert.AreEqual(0x20, Sut.F);
+            Assert.That(Sut.F, Is.EqualTo(0x20));
         }
 
         [Test]
         public void Gets_ZF_correctly_from_F()
         {
             Sut.F = 0xBF;
-            Assert.AreEqual(0, Sut.ZF);
+            Assert.That(Sut.ZF.Value, Is.EqualTo(0));
 
             Sut.F = 0x40;
-            Assert.AreEqual(1, Sut.ZF);
+            Assert.That(Sut.ZF.Value, Is.EqualTo(1));
         }
 
         [Test]
@@ -266,21 +278,21 @@ namespace Konamiman.Z80dotNet.Tests
         {
             Sut.F = 0xFF;
             Sut.ZF = 0;
-            Assert.AreEqual(0xBF, Sut.F);
+            Assert.That(Sut.F, Is.EqualTo(0xBF));
 
             Sut.F = 0x00;
             Sut.ZF = 1;
-            Assert.AreEqual(0x40, Sut.F);
+            Assert.That(Sut.F, Is.EqualTo(0x40));
         }
 
         [Test]
         public void Gets_SF_correctly_from_F()
         {
             Sut.F = 0x7F;
-            Assert.AreEqual(0, Sut.SF);
+            Assert.That(Sut.SF.Value, Is.EqualTo(0));
 
             Sut.F = 0x80;
-            Assert.AreEqual(1, Sut.SF);
+            Assert.That(Sut.SF.Value, Is.EqualTo(1));
         }
 
         [Test]
@@ -288,11 +300,11 @@ namespace Konamiman.Z80dotNet.Tests
         {
             Sut.F = 0xFF;
             Sut.SF = 0;
-            Assert.AreEqual(0x7F, Sut.F);
+            Assert.That(Sut.F, Is.EqualTo(0x7F));
 
             Sut.F = 0x00;
             Sut.SF = 1;
-            Assert.AreEqual(0x80, Sut.F);
+            Assert.That(Sut.F, Is.EqualTo(0x80));
         }
     }
 }

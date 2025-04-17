@@ -1,7 +1,7 @@
 ﻿using System;
 using Konamiman.Z80dotNet.Tests.InstructionsExecution;
 using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -25,7 +25,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         };
 
         [Test]
-        [TestCaseSource("IN_r_C_Source")]
+        [TestCaseSource(nameof(IN_r_C_Source))]
         public void IN_r_C_reads_value_from_port(string reg, byte opcode)
         {
             var portNumber = Fixture.Create<byte>();
@@ -38,57 +38,57 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(opcode, portNumber, value);
 
-            Assert.AreEqual(value, GetReg<byte>(reg));
+            Assert.That(GetReg<byte>(reg), Is.EqualTo(value));
         }
 
         [Test]
-        [TestCaseSource("IN_r_C_Source")]
-        [TestCaseSource("IN_F_C_Source")]
+        [TestCaseSource(nameof(IN_r_C_Source))]
+        [TestCaseSource(nameof(IN_F_C_Source))]
         public void IN_r_C_sets_SF_appropriately(string reg, byte opcode)
         {
             var portNumber = Fixture.Create<byte>();
 
             Execute(opcode, portNumber, 0xFE);
-            Assert.AreEqual(1, Registers.SF);
+            Assert.That(Registers.SF.Value, Is.EqualTo(1));
 
             Execute(opcode, portNumber, 0xFF);
-            Assert.AreEqual(1, Registers.SF);
+            Assert.That(Registers.SF.Value, Is.EqualTo(1));
 
             Execute(opcode, portNumber, 0);
-            Assert.AreEqual(0, Registers.SF);
+            Assert.That(Registers.SF.Value, Is.EqualTo(0));
 
             Execute(opcode, portNumber, 1);
-            Assert.AreEqual(0, Registers.SF);
+            Assert.That(Registers.SF.Value, Is.EqualTo(0));
         }
 
         [Test]
-        [TestCaseSource("IN_r_C_Source")]
-        [TestCaseSource("IN_F_C_Source")]
+        [TestCaseSource(nameof(IN_r_C_Source))]
+        [TestCaseSource(nameof(IN_F_C_Source))]
         public void IN_r_C_sets_ZF_appropriately(string reg, byte opcode)
         {
             var portNumber = Fixture.Create<byte>();
 
             Execute(opcode, portNumber, 0xFF);
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.That(Registers.ZF.Value, Is.EqualTo(0));
 
             Execute(opcode, portNumber, 0);
-            Assert.AreEqual(1, Registers.ZF);
+            Assert.That(Registers.ZF.Value, Is.EqualTo(1));
 
             Execute(opcode, portNumber, 1);
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.That(Registers.ZF.Value, Is.EqualTo(0));
         }
 
         [Test]
-        [TestCaseSource("IN_r_C_Source")]
-        [TestCaseSource("IN_F_C_Source")]
+        [TestCaseSource(nameof(IN_r_C_Source))]
+        [TestCaseSource(nameof(IN_F_C_Source))]
         public void IN_r_C_resets_HF_NF(string reg, byte opcode)
         {
             AssertResetsFlags(opcode, 0xED, "H", "N");
         }
 
         [Test]
-        [TestCaseSource("IN_r_C_Source")]
-        [TestCaseSource("IN_F_C_Source")]
+        [TestCaseSource(nameof(IN_r_C_Source))]
+        [TestCaseSource(nameof(IN_F_C_Source))]
         public void IN_r_C_does_not_change_CF(string reg, byte opcode)
         {
             var randomValues = Fixture.Create<byte[]>();
@@ -98,17 +98,17 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             {
                 Registers.CF = 0;
                 Execute(opcode, portNumber, value);
-                Assert.AreEqual(0, Registers.CF);
+                Assert.That(Registers.CF.Value, Is.EqualTo(0));
 
                 Registers.CF = 1;
                 Execute(opcode, portNumber, value);
-                Assert.AreEqual(1, Registers.CF);
+                Assert.That(Registers.CF.Value, Is.EqualTo(1));
             }
         }
 
         [Test]
-        [TestCaseSource("IN_r_C_Source")]
-        [TestCaseSource("IN_F_C_Source")]
+        [TestCaseSource(nameof(IN_r_C_Source))]
+        [TestCaseSource(nameof(IN_F_C_Source))]
         public void IN_r_C_sets_PF_as_parity(string reg, byte opcode)
         {
             var randomValues = Fixture.Create<byte[]>();
@@ -117,36 +117,42 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             foreach (var value in randomValues)
             {
                 Execute(opcode, portNumber, value);
-                Assert.AreEqual(Parity[value], Registers.PF);
+                Assert.That(Registers.PF.Value, Is.EqualTo(Parity[value]));
             }
         }
 
         [Test]
-        [TestCaseSource("IN_r_C_Source")]
-        [TestCaseSource("IN_F_C_Source")]
+        [TestCaseSource(nameof(IN_r_C_Source))]
+        [TestCaseSource(nameof(IN_F_C_Source))]
         public void IN_r_C_sets_bits_3_and_5_from_result(string reg, byte opcode)
         {
             var portNumber = Fixture.Create<byte>();
             var value = ((byte)0).WithBit(3, 1).WithBit(5, 0);
             Execute(opcode, portNumber, value);
-            Assert.AreEqual(1, Registers.Flag3);
-            Assert.AreEqual(0, Registers.Flag5);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.Flag3.Value, Is.EqualTo(1));
+                Assert.That(Registers.Flag5.Value, Is.EqualTo(0));
+            });
 
             value = ((byte)0).WithBit(3, 0).WithBit(5, 1);
             Execute(opcode, portNumber, value);
-            Assert.AreEqual(0, Registers.Flag3);
-            Assert.AreEqual(1, Registers.Flag5);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.Flag3.Value, Is.EqualTo(0));
+                Assert.That(Registers.Flag5.Value, Is.EqualTo(1));
+            });
         }
 
         [Test]
-        [TestCaseSource("IN_r_C_Source")]
-        [TestCaseSource("IN_F_C_Source")]
+        [TestCaseSource(nameof(IN_r_C_Source))]
+        [TestCaseSource(nameof(IN_F_C_Source))]
         public void IN_r_C_returns_proper_T_states(string reg, byte opcode)
         {
             var portNumber = Fixture.Create<byte>();
             var value = Fixture.Create<byte>();
             var states = Execute(opcode, portNumber, value);
-            Assert.AreEqual(12, states);
+            Assert.That(states, Is.EqualTo(12));
         }
 
         private int Execute(byte opcode, byte portNumber, byte value)

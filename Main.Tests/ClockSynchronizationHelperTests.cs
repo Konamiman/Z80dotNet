@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 using System.Diagnostics;
 
 namespace Konamiman.Z80dotNet.Tests
@@ -38,7 +38,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             var expected = 50;
             var actual = sw.ElapsedMilliseconds;
-            Assert.IsTrue(actual >= expected-5 && actual <= expected+5, "Actual value: " + actual);
+            Assert.That(actual >= expected-5 && actual <= expected+5, Is.True, "Actual value: " + actual);
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             var expected = 50;
             var actual = sw.ElapsedMilliseconds;
-            Assert.IsTrue(actual >= expected-5 && actual <= expected+5, "Actual value: " + actual);
+            Assert.That(actual >= expected-5 && actual <= expected+5, Is.True, "Actual value: " + actual);
         }
 
         [Test]
@@ -74,12 +74,12 @@ namespace Konamiman.Z80dotNet.Tests
 
             var expected = 50;
             var actual = sw.ElapsedMilliseconds;
-            Assert.IsTrue(actual >= expected-5 && actual <= expected+5, "Actual value 1: " + actual);
+            Assert.That(actual >= expected-5 && actual <= expected+5, Is.True, "Actual value 1: " + actual);
 
             sw.Stop();
 
             actual = sw.ElapsedMilliseconds;
-            Assert.IsTrue(actual >= expected-5 && actual <= expected+5, "Actual value 2: " + actual);
+            Assert.That(actual >= expected-5 && actual <= expected+5, Is.True, "Actual value 2: " + actual);
         }
     }
 }

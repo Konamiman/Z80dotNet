@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -15,7 +15,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(CPL_opcode);
 
-            Assert.AreEqual((byte)(~value), Registers.A);
+            Assert.That(Registers.A, Is.EqualTo((byte)(~value)));
         }
 
         [Test]
@@ -39,15 +39,18 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             Registers.A = (byte)value;
             Execute(CPL_opcode);
-            Assert.AreEqual(Registers.A.GetBit(3), Registers.Flag3);
-            Assert.AreEqual(Registers.A.GetBit(5), Registers.Flag5);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.Flag3, Is.EqualTo(Registers.A.GetBit(3)));
+                Assert.That(Registers.Flag5, Is.EqualTo(Registers.A.GetBit(5)));
+            });
         }
 
         [Test]
         public void CPL_returns_proper_T_states()
         {
             var states = Execute(CPL_opcode);
-            Assert.AreEqual(4, states);
+            Assert.That(states, Is.EqualTo(4));
         }
     }
 }

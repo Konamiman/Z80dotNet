@@ -14,12 +14,12 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Sut.InstructionFetchFinished += (sender, e) =>
             {
                 eventFired = true;
-                Assert.True(e.IsHaltInstruction);
+                Assert.That(e.IsHaltInstruction);
             };
 
             Execute(HALT_opcode);
 
-            Assert.IsTrue(eventFired);
+            Assert.That(eventFired);
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         public void HALT_returns_proper_T_states()
         {
             var states = Execute(HALT_opcode);
-            Assert.AreEqual(4, states);
+            Assert.That(states, Is.EqualTo(4));
         }
     }
 }

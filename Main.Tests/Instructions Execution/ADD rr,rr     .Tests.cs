@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -26,8 +26,8 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         };
 
         [Test]
-        [TestCaseSource("ADD_rr_rr_Source")]
-        [TestCaseSource("ADD_rr_rr_Source_same_src_and_dest")]
+        [TestCaseSource(nameof(ADD_rr_rr_Source))]
+        [TestCaseSource(nameof(ADD_rr_rr_Source_same_src_and_dest))]
         public void ADD_rr_rr_adds_register_values(string dest, string src, byte opcode, byte? prefix)
         {
             var value1 = Fixture.Create<short>();
@@ -39,13 +39,13 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(opcode, prefix);
 
-            Assert.AreEqual(value1.Add(value2), GetReg<short>(dest));
+            Assert.That(GetReg<short>(dest), Is.EqualTo(value1.Add(value2)));
             if(src != dest)
-                Assert.AreEqual(value2, GetReg<short>(src));
+                Assert.That(GetReg<short>(src), Is.EqualTo(value2));
         }
 
         [Test]
-        [TestCaseSource("ADD_rr_rr_Source")]
+        [TestCaseSource(nameof(ADD_rr_rr_Source))]
         public void ADD_rr_rr_sets_CF_properly(string dest, string src, byte opcode, byte? prefix)
         {
             Registers.CF = 1;
@@ -53,22 +53,22 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             SetReg(src, 1);
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.CF);
+            Assert.That(Registers.CF.Value, Is.EqualTo(0));
 
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.CF);
+            Assert.That(Registers.CF.Value, Is.EqualTo(1));
         }
 
         [Test]
-        [TestCaseSource("ADD_rr_rr_Source")]
-        [TestCaseSource("ADD_rr_rr_Source_same_src_and_dest")]
+        [TestCaseSource(nameof(ADD_rr_rr_Source))]
+        [TestCaseSource(nameof(ADD_rr_rr_Source_same_src_and_dest))]
         public void ADD_rr_rr_resets_N(string dest, string src, byte opcode, byte? prefix)
         {
             AssertResetsFlags(opcode, prefix, "N");
         }
 
         [Test]
-        [TestCaseSource("ADD_rr_rr_Source")]
+        [TestCaseSource(nameof(ADD_rr_rr_Source))]
         public void ADD_rr_rr_sets_HF_appropriately(string dest, string src, byte opcode, byte? prefix)
         {
             SetReg(src, 0x10);
@@ -77,16 +77,16 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 SetReg(dest, NumberUtils.CreateShort(0xFF, b));
 
                 Execute(opcode, prefix);
-                Assert.AreEqual(1, Registers.HF);
+                Assert.That(Registers.HF.Value, Is.EqualTo(1));
 
                 Execute(opcode, prefix);
-                Assert.AreEqual(0, Registers.HF);
+                Assert.That(Registers.HF.Value, Is.EqualTo(0));
             }
         }
 
         [Test]
-        [TestCaseSource("ADD_rr_rr_Source")]
-        [TestCaseSource("ADD_rr_rr_Source_same_src_and_dest")]
+        [TestCaseSource(nameof(ADD_rr_rr_Source))]
+        [TestCaseSource(nameof(ADD_rr_rr_Source_same_src_and_dest))]
         public void ADD_rr_rr_does_not_change_SF_ZF_PF(string dest, string src, byte opcode, byte? prefix)
         {
             var randomValues = Fixture.Create<byte[]>();
@@ -104,35 +104,44 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 SetReg(src, value);
                 Execute(opcode, prefix);
 
-                Assert.AreEqual(randomSF, Registers.SF);
-                Assert.AreEqual(randomZF, Registers.ZF);
-                Assert.AreEqual(randomPF, Registers.PF);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(Registers.SF, Is.EqualTo(randomSF));
+                    Assert.That(Registers.ZF, Is.EqualTo(randomZF));
+                    Assert.That(Registers.PF, Is.EqualTo(randomPF));
+                });
             }
         }
 
         [Test]
-        [TestCaseSource("ADD_rr_rr_Source")]
+        [TestCaseSource(nameof(ADD_rr_rr_Source))]
         public void ADD_rr_rr_sets_bits_3_and_5_from_high_byte_of_result(string dest, string src, byte opcode, byte? prefix)
         {
             SetReg(dest, NumberUtils.CreateShort(0, ((byte)0).WithBit(3, 1).WithBit(5, 0)));
             SetReg(src, 0);
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.Flag3);
-            Assert.AreEqual(0, Registers.Flag5);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.Flag3.Value, Is.EqualTo(1));
+                Assert.That(Registers.Flag5.Value, Is.EqualTo(0));
+            });
 
             SetReg(dest, NumberUtils.CreateShort(0, ((byte)0).WithBit(3, 0).WithBit(5, 1)));
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.Flag3);
-            Assert.AreEqual(1, Registers.Flag5);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.Flag3.Value, Is.EqualTo(0));
+                Assert.That(Registers.Flag5.Value, Is.EqualTo(1));
+            });
         }
 
         [Test]
-        [TestCaseSource("ADD_rr_rr_Source")]
-        [TestCaseSource("ADD_rr_rr_Source_same_src_and_dest")]
+        [TestCaseSource(nameof(ADD_rr_rr_Source))]
+        [TestCaseSource(nameof(ADD_rr_rr_Source_same_src_and_dest))]
         public void ADD_rr_rr_returns_proper_T_states(string dest, string src, byte opcode, byte? prefix)
         {
             var states = Execute(opcode, prefix);
-            Assert.AreEqual(IfIndexRegister(dest, 15, @else: 11), states);
+            Assert.That(states, Is.EqualTo(IfIndexRegister(dest, 15, @else: 11)));
         }
     }
 }

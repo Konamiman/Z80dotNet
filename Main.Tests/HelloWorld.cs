@@ -22,8 +22,11 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.Start();
 
-            Assert.AreEqual(12, Sut.Registers.A);
-            Assert.AreEqual(28, Sut.TStatesElapsedSinceStart);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.Registers.A, Is.EqualTo(12));
+                Assert.That(Sut.TStatesElapsedSinceStart, Is.EqualTo(28));
+            });
         }
     }
 }

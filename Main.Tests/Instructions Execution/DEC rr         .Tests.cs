@@ -15,27 +15,27 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         };
 
         [Test]
-        [TestCaseSource("DEC_rr_Source")]
+        [TestCaseSource(nameof(DEC_rr_Source))]
         public void DEC_rr_decreases_register(string reg, byte opcode, byte? prefix)
         {
             SetReg(reg, 0);
             Execute(opcode, prefix);
-            Assert.AreEqual(0xFFFF.ToShort(), GetReg<short>(reg));
+            Assert.That(GetReg<short>(reg), Is.EqualTo(0xFFFF.ToShort()));
         }
 
         [Test]
-        [TestCaseSource("DEC_rr_Source")]
+        [TestCaseSource(nameof(DEC_rr_Source))]
         public void DEC_rr_do_not_modify_flags(string reg, byte opcode, byte? prefix)
         {
             AssertNoFlagsAreModified(opcode, prefix);
         }
 
         [Test]
-        [TestCaseSource("DEC_rr_Source")]
+        [TestCaseSource(nameof(DEC_rr_Source))]
         public void DEC_rr_returns_proper_T_states(string reg, byte opcode, byte? prefix)
         {
             var states = Execute(opcode, prefix);
-            Assert.AreEqual(IfIndexRegister(reg, 10, @else: 6), states);
+            Assert.That(states, Is.EqualTo(IfIndexRegister(reg, 10, @else: 6)));
         }
     }
 }

@@ -49,26 +49,29 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         };
 
         [Test]
-        [TestCaseSource("DAA_cases_Source")]
+        [TestCaseSource(nameof(DAA_cases_Source))]
         public void DAA_generates_A_and_CF_correctly_based_on_input(int inputNF, int inputCF, int inputHF, int inputA, int addedValue, int outputC)
         {
             Setup(inputNF, inputCF, inputHF, inputA);
 
             Execute(DAA_opcode);
 
-            Assert.AreEqual(((byte)inputA).Add(addedValue), Registers.A);
-            Assert.AreEqual((Bit)outputC, Registers.CF);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.A, Is.EqualTo(((byte)inputA).Add(addedValue)));
+                Assert.That(Registers.CF, Is.EqualTo((Bit)outputC));
+            });
         }
 
        
         [Test]
-        [TestCaseSource("DAA_cases_Source")]
+        [TestCaseSource(nameof(DAA_cases_Source))]
         public void DAA_returns_proper_T_states(int inputNF, int inputCF, int inputHF, int inputA, int addedValue, int outputC)
         {
             Setup(inputNF, inputCF, inputHF, inputA);
 
             var states = Execute(DAA_opcode);
-            Assert.AreEqual(4, states);
+            Assert.That(states, Is.EqualTo(4));
         }
 
         [Test]
@@ -85,40 +88,40 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
 
         [Test]
-        [TestCaseSource("DAA_cases_Source")]
+        [TestCaseSource(nameof(DAA_cases_Source))]
         public void DAA_generates_PF_properly(int inputNF, int inputCF, int inputHF, int inputA, int addedValue, int outputC)
         {
             Setup(inputNF, inputCF, inputHF, inputA);
 
             Execute(DAA_opcode);
 
-            Assert.AreEqual(Parity[Registers.A], Registers.PF);
+            Assert.That(Registers.PF.Value, Is.EqualTo(Parity[Registers.A]));
         }
 
         [Test]
-        [TestCaseSource("DAA_cases_Source")]
+        [TestCaseSource(nameof(DAA_cases_Source))]
         public void DAA_generates_SF_properly(int inputNF, int inputCF, int inputHF, int inputA, int addedValue, int outputC)
         {
             Setup(inputNF, inputCF, inputHF, inputA);
 
             Execute(DAA_opcode);
 
-            Assert.AreEqual(Registers.A.GetBit(7), Registers.SF);
+            Assert.That(Registers.SF, Is.EqualTo(Registers.A.GetBit(7)));
         }
 
         [Test]
-        [TestCaseSource("DAA_cases_Source")]
+        [TestCaseSource(nameof(DAA_cases_Source))]
         public void DAA_generates_ZF_properly(int inputNF, int inputCF, int inputHF, int inputA, int addedValue, int outputC)
         {
             Setup(inputNF, inputCF, inputHF, inputA);
 
             Execute(DAA_opcode);
 
-            Assert.AreEqual(Registers.A == 0 ? 1 : 0, Registers.ZF);
+            Assert.That(Registers.ZF.Value, Is.EqualTo(Registers.A == 0 ? 1 : 0));
         }
 
         [Test]
-        [TestCaseSource("DAA_cases_Source")]
+        [TestCaseSource(nameof(DAA_cases_Source))]
         public void DAA_does_not_modify_NF(int inputNF, int inputCF, int inputHF, int inputA, int addedValue, int outputC)
         {
             Setup(inputNF, inputCF, inputHF, inputA);
@@ -127,15 +130,18 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
 
         [Test]
-        [TestCaseSource("DAA_cases_Source")]
+        [TestCaseSource(nameof(DAA_cases_Source))]
         public void DAA_sets_bits_3_and_5_from_of_result(int inputNF, int inputCF, int inputHF, int inputA, int addedValue, int outputC)
         {
             Setup(inputNF, inputCF, inputHF, inputA);
 
             Execute(DAA_opcode);
 
-            Assert.AreEqual(Registers.Flag3, Registers.A.GetBit(3));
-            Assert.AreEqual(Registers.Flag5, Registers.A.GetBit(5));
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.A.GetBit(3), Is.EqualTo(Registers.Flag3));
+                Assert.That(Registers.A.GetBit(5), Is.EqualTo(Registers.Flag5));
+            });
         }
 
         private void Setup(int inputNF, int inputCF, int inputHF, int inputA)

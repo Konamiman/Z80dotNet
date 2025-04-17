@@ -13,7 +13,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(SCF_opcode);
 
-            Assert.AreEqual(1, Registers.CF);
+            Assert.That(Registers.CF.Value, Is.EqualTo(1));
         }
 
         [Test]
@@ -34,14 +34,20 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Registers.A = Registers.A.WithBit(3, 1);
             Registers.A = Registers.A.WithBit(5, 0);
             Execute(SCF_opcode);
-            Assert.AreEqual(1, Registers.Flag3);
-            Assert.AreEqual(0, Registers.Flag5);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.Flag3.Value, Is.EqualTo(1));
+                Assert.That(Registers.Flag5.Value, Is.EqualTo(0));
+            });
 
             Registers.A = Registers.A.WithBit(3, 0);
             Registers.A = Registers.A.WithBit(5, 1);
             Execute(SCF_opcode);
-            Assert.AreEqual(0, Registers.Flag3);
-            Assert.AreEqual(1, Registers.Flag5);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.Flag3.Value, Is.EqualTo(0));
+                Assert.That(Registers.Flag5.Value, Is.EqualTo(1));
+            });
         }
 
         [Test]
@@ -53,15 +59,18 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             Registers.A = (byte)value;
             Execute(SCF_opcode);
-            Assert.AreEqual(Registers.A.GetBit(3), Registers.Flag3);
-            Assert.AreEqual(Registers.A.GetBit(5), Registers.Flag5);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.Flag3, Is.EqualTo(Registers.A.GetBit(3)));
+                Assert.That(Registers.Flag5, Is.EqualTo(Registers.A.GetBit(5)));
+            });
         }
 
         [Test]
         public void SCF_returns_proper_T_states()
         {
             var states = Execute(SCF_opcode);
-            Assert.AreEqual(4, states);
+            Assert.That(states, Is.EqualTo(4));
         }
     }
 }

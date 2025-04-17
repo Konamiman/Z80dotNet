@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 using System.Collections.Generic;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
@@ -77,8 +77,8 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
 
         [Test]
-        [TestCaseSource("SUB_SBC_A_r_Source")]
-        [TestCaseSource("SUB_SBC_A_A_Source")]
+        [TestCaseSource(nameof(SUB_SBC_A_r_Source))]
+        [TestCaseSource(nameof(SUB_SBC_A_A_Source))]
         public void SUB_SBC_A_r_substracts_both_registers_with_or_without_carry(string src, byte opcode, int cf, byte? prefix)
         {
             var oldValue = Fixture.Create<byte>();
@@ -87,13 +87,13 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Setup(src, oldValue, valueToSubstract, cf);
             Execute(opcode, prefix);
 
-            Assert.AreEqual(oldValue.Sub(valueToSubstract + cf), Registers.A);
+            Assert.That(Registers.A, Is.EqualTo(oldValue.Sub(valueToSubstract + cf)));
         }
 
         [Test]
-        [TestCaseSource("CP_r_Source")]
-        [TestCaseSource("CP_A_Source")]
-        [TestCaseSource("CPID_R_Source")]
+        [TestCaseSource(nameof(CP_r_Source))]
+        [TestCaseSource(nameof(CP_A_Source))]
+        [TestCaseSource(nameof(CPID_R_Source))]
         public void CPs_do_not_change_A(string src, byte opcode, int cf, byte? prefix)
         {
             var oldValue = Fixture.Create<byte>();
@@ -102,7 +102,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Setup(src, oldValue, argument, cf);
             Execute(opcode, prefix);
 
-            Assert.AreEqual(oldValue, Registers.A);
+            Assert.That(Registers.A, Is.EqualTo(oldValue));
         }
 
         private void Setup(string src, byte oldValue, byte valueToSubstract, int cf = 0)
@@ -136,76 +136,76 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
 
         [Test]
-        [TestCaseSource("SUB_SBC_A_r_Source")]
-        [TestCaseSource("CP_r_Source")]
-        [TestCaseSource("CPID_R_Source")]
+        [TestCaseSource(nameof(SUB_SBC_A_r_Source))]
+        [TestCaseSource(nameof(CP_r_Source))]
+        [TestCaseSource(nameof(CPID_R_Source))]
         public void SUB_SBC_CPs_set_SF_appropriately(string src, byte opcode, int cf, byte? prefix)
         {
             Setup(src, 0x02, 1);
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.SF);
+            Assert.That(Registers.SF.Value, Is.EqualTo(0));
 
             Setup(src, 0x01, 1);
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.SF);
+            Assert.That(Registers.SF.Value, Is.EqualTo(0));
 
             Setup(src, 0x00, 1);
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.SF);
+            Assert.That(Registers.SF.Value, Is.EqualTo(1));
 
             Setup(src, 0xFF, 1);
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.SF);
+            Assert.That(Registers.SF.Value, Is.EqualTo(1));
         }
 
         [Test]
-        [TestCaseSource("SUB_SBC_A_r_Source")]
-        [TestCaseSource("CP_r_Source")]
-        [TestCaseSource("CPID_R_Source")]
+        [TestCaseSource(nameof(SUB_SBC_A_r_Source))]
+        [TestCaseSource(nameof(CP_r_Source))]
+        [TestCaseSource(nameof(CPID_R_Source))]
         public void SUB_SBC_CPs_set_ZF_appropriately(string src, byte opcode, int cf, byte? prefix)
         {
             Setup(src, 0x03, 1);
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.That(Registers.ZF.Value, Is.EqualTo(0));
 
             Setup(src, 0x02, 1);
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.That(Registers.ZF.Value, Is.EqualTo(0));
 
             Setup(src, 0x01, 1);
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.ZF);
+            Assert.That(Registers.ZF.Value, Is.EqualTo(1));
 
             Setup(src, 0x00, 1);
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.That(Registers.ZF.Value, Is.EqualTo(0));
         }
 
         [Test]
-        [TestCaseSource("SUB_SBC_A_r_Source")]
-        [TestCaseSource("CP_r_Source")]
-        [TestCaseSource("CPID_R_Source")]
+        [TestCaseSource(nameof(SUB_SBC_A_r_Source))]
+        [TestCaseSource(nameof(CP_r_Source))]
+        [TestCaseSource(nameof(CPID_R_Source))]
         public void SUB_SBC_CPs_set_HF_appropriately(string src, byte opcode, int cf, byte? prefix)
         {
             foreach(byte b in new byte[] { 0x11, 0x81, 0xF1 }) 
             {
                 Setup(src, b, 1);
                 Execute(opcode, prefix);
-                Assert.AreEqual(0, Registers.HF);
+                Assert.That(Registers.HF.Value, Is.EqualTo(0));
 
                 Setup(src, (byte)(b-1), 1);
                 Execute(opcode, prefix);
-                Assert.AreEqual(1, Registers.HF);
+                Assert.That(Registers.HF.Value, Is.EqualTo(1));
 
                 Setup(src, (byte)(b-2), 1);
                 Execute(opcode, prefix);
-                Assert.AreEqual(0, Registers.HF);
+                Assert.That(Registers.HF.Value, Is.EqualTo(0));
             }
         }
 
         [Test]
-        [TestCaseSource("SUB_SBC_A_r_Source")]
-        [TestCaseSource("CP_r_Source")]
+        [TestCaseSource(nameof(SUB_SBC_A_r_Source))]
+        [TestCaseSource(nameof(CP_r_Source))]
         public void SUB_SBC_CP_r_sets_PF_appropriately(string src, byte opcode, int cf, byte? prefix)
         {
             //http://stackoverflow.com/a/8037485/4574
@@ -235,75 +235,81 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Setup(src, (byte)oldValue, (byte)substractedValue);
 
             Execute(opcode, prefix);
-            Assert.AreEqual(expectedPF, Registers.PF);
+            Assert.That(Registers.PF.Value, Is.EqualTo(expectedPF));
         }
 
         [Test]
-        [TestCaseSource("SUB_SBC_A_r_Source")]
-        [TestCaseSource("SUB_SBC_A_A_Source")]
-        [TestCaseSource("CP_r_Source")]
-        [TestCaseSource("CPID_R_Source")]
+        [TestCaseSource(nameof(SUB_SBC_A_r_Source))]
+        [TestCaseSource(nameof(SUB_SBC_A_A_Source))]
+        [TestCaseSource(nameof(CP_r_Source))]
+        [TestCaseSource(nameof(CPID_R_Source))]
         public void SUB_SBC_CPs_sets_NF(string src, byte opcode, int cf, byte? prefix)
         {
             AssertSetsFlags(opcode, null, "N");
         }
 
         [Test]
-        [TestCaseSource("SUB_SBC_A_r_Source")]
-        [TestCaseSource("CP_r_Source")]
+        [TestCaseSource(nameof(SUB_SBC_A_r_Source))]
+        [TestCaseSource(nameof(CP_r_Source))]
         public void SUB_SBC_CP_r_sets_CF_appropriately(string src, byte opcode, int cf, byte? prefix)
         {
             Setup(src, 0x01, 1);
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.CF);
+            Assert.That(Registers.CF.Value, Is.EqualTo(0));
 
             Setup(src, 0x00, 1);
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.CF);
+            Assert.That(Registers.CF.Value, Is.EqualTo(1));
 
             Setup(src, 0xFF, 1);
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.CF);
+            Assert.That(Registers.CF.Value, Is.EqualTo(0));
         }
 
         [Test]
-        [TestCaseSource("SUB_SBC_A_r_Source")]
+        [TestCaseSource(nameof(SUB_SBC_A_r_Source))]
         public void SUB_SBC_r_sets_bits_3_and_5_from_result(string src, byte opcode, int cf, byte? prefix)
         {
             Setup(src, (byte)(((byte)0).WithBit(3, 1).WithBit(5, 0) + 1), 1);
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.Flag3);
-            Assert.AreEqual(0, Registers.Flag5);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.Flag3.Value, Is.EqualTo(1));
+                Assert.That(Registers.Flag5.Value, Is.EqualTo(0));
+            });
 
             Setup(src, (byte)(((byte)0).WithBit(3, 0).WithBit(5, 1) + 1), 1);
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.Flag3);
-            Assert.AreEqual(1, Registers.Flag5);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.Flag3.Value, Is.EqualTo(0));
+                Assert.That(Registers.Flag5.Value, Is.EqualTo(1));
+            });
         }
 
         [Test]
-        [TestCaseSource("SUB_SBC_A_r_Source")]
-        [TestCaseSource("SUB_SBC_A_A_Source")]
-        [TestCaseSource("CP_r_Source")]
+        [TestCaseSource(nameof(SUB_SBC_A_r_Source))]
+        [TestCaseSource(nameof(SUB_SBC_A_A_Source))]
+        [TestCaseSource(nameof(CP_r_Source))]
         public void SUB_SBC_CP_r_returns_proper_T_states(string src, byte opcode, int cf, byte? prefix)
         {
             var states = Execute(opcode, prefix);
-            Assert.AreEqual(
-                (src == "(HL)" || src == "n") ? 7 :
+            Assert.That(
+states, Is.EqualTo((src == "(HL)" || src == "n") ? 7 :
                 src.StartsWith("I") ? 8 :
                 src.StartsWith(("(I")) ? 19 :
-                4, states);
+                4));
         }
 
         [Test]
-        [TestCaseSource("CPID_R_Source")]
+        [TestCaseSource(nameof(CPID_R_Source))]
         public void CPI_CPD_CPIR_CPRD_do_not_change_C(string src, byte opcode, int cf, byte? prefix)
         {
             AssertDoesNotChangeFlags(opcode, cpidrPrefix, "C");
         }
 
         [Test]
-        [TestCaseSource("CPID_R_Source")]
+        [TestCaseSource(nameof(CPID_R_Source))]
         public void CPI_CPD_CPIR_CPDR_reset_PF_if_BC_reaches_zero(string src, byte opcode, int cf, byte? prefix)
         {
             Registers.BC = 128;
@@ -311,14 +317,17 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             {
                 var oldBC = Registers.BC;
                 Execute(opcode, prefix);
-                Assert.AreEqual(oldBC.Dec(), Registers.BC);
-                Assert.AreEqual(Registers.BC != 0, (bool)Registers.PF);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(Registers.BC, Is.EqualTo(oldBC.Dec()));
+                    Assert.That((bool)Registers.PF, Is.EqualTo(Registers.BC != 0));
+                });
             }
         }
 
         [Test]
-        [TestCaseSource("CPI_Source")]
-        [TestCaseSource("CPIR_Source")]
+        [TestCaseSource(nameof(CPI_Source))]
+        [TestCaseSource(nameof(CPIR_Source))]
         public void CPI_CPIR_increase_HL(string src, byte opcode, int cf, byte? prefix)
         {
             var address = Fixture.Create<short>();
@@ -327,12 +336,12 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(opcode, prefix);
 
-            Assert.AreEqual(address.Inc(), Registers.HL);
+            Assert.That(Registers.HL, Is.EqualTo(address.Inc()));
         }
 
         [Test]
-        [TestCaseSource("CPD_Source")]
-        [TestCaseSource("CPDR_Source")]
+        [TestCaseSource(nameof(CPD_Source))]
+        [TestCaseSource(nameof(CPDR_Source))]
         public void CPD_CPDR_decrease_HL(string src, byte opcode, int cf, byte? prefix)
         {
             var address = Fixture.Create<short>();
@@ -341,11 +350,11 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(opcode, prefix);
 
-            Assert.AreEqual(address.Dec(), Registers.HL);
+            Assert.That(Registers.HL, Is.EqualTo(address.Dec()));
         }
 
         [Test]
-        [TestCaseSource("CPID_R_Source")]
+        [TestCaseSource(nameof(CPID_R_Source))]
         public void CPI_CPD_CPIR_CPDR_decrease_BC(string src, byte opcode, int cf, byte? prefix)
         {
             var count = Fixture.Create<short>();
@@ -354,20 +363,20 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(opcode, prefix);
 
-            Assert.AreEqual(count.Dec(), Registers.BC);
+            Assert.That(Registers.BC, Is.EqualTo(count.Dec()));
         }
 
         [Test]
-        [TestCaseSource("CPI_Source")]
-        [TestCaseSource("CPD_Source")]
+        [TestCaseSource(nameof(CPI_Source))]
+        [TestCaseSource(nameof(CPD_Source))]
         public void CPI_CPD_return_proper_T_states(string src, byte opcode, int cf, byte? prefix)
         {
             var states = Execute(opcode, prefix);
-            Assert.AreEqual(16, states);
+            Assert.That(states, Is.EqualTo(16));
         }
 
         [Test]
-        [TestCaseSource("CPID_R_Source")]
+        [TestCaseSource(nameof(CPID_R_Source))]
         public void CPI_CPD_set_Flag3_from_bit_3_of_A_minus_aHL_minus_HF_and_Flag5_from_bit_1(string src, byte opcode, int cf, byte? prefix)
         {
             var valueInMemory = Fixture.Create<byte>();
@@ -383,14 +392,17 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 Execute(opcode, prefix);
 
                 var expected = valueOfA.Sub(valueInMemory).Sub((short)Registers.HF).GetLowByte();
-                Assert.AreEqual(expected.GetBit(3), Registers.Flag3);
-                Assert.AreEqual(expected.GetBit(1), Registers.Flag5);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(Registers.Flag3, Is.EqualTo(expected.GetBit(3)));
+                    Assert.That(Registers.Flag5, Is.EqualTo(expected.GetBit(1)));
+                });
             }
         }
 
         [Test]
-        [TestCaseSource("CPIR_Source")]
-        [TestCaseSource("CPDR_Source")]
+        [TestCaseSource(nameof(CPIR_Source))]
+        [TestCaseSource(nameof(CPDR_Source))]
         public void CPIR_CPDR_decrease_PC_if_Z_is_1_but_BC_is_not_0(string src, byte opcode, int cf, byte? prefix)
         {
             var dataAddress = Fixture.Create<ushort>();
@@ -404,12 +416,12 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             ExecuteAt(runAddress, opcode, cpidrPrefix);
 
-            Assert.AreEqual(runAddress.Add(2), Registers.PC);
+            Assert.That(Registers.PC, Is.EqualTo(runAddress.Add(2)));
         }
 
         [Test]
-        [TestCaseSource("CPIR_Source")]
-        [TestCaseSource("CPDR_Source")]
+        [TestCaseSource(nameof(CPIR_Source))]
+        [TestCaseSource(nameof(CPDR_Source))]
         public void CPIR_CPDR_decrease_PC_if_BC_is_0_but_Z_is_not_0(string src, byte opcode, int cf, byte? prefix)
         {
             if(opcode==0xFF) opcode = 0xB9;
@@ -426,12 +438,12 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             ExecuteAt(runAddress, opcode, cpidrPrefix);
 
-            Assert.AreEqual(runAddress.Add(2), Registers.PC);
+            Assert.That(Registers.PC, Is.EqualTo(runAddress.Add(2)));
         }
 
         [Test]
-        [TestCaseSource("CPIR_Source")]
-        [TestCaseSource("CPDR_Source")]
+        [TestCaseSource(nameof(CPIR_Source))]
+        [TestCaseSource(nameof(CPDR_Source))]
         public void CPIR_CPDR_do_not_decrease_PC_if_BC_is_not_0_and_Z_is_0(string src, byte opcode, int cf, byte? prefix)
         {
             if(opcode==0xFF) opcode = 0xB9;
@@ -448,12 +460,12 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             ExecuteAt(runAddress, opcode, cpidrPrefix);
 
-            Assert.AreEqual(runAddress, Registers.PC);
+            Assert.That(Registers.PC, Is.EqualTo(runAddress));
         }
 
         [Test]
-        [TestCaseSource("CPIR_Source")]
-        [TestCaseSource("CPDR_Source")]
+        [TestCaseSource(nameof(CPIR_Source))]
+        [TestCaseSource(nameof(CPDR_Source))]
         public void CPIR_CPDR_return_proper_T_states_depending_on_PC_being_decreased_or_not(string src, byte opcode, int cf, byte? prefix)
         {
             if(opcode==0xFF) opcode = 0xB9;
@@ -469,11 +481,11 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Registers.BC = 2;
 
             var states = ExecuteAt(runAddress, opcode, cpidrPrefix);
-            Assert.AreEqual(21, states);
+            Assert.That(states, Is.EqualTo(21));
 
             Registers.HL = dataAddress.ToShort();
             states = ExecuteAt(runAddress, opcode, cpidrPrefix);
-            Assert.AreEqual(16, states);
+            Assert.That(states, Is.EqualTo(16));
         }
 
         protected override int Execute(byte opcode, byte? prefix = null, params byte[] nextFetches)
