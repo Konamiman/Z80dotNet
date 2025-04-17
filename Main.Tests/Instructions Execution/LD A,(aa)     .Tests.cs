@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -19,7 +19,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(LD_A_aa_opcode, nextFetches: new[] {address.GetLowByte(), address.GetHighByte()});
 
-            Assert.AreEqual(newValue, Registers.A);
+            Assert.That(Registers.A, Is.EqualTo(newValue));
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         public void LD_rr_r_returns_proper_T_states()
         {
             var states = Execute(LD_A_aa_opcode);
-            Assert.AreEqual(13, states);
+            Assert.That(states, Is.EqualTo(13));
         }
     }
 }

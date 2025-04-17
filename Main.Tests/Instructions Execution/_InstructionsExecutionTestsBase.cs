@@ -1,6 +1,6 @@
 ﻿using System.CodeDom.Compiler;
 using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -136,7 +136,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Registers.F = value;
             Execute(opcode, prefix);
 
-            Assert.AreEqual(value, Registers.F);
+            Assert.That(Registers.F, Is.EqualTo(value));
         }
 
         protected void AssertSetsFlags(byte opcode, byte? prefix = null, params string[] flagNames)
@@ -176,7 +176,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 executor();
 
                 foreach (var flag in flagNames)
-                    Assert.AreEqual(expected, GetFlag(flag));
+                    Assert.That(GetFlag(flag), Is.EqualTo(expected));
             }
         }
 
@@ -203,7 +203,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 executor();
 
                 foreach(var flag in flagNames)
-                    Assert.AreEqual(randomFlags[flag], GetFlag(flag));
+                    Assert.That(GetFlag(flag), Is.EqualTo(randomFlags[flag]));
             }
         }
 

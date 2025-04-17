@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -19,7 +19,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         };
 
         [Test]
-        [TestCaseSource("LD_rr_r_Source")]
+        [TestCaseSource(nameof(LD_rr_r_Source))]
         public void LD_arr_r_loads_value_in_memory(string destPointerReg, string srcReg, byte opcode)
         {
             var isHorL = (srcReg == "H" || srcReg == "L");
@@ -36,22 +36,22 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Sut.Execute(opcode);
 
             var expected = isHorL ? GetReg<byte>(srcReg) : newValue;
-            Assert.AreEqual(expected, ProcessorAgent.Memory[address]);
+            Assert.That(ProcessorAgent.Memory[address], Is.EqualTo(expected));
         }
 
         [Test]
-        [TestCaseSource("LD_rr_r_Source")]
+        [TestCaseSource(nameof(LD_rr_r_Source))]
         public void LD_rr_r_do_not_modify_flags(string destPointerReg, string srcReg, byte opcode)
         {
             AssertNoFlagsAreModified(opcode);
         }
 
         [Test]
-        [TestCaseSource("LD_rr_r_Source")]
+        [TestCaseSource(nameof(LD_rr_r_Source))]
         public void LD_rr_r_returns_proper_T_states(string destPointerReg, string srcReg, byte opcode)
         {
             var states = Execute(opcode);
-            Assert.AreEqual(7, states);
+            Assert.That(states, Is.EqualTo(7));
         }
     }
 }

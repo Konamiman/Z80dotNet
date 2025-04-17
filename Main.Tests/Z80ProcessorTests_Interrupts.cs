@@ -1,7 +1,7 @@
 ﻿using System;
 using Moq;
 using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests
 {
@@ -34,7 +34,7 @@ namespace Konamiman.Z80dotNet.Tests
         [Test]
         public void Can_create_instances()
         {
-            Assert.IsNotNull(Sut);
+            Assert.That(Sut, Is.Not.Null);
         }
 
         #region Interrupt source registration
@@ -47,7 +47,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             var expected = new[] {InterruptSource1, InterruptSource2};
             var actual = Sut.GetRegisteredInterruptSources();
-            CollectionAssert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EquivalentTo(expected));
 
         }
 
@@ -59,7 +59,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             var expected = new[] {InterruptSource1};
             var actual = Sut.GetRegisteredInterruptSources();
-            CollectionAssert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EquivalentTo(expected));
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.UnregisterAllInterruptSources();
 
             var actual = Sut.GetRegisteredInterruptSources();
-            CollectionAssert.IsEmpty(actual);
+            Assert.That(actual, Is.Empty);
         }
 
         #endregion
@@ -109,8 +109,8 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.Start();
 
-            Assert.True(serviceRoutineInvoked);
-            Assert.True(serviceRoutineReturned);
+            Assert.That(serviceRoutineInvoked);
+            Assert.That(serviceRoutineReturned);
         }
 
         [Test]
@@ -138,8 +138,8 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.Continue();
 
-            Assert.True(nmiFired);
-            Assert.AreEqual(0, Sut.Registers.IFF1);
+            Assert.That(nmiFired);
+            Assert.That(Sut.Registers.IFF1.Value, Is.EqualTo(0));
         }
 
         [Test]
@@ -176,8 +176,8 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.Continue();
 
-            Assert.True(nmiFired);
-            Assert.False(serviceRoutineInvoked);
+            Assert.That(nmiFired);
+            Assert.That(serviceRoutineInvoked, Is.False);
         }
 
         #endregion
@@ -209,8 +209,11 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.Continue();
 
-            Assert.AreEqual(0, Sut.Registers.IFF1);
-            Assert.AreEqual(0, Sut.Registers.IFF2);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.Registers.IFF1.Value, Is.EqualTo(0));
+                Assert.That(Sut.Registers.IFF2.Value, Is.EqualTo(0));
+            });
         }
 
         [Test]
@@ -244,7 +247,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.Continue();
 
-            Assert.False(serviceRoutineInvoked);
+            Assert.That(serviceRoutineInvoked, Is.False);
         }
 
         [Test]
@@ -277,7 +280,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.Continue();
 
-            Assert.True(serviceRoutineInvoked);
+            Assert.That(serviceRoutineInvoked);
         }
 
         [Test]
@@ -310,7 +313,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.Continue();
 
-            Assert.True(serviceRoutineInvoked);
+            Assert.That(serviceRoutineInvoked);
         }
 
         [Test]
@@ -365,9 +368,9 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.Continue();
 
-            Assert.True(serviceRoutineInvoked);
-            Assert.True(beforeMemoryReadEventFiredForPointerAddress, "BeforeMemoryRead not fired for pointer");
-            Assert.True(afterMemoryReadEventFiredForPointerAddress, "AfterMemoryRead not fired for pointer");
+            Assert.That(serviceRoutineInvoked);
+            Assert.That(beforeMemoryReadEventFiredForPointerAddress, "BeforeMemoryRead not fired for pointer");
+            Assert.That(afterMemoryReadEventFiredForPointerAddress, "AfterMemoryRead not fired for pointer");
         }
 
         private void Sut_MemoryAccess(object sender, MemoryAccessEventArgs e)
@@ -413,9 +416,12 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.Start();
 
-            Assert.True(Sut.IsHalted);
-            Assert.AreEqual(2, maxPCreached);
-            Assert.AreEqual(4, nopsExecutedcount);
+            Assert.That(Sut.IsHalted);
+            Assert.Multiple(() =>
+            {
+                Assert.That(maxPCreached, Is.EqualTo(2));
+                Assert.That(nopsExecutedcount, Is.EqualTo(4));
+            });
         }
 
         [Test]
@@ -457,9 +463,12 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.Continue();
 
-            Assert.False(Sut.IsHalted);
-            Assert.AreEqual(13, instructionsExecutedCount); //10 + extra NOP + RET on 0x66 + RET on 2
-            Assert.AreEqual(StopReason.RetWithStackEmpty, Sut.StopReason);
+            Assert.That(Sut.IsHalted, Is.False);
+            Assert.Multiple(() =>
+            {
+                Assert.That(instructionsExecutedCount, Is.EqualTo(13)); //10 + extra NOP + RET on 0x66 + RET on 2
+                Assert.That(Sut.StopReason, Is.EqualTo(StopReason.RetWithStackEmpty));
+            });
         }
 
         #endregion

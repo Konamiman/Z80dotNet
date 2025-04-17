@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests
 {
@@ -27,9 +27,12 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.ExecuteCall(callAddress);
 
-            Assert.AreEqual(callAddress, Sut.Registers.PC);
-            Assert.AreEqual(oldSP.Sub(2), Sut.Registers.SP);
-            Assert.AreEqual(oldPC.ToShort(), ReadShortFromMemory(Sut.Registers.SP.ToUShort()));
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.Registers.PC, Is.EqualTo(callAddress));
+                Assert.That(Sut.Registers.SP, Is.EqualTo(oldSP.Sub(2)));
+                Assert.That(ReadShortFromMemory(Sut.Registers.SP.ToUShort()), Is.EqualTo(oldPC.ToShort()));
+            });
         }
 
         [Test]
@@ -44,8 +47,11 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.ExecuteRet();
 
-            Assert.AreEqual(pushedAddress, Sut.Registers.PC);
-            Assert.AreEqual(sp.Add(2), Sut.Registers.SP);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.Registers.PC, Is.EqualTo(pushedAddress));
+                Assert.That(Sut.Registers.SP, Is.EqualTo(sp.Add(2)));
+            });
         }
 
         private short ReadShortFromMemory(ushort address)

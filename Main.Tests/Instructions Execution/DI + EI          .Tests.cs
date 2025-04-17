@@ -15,8 +15,11 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(DI_opcode);
 
-            Assert.AreEqual(0, Registers.IFF1);
-            Assert.AreEqual(0, Registers.IFF2);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.IFF1.Value, Is.EqualTo(0));
+                Assert.That(Registers.IFF2.Value, Is.EqualTo(0));
+            });
         }
 
         [Test]
@@ -27,8 +30,11 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(EI_opcode);
 
-            Assert.AreEqual(1, Registers.IFF1);
-            Assert.AreEqual(1, Registers.IFF2);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.IFF1.Value, Is.EqualTo(1));
+                Assert.That(Registers.IFF2.Value, Is.EqualTo(1));
+            });
         }
 
         [Test]
@@ -41,12 +47,12 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Sut.InstructionFetchFinished += (sender, e) =>
             {
                 eventFired = true;
-                Assert.True(e.IsEiOrDiInstruction);
+                Assert.That(e.IsEiOrDiInstruction);
             };
 
             Execute(opcode);
 
-            Assert.IsTrue(eventFired);
+            Assert.That(eventFired);
         }
 
         [Test]
@@ -63,7 +69,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         public void DI_EI_return_proper_T_states(byte opcode)
         {
             var states = Execute(opcode);
-            Assert.AreEqual(4, states);
+            Assert.That(states, Is.EqualTo(4));
         }
     }
 }

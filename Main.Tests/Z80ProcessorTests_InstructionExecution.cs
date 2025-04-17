@@ -1,6 +1,6 @@
 ﻿using Moq;
 using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 using System;
 using System.Collections.Generic;
 
@@ -37,7 +37,7 @@ namespace Konamiman.Z80dotNet.Tests
         [Test]
         public void Can_create_instances()
         {
-            Assert.IsNotNull(Sut);
+            Assert.That(Sut, Is.Not.Null);
         }
 
         #region Start, Stop, Pause, Continue
@@ -49,7 +49,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.Start();
 
-            Assert.AreEqual(1, Sut.Registers.PC);
+            Assert.That(Sut.Registers.PC, Is.EqualTo(1));
         }
 
         void DoBeforeFetch(Action<byte> code)
@@ -68,7 +68,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.Start();
 
-            Assert.AreEqual(0xFFFF.ToShort(), Sut.StartOfStack);
+            Assert.That(Sut.StartOfStack, Is.EqualTo(0xFFFF.ToShort()));
         }
 
         [Test]
@@ -79,7 +79,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.Start(state);
 
-            Assert.AreSame(state, Sut.UserState);
+            Assert.That(state, Is.SameAs(Sut.UserState));
         }
 
         [Test]
@@ -89,7 +89,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.Start(null);
 
-            Assert.IsNotNull(Sut.UserState);
+            Assert.That(Sut.UserState, Is.Not.Null);
         }
 
         [Test]
@@ -102,13 +102,13 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.Continue();
 
-            Assert.AreEqual(pc.Inc(), Sut.Registers.PC);
+            Assert.That(Sut.Registers.PC, Is.EqualTo(pc.Inc()));
         }
 
         [Test]
         public void Start_sets_ProcessorState_to_running()
         {
-            DoBeforeFetch(b => Assert.AreEqual(ProcessorState.Running, Sut.State));
+            DoBeforeFetch(b => Assert.That(Sut.State, Is.EqualTo(ProcessorState.Running)));
 
             Sut.Start();
         }
@@ -117,9 +117,9 @@ namespace Konamiman.Z80dotNet.Tests
         {
             var dictionary = ((FakeInstructionExecutor)Sut.InstructionExecutor).TimesEachInstructionIsExecuted;
             if(times==0)
-                Assert.IsFalse(dictionary.ContainsKey(opcode));
+                Assert.That(dictionary, Does.Not.ContainKey(opcode));
             else
-                Assert.AreEqual(dictionary[opcode], times);
+                Assert.That(times, Is.EqualTo(dictionary[opcode]));
         }
 
         [Test]
@@ -137,8 +137,11 @@ namespace Konamiman.Z80dotNet.Tests
             AssertExecuted(DI_opcode, 1);
             AssertExecuted(RET_opcode, 0);
 
-            Assert.AreEqual(StopReason.StopInvoked, Sut.StopReason);
-            Assert.AreEqual(ProcessorState.Stopped, Sut.State);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.StopReason, Is.EqualTo(StopReason.StopInvoked));
+                Assert.That(Sut.State, Is.EqualTo(ProcessorState.Stopped));
+            });
         }
 
         [Test]
@@ -156,8 +159,11 @@ namespace Konamiman.Z80dotNet.Tests
             AssertExecuted(DI_opcode, 1);
             AssertExecuted(RET_opcode, 0);
 
-            Assert.AreEqual(StopReason.PauseInvoked, Sut.StopReason);
-            Assert.AreEqual(ProcessorState.Paused , Sut.State);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.StopReason, Is.EqualTo(StopReason.PauseInvoked));
+                Assert.That(Sut.State, Is.EqualTo(ProcessorState.Paused));
+            });
         }
 
         [Test]
@@ -169,7 +175,7 @@ namespace Konamiman.Z80dotNet.Tests
         [Test]
         public void StopReason_is_not_applicable_while_executing()
         {
-            DoBeforeFetch(b => Assert.AreEqual(StopReason.NotApplicable, Sut.StopReason));
+            DoBeforeFetch(b => Assert.That(Sut.StopReason, Is.EqualTo(StopReason.NotApplicable)));
 
             Sut.Start();
         }
@@ -181,8 +187,11 @@ namespace Konamiman.Z80dotNet.Tests
 
             Assert.Throws<Exception>(() => Sut.Start());
 
-            Assert.AreEqual(ProcessorState.Stopped, Sut.State);
-            Assert.AreEqual(StopReason.ExceptionThrown, Sut.StopReason);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.State, Is.EqualTo(ProcessorState.Stopped));
+                Assert.That(Sut.StopReason, Is.EqualTo(StopReason.ExceptionThrown));
+            });
 
         }
 
@@ -219,7 +228,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.Start();
 
-            Assert.AreEqual(2, Sut.InterruptMode);
+            Assert.That(Sut.InterruptMode, Is.EqualTo(2));
         }
 
         void DoAfterFetch(Action<byte> code)
@@ -251,8 +260,11 @@ namespace Konamiman.Z80dotNet.Tests
             AssertExecuted(HALT_opcode, autoStopOnDiPlusHalt ? 1 : 0);
             AssertExecuted(RET_opcode, autoStopOnDiPlusHalt ? 0 : 1);
 
-            Assert.AreEqual(autoStopOnDiPlusHalt ? StopReason.DiPlusHalt : StopReason.RetWithStackEmpty, Sut.StopReason);
-            Assert.AreEqual(ProcessorState.Stopped , Sut.State);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.StopReason, Is.EqualTo(autoStopOnDiPlusHalt ? StopReason.DiPlusHalt : StopReason.RetWithStackEmpty));
+                Assert.That(Sut.State, Is.EqualTo(ProcessorState.Stopped));
+            });
         }
 
         [Test]
@@ -284,9 +296,12 @@ namespace Konamiman.Z80dotNet.Tests
             AssertExecuted(HALT_opcode, 1);
             AssertExecuted(RET_opcode, 0);
 
-            Assert.AreEqual(5, instructionsExecutedCount);
-            Assert.AreEqual(StopReason.StopInvoked, Sut.StopReason);
-            Assert.AreEqual(ProcessorState.Stopped , Sut.State);
+            Assert.Multiple(() =>
+            {
+                Assert.That(instructionsExecutedCount, Is.EqualTo(5));
+                Assert.That(Sut.StopReason, Is.EqualTo(StopReason.StopInvoked));
+                Assert.That(Sut.State, Is.EqualTo(ProcessorState.Stopped));
+            });
         }
 
         [Test]
@@ -309,8 +324,11 @@ namespace Konamiman.Z80dotNet.Tests
             AssertExecuted(RET_opcode, 1);
             AssertExecuted(DI_opcode, 0);
 
-            Assert.AreEqual(StopReason.RetWithStackEmpty, Sut.StopReason);
-            Assert.AreEqual(ProcessorState.Stopped , Sut.State);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.StopReason, Is.EqualTo(StopReason.RetWithStackEmpty));
+                Assert.That(Sut.State, Is.EqualTo(ProcessorState.Stopped));
+            });
         }
 
         [Test]
@@ -331,9 +349,12 @@ namespace Konamiman.Z80dotNet.Tests
             AssertExecuted(LD_SP_HL_opcode, 1);
             AssertExecuted(RET_opcode, 1);
 
-            Assert.AreEqual(StopReason.RetWithStackEmpty, Sut.StopReason);
-            Assert.AreEqual(ProcessorState.Stopped , Sut.State);
-            Assert.AreEqual(spValue, Sut.StartOfStack);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.StopReason, Is.EqualTo(StopReason.RetWithStackEmpty));
+                Assert.That(Sut.State, Is.EqualTo(ProcessorState.Stopped));
+                Assert.That(Sut.StartOfStack, Is.EqualTo(spValue));
+            });
         }
 
         [Test]
@@ -364,8 +385,11 @@ namespace Konamiman.Z80dotNet.Tests
             AssertExecuted(RET_opcode, 2);
             AssertExecuted(DI_opcode, 0);
 
-            Assert.AreEqual(StopReason.RetWithStackEmpty, Sut.StopReason);
-            Assert.AreEqual(ProcessorState.Stopped , Sut.State);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.StopReason, Is.EqualTo(StopReason.RetWithStackEmpty));
+                Assert.That(Sut.State, Is.EqualTo(ProcessorState.Stopped));
+            });
         }
 
         #endregion
@@ -397,11 +421,11 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.BeforeInstructionFetch += (sender, e) =>
             {
                 beforeFetchEventRaised = true;
-                Assert.IsFalse(executeInvoked);
-                Assert.IsFalse(beforeExecutionEventRaised);
-                Assert.IsFalse(afterEventRaised);
+                Assert.That(executeInvoked, Is.False);
+                Assert.That(beforeExecutionEventRaised, Is.False);
+                Assert.That(afterEventRaised, Is.False);
                 executeInvoked = false;
-                Assert.IsNull(e.LocalUserState);
+                Assert.That(e.LocalUserState, Is.Null);
 
                 e.LocalUserState = localState;
             };
@@ -409,29 +433,37 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.BeforeInstructionExecution += (sender, e) =>
             {
                 beforeExecutionEventRaised = true;
-                Assert.IsFalse(executeInvoked);
-                Assert.IsTrue(beforeExecutionEventRaised);
-                Assert.IsFalse(afterEventRaised);
+                Assert.Multiple(() => {
+                    Assert.That(executeInvoked, Is.False);
+                    Assert.That(beforeExecutionEventRaised, Is.True);
+                    Assert.That(afterEventRaised, Is.False);
+                });
                 executeInvoked = true;
-                Assert.AreEqual(instructionBytes, e.Opcode);
-                Assert.AreEqual(localState, e.LocalUserState);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(e.Opcode, Is.EqualTo(instructionBytes));
+                    Assert.That(e.LocalUserState, Is.EqualTo(localState));
+                });
             };
 
             Sut.AfterInstructionExecution += (sender, e) =>
             {
                 afterEventRaised = true;
-                Assert.IsTrue(executeInvoked);
-                Assert.IsTrue(beforeFetchEventRaised);
-                Assert.IsTrue(beforeExecutionEventRaised);
-                Assert.AreEqual(instructionBytes, e.Opcode);
-                Assert.AreEqual(localState, e.LocalUserState);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(executeInvoked);
+                    Assert.That(beforeFetchEventRaised);
+                    Assert.That(beforeExecutionEventRaised);
+                    Assert.That(e.Opcode, Is.EqualTo(instructionBytes));
+                    Assert.That(e.LocalUserState, Is.EqualTo(localState));
+                });
             };
 
             Sut.Start();
 
-            Assert.IsTrue(beforeFetchEventRaised);
-            Assert.IsTrue(beforeExecutionEventRaised);
-            Assert.IsTrue(afterEventRaised);
+            Assert.That(beforeFetchEventRaised);
+            Assert.That(beforeExecutionEventRaised);
+            Assert.That(afterEventRaised);
         }
 
         [Test]
@@ -457,8 +489,11 @@ namespace Konamiman.Z80dotNet.Tests
             AssertExecuted(HALT_opcode, 0);
             AssertExecuted(RET_opcode, 0);
 
-            Assert.AreEqual(isPause ? StopReason.PauseInvoked : StopReason.StopInvoked, Sut.StopReason);
-            Assert.AreEqual(isPause ? ProcessorState.Paused : ProcessorState.Stopped , Sut.State);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.StopReason, Is.EqualTo(isPause ? StopReason.PauseInvoked : StopReason.StopInvoked));
+                Assert.That(Sut.State, Is.EqualTo(isPause ? ProcessorState.Paused : ProcessorState.Stopped));
+            });
         }
 
         [Test]
@@ -484,8 +519,11 @@ namespace Konamiman.Z80dotNet.Tests
             AssertExecuted(HALT_opcode, 0);
             AssertExecuted(RET_opcode, 0);
 
-            Assert.AreEqual(isPause ? StopReason.PauseInvoked : StopReason.StopInvoked, Sut.StopReason);
-            Assert.AreEqual(isPause ? ProcessorState.Paused : ProcessorState.Stopped , Sut.State);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.StopReason, Is.EqualTo(isPause ? StopReason.PauseInvoked : StopReason.StopInvoked));
+                Assert.That(Sut.State, Is.EqualTo(isPause ? ProcessorState.Paused : ProcessorState.Stopped));
+            });
         }
 
         #endregion
@@ -581,8 +619,11 @@ namespace Konamiman.Z80dotNet.Tests
                 memoryAccessStates * 2 +
                 portAccessStates * 2;
 
-            Assert.AreEqual(expected, Sut.TStatesElapsedSinceReset);
-            Assert.AreEqual(expected, Sut.TStatesElapsedSinceStart);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.TStatesElapsedSinceReset, Is.EqualTo(expected));
+                Assert.That(Sut.TStatesElapsedSinceStart, Is.EqualTo(expected));
+            });
         }
 
         private void SetStatesReturner(Func<byte, byte> returner)
@@ -601,8 +642,11 @@ namespace Konamiman.Z80dotNet.Tests
             {
                 if(!secondRun)
                 {
-                    Assert.AreEqual(M1readMemoryStates, Sut.TStatesElapsedSinceReset);
-                    Assert.AreEqual(M1readMemoryStates, Sut.TStatesElapsedSinceStart);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(Sut.TStatesElapsedSinceReset, Is.EqualTo(M1readMemoryStates));
+                        Assert.That(Sut.TStatesElapsedSinceStart, Is.EqualTo(M1readMemoryStates));
+                    });
                 }
             };
 
@@ -610,8 +654,11 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.BeforeInstructionExecution += (sender, e) =>
             {
-                Assert.AreEqual(0, Sut.TStatesElapsedSinceStart);
-                Assert.AreEqual(0, Sut.TStatesElapsedSinceReset);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(Sut.TStatesElapsedSinceStart, Is.EqualTo(0));
+                    Assert.That(Sut.TStatesElapsedSinceReset, Is.EqualTo(0));
+                });
             };
 
             secondRun = true;
@@ -631,13 +678,19 @@ namespace Konamiman.Z80dotNet.Tests
             {
                 if(secondRun)
                 {
-                    Assert.AreEqual(M1readMemoryStates * 2, Sut.TStatesElapsedSinceReset);
-                    Assert.AreEqual(M1readMemoryStates * 2, Sut.TStatesElapsedSinceStart);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(Sut.TStatesElapsedSinceReset, Is.EqualTo(M1readMemoryStates * 2));
+                        Assert.That(Sut.TStatesElapsedSinceStart, Is.EqualTo(M1readMemoryStates * 2));
+                    });
                 }
                 else
                 {
-                    Assert.AreEqual(M1readMemoryStates, Sut.TStatesElapsedSinceReset);
-                    Assert.AreEqual(M1readMemoryStates, Sut.TStatesElapsedSinceStart);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(Sut.TStatesElapsedSinceReset, Is.EqualTo(M1readMemoryStates));
+                        Assert.That(Sut.TStatesElapsedSinceStart, Is.EqualTo(M1readMemoryStates));
+                    });
                 }
             };
 
@@ -658,13 +711,19 @@ namespace Konamiman.Z80dotNet.Tests
             {
                 if(secondRun)
                 {
-                    Assert.AreEqual(M1readMemoryStates, Sut.TStatesElapsedSinceReset);
-                    Assert.AreEqual(M1readMemoryStates * 2, Sut.TStatesElapsedSinceStart);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(Sut.TStatesElapsedSinceReset, Is.EqualTo(M1readMemoryStates));
+                        Assert.That(Sut.TStatesElapsedSinceStart, Is.EqualTo(M1readMemoryStates * 2));
+                    });
                 }
                 else
                 {
-                    Assert.AreEqual(M1readMemoryStates, Sut.TStatesElapsedSinceReset);
-                    Assert.AreEqual(M1readMemoryStates, Sut.TStatesElapsedSinceStart);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(Sut.TStatesElapsedSinceReset, Is.EqualTo(M1readMemoryStates));
+                        Assert.That(Sut.TStatesElapsedSinceStart, Is.EqualTo(M1readMemoryStates));
+                    });
                 }
             };
 
@@ -682,7 +741,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.Reset();
 
-            Assert.AreEqual(0xFFFF.ToShort(), Sut.StartOfStack);
+            Assert.That(Sut.StartOfStack, Is.EqualTo(0xFFFF.ToShort()));
         }
 
         [Test]
@@ -717,12 +776,12 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.AfterInstructionExecution += (sender, args) =>
             {
                 instructionExecuted = true;
-                Assert.AreEqual(executionStates + M1readMemoryStates, args.TotalTStates);
+                Assert.That(args.TotalTStates, Is.EqualTo(executionStates + M1readMemoryStates));
             };
 
             Sut.Start();
 
-            Assert.IsTrue(instructionExecuted);
+            Assert.That(instructionExecuted);
         }
 
         #endregion
@@ -741,7 +800,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.ExecuteNextInstruction();
 
-            Assert.AreEqual(1, instructionsExecutedCount);
+            Assert.That(instructionsExecutedCount, Is.EqualTo(1));
         }
 
         [Test]
@@ -749,17 +808,17 @@ namespace Konamiman.Z80dotNet.Tests
         {
             Sut.Memory[0] = RET_opcode;
             Sut.ExecuteNextInstruction();
-            Assert.AreEqual(StopReason.ExecuteNextInstructionInvoked, Sut.StopReason);
+            Assert.That(Sut.StopReason, Is.EqualTo(StopReason.ExecuteNextInstructionInvoked));
 
             Sut.Memory[0] = DI_opcode;
             Sut.Reset();
             Sut.ExecuteNextInstruction();
-            Assert.AreEqual(StopReason.ExecuteNextInstructionInvoked, Sut.StopReason);
+            Assert.That(Sut.StopReason, Is.EqualTo(StopReason.ExecuteNextInstructionInvoked));
 
             DoAfterFetch(b => Sut.Stop());
             Sut.Reset();
             Sut.ExecuteNextInstruction();
-            Assert.AreEqual(StopReason.ExecuteNextInstructionInvoked, Sut.StopReason);
+            Assert.That(Sut.StopReason, Is.EqualTo(StopReason.ExecuteNextInstructionInvoked));
         }
 
         [Test]
@@ -777,7 +836,7 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.ExecuteNextInstruction();
             Sut.ExecuteNextInstruction();
 
-            Assert.AreEqual(Sut.Memory.GetContents(0, 3), executedOpcodes);
+            Assert.That(executedOpcodes, Is.EqualTo(Sut.Memory.GetContents(0, 3)));
         }
 
         [Test]
@@ -796,7 +855,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             var actual = Sut.ExecuteNextInstruction();
             var expected = executionStates + M1States + memoryReadStates;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [Test]
@@ -807,9 +866,9 @@ namespace Konamiman.Z80dotNet.Tests
             SetStatesReturner(b => statesCount);
 
             Sut.ExecuteNextInstruction();
-            Assert.AreEqual(statesCount, Sut.TStatesElapsedSinceStart);
+            Assert.That(Sut.TStatesElapsedSinceStart, Is.EqualTo(statesCount));
             Sut.ExecuteNextInstruction();
-            Assert.AreEqual(statesCount * 2, Sut.TStatesElapsedSinceStart);
+            Assert.That(Sut.TStatesElapsedSinceStart, Is.EqualTo(statesCount * 2));
         }
 
         #endregion
@@ -875,13 +934,16 @@ namespace Konamiman.Z80dotNet.Tests
 
             var exception = Assert.Throws<InstructionFetchFinishedEventNotFiredException>(Sut.Continue);
 
-            Assert.AreEqual(address, exception.InstructionAddress);
-            Assert.AreEqual(new Byte[] {RET_opcode}, exception.FetchedBytes);
+            Assert.Multiple(() =>
+            {
+                Assert.That(exception.InstructionAddress, Is.EqualTo(address));
+                Assert.That(exception.FetchedBytes, Is.EqualTo(new Byte[] { RET_opcode }));
+            });
         }
 
         #endregion
 
-        #region PeekNextOpcode
+         #region PeekNextOpcode
 
         [Test]
         public void PeekNextOpcode_returns_next_opcode_without_increasing_PC_and_without_elapsing_T_states()
@@ -910,8 +972,11 @@ namespace Konamiman.Z80dotNet.Tests
                     for (int i = 0; i < 3; i++)
                     {
                         var oldPC = Sut.Registers.PC;
-                        Assert.AreEqual(RET_opcode, Sut.PeekNextOpcode());
-                        Assert.AreEqual(oldPC, Sut.Registers.PC);
+                        Assert.Multiple(() =>
+                        {
+                            Assert.That(Sut.PeekNextOpcode(), Is.EqualTo(RET_opcode));
+                            Assert.That(Sut.Registers.PC, Is.EqualTo(oldPC));
+                        });
                     }
                 }
             });
@@ -926,7 +991,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.Start();
 
-            Assert.IsTrue(beforeInvoked);
+            Assert.That(beforeInvoked);
 
             var expected =
                 //3 instructions of 1 byte each executed...
@@ -939,8 +1004,11 @@ namespace Konamiman.Z80dotNet.Tests
             AssertExecuted(LD_SP_HL_opcode, 1);
             AssertExecuted(RET_opcode, 1);
 
-            Assert.AreEqual(expected, Sut.TStatesElapsedSinceReset);
-            Assert.AreEqual(expected, Sut.TStatesElapsedSinceStart);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.TStatesElapsedSinceReset, Is.EqualTo(expected));
+                Assert.That(Sut.TStatesElapsedSinceStart, Is.EqualTo(expected));
+            });
         }
 
         [Test]
@@ -982,16 +1050,19 @@ namespace Konamiman.Z80dotNet.Tests
                 if(b == LD_SP_HL_opcode)
                 {
                     beforeInvoked = true;
-                    Assert.AreEqual(secondOpcodeByte, Sut.PeekNextOpcode());
-                    Assert.AreEqual(2, Sut.Registers.PC);
-                    Assert.AreEqual(secondOpcodeByte, Sut.FetchNextOpcode());
-                    Assert.AreEqual(3, Sut.Registers.PC);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(Sut.PeekNextOpcode(), Is.EqualTo(secondOpcodeByte));
+                        Assert.That(Sut.Registers.PC, Is.EqualTo(2));
+                        Assert.That(Sut.FetchNextOpcode(), Is.EqualTo(secondOpcodeByte));
+                    });
+                    Assert.That(Sut.Registers.PC, Is.EqualTo(3));
                 }
             });
 
             Sut.Start();
 
-            Assert.IsTrue(beforeInvoked);
+            Assert.That(beforeInvoked);
 
             var expected =
                 executionStates * 3 +
@@ -1004,8 +1075,11 @@ namespace Konamiman.Z80dotNet.Tests
             AssertExecuted(LD_SP_HL_opcode, 1);
             AssertExecuted(RET_opcode, 1);
 
-            Assert.AreEqual(expected, Sut.TStatesElapsedSinceReset);
-            Assert.AreEqual(expected, Sut.TStatesElapsedSinceStart);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.TStatesElapsedSinceReset, Is.EqualTo(expected));
+                Assert.That(Sut.TStatesElapsedSinceStart, Is.EqualTo(expected));
+            });
         }
 
         #endregion

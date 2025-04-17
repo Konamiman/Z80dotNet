@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -23,7 +23,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         };
 
         [Test]
-        [TestCaseSource("JP_cc_Source")]
+        [TestCaseSource(nameof(JP_cc_Source))]
         public void JP_cc_does_not_jump_if_flag_not_set(string flagName, byte opcode, int flagValue)
         {
             var instructionAddress = Fixture.Create<ushort>();
@@ -31,22 +31,22 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             SetFlag(flagName, !(Bit)flagValue);
             ExecuteAt(instructionAddress, opcode);
 
-            Assert.AreEqual(instructionAddress.Add(3), Registers.PC);
+            Assert.That(Registers.PC, Is.EqualTo(instructionAddress.Add(3)));
         }
 
         [Test]
-        [TestCaseSource("JP_cc_Source")]
+        [TestCaseSource(nameof(JP_cc_Source))]
         public void JP_cc_returns_proper_T_states_if_no_jump_is_made(string flagName, byte opcode, int flagValue)
         {
             SetFlag(flagName, !(Bit)flagValue);
             var states = Execute(opcode);
 
-            Assert.AreEqual(10, states);
+            Assert.That(states, Is.EqualTo(10));
         }
 
         [Test]
-        [TestCaseSource("JP_cc_Source")]
-        [TestCaseSource("JP_Source")]
+        [TestCaseSource(nameof(JP_cc_Source))]
+        [TestCaseSource(nameof(JP_Source))]
         public void JP_cc_jumps_to_proper_address_if_flag_is_set_JP_jumps_always(string flagName, byte opcode, int flagValue)
         {
             var instructionAddress = Fixture.Create<ushort>();
@@ -55,7 +55,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             SetFlagIfNotNull(flagName, flagValue);
             ExecuteAt(instructionAddress, opcode, nextFetches: new[] { jumpAddress.GetLowByte(), jumpAddress.GetHighByte() });
 
-            Assert.AreEqual(jumpAddress, Registers.PC);
+            Assert.That(Registers.PC, Is.EqualTo(jumpAddress));
         }
 
         private void SetFlagIfNotNull(string flagName, int flagValue)
@@ -64,19 +64,19 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
         
         [Test]
-        [TestCaseSource("JP_cc_Source")]
-        [TestCaseSource("JP_Source")]
+        [TestCaseSource(nameof(JP_cc_Source))]
+        [TestCaseSource(nameof(JP_Source))]
         public void JP_and_JP_cc_return_proper_T_states_if_jump_is_made(string flagName, byte opcode, int flagValue)
         {
             SetFlagIfNotNull(flagName, flagValue);
             var states = Execute(opcode);
 
-            Assert.AreEqual(10, states);
+            Assert.That(states, Is.EqualTo(10));
         }
 
         [Test]
-        [TestCaseSource("JP_cc_Source")]
-        [TestCaseSource("JP_Source")]
+        [TestCaseSource(nameof(JP_cc_Source))]
+        [TestCaseSource(nameof(JP_Source))]
         public void JP_and_JP_cc_do_not_modify_flags(string flagName, byte opcode, int flagValue)
         {
             Registers.F = Fixture.Create<byte>();
@@ -85,7 +85,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(opcode);
 
-            Assert.AreEqual(value, Registers.F);
+            Assert.That(Registers.F, Is.EqualTo(value));
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -15,7 +15,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         };
 
         [Test]
-        [TestCaseSource("EX_Source")]
+        [TestCaseSource(nameof(EX_Source))]
         public void EX_SP_HL_IX_IY_exchanges_reg_and_pushed_value(string reg, byte opcode, byte? prefix)
         {
             var regValue = Fixture.Create<short>();
@@ -28,23 +28,26 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(opcode, prefix);
 
-            Assert.AreEqual(regValue, ReadShortFromMemory(SP));
-            Assert.AreEqual(pushedValue, GetReg<short>(reg));
+            Assert.Multiple(() =>
+            {
+                Assert.That(ReadShortFromMemory(SP), Is.EqualTo(regValue));
+                Assert.That(GetReg<short>(reg), Is.EqualTo(pushedValue));
+            });
         }
 
         [Test]
-        [TestCaseSource("EX_Source")]
+        [TestCaseSource(nameof(EX_Source))]
         public void EX_SP_HL_IX_IY_do_not_change_flags(string reg, byte opcode, byte? prefix)
         {
             AssertNoFlagsAreModified(opcode, prefix);
         }
 
         [Test]
-        [TestCaseSource("EX_Source")]
+        [TestCaseSource(nameof(EX_Source))]
         public void EX_SP_HL_return_proper_T_states(string reg, byte opcode, byte? prefix)
         {
             var states = Execute(opcode, prefix);
-            Assert.AreEqual(reg == "HL" ? 19 : 23, states);
+            Assert.That(states, Is.EqualTo(reg == "HL" ? 19 : 23));
         }
     }
 }

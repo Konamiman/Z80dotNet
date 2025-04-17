@@ -1,6 +1,6 @@
 ﻿using Moq;
 using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 using System;
 
 namespace Konamiman.Z80dotNet.Tests
@@ -24,44 +24,56 @@ namespace Konamiman.Z80dotNet.Tests
         [Test]
         public void Can_create_instances()
         {
-            Assert.IsNotNull(Sut);
+            Assert.That(Sut, Is.Not.Null);
         }
 
         [Test]
         public void Has_proper_defaults()
         {
-            Assert.AreEqual(4, Sut.ClockFrequencyInMHz);
-            Assert.AreEqual(1, Sut.ClockSpeedFactor);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.ClockFrequencyInMHz, Is.EqualTo(4));
+                Assert.That(Sut.ClockSpeedFactor, Is.EqualTo(1));
+            });
 
-            Assert.IsTrue(Sut.AutoStopOnDiPlusHalt);
-            Assert.IsFalse(Sut.AutoStopOnRetWithStackEmpty);
-            Assert.AreEqual(0xFFFF.ToShort(), Sut.StartOfStack);
+            Assert.That(Sut.AutoStopOnDiPlusHalt);
+            Assert.That(Sut.AutoStopOnRetWithStackEmpty, Is.False);
+            Assert.That(Sut.StartOfStack, Is.EqualTo(0xFFFF.ToShort()));
 
-            Assert.IsInstanceOf<PlainMemory>(Sut.Memory);
-            Assert.AreEqual(65536, Sut.Memory.Size);
-            Assert.IsInstanceOf<PlainMemory>(Sut.PortsSpace);
-            Assert.AreEqual(256, Sut.PortsSpace.Size);
+            Assert.That(Sut.Memory, Is.InstanceOf<PlainMemory>());
+            Assert.That(Sut.Memory.Size, Is.EqualTo(65536));
+            Assert.That(Sut.PortsSpace, Is.InstanceOf<PlainMemory>());
+            Assert.That(Sut.PortsSpace.Size, Is.EqualTo(256));
 
             for(int i = 0; i < 65536; i++) {
-                Assert.AreEqual(MemoryAccessMode.ReadAndWrite, Sut.GetMemoryAccessMode((ushort)i));
-                Assert.AreEqual(0, Sut.GetMemoryWaitStatesForM1((ushort)i));
-                Assert.AreEqual(0, Sut.GetMemoryWaitStatesForNonM1((ushort)i));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(Sut.GetMemoryAccessMode((ushort)i), Is.EqualTo(MemoryAccessMode.ReadAndWrite));
+                    Assert.That(Sut.GetMemoryWaitStatesForM1((ushort)i), Is.EqualTo(0));
+                    Assert.That(Sut.GetMemoryWaitStatesForNonM1((ushort)i), Is.EqualTo(0));
+                });
             }       
             for(int i = 0; i < 256; i++) {
-                Assert.AreEqual(MemoryAccessMode.ReadAndWrite, Sut.GetPortAccessMode((byte) i));
-                Assert.AreEqual(0, Sut.GetPortWaitStates((byte) i));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(Sut.GetPortAccessMode((byte)i), Is.EqualTo(MemoryAccessMode.ReadAndWrite));
+                    Assert.That(Sut.GetPortWaitStates((byte)i), Is.EqualTo(0));
+                });
             }
 
-            Assert.IsInstanceOf<Z80Registers>(Sut.Registers);
+            Assert.That(Sut.Registers, Is.InstanceOf<Z80Registers>());
 
-            Assert.IsInstanceOf<Z80InstructionExecutor>(Sut.InstructionExecutor);
-            Assert.AreSame(Sut, Sut.InstructionExecutor.ProcessorAgent);
-            Assert.IsInstanceOf<ClockSynchronizer>(Sut.ClockSynchronizer);
+            Assert.That(Sut.InstructionExecutor, Is.InstanceOf<Z80InstructionExecutor>());
+            Assert.That(Sut, Is.SameAs(Sut.InstructionExecutor.ProcessorAgent));
+            Assert.That(Sut.ClockSynchronizer, Is.InstanceOf<ClockSynchronizer>());
 
-            Assert.AreEqual(StopReason.NeverRan, Sut.StopReason);
-            Assert.AreEqual(ProcessorState.Stopped, Sut.State);
-            Assert.IsFalse(Sut.IsHalted);
-            Assert.IsNull(Sut.UserState);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.StopReason, Is.EqualTo(StopReason.NeverRan));
+                Assert.That(Sut.State, Is.EqualTo(ProcessorState.Stopped));
+            });
+            Assert.That(Sut.IsHalted, Is.False);
+            Assert.That(Sut.UserState, Is.Null);
         }
 
         [Test]
@@ -77,29 +89,32 @@ namespace Konamiman.Z80dotNet.Tests
             
             Sut.Reset();
 
-            Assert.AreEqual(0xFFFF.ToShort(), Sut.Registers.AF);
-            Assert.AreEqual(0xFFFF.ToShort(), Sut.Registers.SP);
-            Assert.AreEqual(0, Sut.Registers.PC);
-            Assert.AreEqual(0, Sut.Registers.IFF1);
-            Assert.AreEqual(0, Sut.Registers.IFF2);
-            Assert.AreEqual(0, Sut.InterruptMode);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.Registers.AF, Is.EqualTo(0xFFFF.ToShort()));
+                Assert.That(Sut.Registers.SP, Is.EqualTo(0xFFFF.ToShort()));
+                Assert.That(Sut.Registers.PC, Is.EqualTo(0));
+                Assert.That(Sut.Registers.IFF1.Value, Is.EqualTo(0));
+                Assert.That(Sut.Registers.IFF2.Value, Is.EqualTo(0));
+                Assert.That(Sut.InterruptMode, Is.EqualTo(0));
 
-            Assert.AreEqual(0, Sut.TStatesElapsedSinceReset);
+                Assert.That(Sut.TStatesElapsedSinceReset, Is.EqualTo(0));
+            });
 
-            Assert.False(Sut.IsHalted);
+            Assert.That(Sut.IsHalted, Is.False);
         }
 
         [Test]
         public void Interrupt_mode_can_be_set_to_0_1_or_2()
         {
             Sut.InterruptMode = 0;
-            Assert.AreEqual(Sut.InterruptMode, 0);
+            Assert.That(Sut.InterruptMode, Is.EqualTo(0));
 
             Sut.InterruptMode = 1;
-            Assert.AreEqual(Sut.InterruptMode, 1);
+            Assert.That(Sut.InterruptMode, Is.EqualTo(1));
 
             Sut.InterruptMode = 2;
-            Assert.AreEqual(Sut.InterruptMode, 2);
+            Assert.That(Sut.InterruptMode, Is.EqualTo(2));
         }
 
         [Test]
@@ -116,14 +131,17 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.SetMemoryAccessMode(0x8000, 0x4000, MemoryAccessMode.ReadOnly);
             Sut.SetMemoryAccessMode(0xC000, 0x4000, MemoryAccessMode.WriteOnly);
 
-            Assert.AreEqual(MemoryAccessMode.NotConnected, Sut.GetMemoryAccessMode(0));
-            Assert.AreEqual(MemoryAccessMode.NotConnected, Sut.GetMemoryAccessMode(0x3FFF));
-            Assert.AreEqual(MemoryAccessMode.ReadAndWrite, Sut.GetMemoryAccessMode(0x4000));
-            Assert.AreEqual(MemoryAccessMode.ReadAndWrite, Sut.GetMemoryAccessMode(0x7FFF));
-            Assert.AreEqual(MemoryAccessMode.ReadOnly, Sut.GetMemoryAccessMode(0x8000));
-            Assert.AreEqual(MemoryAccessMode.ReadOnly, Sut.GetMemoryAccessMode(0xBFFF));
-            Assert.AreEqual(MemoryAccessMode.WriteOnly, Sut.GetMemoryAccessMode(0xC000));
-            Assert.AreEqual(MemoryAccessMode.WriteOnly, Sut.GetMemoryAccessMode(0xFFFF));
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.GetMemoryAccessMode(0), Is.EqualTo(MemoryAccessMode.NotConnected));
+                Assert.That(Sut.GetMemoryAccessMode(0x3FFF), Is.EqualTo(MemoryAccessMode.NotConnected));
+                Assert.That(Sut.GetMemoryAccessMode(0x4000), Is.EqualTo(MemoryAccessMode.ReadAndWrite));
+                Assert.That(Sut.GetMemoryAccessMode(0x7FFF), Is.EqualTo(MemoryAccessMode.ReadAndWrite));
+                Assert.That(Sut.GetMemoryAccessMode(0x8000), Is.EqualTo(MemoryAccessMode.ReadOnly));
+                Assert.That(Sut.GetMemoryAccessMode(0xBFFF), Is.EqualTo(MemoryAccessMode.ReadOnly));
+                Assert.That(Sut.GetMemoryAccessMode(0xC000), Is.EqualTo(MemoryAccessMode.WriteOnly));
+                Assert.That(Sut.GetMemoryAccessMode(0xFFFF), Is.EqualTo(MemoryAccessMode.WriteOnly));
+            });
         }
 
         [Test]
@@ -160,14 +178,17 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.SetPortsSpaceAccessMode(128, 64, MemoryAccessMode.ReadOnly);
             Sut.SetPortsSpaceAccessMode(192, 64, MemoryAccessMode.WriteOnly);
 
-            Assert.AreEqual(MemoryAccessMode.NotConnected, Sut.GetPortAccessMode(0));
-            Assert.AreEqual(MemoryAccessMode.NotConnected, Sut.GetPortAccessMode(63));
-            Assert.AreEqual(MemoryAccessMode.ReadAndWrite, Sut.GetPortAccessMode(64));
-            Assert.AreEqual(MemoryAccessMode.ReadAndWrite, Sut.GetPortAccessMode(127));
-            Assert.AreEqual(MemoryAccessMode.ReadOnly, Sut.GetPortAccessMode(128));
-            Assert.AreEqual(MemoryAccessMode.ReadOnly, Sut.GetPortAccessMode(191));
-            Assert.AreEqual(MemoryAccessMode.WriteOnly, Sut.GetPortAccessMode(192));
-            Assert.AreEqual(MemoryAccessMode.WriteOnly, Sut.GetPortAccessMode(255));
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.GetPortAccessMode(0), Is.EqualTo(MemoryAccessMode.NotConnected));
+                Assert.That(Sut.GetPortAccessMode(63), Is.EqualTo(MemoryAccessMode.NotConnected));
+                Assert.That(Sut.GetPortAccessMode(64), Is.EqualTo(MemoryAccessMode.ReadAndWrite));
+                Assert.That(Sut.GetPortAccessMode(127), Is.EqualTo(MemoryAccessMode.ReadAndWrite));
+                Assert.That(Sut.GetPortAccessMode(128), Is.EqualTo(MemoryAccessMode.ReadOnly));
+                Assert.That(Sut.GetPortAccessMode(191), Is.EqualTo(MemoryAccessMode.ReadOnly));
+                Assert.That(Sut.GetPortAccessMode(192), Is.EqualTo(MemoryAccessMode.WriteOnly));
+                Assert.That(Sut.GetPortAccessMode(255), Is.EqualTo(MemoryAccessMode.WriteOnly));
+            });
         }
 
         [Test]
@@ -205,10 +226,13 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.SetMemoryWaitStatesForM1(0, 0x8000, value1);
             Sut.SetMemoryWaitStatesForM1(0x8000, 0x8000, value2);
 
-            Assert.AreEqual(value1, Sut.GetMemoryWaitStatesForM1(0));
-            Assert.AreEqual(value1, Sut.GetMemoryWaitStatesForM1(0x7FFF));
-            Assert.AreEqual(value2, Sut.GetMemoryWaitStatesForM1(0x8000));
-            Assert.AreEqual(value2, Sut.GetMemoryWaitStatesForM1(0xFFFF));
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.GetMemoryWaitStatesForM1(0), Is.EqualTo(value1));
+                Assert.That(Sut.GetMemoryWaitStatesForM1(0x7FFF), Is.EqualTo(value1));
+                Assert.That(Sut.GetMemoryWaitStatesForM1(0x8000), Is.EqualTo(value2));
+                Assert.That(Sut.GetMemoryWaitStatesForM1(0xFFFF), Is.EqualTo(value2));
+            });
         }
 
         [Test]
@@ -248,10 +272,13 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.SetMemoryWaitStatesForNonM1(0, 0x8000, value1);
             Sut.SetMemoryWaitStatesForNonM1(0x8000, 0x8000, value2);
 
-            Assert.AreEqual(value1, Sut.GetMemoryWaitStatesForNonM1(0));
-            Assert.AreEqual(value1, Sut.GetMemoryWaitStatesForNonM1(0x7FFF));
-            Assert.AreEqual(value2, Sut.GetMemoryWaitStatesForNonM1(0x8000));
-            Assert.AreEqual(value2, Sut.GetMemoryWaitStatesForNonM1(0xFFFF));
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.GetMemoryWaitStatesForNonM1(0), Is.EqualTo(value1));
+                Assert.That(Sut.GetMemoryWaitStatesForNonM1(0x7FFF), Is.EqualTo(value1));
+                Assert.That(Sut.GetMemoryWaitStatesForNonM1(0x8000), Is.EqualTo(value2));
+                Assert.That(Sut.GetMemoryWaitStatesForNonM1(0xFFFF), Is.EqualTo(value2));
+            });
         }
 
         [Test]
@@ -291,10 +318,13 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.SetPortWaitStates(0, 128, value1);
             Sut.SetPortWaitStates(128, 128, value2);
 
-            Assert.AreEqual(value1, Sut.GetPortWaitStates(0));
-            Assert.AreEqual(value1, Sut.GetPortWaitStates(127));
-            Assert.AreEqual(value2, Sut.GetPortWaitStates(128));
-            Assert.AreEqual(value2, Sut.GetPortWaitStates(255));
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.GetPortWaitStates(0), Is.EqualTo(value1));
+                Assert.That(Sut.GetPortWaitStates(127), Is.EqualTo(value1));
+                Assert.That(Sut.GetPortWaitStates(128), Is.EqualTo(value2));
+                Assert.That(Sut.GetPortWaitStates(255), Is.EqualTo(value2));
+            });
         }
 
         [Test]
@@ -330,7 +360,7 @@ namespace Konamiman.Z80dotNet.Tests
         {
             var value = new Mock<IMemory>().Object;
             Sut.Memory = value;
-            Assert.AreEqual(value, Sut.Memory);
+            Assert.That(Sut.Memory, Is.EqualTo(value));
         }
 
         [Test]
@@ -344,7 +374,7 @@ namespace Konamiman.Z80dotNet.Tests
         {
             var value = new Mock<IZ80Registers>().Object;
             Sut.Registers = value;
-            Assert.AreEqual(value, Sut.Registers);
+            Assert.That(Sut.Registers, Is.EqualTo(value));
         }
 
         [Test]
@@ -358,7 +388,7 @@ namespace Konamiman.Z80dotNet.Tests
         {
             var value = new Mock<IMemory>().Object;
             Sut.PortsSpace = value;
-            Assert.AreEqual(value, Sut.PortsSpace);
+            Assert.That(Sut.PortsSpace, Is.EqualTo(value));
         }
 
         [Test]
@@ -372,7 +402,7 @@ namespace Konamiman.Z80dotNet.Tests
         {
             var value = new Mock<IZ80InstructionExecutor>().Object;
             Sut.InstructionExecutor = value;
-            Assert.AreEqual(value, Sut.InstructionExecutor);
+            Assert.That(Sut.InstructionExecutor, Is.EqualTo(value));
         }
 
         [Test]
@@ -395,7 +425,7 @@ namespace Konamiman.Z80dotNet.Tests
         {
             var value = new Mock<IClockSynchronizer>().Object;
             Sut.ClockSynchronizer = value;
-            Assert.AreEqual(value, Sut.ClockSynchronizer);
+            Assert.That(Sut.ClockSynchronizer, Is.EqualTo(value));
         }
 
         [Test]
@@ -421,8 +451,11 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.ClockFrequencyInMHz = 20;
             Sut.ClockSpeedFactor = 5;
 
-            Assert.AreEqual(Sut.ClockFrequencyInMHz, 20);
-            Assert.AreEqual(Sut.ClockSpeedFactor, 5);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.ClockFrequencyInMHz, Is.EqualTo(20));
+                Assert.That(Sut.ClockSpeedFactor, Is.EqualTo(5));
+            });
         }
 
         [Test]
@@ -450,8 +483,11 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.ClockFrequencyInMHz = 0.1M;
             Sut.ClockSpeedFactor = 0.01M;
 
-            Assert.AreEqual(Sut.ClockFrequencyInMHz, 0.1M);
-            Assert.AreEqual(Sut.ClockSpeedFactor, 0.01M);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.ClockFrequencyInMHz, Is.EqualTo(0.1M));
+                Assert.That(Sut.ClockSpeedFactor, Is.EqualTo(0.01M));
+            });
         }
 
         [Test]

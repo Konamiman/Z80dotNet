@@ -1,6 +1,6 @@
 ﻿using Moq;
 using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 using System;
 
 namespace Konamiman.Z80dotNet.Tests
@@ -20,7 +20,7 @@ namespace Konamiman.Z80dotNet.Tests
         [Test]
         public void Alternate_registers_are_properly_set()
         {
-            Assert.IsInstanceOf<MainZ80Registers>(Sut.Alternate);
+            Assert.That(Sut.Alternate, Is.InstanceOf<MainZ80Registers>());
         }
 
         [Test]
@@ -28,7 +28,7 @@ namespace Konamiman.Z80dotNet.Tests
         {
             var value = new Mock<IMainZ80Registers>().Object;
             Sut.Alternate = value;
-            Assert.AreEqual(value, Sut.Alternate);
+            Assert.That(Sut.Alternate, Is.EqualTo(value));
         }
 
         [Test]
@@ -46,8 +46,11 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.IX = IX;
 
-            Assert.AreEqual(IXh, Sut.IXH);
-            Assert.AreEqual(IXl, Sut.IXL);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.IXH, Is.EqualTo(IXh));
+                Assert.That(Sut.IXL, Is.EqualTo(IXl));
+            });
         }
 
         [Test]
@@ -60,7 +63,7 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.IXH = IXh;
             Sut.IXL = IXl;
 
-            Assert.AreEqual(expected, Sut.IX);
+            Assert.That(Sut.IX, Is.EqualTo(expected));
         }
 
         [Test]
@@ -72,8 +75,11 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.IY = IY;
 
-            Assert.AreEqual(IYh, Sut.IYH);
-            Assert.AreEqual(IYl, Sut.IYL);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.IYH, Is.EqualTo(IYh));
+                Assert.That(Sut.IYL, Is.EqualTo(IYl));
+            });
         }
 
         [Test]
@@ -86,7 +92,7 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.IYH = IYh;
             Sut.IYL = IYl;
 
-            Assert.AreEqual(expected, Sut.IY);
+            Assert.That(Sut.IY, Is.EqualTo(expected));
         }
 
         [Test]
@@ -98,8 +104,11 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.IR = IR;
 
-            Assert.AreEqual(I, Sut.I);
-            Assert.AreEqual(R, Sut.R);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Sut.I, Is.EqualTo(I));
+                Assert.That(Sut.R, Is.EqualTo(R));
+            });
         }
 
         [Test]
@@ -112,7 +121,7 @@ namespace Konamiman.Z80dotNet.Tests
             Sut.I = I;
             Sut.R = R;
 
-            Assert.AreEqual(expected, Sut.IR);
+            Assert.That(Sut.IR, Is.EqualTo(expected));
         }
     }
 }

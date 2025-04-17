@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -16,7 +16,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         };
 
         [Test]
-        [TestCaseSource("LD_rr_nn_Source")]
+        [TestCaseSource(nameof(LD_rr_nn_Source))]
         public void LD_rr_nn_loads_register_with_value(string reg, byte opcode, byte? prefix)
         {
             var oldValue = Fixture.Create<short>();
@@ -26,11 +26,11 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(opcode, prefix, newValue.GetLowByte(), newValue.GetHighByte());
 
-            Assert.AreEqual(newValue, GetReg<short>(reg));
+            Assert.That(GetReg<short>(reg), Is.EqualTo(newValue));
         }
 
         [Test]
-        [TestCaseSource("LD_rr_nn_Source")]
+        [TestCaseSource(nameof(LD_rr_nn_Source))]
         public void LD_SP_nn_fires_FetchFinished_with_isLdSp_true(string reg, byte opcode, byte? prefix)
         {
             var eventFired = false;
@@ -38,27 +38,27 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Sut.InstructionFetchFinished += (sender, e) =>
             {
                 eventFired = true;
-                Assert.True((reg=="SP" && e.IsLdSpInstruction) | (reg != "SP" && !e.IsLdSpInstruction));
+                Assert.That((reg=="SP" && e.IsLdSpInstruction) | (reg != "SP" && !e.IsLdSpInstruction));
             };
 
             Execute(opcode, prefix);
 
-            Assert.IsTrue(eventFired);
+            Assert.That(eventFired);
         }
 
         [Test]
-        [TestCaseSource("LD_rr_nn_Source")]
+        [TestCaseSource(nameof(LD_rr_nn_Source))]
         public void LD_rr_nn_do_not_modify_flags(string reg, byte opcode, byte? prefix)
         {
             AssertNoFlagsAreModified(opcode, prefix);
         }
 
         [Test]
-        [TestCaseSource("LD_rr_nn_Source")]
+        [TestCaseSource(nameof(LD_rr_nn_Source))]
         public void LD_rr_nn_returns_proper_T_states(string reg, byte opcode, byte? prefix)
         {
             var states = Execute(opcode, prefix);
-            Assert.AreEqual(prefix.HasValue ? 14 : 10, states);
+            Assert.That(states, Is.EqualTo(prefix.HasValue ? 14 : 10));
         }
     }
 }

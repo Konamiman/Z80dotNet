@@ -15,7 +15,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             for(var i = 0; i < values.Length; i++)
             {
                 Execute(RLCA_opcode);
-                Assert.AreEqual(values[i], Registers.A);
+                Assert.That(Registers.A, Is.EqualTo(values[i]));
             }
         }
 
@@ -25,16 +25,16 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Registers.A = 0x60;
 
             Execute(RLCA_opcode);
-            Assert.AreEqual(0, Registers.CF);
+            Assert.That(Registers.CF.Value, Is.EqualTo(0));
 
             Execute(RLCA_opcode);
-            Assert.AreEqual(1, Registers.CF);
+            Assert.That(Registers.CF.Value, Is.EqualTo(1));
 
             Execute(RLCA_opcode);
-            Assert.AreEqual(1, Registers.CF);
+            Assert.That(Registers.CF.Value, Is.EqualTo(1));
 
             Execute(RLCA_opcode);
-            Assert.AreEqual(0, Registers.CF);
+            Assert.That(Registers.CF.Value, Is.EqualTo(0));
         }
 
         [Test]
@@ -58,15 +58,18 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             Registers.A = (byte)value;
             Execute(RLCA_opcode);
-            Assert.AreEqual(Registers.A.GetBit(3), Registers.Flag3);
-            Assert.AreEqual(Registers.A.GetBit(5), Registers.Flag5);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.Flag3, Is.EqualTo(Registers.A.GetBit(3)));
+                Assert.That(Registers.Flag5, Is.EqualTo(Registers.A.GetBit(5)));
+            });
         }
 
         [Test]
         public void RLCA_returns_proper_T_states()
         {
             var states = Execute(RLCA_opcode);
-            Assert.AreEqual(4, states);
+            Assert.That(states, Is.EqualTo(4));
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -26,12 +26,15 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             Execute(EXX_opcode);
 
-            Assert.AreEqual(altBC, Registers.BC);
-            Assert.AreEqual(altDE, Registers.DE);
-            Assert.AreEqual(altHL, Registers.HL);
-            Assert.AreEqual(BC, Registers.Alternate.BC);
-            Assert.AreEqual(DE, Registers.Alternate.DE);
-            Assert.AreEqual(HL, Registers.Alternate.HL);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.BC, Is.EqualTo(altBC));
+                Assert.That(Registers.DE, Is.EqualTo(altDE));
+                Assert.That(Registers.HL, Is.EqualTo(altHL));
+                Assert.That(Registers.Alternate.BC, Is.EqualTo(BC));
+                Assert.That(Registers.Alternate.DE, Is.EqualTo(DE));
+                Assert.That(Registers.Alternate.HL, Is.EqualTo(HL));
+            });
         }
 
         [Test]
@@ -44,7 +47,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         public void EXX_returns_proper_T_states()
         {
             var states = Execute(EXX_opcode);
-            Assert.AreEqual(4, states);
+            Assert.That(states, Is.EqualTo(4));
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 {
@@ -21,33 +21,33 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
 
         [Test]
-        [TestCaseSource("BIT_Source")]
+        [TestCaseSource(nameof(BIT_Source))]
         public void BIT_gets_bit_correctly(string reg, string destReg, byte opcode, byte? prefix, int bit)
         {
             var value = ((byte)0).WithBit(bit, 1);
             SetupRegOrMem(reg, value, offset);
             ExecuteBit(opcode, prefix, offset);
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.That(Registers.ZF.Value, Is.EqualTo(0));
 
             value = ((byte)0xFF).WithBit(bit, 0);
             SetupRegOrMem(reg, value, offset);
             ExecuteBit(opcode, prefix, offset);
-            Assert.AreEqual(1, Registers.ZF);
+            Assert.That(Registers.ZF.Value, Is.EqualTo(1));
         }
 
         [Test]
-        [TestCaseSource("BIT_Source")]
+        [TestCaseSource(nameof(BIT_Source))]
         public void BIT_sets_PF_as_ZF(string reg, string destReg, byte opcode, byte? prefix, int bit)
         {
             for(int i = 0; i < 256; i++) {
                 SetupRegOrMem(reg, (byte)i, offset);
                 ExecuteBit(opcode, prefix, offset);
-                Assert.AreEqual(Registers.ZF, Registers.PF);
+                Assert.That(Registers.PF, Is.EqualTo(Registers.ZF));
             }
         }
 
         [Test]
-        [TestCaseSource("BIT_Source")]
+        [TestCaseSource(nameof(BIT_Source))]
         public void BIT_sets_SF_if_bit_is_7_and_is_set(string reg, string destReg, byte opcode, byte? prefix, int bit)
         {
             for(int i = 0; i < 256; i++) {
@@ -55,37 +55,37 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 SetupRegOrMem(reg, b, offset);
                 ExecuteBit(opcode, prefix, offset);
                 var expected = (bit == 7 && b.GetBit(7) == 1);
-                Assert.AreEqual(expected, (bool) Registers.SF);
+                Assert.That((bool) Registers.SF, Is.EqualTo(expected));
             }
         }
 
         [Test]
-        [TestCaseSource("BIT_Source")]
+        [TestCaseSource(nameof(BIT_Source))]
         public void BIT_resets_N(string reg, string destReg, byte opcode, byte? prefix, int bit)
         {
             AssertResetsFlags(() => ExecuteBit(opcode, prefix, offset), opcode, prefix, "N");
         }
 
         [Test]
-        [TestCaseSource("BIT_Source")]
+        [TestCaseSource(nameof(BIT_Source))]
         public void BIT_sets_H(string reg, string destReg, byte opcode, byte? prefix, int bit)
         {
             AssertSetsFlags(() => ExecuteBit(opcode, prefix, offset), opcode, prefix, "H");
         }
 
         [Test]
-        [TestCaseSource("BIT_Source")]
+        [TestCaseSource(nameof(BIT_Source))]
         public void BIT_does_not_modify_CF(string reg, string destReg, byte opcode, byte? prefix, int bit)
         {
             AssertDoesNotChangeFlags(() => ExecuteBit(opcode, prefix, offset), opcode, prefix, "C");
         }
 
         [Test]
-        [TestCaseSource("BIT_Source")]
+        [TestCaseSource(nameof(BIT_Source))]
         public void BIT_returns_proper_T_states(string reg, string destReg, byte opcode, byte? prefix, int bit)
         {
             var states = ExecuteBit(opcode, prefix, offset);
-            Assert.AreEqual(reg == "(HL)" ? 12 : reg.StartsWith("(") ? 20 : 8, states);
+            Assert.That(states, Is.EqualTo(reg == "(HL)" ? 12 : reg.StartsWith("(") ? 20 : 8));
         }
     }
 }

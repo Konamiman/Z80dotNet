@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 using System.Collections.Generic;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
@@ -40,8 +40,8 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
 
         [Test]
-        [TestCaseSource("ADDC_A_r_Source")]
-        [TestCaseSource("ADDC_A_A_Source")]
+        [TestCaseSource(nameof(ADDC_A_r_Source))]
+        [TestCaseSource(nameof(ADDC_A_A_Source))]
         public void ADDC_A_r_adds_both_registers_with_or_without_carry(string src, byte opcode, int cf, byte? prefix)
         {
             var oldValue = Fixture.Create<byte>();
@@ -50,7 +50,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Setup(src, oldValue, valueToAdd, cf);
             Execute(opcode, prefix);
 
-            Assert.AreEqual(oldValue.Add(valueToAdd + cf), Registers.A);
+            Assert.That(Registers.A, Is.EqualTo(oldValue.Add(valueToAdd + cf)));
         }
 
         private void Setup(string src, byte oldValue, byte valueToAdd, int cf = 0)
@@ -84,45 +84,45 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         }
 
         [Test]
-        [TestCaseSource("ADDC_A_r_Source")]
+        [TestCaseSource(nameof(ADDC_A_r_Source))]
         public void ADDC_A_r_sets_SF_appropriately(string src, byte opcode, int cf, byte? prefix)
         {
             Setup(src, 0xFD, 1);
 
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.SF);
+            Assert.That(Registers.SF.Value, Is.EqualTo(1));
 
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.SF);
+            Assert.That(Registers.SF.Value, Is.EqualTo(1));
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.SF);
+            Assert.That(Registers.SF.Value, Is.EqualTo(0));
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.SF);
+            Assert.That(Registers.SF.Value, Is.EqualTo(0));
         }
 
         [Test]
-        [TestCaseSource("ADDC_A_r_Source")]
+        [TestCaseSource(nameof(ADDC_A_r_Source))]
         public void ADDC_A_r_sets_ZF_appropriately(string src, byte opcode, int cf, byte? prefix)
         {
             Setup(src, 0xFD, 1);
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.That(Registers.ZF.Value, Is.EqualTo(0));
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.That(Registers.ZF.Value, Is.EqualTo(0));
 
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.ZF);
+            Assert.That(Registers.ZF.Value, Is.EqualTo(1));
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.That(Registers.ZF.Value, Is.EqualTo(0));
         }
 
         [Test]
-        [TestCaseSource("ADDC_A_r_Source")]
+        [TestCaseSource(nameof(ADDC_A_r_Source))]
         public void ADDC_A_r_sets_HF_appropriately(string src, byte opcode, int cf, byte? prefix)
         {
             foreach(byte b in new byte[] { 0x0E, 0x7E, 0xFE }) 
@@ -130,82 +130,88 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 Setup(src, b, 1);
 
                 Execute(opcode, prefix);
-                Assert.AreEqual(0, Registers.HF);
+                Assert.That(Registers.HF.Value, Is.EqualTo(0));
 
                 Execute(opcode, prefix);
-                Assert.AreEqual(1, Registers.HF);
+                Assert.That(Registers.HF.Value, Is.EqualTo(1));
 
                 Execute(opcode, prefix);
-                Assert.AreEqual(0, Registers.HF);
+                Assert.That(Registers.HF.Value, Is.EqualTo(0));
             }
         }
 
         [Test]
-        [TestCaseSource("ADDC_A_r_Source")]
+        [TestCaseSource(nameof(ADDC_A_r_Source))]
         public void ADDC_A_r_sets_PF_appropriately(string src, byte opcode, int cf, byte? prefix)
         {
             Setup(src, 0x7E, 1);
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.PF);
+            Assert.That(Registers.PF.Value, Is.EqualTo(0));
 
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.PF);
+            Assert.That(Registers.PF.Value, Is.EqualTo(1));
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.PF);
+            Assert.That(Registers.PF.Value, Is.EqualTo(0));
         }
 
         [Test]
-        [TestCaseSource("ADDC_A_r_Source")]
-        [TestCaseSource("ADDC_A_A_Source")]
+        [TestCaseSource(nameof(ADDC_A_r_Source))]
+        [TestCaseSource(nameof(ADDC_A_A_Source))]
         public void ADDC_A_r_resets_NF(string src, byte opcode, int cf, byte? prefix)
         {
             AssertResetsFlags(opcode, null, "N");
         }
 
         [Test]
-        [TestCaseSource("ADDC_A_r_Source")]
+        [TestCaseSource(nameof(ADDC_A_r_Source))]
         public void ADDC_A_r_sets_CF_appropriately(string src, byte opcode, int cf, byte? prefix)
         {
             Setup(src, 0xFE, 1);
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.CF);
+            Assert.That(Registers.CF.Value, Is.EqualTo(0));
 
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.CF);
+            Assert.That(Registers.CF.Value, Is.EqualTo(1));
 
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.CF);
+            Assert.That(Registers.CF.Value, Is.EqualTo(0));
         }
 
         [Test]
-        [TestCaseSource("ADDC_A_r_Source")]
+        [TestCaseSource(nameof(ADDC_A_r_Source))]
         public void ADDC_A_r_sets_bits_3_and_5_from_result(string src, byte opcode, int cf, byte? prefix)
         {
             Setup(src, ((byte)0).WithBit(3, 1).WithBit(5, 0), 0);
             Execute(opcode, prefix);
-            Assert.AreEqual(1, Registers.Flag3);
-            Assert.AreEqual(0, Registers.Flag5);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.Flag3.Value, Is.EqualTo(1));
+                Assert.That(Registers.Flag5.Value, Is.EqualTo(0));
+            });
 
             Setup(src, ((byte)0).WithBit(3, 0).WithBit(5, 1), 0);
             Execute(opcode, prefix);
-            Assert.AreEqual(0, Registers.Flag3);
-            Assert.AreEqual(1, Registers.Flag5);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.Flag3.Value, Is.EqualTo(0));
+                Assert.That(Registers.Flag5.Value, Is.EqualTo(1));
+            });
         }
 
         [Test]
-        [TestCaseSource("ADDC_A_r_Source")]
-        [TestCaseSource("ADDC_A_A_Source")]
+        [TestCaseSource(nameof(ADDC_A_r_Source))]
+        [TestCaseSource(nameof(ADDC_A_A_Source))]
         public void ADDC_A_r_returns_proper_T_states(string src, byte opcode, int cf, byte? prefix)
         {
             var states = Execute(opcode, prefix);
-            Assert.AreEqual(
-                (src == "(HL)" || src == "n") ? 7 :
+            Assert.That(
+states, Is.EqualTo((src == "(HL)" || src == "n") ? 7 :
                 src.StartsWith("I") ? 8 :
                 src.StartsWith(("(I")) ? 19 :
-                4, states);
+                4));
         }
     }
 }

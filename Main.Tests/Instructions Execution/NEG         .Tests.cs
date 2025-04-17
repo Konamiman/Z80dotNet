@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 using System.Collections.Generic;
 
 namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
@@ -18,7 +18,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             Execute();
 
             var expected = (byte)((byte)0).Sub(oldValue);
-            Assert.AreEqual(expected, Registers.A);
+            Assert.That(Registers.A, Is.EqualTo(expected));
         }
 
         [Test]
@@ -26,23 +26,23 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             Registers.A = 2;
             Execute();
-            Assert.AreEqual(1, Registers.SF);
+            Assert.That(Registers.SF.Value, Is.EqualTo(1));
 
             Registers.A = 1;
             Execute();
-            Assert.AreEqual(1, Registers.SF);
+            Assert.That(Registers.SF.Value, Is.EqualTo(1));
 
             Registers.A = 0;
             Execute();
-            Assert.AreEqual(0, Registers.SF);
+            Assert.That(Registers.SF.Value, Is.EqualTo(0));
 
             Registers.A = 0xFF;
             Execute();
-            Assert.AreEqual(0, Registers.SF);
+            Assert.That(Registers.SF.Value, Is.EqualTo(0));
 
             Registers.A = 0x80;
             Execute();
-            Assert.AreEqual(1, Registers.SF);
+            Assert.That(Registers.SF.Value, Is.EqualTo(1));
         }
 
         [Test]
@@ -50,23 +50,23 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             Registers.A = 2;
             Execute();
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.That(Registers.ZF.Value, Is.EqualTo(0));
 
             Registers.A = 1;
             Execute();
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.That(Registers.ZF.Value, Is.EqualTo(0));
 
             Registers.A = 0;
             Execute();
-            Assert.AreEqual(1, Registers.ZF);
+            Assert.That(Registers.ZF.Value, Is.EqualTo(1));
 
             Registers.A = 0xFF;
             Execute();
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.That(Registers.ZF.Value, Is.EqualTo(0));
 
             Registers.A = 0x80;
             Execute();
-            Assert.AreEqual(0, Registers.ZF);
+            Assert.That(Registers.ZF.Value, Is.EqualTo(0));
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 Registers.A = b;
                 Execute();
                 var expected = (Bit)((b ^ Registers.A) & 0x10);
-                Assert.AreEqual(expected, Registers.HF);
+                Assert.That(Registers.HF, Is.EqualTo(expected));
             }
         }
 
@@ -91,7 +91,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 Registers.A = b;
                 Execute();
                 var expected = b == 0x80 ? 1 : 0;
-                Assert.AreEqual(expected, Registers.PF);
+                Assert.That(Registers.PF.Value, Is.EqualTo(expected));
             }
         }
 
@@ -110,7 +110,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 Registers.A = b;
                 Execute();
                 var expected = b == 0 ? 0 : 1;
-                Assert.AreEqual(expected, Registers.CF);
+                Assert.That(Registers.CF.Value, Is.EqualTo(expected));
             }
         }
 
@@ -119,20 +119,26 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             Registers.A = 0x0F;
             Execute();
-            Assert.AreEqual(0, Registers.Flag3);
-            Assert.AreEqual(1, Registers.Flag5);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.Flag3.Value, Is.EqualTo(0));
+                Assert.That(Registers.Flag5.Value, Is.EqualTo(1));
+            });
 
             Registers.A = 0xF1;
             Execute();
-            Assert.AreEqual(1, Registers.Flag3);
-            Assert.AreEqual(0, Registers.Flag5);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Registers.Flag3.Value, Is.EqualTo(1));
+                Assert.That(Registers.Flag5.Value, Is.EqualTo(0));
+            });
         }
 
         [Test]
         public void NEG_returns_proper_T_states()
         {
             var states = Execute();
-            Assert.AreEqual(8, states);
+            Assert.That(states, Is.EqualTo(8));
         }
 
         private int Execute()

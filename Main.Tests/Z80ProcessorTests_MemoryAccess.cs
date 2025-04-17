@@ -1,6 +1,6 @@
 ﻿using Moq;
 using NUnit.Framework;
-using Ploeh.AutoFixture;
+using AutoFixture;
 using System;
 
 namespace Konamiman.Z80dotNet.Tests
@@ -29,7 +29,7 @@ namespace Konamiman.Z80dotNet.Tests
         [Test]
         public void Can_create_instances()
         {
-            Assert.IsNotNull(Sut);
+            Assert.That(Sut, Is.Not.Null);
         }
 
         #region ReadFromMemory and ReadFromPort
@@ -50,7 +50,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             var actual = Read(address, isPort);
 
-            Assert.AreEqual(value, actual);
+            Assert.That(actual, Is.EqualTo(value));
             memory.Verify(m => m[address]);
         }
 
@@ -101,15 +101,18 @@ namespace Konamiman.Z80dotNet.Tests
                 if(args.EventType == BeforeReadEventType(isPort))
                 {
                     eventFired = true;
-                    Assert.AreEqual(Sut, sender);
-                    Assert.AreEqual(address, args.Address);
-                    Assert.AreEqual(0xFF, args.Value);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(sender, Is.EqualTo(Sut));
+                        Assert.That(args.Address, Is.EqualTo(address));
+                        Assert.That(args.Value, Is.EqualTo(0xFF));
+                    });
                 }
             };
 
             Read(address, isPort);
 
-            Assert.IsTrue(eventFired);
+            Assert.That(eventFired);
         }
 
         MemoryAccessEventType BeforeReadEventType(bool isPort)
@@ -138,16 +141,19 @@ namespace Konamiman.Z80dotNet.Tests
                 if(args.EventType == AfterReadEventType(isPort))
                 {
                     eventFired = true;
-                    Assert.AreEqual(Sut, sender);
-                    Assert.AreEqual(address, args.Address);
-                    Assert.AreEqual(value, args.Value);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(sender, Is.EqualTo(Sut));
+                        Assert.That(args.Address, Is.EqualTo(address));
+                        Assert.That(args.Value, Is.EqualTo(value));
+                    });
                 }
             };
 
             var actual = Read(address, isPort);
 
-            Assert.IsTrue(eventFired);
-            Assert.AreEqual(value, actual);
+            Assert.That(eventFired);
+            Assert.That(actual, Is.EqualTo(value));
         }
 
         MemoryAccessEventType AfterReadEventType(bool isPort)
@@ -178,21 +184,24 @@ namespace Konamiman.Z80dotNet.Tests
                 if(args.EventType == BeforeReadEventType(isPort))
                 {
                     beforeEventFired = true;
-                    Assert.AreEqual(address, args.Address);
+                    Assert.That(args.Address, Is.EqualTo(address));
                     args.Value = value;
                 }
                 if(args.EventType == AfterReadEventType(isPort))
                 {
                     afterEventFired = true;
-                    Assert.AreEqual(address, args.Address);
-                    Assert.AreEqual(value, args.Value);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(args.Address, Is.EqualTo(address));
+                        Assert.That(args.Value, Is.EqualTo(value));
+                    });
                 }
             };
 
             var actual = Read(address, isPort);
 
-            Assert.IsTrue(beforeEventFired);
-            Assert.IsTrue(afterEventFired);
+            Assert.That(beforeEventFired);
+            Assert.That(afterEventFired);
         }
         
         [Test]
@@ -220,8 +229,8 @@ namespace Konamiman.Z80dotNet.Tests
 
             var actual = Read(address, isPort);
 
-            Assert.IsTrue(eventFired);
-            Assert.AreEqual(valueFromEvent, actual);
+            Assert.That(eventFired);
+            Assert.That(actual, Is.EqualTo(valueFromEvent));
         }
 
         [Test]
@@ -246,7 +255,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             var actual = Read(address, isPort);
 
-            Assert.AreEqual(value, actual);
+            Assert.That(actual, Is.EqualTo(value));
         }
 
         [Test]
@@ -270,13 +279,13 @@ namespace Konamiman.Z80dotNet.Tests
                 else if(args.EventType == AfterReadEventType(isPort))
                 {
                     eventFired = true;
-                    Assert.IsTrue(args.CancelMemoryAccess);
+                    Assert.That(args.CancelMemoryAccess);
                 }
             };
 
             Read(address, isPort);
 
-            Assert.IsTrue(eventFired);
+            Assert.That(eventFired);
         }
         
         [Test]
@@ -294,13 +303,13 @@ namespace Konamiman.Z80dotNet.Tests
                 if(args.EventType == BeforeReadEventType(isPort))
                 {
                     eventFired = true;
-                    Assert.IsNull(args.LocalUserState);
+                    Assert.That(args.LocalUserState, Is.Null);
                 }
             };
 
             Read(address, isPort);
 
-            Assert.IsTrue(eventFired);
+            Assert.That(eventFired);
         }
 
         [Test]
@@ -323,13 +332,13 @@ namespace Konamiman.Z80dotNet.Tests
                 else if(args.EventType == AfterReadEventType(isPort))
                 {
                     eventFired = true;
-                    Assert.AreEqual(localUserState, args.LocalUserState);
+                    Assert.That(args.LocalUserState, Is.EqualTo(localUserState));
                 }
             };
 
             Read(address, isPort);
 
-            Assert.IsTrue(eventFired);
+            Assert.That(eventFired);
         }
 
         #endregion
@@ -347,7 +356,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             var actual = Sut.FetchNextOpcode();
 
-            Assert.AreEqual(value, actual);
+            Assert.That(actual, Is.EqualTo(value));
             Memory.Verify(m => m[address]);
         }
 
@@ -359,7 +368,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.FetchNextOpcode();
 
-            Assert.AreEqual(address.ToShort().Inc(), Sut.Registers.PC);
+            Assert.That(Sut.Registers.PC, Is.EqualTo(address.ToShort().Inc()));
         }
 
         #endregion
@@ -425,15 +434,18 @@ namespace Konamiman.Z80dotNet.Tests
                 if(args.EventType == BeforeWriteEventType(isPort))
                 {
                     eventFired = true;
-                    Assert.AreEqual(Sut, sender);
-                    Assert.AreEqual(address, args.Address);
-                    Assert.AreEqual(value, args.Value);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(sender, Is.EqualTo(Sut));
+                        Assert.That(args.Address, Is.EqualTo(address));
+                        Assert.That(args.Value, Is.EqualTo(value));
+                    });
                 }
             };
 
             Write(address, value, isPort);
 
-            Assert.IsTrue(eventFired);
+            Assert.That(eventFired);
         }
 
         MemoryAccessEventType BeforeWriteEventType(bool isPort)
@@ -460,15 +472,18 @@ namespace Konamiman.Z80dotNet.Tests
                 if(args.EventType == AfterWriteEventType(isPort))
                 {
                     eventFired = true;
-                    Assert.AreEqual(Sut, sender);
-                    Assert.AreEqual(address, args.Address);
-                    Assert.AreEqual(value, args.Value);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(sender, Is.EqualTo(Sut));
+                        Assert.That(args.Address, Is.EqualTo(address));
+                        Assert.That(args.Value, Is.EqualTo(value));
+                    });
                 }
             };
 
             Write(address, value, isPort);
 
-            Assert.IsTrue(eventFired);
+            Assert.That(eventFired);
             memory.VerifySet(m => m[address] = value);
         }
 
@@ -501,21 +516,24 @@ namespace Konamiman.Z80dotNet.Tests
                 if(args.EventType == BeforeWriteEventType(isPort))
                 {
                     beforeEventFired = true;
-                    Assert.AreEqual(address, args.Address);
+                    Assert.That(args.Address, Is.EqualTo(address));
                     args.Value = modifiedValue;
                 }
                 if(args.EventType == AfterWriteEventType(isPort))
                 {
                     afterEventFired = true;
-                    Assert.AreEqual(address, args.Address);
-                    Assert.AreEqual(modifiedValue, args.Value);
+                    Assert.Multiple(() =>
+                    {
+                        Assert.That(args.Address, Is.EqualTo(address));
+                        Assert.That(args.Value, Is.EqualTo(modifiedValue));
+                    });
                 }
             };
 
             Write(address, originalValue, isPort);
 
-            Assert.IsTrue(beforeEventFired);
-            Assert.IsTrue(afterEventFired);
+            Assert.That(beforeEventFired);
+            Assert.That(afterEventFired);
         }
 
         [Test]
@@ -541,7 +559,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Write(address, originalValue, isPort);
 
-            Assert.IsTrue(eventFired);
+            Assert.That(eventFired);
             memory.VerifySet(m => m[address] = modifiedValue);
         }
 
@@ -570,7 +588,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Write(address, value, isPort);
 
-            Assert.IsTrue(eventFired);
+            Assert.That(eventFired);
         }
 
         [Test]
@@ -595,13 +613,13 @@ namespace Konamiman.Z80dotNet.Tests
                 else if(args.EventType == AfterWriteEventType(isPort))
                 {
                     eventFired = true;
-                    Assert.IsTrue(args.CancelMemoryAccess);
+                    Assert.That(args.CancelMemoryAccess);
                 }
             };
 
             Write(address, value, isPort);
 
-            Assert.IsTrue(eventFired);
+            Assert.That(eventFired);
         }
 
         [Test]
@@ -620,13 +638,13 @@ namespace Konamiman.Z80dotNet.Tests
                 if(args.EventType == BeforeWriteEventType(isPort))
                 {
                     eventFired = true;
-                    Assert.IsNull(args.LocalUserState);
+                    Assert.That(args.LocalUserState, Is.Null);
                 }
             };
 
             Write(address, value, isPort);
 
-            Assert.IsTrue(eventFired);
+            Assert.That(eventFired);
         }
 
         [Test]
@@ -650,13 +668,13 @@ namespace Konamiman.Z80dotNet.Tests
                 else if(args.EventType == AfterWriteEventType(isPort))
                 {
                     eventFired = true;
-                    Assert.AreEqual(localUserState, args.LocalUserState);
+                    Assert.That(args.LocalUserState, Is.EqualTo(localUserState));
                 }
             };
 
             Write(address, value, isPort);
 
-            Assert.IsTrue(eventFired);
+            Assert.That(eventFired);
         }
 
         #endregion
