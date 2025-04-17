@@ -10,7 +10,7 @@ The `HALT` instruction behaves the expected way: after this instruction is execu
 
 ### Interrupt events
 
-[IZ80Processor](../Main/IZ80Processor.cs) provides the following interrupt related events:
+[IZ80ProcessorInterruptEvents](../Main/IZ80ProcessorInterruptEvents.cs) provides the following interrupt related events:
 
 * _`MaskableInterruptServicingStart`_ is fired right before a maskable interrupt is going to be serviced. The execution state is as follows when the event is fired:
 
@@ -25,3 +25,5 @@ The `HALT` instruction behaves the expected way: after this instruction is execu
 * _`BeforeRetiInstructionExecution`_ and _`BeforeRetnInstructionExecution`_ are fired before a RETI/RETN instruction is about to be executed, right after the corresponding _`BeforeInstructionExecution`_ event.
 
 * _`AfterRetiInstructionExecution`_ and _`AfterRetnInstructionExecution`_ are fired after a RETI/RETN instruction is about to be executed, right after the corresponding _`AfterInstructionExecution`_ event.
+
+ **Note:** the `IZ80ProcessorInterruptEvents` interface has the above events and nothing else. A separate interface was created to avoid breaking external code that depends on `IZ80Processor`; the `Z80Processor` class implements both interfaces.
