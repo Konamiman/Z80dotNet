@@ -16,6 +16,9 @@
     <DocumentationFile>bin\Debug\Z80dotNet.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Update="Instructions Execution\Core\Execute_xD_Instruction.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

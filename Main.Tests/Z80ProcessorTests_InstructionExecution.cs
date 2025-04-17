@@ -397,6 +397,138 @@ namespace Konamiman.Z80dotNet.Tests
         #region Before and after instruction execution events
 
         [Test]
+        [TestCase(0x4D)]
+        [TestCase(0x5D)]
+        [TestCase(0x6D)]
+        [TestCase(0x7D)]
+        public void Fires_before_and_after_reti_instruction_execution_in_proper_order(byte opcode)
+        {
+            var beforeExecutionEventRaised = false;
+            var afterExecutionEventRaised = false;
+            var beforeRetiExecutionEventRaised = false;
+            var afterRetiExecutionEventRaised = false;
+
+            var instructionBytes = new byte[]
+            {
+                0xED, opcode
+            };
+            Sut.Memory.SetContents(0, instructionBytes);
+
+            Sut.BeforeInstructionExecution += (sender, e) =>
+            {
+                Assert.That(beforeExecutionEventRaised, Is.False);
+                Assert.That(beforeRetiExecutionEventRaised, Is.False);
+                Assert.That(afterExecutionEventRaised, Is.False);
+                Assert.That(afterRetiExecutionEventRaised, Is.False);
+
+                beforeExecutionEventRaised = true;
+            };
+
+            Sut.BeforeRetiInstructionExecution += (sender, e) =>
+            {
+                Assert.That(beforeExecutionEventRaised, Is.True);
+                Assert.That(beforeRetiExecutionEventRaised, Is.False);
+                Assert.That(afterExecutionEventRaised, Is.False);
+                Assert.That(afterRetiExecutionEventRaised, Is.False);
+
+                beforeRetiExecutionEventRaised = true;
+            };
+
+            Sut.AfterInstructionExecution += (sender, e) =>
+            {
+                Assert.That(beforeExecutionEventRaised, Is.True);
+                Assert.That(beforeRetiExecutionEventRaised, Is.True);
+                Assert.That(afterExecutionEventRaised, Is.False);
+                Assert.That(afterRetiExecutionEventRaised, Is.False);
+
+                afterExecutionEventRaised = true;
+            };
+
+            Sut.AfterRetiInstructionExecution += (sender, e) =>
+            {
+                Assert.That(beforeExecutionEventRaised, Is.True);
+                Assert.That(beforeRetiExecutionEventRaised, Is.True);
+                Assert.That(afterExecutionEventRaised, Is.True);
+                Assert.That(afterRetiExecutionEventRaised, Is.False);
+
+                afterRetiExecutionEventRaised = true;
+            };
+
+            Sut.ExecuteNextInstruction();
+
+            Assert.That(beforeExecutionEventRaised, Is.True);
+            Assert.That(beforeRetiExecutionEventRaised, Is.True);
+            Assert.That(afterExecutionEventRaised, Is.True);
+            Assert.That(afterRetiExecutionEventRaised, Is.True);
+        }
+
+        [Test]
+        [TestCase(0x45)]
+        [TestCase(0x55)]
+        [TestCase(0x65)]
+        [TestCase(0x75)]
+        public void Fires_before_and_after_retn_instruction_execution_in_proper_order(byte opcode)
+        {
+            var beforeExecutionEventRaised = false;
+            var afterExecutionEventRaised = false;
+            var beforeRetnExecutionEventRaised = false;
+            var afterRetnExecutionEventRaised = false;
+
+            var instructionBytes = new byte[]
+            {
+                0xED, opcode
+            };
+            Sut.Memory.SetContents(0, instructionBytes);
+
+            Sut.BeforeInstructionExecution += (sender, e) =>
+            {
+                Assert.That(beforeExecutionEventRaised, Is.False);
+                Assert.That(beforeRetnExecutionEventRaised, Is.False);
+                Assert.That(afterExecutionEventRaised, Is.False);
+                Assert.That(afterRetnExecutionEventRaised, Is.False);
+
+                beforeExecutionEventRaised = true;
+            };
+
+            Sut.BeforeRetnInstructionExecution += (sender, e) =>
+            {
+                Assert.That(beforeExecutionEventRaised, Is.True);
+                Assert.That(beforeRetnExecutionEventRaised, Is.False);
+                Assert.That(afterExecutionEventRaised, Is.False);
+                Assert.That(afterRetnExecutionEventRaised, Is.False);
+
+                beforeRetnExecutionEventRaised = true;
+            };
+
+            Sut.AfterInstructionExecution += (sender, e) =>
+            {
+                Assert.That(beforeExecutionEventRaised, Is.True);
+                Assert.That(beforeRetnExecutionEventRaised, Is.True);
+                Assert.That(afterExecutionEventRaised, Is.False);
+                Assert.That(afterRetnExecutionEventRaised, Is.False);
+
+                afterExecutionEventRaised = true;
+            };
+
+            Sut.AfterRetnInstructionExecution += (sender, e) =>
+            {
+                Assert.That(beforeExecutionEventRaised, Is.True);
+                Assert.That(beforeRetnExecutionEventRaised, Is.True);
+                Assert.That(afterExecutionEventRaised, Is.True);
+                Assert.That(afterRetnExecutionEventRaised, Is.False);
+
+                afterRetnExecutionEventRaised = true;
+            };
+
+            Sut.ExecuteNextInstruction();
+
+            Assert.That(beforeExecutionEventRaised, Is.True);
+            Assert.That(beforeRetnExecutionEventRaised, Is.True);
+            Assert.That(afterExecutionEventRaised, Is.True);
+            Assert.That(afterRetnExecutionEventRaised, Is.True);
+        }
+
+        [Test]
         public void Fires_before_and_after_instruction_execution_with_proper_opcodes_and_local_state()
         {
             var executeInvoked = false;
@@ -892,8 +1024,10 @@ namespace Konamiman.Z80dotNet.Tests
                 else
                     TimesEachInstructionIsExecuted[firstOpcodeByte] = 1;
 
-                if(ExtraBeforeFetchCode != null)
-                    ExtraBeforeFetchCode(firstOpcodeByte);
+                if (firstOpcodeByte == 0xED)
+                    ProcessorAgent.FetchNextOpcode();
+
+                ExtraBeforeFetchCode?.Invoke(firstOpcodeByte);
 
                 InstructionFetchFinished(this, 
                     new InstructionFetchFinishedEventArgs()
@@ -903,10 +1037,9 @@ namespace Konamiman.Z80dotNet.Tests
                         IsHaltInstruction = (firstOpcodeByte == HALT_opcode)
                     });
 
-                if(ExtraAfterFetchCode != null)
-                    ExtraAfterFetchCode(firstOpcodeByte);
+                ExtraAfterFetchCode?.Invoke(firstOpcodeByte);
 
-                if(TStatesReturner == null)
+                if (TStatesReturner == null)
                     return 0;
                 else
                     return TStatesReturner(firstOpcodeByte);
