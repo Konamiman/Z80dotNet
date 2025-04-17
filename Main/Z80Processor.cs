@@ -8,7 +8,7 @@ namespace Konamiman.Z80dotNet
     /// <summary>
     /// The implementation of the <see cref="IZ80Processor"/> interface.
     /// </summary>
-    public class Z80Processor : IZ80Processor, IZ80ProcessorAgent
+    public class Z80Processor : IZ80Processor, IZ80ProcessorInterruptEvents, IZ80ProcessorAgent
     {
         private const int MemorySpaceSize = 65536;
         private const int PortSpaceSize = 256;
