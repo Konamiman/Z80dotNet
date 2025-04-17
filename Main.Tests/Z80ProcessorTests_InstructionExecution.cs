@@ -416,50 +416,50 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.BeforeInstructionExecution += (sender, e) =>
             {
-                Assert.IsFalse(beforeExecutionEventRaised);
-                Assert.IsFalse(beforeRetiExecutionEventRaised);
-                Assert.IsFalse(afterExecutionEventRaised);
-                Assert.IsFalse(afterRetiExecutionEventRaised);
+                Assert.That(beforeExecutionEventRaised, Is.False);
+                Assert.That(beforeRetiExecutionEventRaised, Is.False);
+                Assert.That(afterExecutionEventRaised, Is.False);
+                Assert.That(afterRetiExecutionEventRaised, Is.False);
 
                 beforeExecutionEventRaised = true;
             };
 
             Sut.BeforeRetiInstructionExecution += (sender, e) =>
             {
-                Assert.IsTrue(beforeExecutionEventRaised);
-                Assert.IsFalse(beforeRetiExecutionEventRaised);
-                Assert.IsFalse(afterExecutionEventRaised);
-                Assert.IsFalse(afterRetiExecutionEventRaised);
+                Assert.That(beforeExecutionEventRaised, Is.True);
+                Assert.That(beforeRetiExecutionEventRaised, Is.False);
+                Assert.That(afterExecutionEventRaised, Is.False);
+                Assert.That(afterRetiExecutionEventRaised, Is.False);
 
                 beforeRetiExecutionEventRaised = true;
             };
 
             Sut.AfterInstructionExecution += (sender, e) =>
             {
-                Assert.IsTrue(beforeExecutionEventRaised);
-                Assert.IsTrue(beforeRetiExecutionEventRaised);
-                Assert.IsFalse(afterExecutionEventRaised);
-                Assert.IsFalse(afterRetiExecutionEventRaised);
+                Assert.That(beforeExecutionEventRaised, Is.True);
+                Assert.That(beforeRetiExecutionEventRaised, Is.True);
+                Assert.That(afterExecutionEventRaised, Is.False);
+                Assert.That(afterRetiExecutionEventRaised, Is.False);
 
                 afterExecutionEventRaised = true;
             };
 
             Sut.AfterRetiInstructionExecution += (sender, e) =>
             {
-                Assert.IsTrue(beforeExecutionEventRaised);
-                Assert.IsTrue(beforeRetiExecutionEventRaised);
-                Assert.IsTrue(afterExecutionEventRaised);
-                Assert.IsFalse(afterRetiExecutionEventRaised);
+                Assert.That(beforeExecutionEventRaised, Is.True);
+                Assert.That(beforeRetiExecutionEventRaised, Is.True);
+                Assert.That(afterExecutionEventRaised, Is.True);
+                Assert.That(afterRetiExecutionEventRaised, Is.False);
 
                 afterRetiExecutionEventRaised = true;
             };
 
             Sut.ExecuteNextInstruction();
 
-            Assert.IsTrue(beforeExecutionEventRaised);
-            Assert.IsTrue(beforeRetiExecutionEventRaised);
-            Assert.IsTrue(afterExecutionEventRaised);
-            Assert.IsTrue(afterRetiExecutionEventRaised);
+            Assert.That(beforeExecutionEventRaised, Is.True);
+            Assert.That(beforeRetiExecutionEventRaised, Is.True);
+            Assert.That(afterExecutionEventRaised, Is.True);
+            Assert.That(afterRetiExecutionEventRaised, Is.True);
         }
 
         [Test]
@@ -482,50 +482,50 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.BeforeInstructionExecution += (sender, e) =>
             {
-                Assert.IsFalse(beforeExecutionEventRaised);
-                Assert.IsFalse(beforeRetnExecutionEventRaised);
-                Assert.IsFalse(afterExecutionEventRaised);
-                Assert.IsFalse(afterRetnExecutionEventRaised);
+                Assert.That(beforeExecutionEventRaised, Is.False);
+                Assert.That(beforeRetnExecutionEventRaised, Is.False);
+                Assert.That(afterExecutionEventRaised, Is.False);
+                Assert.That(afterRetnExecutionEventRaised, Is.False);
 
                 beforeExecutionEventRaised = true;
             };
 
             Sut.BeforeRetnInstructionExecution += (sender, e) =>
             {
-                Assert.IsTrue(beforeExecutionEventRaised);
-                Assert.IsFalse(beforeRetnExecutionEventRaised);
-                Assert.IsFalse(afterExecutionEventRaised);
-                Assert.IsFalse(afterRetnExecutionEventRaised);
+                Assert.That(beforeExecutionEventRaised, Is.True);
+                Assert.That(beforeRetnExecutionEventRaised, Is.False);
+                Assert.That(afterExecutionEventRaised, Is.False);
+                Assert.That(afterRetnExecutionEventRaised, Is.False);
 
                 beforeRetnExecutionEventRaised = true;
             };
 
             Sut.AfterInstructionExecution += (sender, e) =>
             {
-                Assert.IsTrue(beforeExecutionEventRaised);
-                Assert.IsTrue(beforeRetnExecutionEventRaised);
-                Assert.IsFalse(afterExecutionEventRaised);
-                Assert.IsFalse(afterRetnExecutionEventRaised);
+                Assert.That(beforeExecutionEventRaised, Is.True);
+                Assert.That(beforeRetnExecutionEventRaised, Is.True);
+                Assert.That(afterExecutionEventRaised, Is.False);
+                Assert.That(afterRetnExecutionEventRaised, Is.False);
 
                 afterExecutionEventRaised = true;
             };
 
             Sut.AfterRetnInstructionExecution += (sender, e) =>
             {
-                Assert.IsTrue(beforeExecutionEventRaised);
-                Assert.IsTrue(beforeRetnExecutionEventRaised);
-                Assert.IsTrue(afterExecutionEventRaised);
-                Assert.IsFalse(afterRetnExecutionEventRaised);
+                Assert.That(beforeExecutionEventRaised, Is.True);
+                Assert.That(beforeRetnExecutionEventRaised, Is.True);
+                Assert.That(afterExecutionEventRaised, Is.True);
+                Assert.That(afterRetnExecutionEventRaised, Is.False);
 
                 afterRetnExecutionEventRaised = true;
             };
 
             Sut.ExecuteNextInstruction();
 
-            Assert.IsTrue(beforeExecutionEventRaised);
-            Assert.IsTrue(beforeRetnExecutionEventRaised);
-            Assert.IsTrue(afterExecutionEventRaised);
-            Assert.IsTrue(afterRetnExecutionEventRaised);
+            Assert.That(beforeExecutionEventRaised, Is.True);
+            Assert.That(beforeRetnExecutionEventRaised, Is.True);
+            Assert.That(afterExecutionEventRaised, Is.True);
+            Assert.That(afterRetnExecutionEventRaised, Is.True);
         }
 
         [Test]

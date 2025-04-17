@@ -495,7 +495,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.ExecuteNextInstruction();
 
-            Assert.True(nonMaskableInterruptServicingStartFired);
+            Assert.That(nonMaskableInterruptServicingStartFired, Is.True);
         }
 
         [Test]
@@ -524,7 +524,7 @@ namespace Konamiman.Z80dotNet.Tests
 
             Sut.ExecuteNextInstruction();
 
-            Assert.True(maskableInterruptServicingStartFired);
+            Assert.That(maskableInterruptServicingStartFired, Is.True);
         }
 
         #endregion
