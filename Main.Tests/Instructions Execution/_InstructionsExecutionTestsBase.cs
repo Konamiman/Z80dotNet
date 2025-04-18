@@ -20,6 +20,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
             Sut = new Z80InstructionExecutor();
             Sut.ProcessorAgent = ProcessorAgent = new FakeProcessorAgent();
+            Sut.ProcessorAgentExtendedPorts = ProcessorAgent;
             Registers = ProcessorAgent.Registers;
             Sut.InstructionFetchFinished += (s, e) => { };
 
@@ -61,7 +62,8 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         {
 			var sut = new FakeInstructionExecutor();
             sut.ProcessorAgent = ProcessorAgent = new FakeProcessorAgent();
-		    Registers = ProcessorAgent.Registers;
+            sut.ProcessorAgentExtendedPorts = ProcessorAgent;
+            Registers = ProcessorAgent.Registers;
 			sut.InstructionFetchFinished += (s, e) => { };
             return sut;
         }
@@ -375,14 +377,16 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 		    }
         }
 
-        protected class FakeProcessorAgent : IZ80ProcessorAgent
+        protected class FakeProcessorAgent : IZ80ProcessorAgent, IZ80ProcessorAgentExtendedPorts
         {
             public FakeProcessorAgent()
             {
                 Registers = new Z80Registers();
                 Memory = new byte[65536];
-                Ports = new byte[256];
+                Ports = new byte[65536];
             }
+
+            public bool UseExtendedPorts { get; set; } = false;
 
             public byte[] Memory { get; set; }
 
@@ -432,6 +436,18 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             public void Stop(bool isPause = false)
             {
                 throw new NotImplementedException();
+            }
+
+            public byte ReadFromPort(byte portNumberLow, byte portNumberHigh)
+            {
+                if(!UseExtendedPorts) portNumberHigh = 0;
+                return Ports[NumberUtils.CreateUshort(portNumberLow, portNumberHigh)];
+            }
+
+            public void WriteToPort(byte portNumberLow, byte portNumberHigh, byte value)
+            {
+                if(!UseExtendedPorts) portNumberHigh = 0;
+                Ports[NumberUtils.CreateUshort(portNumberLow, portNumberHigh)] = value;
             }
         }
 

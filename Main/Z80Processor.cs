@@ -8,10 +8,10 @@ namespace Konamiman.Z80dotNet
     /// <summary>
     /// The implementation of the <see cref="IZ80Processor"/> interface.
     /// </summary>
-    public class Z80Processor : IZ80Processor, IZ80ProcessorInterruptEvents, IZ80ProcessorAgent
+    public class Z80Processor : IZ80Processor, IZ80ProcessorInterruptEvents, IZ80ProcessorExtendedPortsSpace, IZ80ProcessorAgent, IZ80ProcessorAgentExtendedPorts
     {
         private const int MemorySpaceSize = 65536;
-        private const int PortSpaceSize = 256;
+        private int PortSpaceSize = 256;
 
         private const decimal MaxEffectiveClockSpeed = 100M;
         private const decimal MinEffectiveClockSpeed = 0.001M;
@@ -34,12 +34,14 @@ namespace Konamiman.Z80dotNet
             AutoStopOnRetWithStackEmpty = false;
             unchecked { StartOfStack =  (short)0xFFFF; }
 
+            Memory = new PlainMemory(MemorySpaceSize);
+            PortsSpace = new PlainMemory(PortSpaceSize);
+            portsAccessModes = new MemoryAccessMode[PortSpaceSize];
+            portWaitStates = new byte[PortSpaceSize];
+
             SetMemoryWaitStatesForM1(0, MemorySpaceSize, 0);
             SetMemoryWaitStatesForNonM1(0, MemorySpaceSize, 0);
             SetPortWaitStates(0, PortSpaceSize, 0);
-
-            Memory = new PlainMemory(MemorySpaceSize);
-            PortsSpace = new PlainMemory(PortSpaceSize);
 
             SetMemoryAccessMode(0, MemorySpaceSize, MemoryAccessMode.ReadAndWrite);
             SetPortsSpaceAccessMode(0, PortSpaceSize, MemoryAccessMode.ReadAndWrite);
@@ -48,6 +50,7 @@ namespace Konamiman.Z80dotNet
             InterruptSources = new List<IZ80InterruptSource>();
 
             InstructionExecutor = new Z80InstructionExecutor();
+            InstructionExecutorExtendedPorts = (IZ80InstructionExecutorExtendedPorts)InstructionExecutor;
 
             StopReason = StopReason.NeverRan;
             State = ProcessorState.Stopped;
@@ -491,14 +494,18 @@ namespace Konamiman.Z80dotNet
             }
         }
 
-        private MemoryAccessMode[] portsAccessModes = new MemoryAccessMode[PortSpaceSize];
+        private MemoryAccessMode[] portsAccessModes;
 
-        public void SetPortsSpaceAccessMode(byte startPort, int length, MemoryAccessMode mode)
+        public void SetPortsSpaceAccessMode(byte startPort, int length, MemoryAccessMode mode) => SetExtendedPortsSpaceAccessMode(startPort, length, mode);
+
+        public void SetExtendedPortsSpaceAccessMode(ushort startPort, int length, MemoryAccessMode mode)
         {
             SetArrayContents(portsAccessModes, startPort, length, mode);
         }
 
-        public MemoryAccessMode GetPortAccessMode(byte portNumber)
+        public MemoryAccessMode GetPortAccessMode(byte portNumber) => GetExtendedPortAccessMode(portNumber);
+
+        public MemoryAccessMode GetExtendedPortAccessMode(ushort portNumber)
         {
             return portsAccessModes[portNumber];
         }
@@ -622,14 +629,18 @@ namespace Konamiman.Z80dotNet
             return memoryWaitStatesForNonM1[address];
         }
 
-        private byte[] portWaitStates = new byte[PortSpaceSize];
+        private byte[] portWaitStates;
 
-        public void SetPortWaitStates(ushort startPort, int length, byte waitStates)
+        public void SetPortWaitStates(ushort startPort, int length, byte waitStates) => SetExtendedPortWaitStates(startPort, length, waitStates);
+
+        public void SetExtendedPortWaitStates(ushort startPort, int length, byte waitStates)
         {
             SetArrayContents(portWaitStates, startPort, length, waitStates);
         }
 
-        public byte GetPortWaitStates(byte portNumber)
+        public byte GetPortWaitStates(byte portNumber) => GetExtendedPortWaitStates(portNumber);
+
+        public byte GetExtendedPortWaitStates(ushort portNumber)
         {
             return portWaitStates[portNumber];
         }
@@ -655,6 +666,23 @@ namespace Konamiman.Z80dotNet
             }
         }
 
+        private IZ80InstructionExecutorExtendedPorts _InstructionExecutorExtendedPorts;
+        public IZ80InstructionExecutorExtendedPorts InstructionExecutorExtendedPorts
+        {
+            get
+            {
+                return _InstructionExecutorExtendedPorts;
+            }
+            set
+            {
+                if(value == null)
+                    throw new ArgumentNullException("InstructionExecutorExtendedPorts");
+
+                _InstructionExecutorExtendedPorts = value;
+                _InstructionExecutorExtendedPorts.ProcessorAgentExtendedPorts = this;
+            }
+        }
+
         private IClockSynchronizer clockSynchronizer;
         public IClockSynchronizer ClockSynchronizer
         {
@@ -669,6 +697,38 @@ namespace Konamiman.Z80dotNet
                     return;
 
                 clockSynchronizer.EffectiveClockFrequencyInMHz = effectiveClockFrequency;
+            }
+        }
+
+        private bool useExtendedPortsSpace = false;
+
+        /// <inheritdoc/>
+        public bool UseExtendedPortsSpace
+        {
+            get => useExtendedPortsSpace;
+
+            set
+            {
+                if(value == useExtendedPortsSpace) {
+                    return;
+                }
+
+                var newPortsSpaceSize = value ? 65536 : 256;
+                if(PortsSpace.Size < newPortsSpaceSize) {
+                    throw new InvalidOperationException($"UseExtendedPortsSpace can be set to {value} only if the ports space size is {newPortsSpaceSize} bytes");
+
+                }
+
+                useExtendedPortsSpace = value;
+                PortSpaceSize = newPortsSpaceSize;
+
+                var newPortsAccessModes = new MemoryAccessMode[PortSpaceSize];
+                Array.Copy(portsAccessModes, newPortsAccessModes, 256);
+                portsAccessModes = newPortsAccessModes;
+
+                var newPortWaitStates = new byte[PortSpaceSize];
+                Array.Copy(portWaitStates, newPortWaitStates, 256);
+                portWaitStates = newPortWaitStates;
             }
         }
 
@@ -878,33 +938,41 @@ namespace Konamiman.Z80dotNet
                 beforeEventArgs.CancelMemoryAccess);
         }
 
-        public byte ReadFromPort(byte portNumber)
+        public byte ReadFromPort(byte portNumber) => ReadFromPort(portNumber, 0);
+
+        public byte ReadFromPort(byte portNumberLow, byte portNumberHigh)
         {
             FailIfNoExecutionContext();
             FailIfNoInstructionFetchComplete();
+
+            ushort portNumber = useExtendedPortsSpace ? NumberUtils.CreateUshort(portNumberLow, portNumberHigh) : portNumberLow;
 
             return ReadFromMemoryOrPort(
-                portNumber, 
-                PortsSpace, 
-                GetPortAccessMode(portNumber),
+                portNumber,
+                PortsSpace,
+                GetExtendedPortAccessMode(portNumber),
                 MemoryAccessEventType.BeforePortRead,
                 MemoryAccessEventType.AfterPortRead,
-                GetPortWaitStates(portNumber));
+                GetExtendedPortWaitStates(portNumber));
         }
 
-        public void WriteToPort(byte portNumber, byte value)
+        public void WriteToPort(byte portNumber, byte value) => WriteToPort(portNumber, 0, value);
+
+        public void WriteToPort(byte portNumberLow, byte portNumberHigh, byte value)
         {
             FailIfNoExecutionContext();
             FailIfNoInstructionFetchComplete();
+
+            ushort portNumber = useExtendedPortsSpace ? NumberUtils.CreateUshort(portNumberLow, portNumberHigh) : portNumberLow;
 
             WritetoMemoryOrPort(
                 portNumber,
                 value,
                 PortsSpace,
-                GetPortAccessMode(portNumber),
+                GetExtendedPortAccessMode(portNumber),
                 MemoryAccessEventType.BeforePortWrite,
                 MemoryAccessEventType.AfterPortWrite,
-                GetPortWaitStates(portNumber));
+                GetExtendedPortWaitStates(portNumber));
         }
 
         public void SetInterruptMode(byte interruptMode)
