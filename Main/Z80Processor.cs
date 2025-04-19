@@ -35,7 +35,7 @@ namespace Konamiman.Z80dotNet
             unchecked { StartOfStack =  (short)0xFFFF; }
 
             Memory = new PlainMemory(MemorySpaceSize);
-            PortsSpace = new PlainMemory(PortSpaceSize);
+            _PortsSpace = new PlainMemory(PortSpaceSize);
             portsAccessModes = new MemoryAccessMode[PortSpaceSize];
             portWaitStates = new byte[PortSpaceSize];
 
@@ -433,7 +433,7 @@ namespace Konamiman.Z80dotNet
             set
             {
                 if(value == null)
-                    throw new ArgumentNullException("Registers");
+                    throw new ArgumentNullException(nameof(Registers));
 
                 _Registers = value;
             }
@@ -449,7 +449,7 @@ namespace Konamiman.Z80dotNet
             set
             {
                 if(value == null)
-                    throw new ArgumentNullException("Memory");
+                    throw new ArgumentNullException(nameof(Memory));
 
                 _Memory = value;
             }
@@ -465,9 +465,9 @@ namespace Konamiman.Z80dotNet
         private void SetArrayContents<T>(T[] array, ushort startIndex, int length, T value)
         {
             if(length < 0)
-                throw new ArgumentException("length can't be negative");
+                throw new ArgumentException($"{nameof(length)} can't be negative");
             if(startIndex + length > array.Length)
-                throw new ArgumentException("start + length go beyond " + (array.Length - 1));
+                throw new ArgumentException($"{nameof(startIndex)} + {nameof(length)} go beyond " + (array.Length - 1));
 
             var data = Enumerable.Repeat(value, length).ToArray();
             Array.Copy(data, 0, array, startIndex, length);
@@ -488,7 +488,11 @@ namespace Konamiman.Z80dotNet
             set
             {
                 if(value == null)
-                    throw new ArgumentNullException("PortsSpace");
+                    throw new ArgumentNullException(nameof(PortsSpace));
+
+                if(value.Size < PortSpaceSize) {
+                    throw new InvalidOperationException($"{nameof(PortsSpace)} must be set to an instance of {nameof(IMemory)} with a size of at least {PortSpaceSize} bytes when {nameof(UseExtendedPortsSpace)} is {UseExtendedPortsSpace}");
+                }
 
                 _PortsSpace = value;
             }
@@ -655,7 +659,7 @@ namespace Konamiman.Z80dotNet
             set
             {
                 if(value == null)
-                    throw new ArgumentNullException("InstructionExecutor");
+                    throw new ArgumentNullException(nameof(InstructionExecutor));
 
                 if(_InstructionExecutor != null)
                     _InstructionExecutor.InstructionFetchFinished -= InstructionExecutor_InstructionFetchFinished;
@@ -676,7 +680,7 @@ namespace Konamiman.Z80dotNet
             set
             {
                 if(value == null)
-                    throw new ArgumentNullException("InstructionExecutorExtendedPorts");
+                    throw new ArgumentNullException(nameof(InstructionExecutorExtendedPorts));
 
                 _InstructionExecutorExtendedPorts = value;
                 _InstructionExecutorExtendedPorts.ProcessorAgentExtendedPorts = this;
@@ -702,7 +706,13 @@ namespace Konamiman.Z80dotNet
 
         private bool useExtendedPortsSpace = false;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets or sets a value indicating whether the processor is using extended (16 bits) ports space.
+        /// 
+        /// The first 256 items in the port access modes and port wait states arrays will be preserved
+        /// when modifying the value of this property. When setting the value to true,
+        /// ports 256 to 65535 will get read and write access mode and zero wait states.
+        /// </summary>
         public bool UseExtendedPortsSpace
         {
             get => useExtendedPortsSpace;
@@ -716,7 +726,6 @@ namespace Konamiman.Z80dotNet
                 var newPortsSpaceSize = value ? 65536 : 256;
                 if(PortsSpace.Size < newPortsSpaceSize) {
                     throw new InvalidOperationException($"UseExtendedPortsSpace can be set to {value} only if the ports space size is {newPortsSpaceSize} bytes");
-
                 }
 
                 useExtendedPortsSpace = value;

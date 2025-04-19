@@ -31,12 +31,12 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
         protected int nextFetchesAddress;
 
-        protected void SetPortValue(byte portNumber, byte value)
+        protected void SetPortValue(ushort portNumber, byte value)
         {
             ProcessorAgent.Ports[portNumber] = value;
         }
 
-        protected byte GetPortValue(byte portNumber)
+        protected byte GetPortValue(ushort portNumber)
         {
             return ProcessorAgent.Ports[portNumber];
         }
@@ -386,8 +386,6 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
                 Ports = new byte[65536];
             }
 
-            public bool UseExtendedPorts { get; set; } = false;
-
             public byte[] Memory { get; set; }
 
             public byte[] Ports { get; set; }
@@ -440,13 +438,11 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
 
             public byte ReadFromPort(byte portNumberLow, byte portNumberHigh)
             {
-                if(!UseExtendedPorts) portNumberHigh = 0;
                 return Ports[NumberUtils.CreateUshort(portNumberLow, portNumberHigh)];
             }
 
             public void WriteToPort(byte portNumberLow, byte portNumberHigh, byte value)
             {
-                if(!UseExtendedPorts) portNumberHigh = 0;
                 Ports[NumberUtils.CreateUshort(portNumberLow, portNumberHigh)] = value;
             }
         }

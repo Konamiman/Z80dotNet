@@ -28,15 +28,15 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [TestCaseSource(nameof(IN_r_C_Source))]
         public void IN_r_C_reads_value_from_port(string reg, byte opcode)
         {
-            var portNumber = Fixture.Create<byte>();
+            var portNumberLow = Fixture.Create<byte>();
+            var portNumberHigh = Fixture.Create<byte>();
             var value = Fixture.Create<byte>();
             var oldValue = Fixture.Create<byte>();
 
             if(reg != "C")
-                SetReg(reg, value);
-            Registers.A = oldValue;
+                SetReg(reg, oldValue);
 
-            Execute(opcode, portNumber, value);
+            Execute(opcode, portNumberLow, portNumberHigh, value);
 
             Assert.That(GetReg<byte>(reg), Is.EqualTo(value));
         }
@@ -46,18 +46,19 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [TestCaseSource(nameof(IN_F_C_Source))]
         public void IN_r_C_sets_SF_appropriately(string reg, byte opcode)
         {
-            var portNumber = Fixture.Create<byte>();
+            var portNumberLow = Fixture.Create<byte>();
+            var portNumberHigh = Fixture.Create<byte>();
 
-            Execute(opcode, portNumber, 0xFE);
+            Execute(opcode, portNumberLow, portNumberHigh, 0xFE);
             Assert.That(Registers.SF.Value, Is.EqualTo(1));
 
-            Execute(opcode, portNumber, 0xFF);
+            Execute(opcode, portNumberLow, portNumberHigh, 0xFF);
             Assert.That(Registers.SF.Value, Is.EqualTo(1));
 
-            Execute(opcode, portNumber, 0);
+            Execute(opcode, portNumberLow, portNumberHigh, 0);
             Assert.That(Registers.SF.Value, Is.EqualTo(0));
 
-            Execute(opcode, portNumber, 1);
+            Execute(opcode, portNumberLow, portNumberHigh, 1);
             Assert.That(Registers.SF.Value, Is.EqualTo(0));
         }
 
@@ -66,15 +67,16 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [TestCaseSource(nameof(IN_F_C_Source))]
         public void IN_r_C_sets_ZF_appropriately(string reg, byte opcode)
         {
-            var portNumber = Fixture.Create<byte>();
+            var portNumberLow = Fixture.Create<byte>();
+            var portNumberHigh = Fixture.Create<byte>();
 
-            Execute(opcode, portNumber, 0xFF);
+            Execute(opcode, portNumberLow, portNumberHigh, 0xFF);
             Assert.That(Registers.ZF.Value, Is.EqualTo(0));
 
-            Execute(opcode, portNumber, 0);
+            Execute(opcode, portNumberLow, portNumberHigh, 0);
             Assert.That(Registers.ZF.Value, Is.EqualTo(1));
 
-            Execute(opcode, portNumber, 1);
+            Execute(opcode, portNumberLow, portNumberHigh, 1);
             Assert.That(Registers.ZF.Value, Is.EqualTo(0));
         }
 
@@ -92,16 +94,17 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         public void IN_r_C_does_not_change_CF(string reg, byte opcode)
         {
             var randomValues = Fixture.Create<byte[]>();
-            var portNumber = Fixture.Create<byte>();
+            var portNumberLow = Fixture.Create<byte>();
+            var portNumberHigh = Fixture.Create<byte>();
 
             foreach (var value in randomValues)
             {
                 Registers.CF = 0;
-                Execute(opcode, portNumber, value);
+                Execute(opcode, portNumberLow, portNumberHigh, value);
                 Assert.That(Registers.CF.Value, Is.EqualTo(0));
 
                 Registers.CF = 1;
-                Execute(opcode, portNumber, value);
+                Execute(opcode, portNumberLow, portNumberHigh, value);
                 Assert.That(Registers.CF.Value, Is.EqualTo(1));
             }
         }
@@ -112,11 +115,12 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         public void IN_r_C_sets_PF_as_parity(string reg, byte opcode)
         {
             var randomValues = Fixture.Create<byte[]>();
-            var portNumber = Fixture.Create<byte>();
+            var portNumberLow = Fixture.Create<byte>();
+            var portNumberHigh = Fixture.Create<byte>();
 
             foreach (var value in randomValues)
             {
-                Execute(opcode, portNumber, value);
+                Execute(opcode, portNumberLow, portNumberHigh, value);
                 Assert.That(Registers.PF.Value, Is.EqualTo(Parity[value]));
             }
         }
@@ -126,9 +130,10 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [TestCaseSource(nameof(IN_F_C_Source))]
         public void IN_r_C_sets_bits_3_and_5_from_result(string reg, byte opcode)
         {
-            var portNumber = Fixture.Create<byte>();
+            var portNumberLow = Fixture.Create<byte>();
+            var portNumberHigh = Fixture.Create<byte>();
             var value = ((byte)0).WithBit(3, 1).WithBit(5, 0);
-            Execute(opcode, portNumber, value);
+            Execute(opcode, portNumberLow, portNumberHigh, value);
             Assert.Multiple(() =>
             {
                 Assert.That(Registers.Flag3.Value, Is.EqualTo(1));
@@ -136,7 +141,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             });
 
             value = ((byte)0).WithBit(3, 0).WithBit(5, 1);
-            Execute(opcode, portNumber, value);
+            Execute(opcode, portNumberLow, portNumberHigh, value);
             Assert.Multiple(() =>
             {
                 Assert.That(Registers.Flag3.Value, Is.EqualTo(0));
@@ -149,16 +154,18 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         [TestCaseSource(nameof(IN_F_C_Source))]
         public void IN_r_C_returns_proper_T_states(string reg, byte opcode)
         {
-            var portNumber = Fixture.Create<byte>();
+            var portNumberLow = Fixture.Create<byte>();
+            var portNumberHigh = Fixture.Create<byte>();
             var value = Fixture.Create<byte>();
-            var states = Execute(opcode, portNumber, value);
+            var states = Execute(opcode, portNumberLow, portNumberHigh, value);
             Assert.That(states, Is.EqualTo(12));
         }
 
-        private int Execute(byte opcode, byte portNumber, byte value)
+        private int Execute(byte opcode, byte portNumberLow, byte portNumberHigh, byte value)
         {
-            Registers.C = portNumber;
-            SetPortValue(portNumber, value);
+            Registers.C = portNumberLow;
+            Registers.B = portNumberHigh;
+            SetPortValue(NumberUtils.CreateUshort(portNumberLow, portNumberHigh), value);
             return Execute(opcode, 0xED);
         }
     }

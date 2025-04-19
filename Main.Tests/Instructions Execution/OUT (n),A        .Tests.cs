@@ -8,18 +8,18 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
         private const byte OUT_A_n_opcode = 0xD3;
 
         [Test]
-        public void OUT_A_n_reads_value_from_port()
+        public void OUT_A_n_writes_value_to_port()
         {
-            var portNumber = Fixture.Create<byte>();
+            var portNumberLow = Fixture.Create<byte>();
             var value = Fixture.Create<byte>();
             var oldValue = Fixture.Create<byte>();
 
             Registers.A = value;
-            SetPortValue(portNumber, oldValue);
+            SetPortValue(NumberUtils.CreateUshort(portNumberLow, value), oldValue);
 
-            Execute(OUT_A_n_opcode, null, portNumber);
+            Execute(OUT_A_n_opcode, null, portNumberLow);
 
-            Assert.That(GetPortValue(portNumber), Is.EqualTo(value));
+            Assert.That(GetPortValue(NumberUtils.CreateUshort(portNumberLow, value)), Is.EqualTo(value));
         }
 
         [Test]
