@@ -386,7 +386,7 @@ namespace Konamiman.Z80dotNet.Tests
         [Test]
         public void Can_set_PortsSpace_to_non_null_value()
         {
-            var value = new Mock<IMemory>().Object;
+            var value = new PlainMemory(256);
             Sut.PortsSpace = value;
             Assert.That(Sut.PortsSpace, Is.EqualTo(value));
         }
@@ -506,6 +506,107 @@ namespace Konamiman.Z80dotNet.Tests
             {
                 Sut.ClockSpeedFactor = 0.0009M;
                 Sut.ClockFrequencyInMHz = 1;
+            });
+        }
+
+        [Test]
+        public void Cannot_set_PortsSpace_to_smaller_than_256_bytes_if_UseExtendedPortsSpace_is_false()
+        {
+            Assert.Throws<InvalidOperationException>(() => Sut.PortsSpace = new PlainMemory(255));
+        }
+
+        [Test]
+        public void Cannot_set_PortsSpace_to_smaller_than_65536_bytes_if_UseExtendedPortsSpace_is_true()
+        {
+            Sut.PortsSpace = new PlainMemory(65536);
+            Sut.UseExtendedPortsSpace = true;
+
+            Sut.PortsSpace = new PlainMemory(65536);
+            Assert.Throws<InvalidOperationException>(() => Sut.PortsSpace = new PlainMemory(65535));
+        }
+
+        [Test]
+        public void Cannot_set_UseExtendedPortsSpace_to_true_if_ports_space_is_smaller_than_65536_bytes()
+        {
+            Sut.PortsSpace = new PlainMemory(65535);
+            Assert.Throws<InvalidOperationException>(() => Sut.UseExtendedPortsSpace = true);
+        }
+
+        [Test]
+        public void Changing_UseExtendedPortsSpace_preserves_values_of_first_256_port_access_modes()
+        {
+            Sut.SetPortsSpaceAccessMode(0, 64, MemoryAccessMode.NotConnected);
+            Sut.SetPortsSpaceAccessMode(64, 64, MemoryAccessMode.ReadAndWrite);
+            Sut.SetPortsSpaceAccessMode(128, 64, MemoryAccessMode.ReadOnly);
+            Sut.SetPortsSpaceAccessMode(192, 64, MemoryAccessMode.WriteOnly);
+
+            Sut.PortsSpace = new PlainMemory(65536);
+            Sut.UseExtendedPortsSpace = true;
+
+            Assert.Multiple(() => {
+                Assert.That(Sut.GetPortAccessMode(0), Is.EqualTo(MemoryAccessMode.NotConnected));
+                Assert.That(Sut.GetPortAccessMode(63), Is.EqualTo(MemoryAccessMode.NotConnected));
+                Assert.That(Sut.GetPortAccessMode(64), Is.EqualTo(MemoryAccessMode.ReadAndWrite));
+                Assert.That(Sut.GetPortAccessMode(127), Is.EqualTo(MemoryAccessMode.ReadAndWrite));
+                Assert.That(Sut.GetPortAccessMode(128), Is.EqualTo(MemoryAccessMode.ReadOnly));
+                Assert.That(Sut.GetPortAccessMode(191), Is.EqualTo(MemoryAccessMode.ReadOnly));
+                Assert.That(Sut.GetPortAccessMode(192), Is.EqualTo(MemoryAccessMode.WriteOnly));
+                Assert.That(Sut.GetPortAccessMode(255), Is.EqualTo(MemoryAccessMode.WriteOnly));
+            });
+        }
+
+        [Test]
+        public void Changing_UseExtendedPortsSpace_preserves_values_of_first_256_port_wait_states()
+        {
+            var value1 = Fixture.Create<byte>();
+            var value2 = Fixture.Create<byte>();
+            Sut.SetPortWaitStates(0, 128, value1);
+            Sut.SetPortWaitStates(128, 128, value2);
+
+            Sut.PortsSpace = new PlainMemory(65536);
+            Sut.UseExtendedPortsSpace = true;
+
+            Assert.Multiple(() => {
+                Assert.That(Sut.GetPortWaitStates(0), Is.EqualTo(value1));
+                Assert.That(Sut.GetPortWaitStates(127), Is.EqualTo(value1));
+                Assert.That(Sut.GetPortWaitStates(128), Is.EqualTo(value2));
+                Assert.That(Sut.GetPortWaitStates(255), Is.EqualTo(value2));
+            });
+        }
+
+        [Test]
+        public void Changing_UseExtendedPortsSpace_to_true_sets_zero_wait_states_for_ports_256_to_65535()
+        {
+            Sut.PortsSpace = new PlainMemory(65536);
+            Sut.UseExtendedPortsSpace = true;
+
+            Sut.SetExtendedPortWaitStates(256, 65536-256, 34);
+
+            Sut.UseExtendedPortsSpace = false;
+            Sut.UseExtendedPortsSpace = true;
+
+            Assert.Multiple(() => {
+                Assert.That(Sut.GetExtendedPortWaitStates(256), Is.EqualTo(0));
+                Assert.That(Sut.GetExtendedPortWaitStates(32768), Is.EqualTo(0));
+                Assert.That(Sut.GetExtendedPortWaitStates(65535), Is.EqualTo(0));
+            });
+        }
+
+        [Test]
+        public void Changing_UseExtendedPortsSpace_to_true_sets_read_and_write_mode_for_ports_256_to_65535()
+        {
+            Sut.PortsSpace = new PlainMemory(65536);
+            Sut.UseExtendedPortsSpace = true;
+
+            Sut.SetExtendedPortsSpaceAccessMode(256, 65536 - 256, MemoryAccessMode.ReadOnly);
+
+            Sut.UseExtendedPortsSpace = false;
+            Sut.UseExtendedPortsSpace = true;
+
+            Assert.Multiple(() => {
+                Assert.That(Sut.GetExtendedPortAccessMode(256), Is.EqualTo(MemoryAccessMode.ReadAndWrite));
+                Assert.That(Sut.GetExtendedPortAccessMode(32768), Is.EqualTo(MemoryAccessMode.ReadAndWrite));
+                Assert.That(Sut.GetExtendedPortAccessMode(65535), Is.EqualTo(MemoryAccessMode.ReadAndWrite));
             });
         }
     }

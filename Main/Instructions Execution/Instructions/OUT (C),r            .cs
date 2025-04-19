@@ -15,7 +15,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            ProcessorAgent.WriteToPort(Registers.C, Registers.A);
+            ProcessorAgentExtendedPorts.WriteToPort(Registers.C, Registers.B, Registers.A);
 
             return 12;
         }
@@ -27,7 +27,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            ProcessorAgent.WriteToPort(Registers.C, Registers.B);
+            ProcessorAgentExtendedPorts.WriteToPort(Registers.C, Registers.B, Registers.B);
 
             return 12;
         }
@@ -39,7 +39,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            ProcessorAgent.WriteToPort(Registers.C, Registers.C);
+            ProcessorAgentExtendedPorts.WriteToPort(Registers.C, Registers.B, Registers.C);
 
             return 12;
         }
@@ -51,7 +51,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            ProcessorAgent.WriteToPort(Registers.C, Registers.D);
+            ProcessorAgentExtendedPorts.WriteToPort(Registers.C, Registers.B, Registers.D);
 
             return 12;
         }
@@ -63,7 +63,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            ProcessorAgent.WriteToPort(Registers.C, Registers.E);
+            ProcessorAgentExtendedPorts.WriteToPort(Registers.C, Registers.B, Registers.E);
 
             return 12;
         }
@@ -75,7 +75,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            ProcessorAgent.WriteToPort(Registers.C, Registers.H);
+            ProcessorAgentExtendedPorts.WriteToPort(Registers.C, Registers.B, Registers.H);
 
             return 12;
         }
@@ -87,7 +87,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            ProcessorAgent.WriteToPort(Registers.C, Registers.L);
+            ProcessorAgentExtendedPorts.WriteToPort(Registers.C, Registers.B, Registers.L);
 
             return 12;
         }
@@ -99,7 +99,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            ProcessorAgent.WriteToPort(Registers.C, 0);
+            ProcessorAgentExtendedPorts.WriteToPort(Registers.C, Registers.B, 0);
 
             return 12;
         }

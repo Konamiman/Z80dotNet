@@ -20,7 +20,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            var value = ProcessorAgent.ReadFromPort(Registers.C);
+            var value = ProcessorAgentExtendedPorts.ReadFromPort(Registers.C, Registers.B);
 <# if(reg != "F") { #>
             <#=Register(reg)#> = value;
 <# } #>

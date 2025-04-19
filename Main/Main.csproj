@@ -92,12 +92,14 @@
     </None>
     <None Include="Instructions Execution\Instructions\AND %28HL%29       --see AND r" />
     <None Include="Instructions Execution\Instructions\CP %28HL%29           --see ADD A,r" />
-    <None Include="Instructions Execution\Instructions\IN r,%28C%29             .tt">
+    <None Update="Instructions Execution\Instructions\IN r,%28C%29             .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
+      <AutoGen>True</AutoGen>
       <LastGenOutput>IN r,%28C%29             .cs</LastGenOutput>
     </None>
-    <None Include="Instructions Execution\Instructions\OUT %28C%29,r            .tt">
+    <None Update="Instructions Execution\Instructions\OUT %28C%29,r            .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
+      <AutoGen>true</AutoGen>
       <LastGenOutput>OUT %28C%29,r            .cs</LastGenOutput>
     </None>
     <None Update="Instructions Execution\Instructions\PUSH rr +                   .tt">
@@ -158,7 +160,7 @@
     </Compile>
     <None Update="Instructions Execution\Instructions\JR cc         .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>JR cc         1.cs</LastGenOutput>
+      <LastGenOutput>JR cc         .cs</LastGenOutput>
     </None>
     <None Update="Instructions Execution\Instructions\BIT b,r +            .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -208,6 +210,7 @@
     </None>
     <None Update="Instructions Execution\Instructions\INI +             .tt">
       <Generator>TextTemplatingFileGenerator</Generator>
+      <AutoGen>true</AutoGen>
       <LastGenOutput>INI +             .cs</LastGenOutput>
     </None>
     <Compile Update="Instructions Execution\Instructions\INI +             .cs">
@@ -311,7 +314,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ADC HL,rr +          .tt</DependentUpon>
     </Compile>
-    <Compile Update="Instructions Execution\Instructions\JR cc         1.cs">
+    <Compile Update="Instructions Execution\Instructions\JR cc         .cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>JR cc         .tt</DependentUpon>

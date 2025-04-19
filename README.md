@@ -3,7 +3,7 @@
 
 ## What is this? ##
 
-Z80.NET is a Z80 processor simulator that can be used as the core component for developing computer emulators (see for example [NestorMSX](https://bitbucket.org/konamiman/nestormsx)), or to exercise pieces of Z80 code in custom test code. It is written in C# targetting the .NET Framework 4 Client Profile.  
+Z80.NET is a Z80 processor simulator that can be used as the core component for developing computer emulators (see for example [NestorMSX](https://bitbucket.org/konamiman/nestormsx)), or to exercise pieces of Z80 code in custom test code. It is written in C# and since version 1.1 it targets [.NET Standard 2.0](https://learn.microsoft.com/en-us/dotnet/standard/net-standard?tabs=net-standard-2-0), so it can be used with .NET Framework 4.6.1+ and .NET/.NET Core 2.0+.
 
 If you like Z80.NET you may want to take a look at [ZWatcher](https://github.com/Konamiman/ZWatcher) too.
 
@@ -51,6 +51,8 @@ Z80.NET implements all the documented Z80 behavior, plus all the undocumented in
 * The H, C and P/V flags are not modified by the INI, INIR, IND, INDR, OUTI, OTIR, OUTD and OTDR instructions
 
 The processor class passes [the ZEXDOC test](https://github.com/KnightOS/z80e/blob/master/gpl/zexdoc.src) fully, and [the ZEXALL test](https://github.com/KnightOS/z80e/blob/master/gpl/zexall.src) fully except for the BIT instruction. You can try these tests yourself by running [the ZexallTest project](ZexallTest/Program.cs).
+
+Z80.NET implements support for 16 bit port numbers, but it must be manually enabled. See [the configuration documentation](Docs/Configuration.md#the-extended-ports-space) for the details.
 
 ## Resources
 

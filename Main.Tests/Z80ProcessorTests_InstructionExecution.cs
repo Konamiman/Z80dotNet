@@ -1076,7 +1076,7 @@ namespace Konamiman.Z80dotNet.Tests
 
         #endregion
 
-         #region PeekNextOpcode
+        #region PeekNextOpcode
 
         [Test]
         public void PeekNextOpcode_returns_next_opcode_without_increasing_PC_and_without_elapsing_T_states()
