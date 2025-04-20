@@ -15,7 +15,7 @@ namespace Konamiman.Z80dotNet.Tests.InstructionsExecution
             var oldValue = Fixture.Create<byte>();
 
             Registers.A = oldValue;
-            SetPortValue(portNumber, value);
+            SetPortValue(NumberUtils.CreateUshort(portNumber, oldValue), value);
 
             Execute(IN_A_n_opcode, null, portNumber);
 

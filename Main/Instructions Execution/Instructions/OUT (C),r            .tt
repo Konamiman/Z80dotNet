@@ -20,7 +20,7 @@ namespace Konamiman.Z80dotNet
         {
             FetchFinished();
 
-            ProcessorAgent.WriteToPort(Registers.C, <#=reg=="0" ? "0" : "Registers." + reg#>);
+            ProcessorAgentExtendedPorts.WriteToPort(Registers.C, Registers.B, <#=reg=="0" ? "0" : "Registers." + reg#>);
 
             return 12;
         }

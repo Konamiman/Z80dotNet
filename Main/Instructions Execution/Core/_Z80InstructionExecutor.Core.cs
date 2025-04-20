@@ -5,11 +5,13 @@ namespace Konamiman.Z80dotNet
     /// <summary>
     /// Default implementation of <see cref="IZ80InstructionExecutor"/>.
     /// </summary>
-    public partial class Z80InstructionExecutor : IZ80InstructionExecutor
+    public partial class Z80InstructionExecutor : IZ80InstructionExecutor, IZ80InstructionExecutorExtendedPorts
     {
         private IZ80Registers Registers;
 
         public IZ80ProcessorAgent ProcessorAgent { get; set; }
+
+        public IZ80ProcessorAgentExtendedPorts ProcessorAgentExtendedPorts { get; set; }
 
         public Z80InstructionExecutor()
         {

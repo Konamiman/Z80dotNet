@@ -10,7 +10,7 @@
             var portNumber = ProcessorAgent.FetchNextOpcode();
             FetchFinished();
 
-            Registers.A = ProcessorAgent.ReadFromPort(portNumber);
+            Registers.A = ProcessorAgentExtendedPorts.ReadFromPort(portNumber, Registers.A);
 
             return 11;
         }

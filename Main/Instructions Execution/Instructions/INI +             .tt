@@ -29,9 +29,9 @@ namespace Konamiman.Z80dotNet
             var address = Registers.HL;
 <# if (isOut) { #>
             var value = ProcessorAgent.ReadFromMemory((ushort)address);
-            ProcessorAgent.WriteToPort(portNumber, value);
+            ProcessorAgentExtendedPorts.WriteToPort(portNumber, Registers.B, value);
 <# } else { #>
-            var value = ProcessorAgent.ReadFromPort(portNumber);
+            var value = ProcessorAgentExtendedPorts.ReadFromPort(portNumber, Registers.B);
             ProcessorAgent.WriteToMemory((ushort)address, value);
 <# } #>
 
