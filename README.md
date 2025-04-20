@@ -9,7 +9,7 @@ If you like Z80.NET you may want to take a look at [ZWatcher](https://github.com
 
 ## Hello, world! ##
 
-```
+```C#
 var z80 = new Z80Processor();
 z80.AutoStopOnRetWithStackEmpty = true;
 
