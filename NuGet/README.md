@@ -24,12 +24,12 @@ Debug.Assert(z80.TStatesElapsedSinceStart == 28);
 
 ## Documentation
 
-* [Project README file](https://github.com/Konamiman/Z80dotNet/blob/add_support_for_16_bit_ports/README.md)
-* [Configuration](https://github.com/Konamiman/Z80dotNet/blob/add_support_for_16_bit_ports/Docs/Configuration.md)
-* [Dependencies](https://github.com/Konamiman/Z80dotNet/blob/add_support_for_16_bit_ports/Docs/Dependencies.md)
-* [How execution works](https://github.com/Konamiman/Z80dotNet/blob/add_support_for_16_bit_ports/Docs/HowExecutionWorks.md)
-* [Instruction execution flow](https://github.com/Konamiman/Z80dotNet/blob/add_support_for_16_bit_ports/Docs/InstructionExecutionFlow.md)
-* [Interrupts](https://github.com/Konamiman/Z80dotNet/blob/add_support_for_16_bit_ports/Docs/Interrupts.md)
-* [Memory access flow](https://github.com/Konamiman/Z80dotNet/blob/add_support_for_16_bit_ports/Docs/MemoryAccessFlow.md)
-* [Checking state](https://github.com/Konamiman/Z80dotNet/blob/add_support_for_16_bit_ports/Docs/State.md)
-* [Execution stop conditions](https://github.com/Konamiman/Z80dotNet/blob/add_support_for_16_bit_ports/Docs/StopConditions.md)
+* [Project README file](https://github.com/Konamiman/Z80dotNet/blob/master/README.md)
+* [Configuration](https://github.com/Konamiman/Z80dotNet/blob/master/Docs/Configuration.md)
+* [Dependencies](https://github.com/Konamiman/Z80dotNet/blob/master/Docs/Dependencies.md)
+* [How execution works](https://github.com/Konamiman/Z80dotNet/blob/master/Docs/HowExecutionWorks.md)
+* [Instruction execution flow](https://github.com/Konamiman/Z80dotNet/blob/master/Docs/InstructionExecutionFlow.md)
+* [Interrupts](https://github.com/Konamiman/Z80dotNet/blob/master/Docs/Interrupts.md)
+* [Memory access flow](https://github.com/Konamiman/Z80dotNet/blob/master/Docs/MemoryAccessFlow.md)
+* [Checking state](https://github.com/Konamiman/Z80dotNet/blob/master/Docs/State.md)
+* [Execution stop conditions](https://github.com/Konamiman/Z80dotNet/blob/master/Docs/StopConditions.md)
