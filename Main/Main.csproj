@@ -6,11 +6,21 @@
     <AssemblyName>Z80dotNet</AssemblyName>
     <AssemblyTitle>Z80.NET</AssemblyTitle>
     <Description>A Z80 processor simulator written in C#.</Description>
-    <Company>Konamiman</Company>
+    <Company></Company>
     <Product>Z80.NET</Product>
-    <Copyright>Copyright © Konamiman 2015</Copyright>
-    <AssemblyVersion>1.0.6.0</AssemblyVersion>
-    <FileVersion>1.0.6.0</FileVersion>
+    <Copyright>Copyright © Konamiman 2025</Copyright>
+    <AssemblyVersion>1.1.0</AssemblyVersion>
+    <FileVersion>1.1.0</FileVersion>
+    <RepositoryUrl>https://github.com/Konamiman/Z80dotNet</RepositoryUrl>
+    <PackageTags>Z80</PackageTags>
+    <Title>Z80.NET</Title>
+    <PackageIcon>Z80dotNet.png</PackageIcon>
+    <Authors>Konamiman</Authors>
+    <PackageReleaseNotes>- Retarget to .NET standard 2.0
+- Add interrupt and RETI/RETN related events
+- Add support for 16 bit port numbers</PackageReleaseNotes>
+    <Version>1.1.0</Version>
+    <PackageId>Z80dotNet</PackageId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DocumentationFile>bin\Debug\Z80dotNet.xml</DocumentationFile>
@@ -21,6 +31,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Execute_xD_Instruction.tt</DependentUpon>
     </Compile>
+    <None Include="..\NuGet\Z80dotNet.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Include="Instructions Execution\Instructions\ADC A,%28HL%29   --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\ADC A,%28IX+d%29   --see ADD A,r" />
     <None Include="Instructions Execution\Instructions\ADD A,%28IX+d%29   --see ADD A,r" />
