@@ -2,13 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Konamiman.Z80dotNet
 {
     /// <summary>
     /// The implementation of the <see cref="IZ80Processor"/> interface.
     /// </summary>
-    public class Z80Processor : IZ80Processor, IZ80ProcessorInterruptEvents, IZ80ProcessorExtendedPortsSpace, IZ80ProcessorAgent, IZ80ProcessorAgentExtendedPorts
+    public class Z80Processor : IZ80Processor, IZ80ProcessorInterruptEvents, IZ80ProcessorExtendedPortsSpace, IZ80ProcessorEventsControl, IZ80ProcessorAgent, IZ80ProcessorAgentExtendedPorts
     {
         private const int MemorySpaceSize = 65536;
         private int PortSpaceSize = 256;
@@ -22,6 +23,37 @@ namespace Konamiman.Z80dotNet
         private const byte RETI_RETN_prefix = 0xED;
         private const byte RETI_opcode = 0x4D;
         private const byte RETN_opcode = 0x45;
+
+        #region Memory/Port access events control
+
+        private const int BlockCount = 256;
+        private const int BlockSize = 256;
+
+        // Backing fields for event area block addresses (normalized, deduplicated)
+        private ushort[] memoryAreasWithReadEvents;
+        private ushort[] memoryAreasWithWriteEvents;
+        private ushort[] portAreasWithReadEvents;
+        private ushort[] portAreasWithWriteEvents;
+
+        // Lookup tables for fast event firing decisions (256 entries each)
+        // For memory: indexed by address >> 8
+        // For ports in extended mode: indexed by portNumber >> 8
+        // For ports in standard mode: indexed by portNumber directly
+        // null means use the optimization flag instead
+        private bool[] memoryReadEventsLookup;
+        private bool[] memoryWriteEventsLookup;
+        private bool[] portReadEventsLookup;
+        private bool[] portWriteEventsLookup;
+
+        // Optimization flags: when all blocks are enabled or disabled,
+        // we use these flags instead of checking the lookup table
+        // null = use lookup table, true = fire all events, false = fire no events
+        private bool? memoryReadEventsAllFlag;
+        private bool? memoryWriteEventsAllFlag;
+        private bool? portReadEventsAllFlag;
+        private bool? portWriteEventsAllFlag;
+
+        #endregion
 
         public Z80Processor()
         {
@@ -45,6 +77,10 @@ namespace Konamiman.Z80dotNet
 
             SetMemoryAccessMode(0, MemorySpaceSize, MemoryAccessMode.ReadAndWrite);
             SetPortsSpaceAccessMode(0, PortSpaceSize, MemoryAccessMode.ReadAndWrite);
+
+            // Initialize event areas to cover entire address space (backwards compatibility)
+            InitializeAllMemoryEventsEnabled();
+            InitializeAllPortEventsEnabled();
 
             Registers = new Z80Registers();
             InterruptSources = new List<IZ80InterruptSource>();
@@ -738,8 +774,158 @@ namespace Konamiman.Z80dotNet
                 var newPortWaitStates = new byte[PortSpaceSize];
                 Array.Copy(portWaitStates, newPortWaitStates, 256);
                 portWaitStates = newPortWaitStates;
+
+                // Reset port event areas to "all events enabled" when port mode changes
+                // This simplifies handling since the interpretation of port areas differs between modes
+                InitializeAllPortEventsEnabled();
             }
         }
+
+        #endregion
+
+        #region Events control (IZ80ProcessorEventsControl)
+
+        /// <summary>
+        /// Gets or sets the memory block base addresses for which read events will be fired.
+        /// </summary>
+        public ushort[] MemoryAreasWithReadEvents
+        {
+            get => memoryAreasWithReadEvents;
+            set
+            {
+                if (value == null) throw new ArgumentNullException(nameof(MemoryAreasWithReadEvents));
+                memoryAreasWithReadEvents = NormalizeBlockAddresses(value, isMemory: true);
+                RebuildBlockLookupTable(memoryAreasWithReadEvents, ref memoryReadEventsLookup, ref memoryReadEventsAllFlag, isMemory: true);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the memory block base addresses for which write events will be fired.
+        /// </summary>
+        public ushort[] MemoryAreasWithWriteEvents
+        {
+            get => memoryAreasWithWriteEvents;
+            set
+            {
+                if (value == null) throw new ArgumentNullException(nameof(MemoryAreasWithWriteEvents));
+                memoryAreasWithWriteEvents = NormalizeBlockAddresses(value, isMemory: true);
+                RebuildBlockLookupTable(memoryAreasWithWriteEvents, ref memoryWriteEventsLookup, ref memoryWriteEventsAllFlag, isMemory: true);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the port addresses or block base addresses for which read events will be fired.
+        /// </summary>
+        public ushort[] PortAreasWithReadEvents
+        {
+            get => portAreasWithReadEvents;
+            set
+            {
+                if (value == null) throw new ArgumentNullException(nameof(PortAreasWithReadEvents));
+                portAreasWithReadEvents = NormalizeBlockAddresses(value, isMemory: false);
+                RebuildBlockLookupTable(portAreasWithReadEvents, ref portReadEventsLookup, ref portReadEventsAllFlag, isMemory: false);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the port addresses or block base addresses for which write events will be fired.
+        /// </summary>
+        public ushort[] PortAreasWithWriteEvents
+        {
+            get => portAreasWithWriteEvents;
+            set
+            {
+                if (value == null) throw new ArgumentNullException(nameof(PortAreasWithWriteEvents));
+                portAreasWithWriteEvents = NormalizeBlockAddresses(value, isMemory: false);
+                RebuildBlockLookupTable(portAreasWithWriteEvents, ref portWriteEventsLookup, ref portWriteEventsAllFlag, isMemory: false);
+            }
+        }
+
+        private void InitializeAllMemoryEventsEnabled()
+        {
+            memoryAreasWithReadEvents = Array.Empty<ushort>();
+            memoryReadEventsLookup = null;
+            memoryReadEventsAllFlag = true;
+
+            memoryAreasWithWriteEvents = Array.Empty<ushort>();
+            memoryWriteEventsLookup = null;
+            memoryWriteEventsAllFlag = true;
+        }
+
+        private void InitializeAllPortEventsEnabled()
+        {
+            portAreasWithReadEvents = Array.Empty<ushort>();
+            portReadEventsLookup = null;
+            portReadEventsAllFlag = true;
+
+            portAreasWithWriteEvents = Array.Empty<ushort>();
+            portWriteEventsLookup = null;
+            portWriteEventsAllFlag = true;
+        }
+
+        private ushort[] NormalizeBlockAddresses(ushort[] input, bool isMemory)
+        {
+            if (input.Length == 0)
+                return input;
+
+            // For memory and extended ports: mask to block boundaries and deduplicate
+            // For standard ports: just deduplicate (each port is its own "block")
+            bool useBlocks = isMemory || useExtendedPortsSpace;
+
+            var seen = new HashSet<ushort>();
+            foreach (var addr in input) {
+                ushort normalized = useBlocks ? (ushort)(addr & 0xFF00) : (ushort)(addr & 0xFF);
+                seen.Add(normalized);
+            }
+
+            var result = new ushort[seen.Count];
+            seen.CopyTo(result);
+            Array.Sort(result);
+            return result;
+        }
+
+        private void RebuildBlockLookupTable(
+            ushort[] blockAddresses,
+            ref bool[] lookupTable,
+            ref bool? allFlag,
+            bool isMemory)
+        {
+            if (blockAddresses.Length == 0) {
+                // No events at all
+                lookupTable = null;
+                allFlag = false;
+                return;
+            }
+
+            bool useBlocks = isMemory || useExtendedPortsSpace;
+            int tableSize = BlockCount; // Always 256 entries
+
+            // Check if all blocks are covered
+            if (blockAddresses.Length == tableSize) {
+                lookupTable = null;
+                allFlag = true;
+                return;
+            }
+
+            // Build the lookup table
+            var table = new bool[tableSize];
+            foreach (var addr in blockAddresses) {
+                int index = useBlocks ? (addr >> 8) : addr;
+                if (index < tableSize)
+                    table[index] = true;
+            }
+
+            // Check if all entries are true (shouldn't happen given length check above, but be safe)
+            if (Array.TrueForAll(table, v => v)) {
+                lookupTable = null;
+                allFlag = true;
+            }
+            else {
+                lookupTable = table;
+                allFlag = null;
+            }
+        }
+
 
         #endregion
 
@@ -780,13 +966,20 @@ namespace Konamiman.Z80dotNet
             if (executionContext.PeekedOpcode == null)
             {
                 var address = Registers.PC;
-                opcode = ReadFromMemoryOrPort(
-                    address,
-                    Memory,
-                    GetMemoryAccessMode(address),
-                    MemoryAccessEventType.BeforeMemoryRead,
-                    MemoryAccessEventType.AfterMemoryRead,
-                    GetMemoryWaitStatesForM1(address));
+                executionContext.AccummulatedMemoryWaitStates += GetMemoryWaitStatesForM1(address);
+
+                if (memoryReadEventsAllFlag ?? memoryReadEventsLookup[address >> 8]) {
+                    opcode = ReadFromMemoryOrPort(
+                        address,
+                        Memory,
+                        GetMemoryAccessMode(address),
+                        MemoryAccessEventType.BeforeMemoryRead,
+                        MemoryAccessEventType.AfterMemoryRead);
+                }
+                else {
+                    // Fast path: no events, skip accessMode check (instruction memory is always readable)
+                    opcode = Memory[address];
+                }
             }
             else
             {
@@ -811,13 +1004,20 @@ namespace Konamiman.Z80dotNet
             if (executionContext.PeekedOpcode == null)
             {
                 var address = Registers.PC;
-                var opcode = ReadFromMemoryOrPort(
-                    address,
-                    Memory,
-                    GetMemoryAccessMode(address),
-                    MemoryAccessEventType.BeforeMemoryRead,
-                    MemoryAccessEventType.AfterMemoryRead,
-                    waitStates: 0);
+                byte opcode;
+
+                if (memoryReadEventsAllFlag ?? memoryReadEventsLookup[address >> 8]) {
+                    opcode = ReadFromMemoryOrPort(
+                        address,
+                        Memory,
+                        GetMemoryAccessMode(address),
+                        MemoryAccessEventType.BeforeMemoryRead,
+                        MemoryAccessEventType.AfterMemoryRead);
+                }
+                else {
+                    // Fast path: no events, skip accessMode check (instruction memory is always readable)
+                    opcode = Memory[address];
+                }
 
                 executionContext.PeekedOpcode = opcode;
                 executionContext.AddressOfPeekedOpcode = Registers.PC;
@@ -845,13 +1045,23 @@ namespace Konamiman.Z80dotNet
 
         private byte ReadFromMemoryInternal(ushort address)
         {
-            return ReadFromMemoryOrPort(
-                address,
-                Memory,
-                GetMemoryAccessMode(address),
-                MemoryAccessEventType.BeforeMemoryRead,
-                MemoryAccessEventType.AfterMemoryRead,
-                GetMemoryWaitStatesForNonM1(address));
+            if (executionContext != null)
+                executionContext.AccummulatedMemoryWaitStates += GetMemoryWaitStatesForNonM1(address);
+
+            if (memoryReadEventsAllFlag ?? memoryReadEventsLookup[address >> 8]) {
+                return ReadFromMemoryOrPort(
+                    address,
+                    Memory,
+                    GetMemoryAccessMode(address),
+                    MemoryAccessEventType.BeforeMemoryRead,
+                    MemoryAccessEventType.AfterMemoryRead);
+            }
+            else {
+                var accessMode = GetMemoryAccessMode(address);
+                return (accessMode is MemoryAccessMode.ReadAndWrite or MemoryAccessMode.ReadOnly)
+                    ? Memory[address]
+                    : (byte)0xFF;
+            }
         }
 
         protected virtual void FailIfNoInstructionFetchComplete()
@@ -865,23 +1075,17 @@ namespace Konamiman.Z80dotNet
             IMemory memory,
             MemoryAccessMode accessMode,
             MemoryAccessEventType beforeEventType,
-            MemoryAccessEventType afterEventType,
-            byte waitStates)
+            MemoryAccessEventType afterEventType)
         {
             var beforeEventArgs = FireMemoryAccessEvent(beforeEventType, address, 0xFF);
 
-            byte value;
-            if(!beforeEventArgs.CancelMemoryAccess && 
-                (accessMode == MemoryAccessMode.ReadAndWrite || accessMode == MemoryAccessMode.ReadOnly))
-                value = memory[address];
-            else
-                value = beforeEventArgs.Value;
-
-            if(executionContext != null)
-                executionContext.AccummulatedMemoryWaitStates += waitStates;
+            byte value = (!beforeEventArgs.CancelMemoryAccess &&
+                (accessMode is MemoryAccessMode.ReadAndWrite or MemoryAccessMode.ReadOnly))
+                ? memory[address]
+                : beforeEventArgs.Value;
 
             var afterEventArgs = FireMemoryAccessEvent(
-                afterEventType, 
+                afterEventType,
                 address,
                 value,
                 beforeEventArgs.LocalUserState,
@@ -911,14 +1115,23 @@ namespace Konamiman.Z80dotNet
 
         private void WriteToMemoryInternal(ushort address, byte value)
         {
-            WritetoMemoryOrPort(
-                address,
-                value,
-                Memory,
-                GetMemoryAccessMode(address),
-                MemoryAccessEventType.BeforeMemoryWrite,
-                MemoryAccessEventType.AfterMemoryWrite,
-                GetMemoryWaitStatesForNonM1(address));
+            if (executionContext != null)
+                executionContext.AccummulatedMemoryWaitStates += GetMemoryWaitStatesForNonM1(address);
+
+            if (memoryWriteEventsAllFlag ?? memoryWriteEventsLookup[address >> 8]) {
+                WritetoMemoryOrPort(
+                    address,
+                    value,
+                    Memory,
+                    GetMemoryAccessMode(address),
+                    MemoryAccessEventType.BeforeMemoryWrite,
+                    MemoryAccessEventType.AfterMemoryWrite);
+            }
+            else {
+                var accessMode = GetMemoryAccessMode(address);
+                if (accessMode is MemoryAccessMode.ReadAndWrite or MemoryAccessMode.WriteOnly)
+                    Memory[address] = value;
+            }
         }
 
         private void WritetoMemoryOrPort(
@@ -927,22 +1140,18 @@ namespace Konamiman.Z80dotNet
             IMemory memory,
             MemoryAccessMode accessMode,
             MemoryAccessEventType beforeEventType,
-            MemoryAccessEventType afterEventType,
-            byte waitStates)
+            MemoryAccessEventType afterEventType)
         {
             var beforeEventArgs = FireMemoryAccessEvent(beforeEventType, address, value);
 
-            if(!beforeEventArgs.CancelMemoryAccess &&
-                (accessMode == MemoryAccessMode.ReadAndWrite || accessMode == MemoryAccessMode.WriteOnly))
+            if (!beforeEventArgs.CancelMemoryAccess &&
+                (accessMode is MemoryAccessMode.ReadAndWrite or MemoryAccessMode.WriteOnly))
                 memory[address] = beforeEventArgs.Value;
 
-            if(executionContext != null)
-                executionContext.AccummulatedMemoryWaitStates += waitStates;
-
             FireMemoryAccessEvent(
-                afterEventType, 
-                address, 
-                beforeEventArgs.Value, 
+                afterEventType,
+                address,
+                beforeEventArgs.Value,
                 beforeEventArgs.LocalUserState,
                 beforeEventArgs.CancelMemoryAccess);
         }
@@ -956,13 +1165,23 @@ namespace Konamiman.Z80dotNet
 
             ushort portNumber = useExtendedPortsSpace ? NumberUtils.CreateUshort(portNumberLow, portNumberHigh) : portNumberLow;
 
-            return ReadFromMemoryOrPort(
-                portNumber,
-                PortsSpace,
-                GetExtendedPortAccessMode(portNumber),
-                MemoryAccessEventType.BeforePortRead,
-                MemoryAccessEventType.AfterPortRead,
-                GetExtendedPortWaitStates(portNumber));
+            if (executionContext != null)
+                executionContext.AccummulatedMemoryWaitStates += GetExtendedPortWaitStates(portNumber);
+
+            if (portReadEventsAllFlag ?? portReadEventsLookup[useExtendedPortsSpace ? (portNumber >> 8) : portNumber]) {
+                return ReadFromMemoryOrPort(
+                    portNumber,
+                    PortsSpace,
+                    GetExtendedPortAccessMode(portNumber),
+                    MemoryAccessEventType.BeforePortRead,
+                    MemoryAccessEventType.AfterPortRead);
+            }
+            else {
+                var accessMode = GetExtendedPortAccessMode(portNumber);
+                return (accessMode is MemoryAccessMode.ReadAndWrite or MemoryAccessMode.ReadOnly)
+                    ? PortsSpace[portNumber]
+                    : (byte)0xFF;
+            }
         }
 
         public void WriteToPort(byte portNumber, byte value) => WriteToPort(portNumber, 0, value);
@@ -974,14 +1193,23 @@ namespace Konamiman.Z80dotNet
 
             ushort portNumber = useExtendedPortsSpace ? NumberUtils.CreateUshort(portNumberLow, portNumberHigh) : portNumberLow;
 
-            WritetoMemoryOrPort(
-                portNumber,
-                value,
-                PortsSpace,
-                GetExtendedPortAccessMode(portNumber),
-                MemoryAccessEventType.BeforePortWrite,
-                MemoryAccessEventType.AfterPortWrite,
-                GetExtendedPortWaitStates(portNumber));
+            if (executionContext != null)
+                executionContext.AccummulatedMemoryWaitStates += GetExtendedPortWaitStates(portNumber);
+
+            if (portWriteEventsAllFlag ?? portWriteEventsLookup[useExtendedPortsSpace ? (portNumber >> 8) : portNumber]) {
+                WritetoMemoryOrPort(
+                    portNumber,
+                    value,
+                    PortsSpace,
+                    GetExtendedPortAccessMode(portNumber),
+                    MemoryAccessEventType.BeforePortWrite,
+                    MemoryAccessEventType.AfterPortWrite);
+            }
+            else {
+                var accessMode = GetExtendedPortAccessMode(portNumber);
+                if (accessMode is MemoryAccessMode.ReadAndWrite or MemoryAccessMode.WriteOnly)
+                    PortsSpace[portNumber] = value;
+            }
         }
 
         public void SetInterruptMode(byte interruptMode)
